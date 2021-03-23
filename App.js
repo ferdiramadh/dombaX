@@ -1,13 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+import MyTabs from './drawer/BottomTabBar';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 export default function App() {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
   );
 }
 
