@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "kiwi-app",
-    "slug": "kiwi-app",
+    "name": "domba-x",
+    "slug": "domba-x",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Gembul.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -27,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }

@@ -1,0 +1,105 @@
+import React, {useState, useEffect} from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity , TextInput,BackHandler,Alert, ActivityIndicator} from 'react-native'
+import firebase from 'firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch} from 'react-redux'
+
+const RegisterScreen = ({navigation}) => {
+    const dispatch = useDispatch();
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('')
+    const [ error, setError ] = useState('')
+
+    const signUp = async() => {
+        let value = 'absba'
+        try{
+            const respons = await firebase.auth().createUserWithEmailAndPassword(email,password);
+            const userObj = respons.user
+            await AsyncStorage.setItem('@storage_Key', value)
+            console.log(userObj)
+            dispatch({type:'REGISTER',results:userObj})
+            navigation.navigate('Home')
+        }catch(err){
+            console.log(err)
+            setError(err.message)
+        }
+    }
+
+    useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { text: 'YES', onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () => backHandler.remove();
+  }, []);
+
+    return (
+        <View style={styles.container}>
+            <Image style={styles.imgIcon} source={require('../assets/images/Kiwi_Categories-Icon.png')}/>
+            { error? <Text style={{color:'red'}}>{error}</Text>:null}
+            <TextInput style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+            />
+            <TextInput style={styles.input}
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+            />
+            <TouchableOpacity onPress={signUp} style={styles.btn}>
+                <Text>Daftar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')} >
+                <Text>Masuk</Text>
+            </TouchableOpacity>
+            
+        </View>
+    )
+}
+
+export default RegisterScreen
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    imgIcon:{
+        width:250,
+        height:250
+    },
+    input:{
+        width: 181,
+        height: 40,
+        borderColor:'black',
+        borderWidth:2,
+        borderRadius:10,
+        padding:10,
+        backgroundColor:'white',
+        marginVertical:10
+    },
+    btn:{
+        width: 181,
+        height: 40,
+        borderColor:'black',
+        backgroundColor:'#ED9B83',
+        borderRadius:10,
+        justifyContent:'center',
+        alignItems:'center',
+        borderWidth:2,
+        marginBottom:10
+    }
+})

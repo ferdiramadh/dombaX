@@ -1,16 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
-import MyTabs from './drawer/BottomTabBar';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text, View} from 'react-native';
+import Routes from './navigation/Routes';
+import { Provider } from 'react-redux'
+import {store} from './redux';
 
 
 export default function App() {
-
   return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
+    <Provider store ={store}>
+      <Routes />
+    </Provider>
   );
 }
 
@@ -20,5 +19,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });

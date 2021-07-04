@@ -1,0 +1,232 @@
+import {combineReducers} from 'redux'
+
+const initialState = {
+    name:'Ferdiansyah Ramadhan',
+
+};
+
+const initialUserState = {};
+
+const initialStock = {
+    formDombaTest:{
+        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+        jenisProduk: 'Domba',
+        jenisDomba:'Garut',
+        hargaBeli: 500000,
+        hargaJual: 2500000,
+        usia: 2,
+        berat: 15,
+        kategori:'Penggemukan',
+        jumlah: 30
+    },
+    formDomba:{
+        jenisProduk:'Domba',
+        jenisDomba:'',
+        hargaBel: 0,
+        hargaJual: 0,
+        usia: '',
+        kategori:'',
+        jumlah: 0,
+        biayaOverall: 0
+    },
+    formPakan:{
+        jenisProduk:'Pakan',
+        namaMerk:'',
+        Jumlah: 0,
+        kadaluarsa: '',
+        petunjuk: '',
+        jumlah: 0,
+        biayaOverall: 0
+    },
+    listDomba:[],
+    listPakan:[],
+    listObat:[]
+}
+
+const initialCost = {
+    listKandang:[],
+    listPegawai:[],
+    listLahan:[],
+    dataKandang:{
+        tipeKandang:'Koloni',
+        bahanKandang:'Kayu',
+        jumlah:'',
+        luas:'',
+        statusKepemilikan:'Sendiri',
+        biayaBuat:''
+    },
+    dataPegawai:{
+        tipePegawai:'Manajerial',
+        jumlah:'',
+        gaji:''
+    },
+    dataLahan:{
+        jenisLahan:'Tanah',
+        lokasi:'',
+        luas:'',
+        statusKepemilikan:'Sendiri',
+        hargaBeli:''
+
+    }
+}
+
+const initialTransaction = {
+    dataPurchasing:{
+        produk:'',
+        deskripsi: '',
+        kuantitas:'',
+        hargaBeli: '',
+        diskon:'',
+        pajak: '',
+        tanggalBeli: '',
+        status:'Belum Lunas'
+    },
+    dataSelling:{
+        produk:'',
+        deskripsi: '',
+        kuantitas:'',
+        hargaJual: '',
+        diskon:'',
+        pajak: '',
+        batasBayar: '',
+        status:'Belum Lunas'
+    },
+    listPurchasing: [],
+    listSelling: []
+}
+
+const stokReducer = (state = initialStock, action) => {
+    switch(action.type){
+    case 'STORE_DATA':
+        return {
+            ...state,
+            listDomba: [...state.listDomba, action.results]
+            
+        }
+    case 'STORE_DATA_PAKAN':
+        return {
+            ...state,
+            listPakan: [...state.listPakan, action.results]
+            
+        }
+    case 'STORE_DATA_OBAT':
+        return {
+            ...state,
+            listObat: [...state.listObat, action.results]
+            
+        }
+    case 'LOAD_DOMBA_DATA':
+        return {
+            ...state,
+            listDomba:  [action.results]
+            
+    }
+    case 'SET_EMPTY_DOMBA_DATA':
+        return {
+            ...state,
+            listDomba:  []
+            
+    }
+    case 'LOAD_PAKAN_DATA':
+        return {
+            ...state,
+            listPakan:  [action.results]
+        
+    }
+    case 'SET_EMPTY_PAKAN_DATA':
+        return {
+            ...state,
+            listPakan:  []
+            
+    }
+    case 'LOAD_OBAT_DATA':
+        return {
+            ...state,
+            listObat:  [action.results]
+        
+    }
+    case 'SET_EMPTY_OBAT_DATA':
+        return {
+            ...state,
+            listObat:  []
+            
+    }
+    case 'SIGN_OUT_CLEAR_DATA':
+        return {
+            ...state,
+            listObat:  [],
+            listPakan:[],
+            listDomba:[]
+            
+    }
+        default: return state;
+    }
+}
+
+const costReducer = (state = initialCost, action) => {
+    switch(action.type){
+        case 'STORE_KANDANG_COST':
+            return {
+                ...state,
+                listKandang: [...state.listKandang, action.results]
+                
+        }
+        case 'STORE_DATA_PEGAWAI':
+            return {
+                ...state,
+                listPegawai: [...state.listPegawai, action.results]
+                
+            }
+        case 'STORE_DATA_LAHAN':
+            return {
+                ...state,
+                listLahan: [...state.listLahan, action.results]
+                    
+            }
+            default: return state;
+        }
+}
+
+
+const transactionsReducer = (state = initialTransaction, action) => {
+    switch(action.type){
+        case 'STORE_PURCHASING':
+            return {
+                ...state,
+                listPurchasing: [...state.listPurchasing, action.results]
+                
+        }
+        case 'STORE_SELLING':
+            return {
+                ...state,
+                listSelling: [...state.listSelling, action.results]
+                
+        }
+       
+            default: return state;
+        }
+}
+
+const userReducer = (state = initialUserState, action) => {
+    switch(action.type){
+        case 'REGISTER':
+            return action.results;
+        case 'LOGIN':
+            return action.results;
+        case 'LOGOUT':
+            return state = {};
+        default: return state;
+        }
+}
+
+
+
+const reducer = combineReducers(
+    {
+    costReducer,
+    stokReducer,
+    transactionsReducer,
+    userReducer
+    }
+)
+export default reducer;
