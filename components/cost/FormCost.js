@@ -11,7 +11,7 @@ import firebase from '../../Firebaseconfig'
 const FormCost = ({setModalCostVisible,modalCostVisible}) => {
     const dispatch = useDispatch();
     const costState = useSelector(state => state.costReducer);
-    const uid = useSelector(state => state.userReducer)
+    const uid = useSelector(state => state.userReducer.uid)
     const dataKandang = costState.dataKandang
     const dataPegawai = costState.dataPegawai
     const dataLahan = costState.dataLahan

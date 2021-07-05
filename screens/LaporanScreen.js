@@ -14,7 +14,7 @@ import firebase from 'firebase'
 export default function LaporanScreen() {
     const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
-    const populate = () => {
+    const loadDataDomba = () => {
       
         return firebase
         .firestore()
@@ -39,7 +39,7 @@ export default function LaporanScreen() {
         });
         
     }
-    const getPakan = () => {
+    const loadDataPakan = () => {
       
         return firebase
         .firestore()
@@ -66,7 +66,7 @@ export default function LaporanScreen() {
         
     }
 
-    const getObat = () => {
+    const loadDataObat = () => {
       
         return firebase
         .firestore()
@@ -91,17 +91,24 @@ export default function LaporanScreen() {
     }
     
     
-    const getKandang = () => {
+    const loadKandang = () => {
           
         return firebase
         .firestore()
         .collection("kandangcost").where("userId","==",uid)
         .get()
-        .then((querySnapshot) => {querySnapshot.forEach( function(doc){
+        .then((querySnapshot) => {
+            if(querySnapshot.docs.length === 0){
+                console.log('TIDAK ada nih')
+                dispatch({type:'SET_EMPTY_KANDANG_COST'})
+                
+            } else {
+
+            querySnapshot.forEach( function(doc){
             let newValue = doc.data()
-            dispatch({type:'STORE_KANDANG_COST',results:newValue})
+            dispatch({type:'LOAD_KANDANG_COST',results:newValue})
             
-        });
+        });}
         
         }).catch((error) => {
             console.log("Error getting document:", error);
@@ -109,17 +116,23 @@ export default function LaporanScreen() {
         
     }
     
-    const getPegawai = () => {
+    const loadPegawai = () => {
           
         return firebase
         .firestore()
         .collection("pegawaicost").where("userId","==",uid)
         .get()
-        .then((querySnapshot) => {querySnapshot.forEach( function(doc){
+        .then((querySnapshot) => {
+            if(querySnapshot.docs.length === 0){
+                console.log('TIDAK ada nih')
+                dispatch({type:'SET_EMPTY_PEGAWAI_COST'})
+                
+            } else {
+            querySnapshot.forEach( function(doc){
             let newValue = doc.data()
-            dispatch({type:'STORE_DATA_PEGAWAI',results:newValue})
+            dispatch({type:'LOAD_PEGAWAI_COST',results:newValue})
             
-        });
+        });}
         
         }).catch((error) => {
             console.log("Error getting document:", error);
@@ -127,17 +140,23 @@ export default function LaporanScreen() {
         
     }
     
-    const getLahan = () => {
+    const loadLahan = () => {
           
         return firebase
         .firestore()
         .collection("lahancost").where("userId","==",uid)
         .get()
-        .then((querySnapshot) => {querySnapshot.forEach( function(doc){
+        .then((querySnapshot) => {
+            if(querySnapshot.docs.length === 0){
+                console.log('TIDAK ada nih')
+                dispatch({type:'SET_EMPTY_LAHAN_COST'})
+                
+            } else {
+            querySnapshot.forEach( function(doc){
             let newValue = doc.data()
-            dispatch({type:'STORE_DATA_LAHAN',results:newValue})
+            dispatch({type:'LOAD_LAHAN_COST',results:newValue})
             
-        });
+        });}
         
         }).catch((error) => {
             console.log("Error getting document:", error);
@@ -145,34 +164,46 @@ export default function LaporanScreen() {
         
     }
     
-    const getPurchasing = () => {
+    const loadPurchasing = () => {
           
         return firebase
         .firestore()
         .collection("purchasing").where("userId","==",uid)
         .get()
-        .then((querySnapshot) => {querySnapshot.forEach( function(doc){
+        .then((querySnapshot) => {
+            if(querySnapshot.docs.length === 0){
+                console.log('TIDAK ada nih')
+                dispatch({type:'SET_EMPTY_PURCHASING'})
+                
+            } else {
+            querySnapshot.forEach( function(doc){
             let newValue = doc.data()
-            dispatch({type:'STORE_PURCHASING',results:newValue})
+            dispatch({type:'LOAD_PURCHASING',results:newValue})
             
-        });
+        });}
         
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
         
     }
-    const getSelling = () => {
+    const loadSelling = () => {
           
         return firebase
         .firestore()
         .collection("selling").where("userId","==",uid)
         .get()
-        .then((querySnapshot) => {querySnapshot.forEach( function(doc){
+        .then((querySnapshot) => {
+            if(querySnapshot.docs.length === 0){
+                console.log('TIDAK ada nih')
+                dispatch({type:'SET_EMPTY_SELLING'})
+                
+            } else {
+            querySnapshot.forEach( function(doc){
             let newValue = doc.data()
-            dispatch({type:'STORE_SELLING',results:newValue})
+            dispatch({type:'LOAD_SELLING',results:newValue})
             
-        });
+        });}
         
         }).catch((error) => {
             console.log("Error getting document:", error);
@@ -181,14 +212,14 @@ export default function LaporanScreen() {
     }
 
     const populateAll = () => {
-            populate()
-            getPakan()
-            getObat()
-            // getKandang()
-            // getPegawai()
-            // getLahan()
-            // getPurchasing()
-            // getSelling()
+            loadDataDomba()
+            loadDataPakan()
+            loadDataObat()
+            loadKandang()
+            loadPegawai()
+            loadLahan()
+            loadPurchasing()
+            loadSelling()
     }
 
     useEffect(() => {
@@ -249,7 +280,7 @@ export default function LaporanScreen() {
                    () => populate()
             //         () => {
             //         if(uid !== "undefined"){
-            //             getPakan()
+            //             loadDataPakan()
             //             console.log('Aya Yeuh UID')
             //         } else {
             //             console.log('Eweuh UID')

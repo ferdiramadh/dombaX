@@ -183,7 +183,43 @@ const costReducer = (state = initialCost, action) => {
                 listLahan: [...state.listLahan, action.results]
                     
             }
-            default: return state;
+        case 'LOAD_KANDANG_COST':
+            return {
+                ...state,
+                listKandang: [action.results]
+                    
+            }
+        case 'SET_EMPTY_KANDANG_COST':
+            return {
+                ...state,
+                listKandang: []
+                    
+            }
+        case 'LOAD_PEGAWAI_COST':
+            return {
+                ...state,
+                listPegawai: [action.results]
+                    
+            }
+        case 'SET_EMPTY_PEGAWAI_COST':
+            return {
+                ...state,
+                listPegawai: []
+                    
+            }
+        case 'LOAD_LAHAN_COST':
+            return {
+                ...state,
+                listLahan: [action.results]
+                    
+            }
+        case 'SET_EMPTY_LAHAN_COST':
+            return {
+                ...state,
+                listLahan: []
+                    
+            }
+        default: return state;
         }
 }
 
@@ -202,9 +238,33 @@ const transactionsReducer = (state = initialTransaction, action) => {
                 listSelling: [...state.listSelling, action.results]
                 
         }
+        case 'LOAD_PURCHASING':
+            return {
+                ...state,
+                listPurchasing: [action.results]
+                    
+            }
+        case 'SET_EMPTY_PURCHASING':
+            return {
+                ...state,
+                listPurchasing: []
+                    
+            }
+        case 'LOAD_SELLING':
+            return {
+                ...state,
+                listSelling: [action.results]
+                    
+            }
+        case 'SET_EMPTY_SELLING':
+            return {
+                ...state,
+                listSelling: []
+                    
+            }
        
-            default: return state;
-        }
+        default: return state;
+            }
 }
 
 const userReducer = (state = initialUserState, action) => {

@@ -8,6 +8,7 @@ import firebase from '../../Firebaseconfig'
 const FormSelling = ({modalTransaction, setModalTransaction}) => {
     const dispatch = useDispatch();
     const transactionState = useSelector(state => state.transactionsReducer);
+    const uid = useSelector(state => state.userReducer.uid)
     const dataSelling = transactionState.dataSelling
     const [selectedProduct, setSelectedProduct] = useState();
     const [selectedShipCategory, setSelectedShipCategory] = useState();
@@ -22,7 +23,7 @@ const FormSelling = ({modalTransaction, setModalTransaction}) => {
         .collection(firebaseSetup.collection)
         .doc().id
     }
-    let addedProperties = {id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp()}
+    let addedProperties = {id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp(),userId:uid}
     const newValue = Object.assign(values,addedProperties)
         const db = firebase.firestore();
         db.collection(firebaseSetup.collection)
