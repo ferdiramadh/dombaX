@@ -1,17 +1,19 @@
-import firebase from 'firebase'
+import firebase from '../Firebaseconfig'
 import React, {useState} from 'react'
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity,ActivityIndicator} from 'react-native'
 import {useSelector, useDispatch} from 'react-redux'
 
 const LoginScreen = ({navigation}) => {
     const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
+    const [isLoading,setIsLoading ] = useState(false)
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState('')
     
 
     const signIn = async() => {
+        setIsLoading(true)
         try{
             const respons = await firebase.auth().signInWithEmailAndPassword(email,password);
             const userObj = respons.user
@@ -24,8 +26,18 @@ const LoginScreen = ({navigation}) => {
             console.log(e)
             setError(e.toString())
         }
-       
+        setTimeout(() => {
+            setIsLoading(false)
+        },1000)
     }
+    if(isLoading){
+        return(
+          <View style={styles.container}>
+              <ActivityIndicator size="large" color="orange" />
+          </View>
+        )
+    }
+  
     return (
         <View style={styles.container}>
             <Image style={styles.imgIcon} source={require('../assets/images/Kiwi_Categories-Icon.png')}/>
@@ -44,7 +56,10 @@ const LoginScreen = ({navigation}) => {
             <TouchableOpacity onPress={() => console.log(uid)} style={styles.btn}>
                 <Text>Cek uid</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={signIn} style={styles.btn}>
+            <TouchableOpacity onPress={
+                signIn
+                
+            } style={styles.btn}>
                 <Text>Masuk</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Register')} >

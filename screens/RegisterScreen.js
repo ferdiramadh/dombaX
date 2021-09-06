@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity , TextInput,BackHandler,Alert, ActivityIndicator} from 'react-native'
-import firebase from 'firebase'
+import firebase from '../Firebaseconfig'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch} from 'react-redux'
 

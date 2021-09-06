@@ -66,7 +66,23 @@ const DombaStok = () => {
         <View>
             {  DATA.map((item, i) => {
                 return(
-                    <TouchableOpacity style={styles.container} key={item.id} onPress={() => console.log(DATA)}>
+                    <TouchableOpacity style={styles.container} key={item.id} 
+                    onPress={() =>{
+                        console.log(DATA)
+                   }}
+                    onLongPress={() => console.log("ni lama beut")}
+                    delayLongPress={1000}
+                    >
+                {/* <View style={styles.deleteModal}>
+                   <View style={styles.deleteContent}>
+                        <TouchableOpacity>
+                            <Text>Ubah</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Text>Hapus</Text>
+                        </TouchableOpacity>
+                   </View>
+                </View> */}
                 <View style={styles.leftIcon}>
                     <Image source={require('../../../assets/images/Kiwi_Categories-Icon.png')} style={styles.imgIcon}/>
                 </View>
@@ -106,7 +122,8 @@ const styles = StyleSheet.create({
     container:{
         // backgroundColor:'green',
         flexDirection:'row',
-        marginBottom: 10
+        marginBottom: 10,
+        position:'relative'
     },
     leftIcon:{
         // backgroundColor:'yellow',
@@ -144,5 +161,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight:'500',
         marginVertical:5
+    },
+    deleteModal:{
+        width:'100%',
+        height:'100%',
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'green',
+        position:'absolute',
+        zIndex:1
+    },
+    deleteContent:{
+        width:'50%',
+        backgroundColor:'grey',
+        height:'60%',
+        position:'relative'
     }
 })

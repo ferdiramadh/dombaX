@@ -9,211 +9,224 @@ import {
   } from 'react-native-chart-kit'
 import LaporanComponent from '../components/laporan/LaporanComponent'
 import {useSelector, useDispatch} from 'react-redux'
-import firebase from 'firebase'
+import firebase from '../Firebaseconfig'
 
 export default function LaporanScreen() {
     const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
-    const loadDataDomba = () => {
-      
+    const dombastok = useSelector(state => state.stokReducer.listDomba)
+    const testLoadSnapshot = () => {
         return firebase
         .firestore()
         .collection("dombastok").where("userId","==",uid)
-        .get()
-        .then((querySnapshot) => {
-            if(querySnapshot.docs.length === 0){
-                console.log('TIDAK ada nih')
-                dispatch({type:'SET_EMPTY_DOMBA_DATA'})
-                
-            } else {
-                console.log('ada nih')
-                querySnapshot.forEach( function(doc){
-                    let newValue = doc.data()
-                    dispatch({type:'LOAD_DOMBA_DATA',results:newValue})
-                    
-                });
-            }
-
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-        
+        .onSnapshot((querySnapshot) => {
+            // console.log(querySnapshot)
+            const items = []
+            querySnapshot.forEach( function(doc){
+                let newValue = doc.data()
+                items.push(newValue)
+                console.log(newValue)
+                console.log('Itu newValue dari snapshot dalem')
+               
+            });
+            dispatch({type:'LOAD_DOMBA_DATA',results:items})
+            // console.log(items)
+            
+        })
     }
-    const loadDataPakan = () => {
-      
+
+    const testLoadSnapshotDataPakan = () => {
         return firebase
         .firestore()
         .collection("pakanstok").where("userId","==",uid)
-        .get()
-        .then((querySnapshot) => {
-            if(querySnapshot.docs.length === 0){
-                console.log('TIDAK ada nih')
-                dispatch({type:'SET_EMPTY_PAKAN_DATA'})
+        .onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach( function(doc){
+                let newValue = doc.data()
+                items.push(newValue)
+                console.log(newValue)
+                console.log('Itu newValue dari snapshot dalem')
                 
-            } else {
-                console.log('ada nih')
-                querySnapshot.forEach( function(doc){
-                    let newValue = doc.data()
-                    dispatch({type:'LOAD_PAKAN_DATA',results:newValue})
-                    
-                });
-            }
-          
-        
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-        
+            });
+            // console.log(items)
+            console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_PAKAN_DATA',results:items})
+        })
     }
 
-    const loadDataObat = () => {
+    // const loadDataDomba = () => {
       
+    //     return firebase
+    //     .firestore()
+    //     .collection("dombastok").where("userId","==",uid)
+    //     .get()
+    //     .then((querySnapshot) => {
+    //         if(querySnapshot.docs.length === 0){
+    //             console.log('TIDAK ada nih')
+    //             dispatch({type:'SET_EMPTY_DOMBA_DATA'})
+                
+    //         } else {
+    //             console.log('ada nih')
+    //             querySnapshot.forEach( function(doc){
+    //                 let newValue = doc.data()
+    //                 console.log(newValue);
+    //                 dispatch({type:'LOAD_DOMBA_DATA',results:newValue})
+                    
+    //             });
+    //         }
+
+    //     }).catch((error) => {
+    //         console.log("Error getting document:", error);
+    //     });
+        
+    // }
+    // const loadDataPakan = () => {
+      
+    //     return firebase
+    //     .firestore()
+    //     .collection("pakanstok").where("userId","==",uid)
+    //     .get()
+    //     .then((querySnapshot) => {
+    //         if(querySnapshot.docs.length === 0){
+    //             // console.log('TIDAK ada nih')
+    //             dispatch({type:'SET_EMPTY_PAKAN_DATA'})
+                
+    //         } else {
+    //             // console.log('ada nih')
+    //             querySnapshot.forEach( function(doc){
+    //                 let newValue = doc.data()
+    //                 dispatch({type:'LOAD_PAKAN_DATA',results:newValue})
+                    
+    //             });
+    //         }
+          
+        
+    //     }).catch((error) => {
+    //         console.log("Error getting document:", error);
+    //     });
+        
+    // }
+    const loadDataObat = () => {
         return firebase
         .firestore()
         .collection("obatstok").where("userId","==",uid)
-        .get()
-        .then((querySnapshot) => {
-            if(querySnapshot.docs.length === 0){
-                console.log('TIDAK ada nih')
-                dispatch({type:'SET_EMPTY_OBAT_DATA'})
-                
-            } else {
+        .onSnapshot((querySnapshot) => {
+            const items = []
             querySnapshot.forEach( function(doc){
-            let newValue = doc.data()
-            dispatch({type:'LOAD_OBAT_DATA',results:newValue})
-            
-        });}
-        
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-        
+                let newValue = doc.data()
+                items.push(newValue)
+                console.log(newValue)
+                console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            // console.log(items)
+            console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_OBAT_DATA',results:items})
+        })
     }
-    
-    
+
     const loadKandang = () => {
-          
         return firebase
         .firestore()
         .collection("kandangcost").where("userId","==",uid)
-        .get()
-        .then((querySnapshot) => {
-            if(querySnapshot.docs.length === 0){
-                console.log('TIDAK ada nih')
-                dispatch({type:'SET_EMPTY_KANDANG_COST'})
-                
-            } else {
-
+        .onSnapshot((querySnapshot) => {
+            const items = []
             querySnapshot.forEach( function(doc){
-            let newValue = doc.data()
-            dispatch({type:'LOAD_KANDANG_COST',results:newValue})
-            
-        });}
-        
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-        
+                let newValue = doc.data()
+                items.push(newValue)
+                console.log(newValue)
+                console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            // console.log(items)
+            console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_KANDANG_COST',results:items})
+        })
     }
-    
+
     const loadPegawai = () => {
-          
         return firebase
         .firestore()
         .collection("pegawaicost").where("userId","==",uid)
-        .get()
-        .then((querySnapshot) => {
-            if(querySnapshot.docs.length === 0){
-                console.log('TIDAK ada nih')
-                dispatch({type:'SET_EMPTY_PEGAWAI_COST'})
-                
-            } else {
+        .onSnapshot((querySnapshot) => {
+            const items = []
             querySnapshot.forEach( function(doc){
-            let newValue = doc.data()
-            dispatch({type:'LOAD_PEGAWAI_COST',results:newValue})
-            
-        });}
-        
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-        
+                let newValue = doc.data()
+                items.push(newValue)
+                console.log(newValue)
+                console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            // console.log(items)
+            console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_PEGAWAI_COST',results:items})
+        })
     }
-    
+
     const loadLahan = () => {
-          
         return firebase
         .firestore()
         .collection("lahancost").where("userId","==",uid)
-        .get()
-        .then((querySnapshot) => {
-            if(querySnapshot.docs.length === 0){
-                console.log('TIDAK ada nih')
-                dispatch({type:'SET_EMPTY_LAHAN_COST'})
-                
-            } else {
+        .onSnapshot((querySnapshot) => {
+            const items = []
             querySnapshot.forEach( function(doc){
-            let newValue = doc.data()
-            dispatch({type:'LOAD_LAHAN_COST',results:newValue})
-            
-        });}
-        
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-        
+                let newValue = doc.data()
+                items.push(newValue)
+                console.log(newValue)
+                console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            // console.log(items)
+            console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_LAHAN_COST',results:items})
+        })
     }
     
     const loadPurchasing = () => {
-          
         return firebase
         .firestore()
         .collection("purchasing").where("userId","==",uid)
-        .get()
-        .then((querySnapshot) => {
-            if(querySnapshot.docs.length === 0){
-                console.log('TIDAK ada nih')
-                dispatch({type:'SET_EMPTY_PURCHASING'})
-                
-            } else {
+        .onSnapshot((querySnapshot) => {
+            const items = []
             querySnapshot.forEach( function(doc){
-            let newValue = doc.data()
-            dispatch({type:'LOAD_PURCHASING',results:newValue})
-            
-        });}
-        
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-        
+                let newValue = doc.data()
+                items.push(newValue)
+                console.log(newValue)
+                console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            // console.log(items)
+            console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_PURCHASING',results:items})
+        })
     }
+
     const loadSelling = () => {
-          
         return firebase
         .firestore()
         .collection("selling").where("userId","==",uid)
-        .get()
-        .then((querySnapshot) => {
-            if(querySnapshot.docs.length === 0){
-                console.log('TIDAK ada nih')
-                dispatch({type:'SET_EMPTY_SELLING'})
-                
-            } else {
+        .onSnapshot((querySnapshot) => {
+            const items = []
             querySnapshot.forEach( function(doc){
-            let newValue = doc.data()
-            dispatch({type:'LOAD_SELLING',results:newValue})
-            
-        });}
-        
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-        
+                let newValue = doc.data()
+                items.push(newValue)
+                console.log(newValue)
+                console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            // console.log(items)
+            console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_SELLING',results:items})
+        })
     }
 
+
+
     const populateAll = () => {
-            loadDataDomba()
-            loadDataPakan()
+            testLoadSnapshot()
+            testLoadSnapshotDataPakan()
+            // loadDataDomba()
+            // loadDataPakan()
             loadDataObat()
             loadKandang()
             loadPegawai()
@@ -277,7 +290,7 @@ export default function LaporanScreen() {
             
 
                 <CustomButton onPress={
-                   () => populate()
+                   () => console.log(dombastok.length)
             //         () => {
             //         if(uid !== "undefined"){
             //             loadDataPakan()

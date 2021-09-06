@@ -39,7 +39,7 @@ const Routes = () => {
       
       return firebase
       .firestore()
-      .collection("dombastok").orderBy('createdAt')
+      .collection("dombastok").where("userId","==",uid)
       .get()
       .then((querySnapshot) => {querySnapshot.forEach( function(doc){
           let newValue = doc.data()
@@ -57,7 +57,7 @@ const Routes = () => {
       
     return firebase
     .firestore()
-    .collection("pakanstok").orderBy('createdAt')
+    .collection("pakanstok").where("userId","==",uid)
     .get()
     .then((querySnapshot) => {querySnapshot.forEach( function(doc){
         let newValue = doc.data()
@@ -75,7 +75,7 @@ const getObat = () => {
       
     return firebase
     .firestore()
-    .collection("obatstok").orderBy('createdAt')
+    .collection("obatstok").where("userId","==",uid)
     .get()
     .then((querySnapshot) => {querySnapshot.forEach( function(doc){
         let newValue = doc.data()
@@ -94,7 +94,7 @@ const getKandang = () => {
       
     return firebase
     .firestore()
-    .collection("kandangcost").orderBy('createdAt')
+    .collection("kandangcost").where("userId","==",uid)
     .get()
     .then((querySnapshot) => {querySnapshot.forEach( function(doc){
         let newValue = doc.data()
@@ -112,7 +112,7 @@ const getPegawai = () => {
       
     return firebase
     .firestore()
-    .collection("pegawaicost").orderBy('createdAt')
+    .collection("pegawaicost").where("userId","==",uid)
     .get()
     .then((querySnapshot) => {querySnapshot.forEach( function(doc){
         let newValue = doc.data()
@@ -130,7 +130,7 @@ const getLahan = () => {
       
     return firebase
     .firestore()
-    .collection("lahancost").orderBy('createdAt')
+    .collection("lahancost").where("userId","==",uid)
     .get()
     .then((querySnapshot) => {querySnapshot.forEach( function(doc){
         let newValue = doc.data()
@@ -148,7 +148,7 @@ const getPurchasing = () => {
       
     return firebase
     .firestore()
-    .collection("purchasing").orderBy('createdAt')
+    .collection("purchasing").where("userId","==",uid)
     .get()
     .then((querySnapshot) => {querySnapshot.forEach( function(doc){
         let newValue = doc.data()
@@ -165,7 +165,7 @@ const getSelling = () => {
       
     return firebase
     .firestore()
-    .collection("selling").orderBy('createdAt')
+    .collection("selling").where("userId","==",uid)
     .get()
     .then((querySnapshot) => {querySnapshot.forEach( function(doc){
         let newValue = doc.data()

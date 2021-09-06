@@ -118,7 +118,7 @@ const stokReducer = (state = initialStock, action) => {
     case 'LOAD_DOMBA_DATA':
         return {
             ...state,
-            listDomba:  [action.results]
+            listDomba: action.results
             
     }
     case 'SET_EMPTY_DOMBA_DATA':
@@ -130,7 +130,7 @@ const stokReducer = (state = initialStock, action) => {
     case 'LOAD_PAKAN_DATA':
         return {
             ...state,
-            listPakan:  [action.results]
+            listPakan: action.results
         
     }
     case 'SET_EMPTY_PAKAN_DATA':
@@ -142,7 +142,7 @@ const stokReducer = (state = initialStock, action) => {
     case 'LOAD_OBAT_DATA':
         return {
             ...state,
-            listObat:  [action.results]
+            listObat: action.results
         
     }
     case 'SET_EMPTY_OBAT_DATA':
@@ -168,7 +168,7 @@ const costReducer = (state = initialCost, action) => {
         case 'STORE_KANDANG_COST':
             return {
                 ...state,
-                listKandang: [...state.listKandang, action.results]
+                listKandang:[...state.listKandang, action.results]
                 
         }
         case 'STORE_DATA_PEGAWAI':
@@ -186,7 +186,7 @@ const costReducer = (state = initialCost, action) => {
         case 'LOAD_KANDANG_COST':
             return {
                 ...state,
-                listKandang: [action.results]
+                listKandang: action.results
                     
             }
         case 'SET_EMPTY_KANDANG_COST':
@@ -198,7 +198,7 @@ const costReducer = (state = initialCost, action) => {
         case 'LOAD_PEGAWAI_COST':
             return {
                 ...state,
-                listPegawai: [action.results]
+                listPegawai: action.results
                     
             }
         case 'SET_EMPTY_PEGAWAI_COST':
@@ -210,7 +210,7 @@ const costReducer = (state = initialCost, action) => {
         case 'LOAD_LAHAN_COST':
             return {
                 ...state,
-                listLahan: [action.results]
+                listLahan: action.results
                     
             }
         case 'SET_EMPTY_LAHAN_COST':
@@ -241,7 +241,7 @@ const transactionsReducer = (state = initialTransaction, action) => {
         case 'LOAD_PURCHASING':
             return {
                 ...state,
-                listPurchasing: [action.results]
+                listPurchasing: action.results
                     
             }
         case 'SET_EMPTY_PURCHASING':
@@ -253,7 +253,7 @@ const transactionsReducer = (state = initialTransaction, action) => {
         case 'LOAD_SELLING':
             return {
                 ...state,
-                listSelling: [action.results]
+                listSelling: action.results
                     
             }
         case 'SET_EMPTY_SELLING':
