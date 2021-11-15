@@ -1,13 +1,43 @@
 import React from 'react'
-import { StyleSheet, Text, View , Image, FlatList, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-native'
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
-
+import { Feather } from '@expo/vector-icons';
+import firebase from '../../../Firebaseconfig'
 
 const PakanStok = () => {
     
     const dombaState = useSelector(state => state.stokReducer)
     const DATA = dombaState.listPakan
+    const deleteItem = (item) => {
+        Alert.alert(
+            "Attention!",
+            `Do You Want to Delete "${item.jenisPakan} - ${item.jumlah} " Ekor ?`,
+            [
+                {
+                    text:"Cancel",
+                    onPress: () => Alert.alert("Canceled"),
+                    style:'cancel'
+                },
+                {
+                    text: "OK",
+                    onPress: () => {
+                        return firebase
+                        .firestore()
+                        .collection("pakanstok")
+                        .doc(item.id)
+                        .delete()
+                    }
+                }
+            ],
+            {
+                cancelable: true,
+                
+            }
+        )
+        
+        
+    }
     
     const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
 
@@ -20,7 +50,18 @@ const PakanStok = () => {
                     <Image source={require('../../../assets/images/kategori/Pakan.png')} style={styles.imgIcon}/>
                 </View>
                 <View style={styles.rightSection}>
-                    <Text style={styles.subStokTitle}>{item.jenisPakan}  - {item.jumlah} kg</Text>
+                <View style={styles.upperSection}>
+                        <Text style={styles.subStokTitle}>{item.jenisPakan} {item.jenisDomba} - {item.jumlah} Ekor</Text>
+                        <View style={styles.buttonSection}>
+                            <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
+                                <Feather name="trash-2" size={24} color="black" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginLeft:10}}>
+                                <Feather name="edit" size={24} color="black" />
+                            </TouchableOpacity>  
+                        </View>
+                    </View>
+                  
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
                             <Text style={styles.infoData}>Beli {item.hargaBeli}</Text>
@@ -72,7 +113,7 @@ const styles = StyleSheet.create({
     },
     subStokTitle:{
         fontSize: 20,
-        fontWeight:'bold'
+        fontWeight:'bold',
     },
     leftDombaInfo:{
         width:'50%',
@@ -85,5 +126,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight:'500',
         marginVertical:5
+    },
+    upperSection:{
+        // backgroundColor:'green',
+        flexDirection:'row',
+        justifyContent:'space-between'
+        
+    },
+    buttonSection:{
+        // backgroundColor:'red',
+        flexDirection:'row',  
+        width:'50%',
+        justifyContent:'flex-end',
+        position:'absolute',
+        right: 10
+       
     }
 })

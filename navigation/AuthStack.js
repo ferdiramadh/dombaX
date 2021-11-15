@@ -14,7 +14,7 @@ const AuthStack = ({isSignUp}) => {
     
 
     return (
-      <Stack.Navigator initialRouteName={isSignUp}>
+      <Stack.Navigator initialRouteName="Register">
         <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{
           headerShown:false
         }}/>
