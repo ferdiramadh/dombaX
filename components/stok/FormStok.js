@@ -26,12 +26,12 @@ const FormStok = ({setModalVisible,modalVisible}) => {
         id: '',
         jenisProduk: '',
         jenisDomba:'',
-        hargaBeli: '0',
-        hargaJual:'0',
-        usia: '0',
+        hargaBeli: '',
+        hargaJual:'',
+        usia: '',
         berat: '',
         kategori:'Penggemukan',
-        jumlah: '0',
+        jumlah: '',
         tipe:'domba'
 
     })
@@ -40,8 +40,8 @@ const FormStok = ({setModalVisible,modalVisible}) => {
       id: '',
       jenisPakan: '',
       merk:'',
-      jumlah: '0',
-      hargaBeli: '0',
+      jumlah: '',
+      hargaBeli: '',
       kadaluarsa: '',
       petunjuk:'',
       tipe:'pakan'

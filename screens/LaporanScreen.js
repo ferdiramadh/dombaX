@@ -25,8 +25,8 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                console.log(newValue)
-                console.log('Itu newValue dari snapshot dalem')
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
                
             });
             dispatch({type:'LOAD_DOMBA_DATA',results:items})
@@ -44,12 +44,12 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                console.log(newValue)
-                console.log('Itu newValue dari snapshot dalem')
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
                 
             });
             // console.log(items)
-            console.log('Itu items dari snapshot')
+            // console.log('Itu items dari snapshot')
             dispatch({type:'LOAD_PAKAN_DATA',results:items})
         })
     }
@@ -115,12 +115,12 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                console.log(newValue)
-                console.log('Itu newValue dari snapshot dalem')
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
                 
             });
             // console.log(items)
-            console.log('Itu items dari snapshot')
+            // console.log('Itu items dari snapshot')
             dispatch({type:'LOAD_OBAT_DATA',results:items})
         })
     }
@@ -134,12 +134,12 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                console.log(newValue)
-                console.log('Itu newValue dari snapshot dalem')
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
                 
             });
             // console.log(items)
-            console.log('Itu items dari snapshot')
+            // console.log('Itu items dari snapshot')
             dispatch({type:'LOAD_KANDANG_COST',results:items})
         })
     }
@@ -153,12 +153,12 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                console.log(newValue)
-                console.log('Itu newValue dari snapshot dalem')
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
                 
             });
             // console.log(items)
-            console.log('Itu items dari snapshot')
+            // console.log('Itu items dari snapshot')
             dispatch({type:'LOAD_PEGAWAI_COST',results:items})
         })
     }
@@ -172,12 +172,12 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                console.log(newValue)
-                console.log('Itu newValue dari snapshot dalem')
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
                 
             });
             // console.log(items)
-            console.log('Itu items dari snapshot')
+            // console.log('Itu items dari snapshot')
             dispatch({type:'LOAD_LAHAN_COST',results:items})
         })
     }
@@ -191,12 +191,12 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                console.log(newValue)
-                console.log('Itu newValue dari snapshot dalem')
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
                 
             });
             // console.log(items)
-            console.log('Itu items dari snapshot')
+            // console.log('Itu items dari snapshot')
             dispatch({type:'LOAD_PURCHASING',results:items})
         })
     }
@@ -210,12 +210,12 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                console.log(newValue)
-                console.log('Itu newValue dari snapshot dalem')
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
                 
             });
             // console.log(items)
-            console.log('Itu items dari snapshot')
+            // console.log('Itu items dari snapshot')
             dispatch({type:'LOAD_SELLING',results:items})
         })
     }

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-native'
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
 import { Feather } from '@expo/vector-icons';
 import firebase from '../../../Firebaseconfig'
+import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalModalEdit';
 
 // const DATAX = [
 //     {
@@ -36,7 +37,11 @@ import firebase from '../../../Firebaseconfig'
 const DombaStok = () => {
     
     const dombaState = useSelector(state => state.stokReducer)
-    const DATA = dombaState.listDomba
+    const DATA = dombaState.listDomba;
+    const [modalVisible, setModalVisible] = useState(false);
+    const [editData, setEditData] = useState({
+        
+    });
 
     const deleteItem = (item) => {
         Alert.alert(
@@ -64,6 +69,20 @@ const DombaStok = () => {
                 
             }
         )
+        
+        
+    }
+
+    const editItem = (item) => {
+        
+        return firebase
+        .firestore()
+        .collection("dombastok")
+        .doc(item.id)
+        .get()
+        .then((i) => {
+            setEditData(i.data());
+        })
         
         
     }
@@ -105,16 +124,6 @@ const DombaStok = () => {
                     onLongPress={() => console.log("ni lama beut")}
                     delayLongPress={1000}
                     >
-                {/* <View style={styles.deleteModal}>
-                   <View style={styles.deleteContent}>
-                        <TouchableOpacity>
-                            <Text>Ubah</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Text>Hapus</Text>
-                        </TouchableOpacity>
-                   </View>
-                </View> */}
                 <View style={styles.leftIcon}>
                     <Image source={require('../../../assets/images/Kiwi_Categories-Icon.png')} style={styles.imgIcon}/>
                 </View>
@@ -125,7 +134,13 @@ const DombaStok = () => {
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
                                 <Feather name="trash-2" size={24} color="black" />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{marginLeft:10}}>
+                            <TouchableOpacity style={{marginLeft:10}} onPress={() => {
+                                editItem(item)
+                                setTimeout(() => {
+                                    setModalVisible(!modalVisible)
+                                },500)
+                                
+                            }}>
                                 <Feather name="edit" size={24} color="black" />
                             </TouchableOpacity>  
                         </View>
@@ -140,13 +155,14 @@ const DombaStok = () => {
                         <View style={styles.leftDombaInfo}>
                             <Text style={styles.infoData}>Berat Rata-Rata: {item.berat + ' '}kg</Text>
                             <Text style={styles.infoData}>Usia : {item.usia + ''} Bulan</Text>
-                            <Text style={[styles.infoData,{fontWeight:'bold', color:'red'}]}>Rp. 25.000.000</Text>
+                            <Text style={[styles.infoData,{fontWeight:'bold', color:'red'}]}>{ formatToCurrency(parseInt(item.hargaJual)*parseInt(item.jumlah))}</Text>
                         </View>
                     </View>
                 </View> 
             </TouchableOpacity>
                 )
             })}
+            <GlobalModalEdit modalVisible={modalVisible} setModalVisible={setModalVisible} data={editData} setEditData={setEditData}/>
         </View>
         
             // <FlatList
@@ -204,21 +220,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight:'500',
         marginVertical:5
-    },
-    deleteModal:{
-        width:'100%',
-        height:'100%',
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'green',
-        position:'absolute',
-        zIndex:1
-    },
-    deleteContent:{
-        width:'50%',
-        backgroundColor:'grey',
-        height:'60%',
-        position:'relative'
     },
     upperSection:{
         // backgroundColor:'green',

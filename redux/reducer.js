@@ -22,12 +22,12 @@ const initialStock = {
     formDomba:{
         jenisProduk:'Domba',
         jenisDomba:'',
-        hargaBel: 0,
-        hargaJual: 0,
+        hargaBeli: '',
+        hargaJual: '',
         usia: '',
         kategori:'',
-        jumlah: 0,
-        biayaOverall: 0
+        jumlah: '',
+        biayaOverall: ''
     },
     formPakan:{
         jenisProduk:'Pakan',
