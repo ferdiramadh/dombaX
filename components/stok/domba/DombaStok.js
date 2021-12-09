@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-native'
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
@@ -38,10 +38,25 @@ const DombaStok = () => {
     
     const dombaState = useSelector(state => state.stokReducer)
     const DATA = dombaState.listDomba;
-    const [modalVisible, setModalVisible] = useState(false);
-    const [editData, setEditData] = useState({
-        
+    const sortData = DATA.sort((a, b) => {
+        let bd = objToDate(b.createdAt);
+        let ad = objToDate(a.createdAt);
+        return ad - bd;
     });
+    const [modalVisible, setModalVisible] = useState(false);
+    const [editData, setEditData] = useState({});
+
+
+
+    function objToDate (obj) {
+        let result = new Date(0);
+        if( obj !== null) {
+            result.setSeconds(obj.seconds);
+            result.setMilliseconds(obj.nanoseconds/1000000);
+            return result;
+        }
+        
+    }
 
     const deleteItem = (item) => {
         Alert.alert(
@@ -86,6 +101,20 @@ const DombaStok = () => {
         
         
     }
+
+    useEffect(() => {
+        console.log("Cek Data")
+        if(Object.keys(editData).length !== 0) {
+            setModalVisible(!modalVisible)
+        } if (editData !== undefined) {
+            console.log(editData)
+        }
+
+    },[editData])
+
+    // useEffect(() => {
+    //     console.log(DATA)
+    // },[])
     
     const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
     // const renderItem = ({item}) => {
@@ -115,11 +144,11 @@ const DombaStok = () => {
     // }
     return (
         <View>
-            {  DATA.map((item, i) => {
+            {  sortData.map((item, i) => {
                 return(
                     <TouchableOpacity style={styles.container} key={item.id} 
                     onPress={() =>{
-                        console.log(DATA)
+                        console.log(sortData)
                    }}
                     onLongPress={() => console.log("ni lama beut")}
                     delayLongPress={1000}
@@ -134,13 +163,7 @@ const DombaStok = () => {
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
                                 <Feather name="trash-2" size={24} color="black" />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{marginLeft:10}} onPress={() => {
-                                editItem(item)
-                                setTimeout(() => {
-                                    setModalVisible(!modalVisible)
-                                },500)
-                                
-                            }}>
+                            <TouchableOpacity style={{marginLeft:10}} onPress={() => editItem(item)}>
                                 <Feather name="edit" size={24} color="black" />
                             </TouchableOpacity>  
                         </View>

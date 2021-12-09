@@ -52,8 +52,8 @@ const FormStok = ({setModalVisible,modalVisible}) => {
     id: '',
     jenisObat: '',
     merk:'',
-    jumlah: '0',
-    hargaBeli: '0',
+    jumlah: '',
+    hargaBeli: '',
     kadaluarsa: '',
     petunjuk:'',
     tipe:'pakan'
