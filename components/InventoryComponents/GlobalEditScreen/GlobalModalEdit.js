@@ -1,6 +1,8 @@
 import React from 'react';
 import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, ScrollView } from 'react-native';
 import UpdateStokForm from './UpdateStokForm';
+import UpdatePakanForm from './UpdatePakanForm';
+import UpdateObatForm from './UpdateObatForm';
 
 
 const GlobalModalEdit = ({modalVisible, setModalVisible, data, setEditData}) => {
@@ -29,10 +31,19 @@ const GlobalModalEdit = ({modalVisible, setModalVisible, data, setEditData}) => 
                 {/* <ScrollView style={styles.container}>
                 
                 </ScrollView> */}
-                <UpdateStokForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>
-
-
-                
+                {/* <View style={styles.updatePageTitleSection}>
+                  <Text>Update Item</Text>
+                  <Text>Update Item</Text>
+                </View> */}
+                {
+                  data.tipe == 'domba'? <UpdateStokForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
+                {
+                  data.tipe == 'pakan'? <UpdatePakanForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
+                {
+                  data.tipe == 'obat'? <UpdateObatForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
 
             </View>
           </View>
@@ -62,7 +73,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         width:'90%',
-        height: 630,
+        height: '85%',
         marginTop: 10,
         backgroundColor:'#ED9B83',
         borderRadius: 20,
@@ -78,7 +89,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         padding:10,
         borderWidth:2
-        // position:'relative'
+        // position:'relative',
     },
     closeButton: {
       backgroundColor: 'red',
@@ -125,5 +136,10 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent:'center',
       alignItems:'center'
+    },
+    updatePageTitleSection:{
+      height: '15%',
+      backgroundColor:'lightgreen',
+      justifyContent:'center'
     }
   });

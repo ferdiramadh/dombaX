@@ -112,9 +112,6 @@ const DombaStok = () => {
 
     },[editData])
 
-    // useEffect(() => {
-    //     console.log(DATA)
-    // },[])
     
     const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
     // const renderItem = ({item}) => {

@@ -1,15 +1,33 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-native'
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
 import { Feather } from '@expo/vector-icons';
 import firebase from '../../../Firebaseconfig'
+import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalModalEdit';
 
 
 const ObatStok = () => {
     
     const dombaState = useSelector(state => state.stokReducer)
-    const DATA = dombaState.listObat
+    const DATA = dombaState.listObat;
+    const sortData = DATA.sort((a, b) => {
+        let bd = objToDate(b.createdAt);
+        let ad = objToDate(a.createdAt);
+        return ad - bd;
+    });
+    const [modalVisible, setModalVisible] = useState(false);
+    const [editData, setEditData] = useState({});
+
+    function objToDate (obj) {
+        let result = new Date(0);
+        if( obj !== null) {
+            result.setSeconds(obj.seconds);
+            result.setMilliseconds(obj.nanoseconds/1000000);
+            return result;
+        }
+        
+    }
     const deleteItem = (item) => {
         Alert.alert(
             "Attention!",
@@ -39,12 +57,36 @@ const ObatStok = () => {
         
         
     }
+
+    const editItem = (item) => {
+        
+        return firebase
+        .firestore()
+        .collection("obatstok")
+        .doc(item.id)
+        .get()
+        .then((i) => {
+            setEditData(i.data());
+        })
+        
+        
+    }
+
+    useEffect(() => {
+        console.log("Cek Data")
+        if(Object.keys(editData).length !== 0) {
+            setModalVisible(!modalVisible)
+        } if (editData !== undefined) {
+            console.log(editData)
+        }
+
+    },[editData])
     
     const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
 
     return (
         <View>
-            {  DATA.map((item, i) => {
+            {  sortData.map((item, i) => {
                 return(
                     <TouchableOpacity style={styles.container} key={item.id} onPress={() => console.log(DATA)}>
                 <View style={styles.leftIcon}>
@@ -57,7 +99,7 @@ const ObatStok = () => {
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
                                 <Feather name="trash-2" size={24} color="black" />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{marginLeft:10}}>
+                            <TouchableOpacity style={{marginLeft:10}} onPress={() => editItem(item)}>
                                 <Feather name="edit" size={24} color="black" />
                             </TouchableOpacity>  
                         </View>
@@ -69,13 +111,14 @@ const ObatStok = () => {
                         </View>
                         <View style={styles.leftDombaInfo}>
                             <Text style={styles.infoData}>Kadaluarsa : {item.kadaluarsa}</Text>
-                            <Text style={[styles.infoData,{fontWeight:'bold', color:'red'}]}>Rp. 25.000.000</Text>
+                            <Text style={[styles.infoData,{fontWeight:'bold', color:'red'}]}>{ formatToCurrency(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
                         </View>
                     </View>
                 </View> 
             </TouchableOpacity>
                 )
             })}
+            <GlobalModalEdit modalVisible={modalVisible} setModalVisible={setModalVisible} data={editData} setEditData={setEditData}/>
         </View>
        
     ) 
