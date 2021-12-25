@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View , Image, FlatList, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View , Image, TouchableOpacity} from 'react-native'
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
 
@@ -9,12 +9,40 @@ const VarCostItem = () => {
     const DATA_DOMBA = varCostData.listDomba
     const DATA_PAKAN = varCostData.listPakan
     const DATA_OBAT = varCostData.listObat
+
+    const sortDataDomba = DATA_DOMBA.sort((a, b) => {
+        let bd = objToDate(b.createdAt);
+        let ad = objToDate(a.createdAt);
+        return ad - bd;
+    });
+
+    const sortDataPakan = DATA_PAKAN.sort((a, b) => {
+        let bd = objToDate(b.createdAt);
+        let ad = objToDate(a.createdAt);
+        return ad - bd;
+    });
+
+    const sortDataObat = DATA_OBAT.sort((a, b) => {
+        let bd = objToDate(b.createdAt);
+        let ad = objToDate(a.createdAt);
+        return ad - bd;
+    });
+
+    function objToDate (obj) {
+        let result = new Date(0);
+        if( obj !== null) {
+            result.setSeconds(obj.seconds);
+            result.setMilliseconds(obj.nanoseconds/1000000);
+            return result;
+        }
+        
+    }
     
     const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
 
     return (
         <View>
-            {  DATA_DOMBA.length !== 0? DATA_DOMBA.map((item, i) => {
+            {  DATA_DOMBA.length !== 0? sortDataDomba.map((item, i) => {
                 return(
                     <TouchableOpacity style={styles.container} key={item.id}>
                 <View style={styles.leftIcon}>
@@ -24,14 +52,15 @@ const VarCostItem = () => {
                     <Text style={styles.subStokTitle}>{item.kategori} - {item.jumlah} Ekor</Text>
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>Rp. {item.hargaBeli}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(item.hargaBeli)}</Text>
+  
                         </View>
                     </View>
                 </View> 
             </TouchableOpacity>
                 )
             }):null}
-            {  DATA_PAKAN.length !== 0? DATA_PAKAN.map((item, i) => {
+            {  DATA_PAKAN.length !== 0? sortDataPakan.map((item, i) => {
                 return(
                     <TouchableOpacity style={styles.container} key={item.id}>
                 <View style={styles.leftIcon}>
@@ -41,14 +70,14 @@ const VarCostItem = () => {
                     <Text style={styles.subStokTitle}>{item.jenisPakan} - {item.jumlah} Kg</Text>
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>Rp. {item.hargaBeli}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(item.hargaBeli)}</Text>
                         </View>
                     </View>
                 </View> 
             </TouchableOpacity>
                 )
             }):null}
-            {  DATA_OBAT.length !== 0? DATA_OBAT.map((item, i) => {
+            {  DATA_OBAT.length !== 0? sortDataObat.map((item, i) => {
                 return(
                     <TouchableOpacity style={styles.container} key={item.id}>
                 <View style={styles.leftIcon}>
@@ -58,7 +87,7 @@ const VarCostItem = () => {
                     <Text style={styles.subStokTitle}>{item.jenisObat} - {item.jumlah} Kg</Text>
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>Rp. {item.hargaBeli}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(item.hargaBeli)}</Text>
                         </View>
                     </View>
                 </View> 
@@ -77,7 +106,9 @@ const styles = StyleSheet.create({
     container:{
         // backgroundColor:'green',
         flexDirection:'row',
-        marginBottom: 10
+        marginBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor:'lightgrey'
     },
     leftIcon:{
         // backgroundColor:'yellow',
@@ -113,7 +144,7 @@ const styles = StyleSheet.create({
         alignItems:'flex-start'
     },
     infoData:{
-        fontSize: 22 ,
+        fontSize: 20 ,
         fontWeight:'bold',
         marginVertical:5,
         color:'red'

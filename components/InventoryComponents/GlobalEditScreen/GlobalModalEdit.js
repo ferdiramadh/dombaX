@@ -1,8 +1,11 @@
 import React from 'react';
-import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, ScrollView } from 'react-native';
-import UpdateStokForm from './UpdateStokForm';
+import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, Button } from 'react-native';
+import UpdateDombaForm from './UpdateDombaForm';
 import UpdatePakanForm from './UpdatePakanForm';
 import UpdateObatForm from './UpdateObatForm';
+import UpdateKandangForm from '../../cost/fixcost/kandang/UpdateKandangForm';
+import UpdateLahanForm from '../../cost/fixcost/lahan/UpdateLahanForm';
+import UpdatePegawaiForm from '../../cost/fixcost/pegawai/UpdatePegawaiForm';
 
 
 const GlobalModalEdit = ({modalVisible, setModalVisible, data, setEditData}) => {
@@ -36,13 +39,23 @@ const GlobalModalEdit = ({modalVisible, setModalVisible, data, setEditData}) => 
                   <Text>Update Item</Text>
                 </View> */}
                 {
-                  data.tipe == 'domba'? <UpdateStokForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                  data.tipe == 'domba'? <UpdateDombaForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
                 }
                 {
                   data.tipe == 'pakan'? <UpdatePakanForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
                 }
                 {
                   data.tipe == 'obat'? <UpdateObatForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
+
+                {
+                  data.tipeKandang ? <UpdateKandangForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
+                {
+                  data.jenisLahan ? <UpdateLahanForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
+                {
+                  data.tipePegawai ? <UpdatePegawaiForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
                 }
 
             </View>

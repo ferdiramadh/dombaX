@@ -1,17 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, TouchableOpacity, View , ScrollView,Text, TextInput, Alert} from 'react-native'
 import { Formik } from 'formik';
-import firebase from '../../../Firebaseconfig';
+import {Picker} from '@react-native-picker/picker'
+import firebase from '../../../../Firebaseconfig'
 
 
-const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
+const UpdateLahanForm = ({values, modalVisible, setModalVisible}) => {
 
-    const [ dombaData, setDombaData ] = useState(values)
+
+    const [ lahanData, setLahanData ] = useState(values)
 
     const updateItem = (item) => {
       return firebase
       .firestore()
-      .collection("obatstok")
+      .collection("lahancost")
       .doc(item.id)
       .update(item).then(() => {
         console.log('Item Updated')
@@ -38,32 +40,74 @@ const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
 
     return (
         <Formik
-        initialValues={dombaData}
+        initialValues={lahanData}
         onSubmit={(values, actions) => {  
           updateItem(values);
           updateNotification()
       
         }}
       >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        {({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => (
          <ScrollView style={styles.container} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
           <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
-                <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
-                <TextInput
-              onChangeText={handleChange('jenisObat')}
-              onBlur={handleBlur('jenisObat')}
-              value={values.jenisObat}
-              style={styles.textInput}
-              placeholder='Jenis Obat'
-            />
-            <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
+
+          <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
+            
+          <View style={styles.pickerContainer}>
+                    <Picker
+                        selectedValue={values.jenisLahan}
+                        onValueChange={(itemValue, itemIndex) =>
+                          {
+                            setFieldValue('jenisLahan',itemValue)
+                          }
+                        }
+                        style={{
+                         fontSize: 22,
+                         fontWeight:'bold',
+                          color: 'black',
+                        }}
+                        prompt='Jenis Lahan'
+                       
+                        >
+                        <Picker.Item label="Tanah" value="Tanah" />
+                        <Picker.Item label="Semen" value="Semen"  />
+                    </Picker>
+                </View>
             <TextInput
-              onChangeText={handleChange('merk')}
-              onBlur={handleBlur('merk')}
-              value={values.merk}
+              onChangeText={handleChange('luas')}
+              onBlur={handleBlur('luas')}
+              value={values.luas}
               style={styles.textInput}
-              placeholder='Nama/Merk'
+              placeholder='Luas (m2)'
+              keyboardType='numeric'
             />
+            <TextInput
+              onChangeText={handleChange('lokasi')}
+              onBlur={handleBlur('lokasi')}
+              value={values.lokasi}
+              style={styles.textInput}
+              placeholder='Lokasi'
+            />
+            <View style={styles.pickerContainer}>
+                    <Picker
+                        selectedValue={values.statusKepemilikan}
+                        onValueChange={(itemValue, itemIndex) =>
+                          {
+                            setFieldValue('statusKepemilikan',itemValue)
+                          }
+                        }
+                        style={{
+                         fontSize: 22,
+                         fontWeight:'bold',
+                          color: 'black',
+                        }}
+                        prompt='Kepemilikan'
+                       
+                        >
+                        <Picker.Item label="Sendiri" value="Sendiri" />
+                        <Picker.Item label="Sewa" value="Sewa"  />
+                    </Picker>
+                </View>
             <TextInput
               onChangeText={handleChange('hargaBeli')}
               onBlur={handleBlur('hargaBeli')}
@@ -72,33 +116,9 @@ const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
               placeholder='Harga Beli'
               keyboardType='numeric'
             />
-            <TextInput
-              onChangeText={handleChange('jumlah')}
-              onBlur={handleBlur('jumlah')}
-              value={values.jumlah}
-              style={styles.textInput}
-              placeholder='Jumlah Satuan'
-              keyboardType='numeric'
-            />
-            <TextInput
-              onChangeText={handleChange('kadaluarsa')}
-              onBlur={handleBlur('kadaluarsa')}
-              value={values.kadaluarsa}
-              style={styles.textInput}
-              placeholder='Kadaluarsa'
-            />
-            <TextInput
-              onChangeText={handleChange('petunjuk')}
-              onBlur={handleBlur('petunjuk')}
-              value={values.petunjuk}
-              style={[styles.textInput,{height:100,paddingVertical:5}]}
-              placeholder='Petunjuk Penggunaan/Deskripsi'
-              multiline={true}
-            />
             <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Update</Text>                  
               </TouchableOpacity>
-            </View>
           </View>
 
           </View>
@@ -109,7 +129,7 @@ const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
     )
 }
 
-export default UpdateObatForm
+export default UpdateLahanForm
 
 const styles = StyleSheet.create({
     container:{

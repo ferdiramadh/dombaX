@@ -1,16 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import { StyleSheet, TouchableOpacity, View , ScrollView,Text, TextInput, Alert} from 'react-native'
 import { Formik } from 'formik';
-import {useSelector, useDispatch} from 'react-redux'
 import {Picker} from '@react-native-picker/picker'
 import firebase from '../../../Firebaseconfig';
 
 
-const UpdateStokForm = ({values, modalVisible, setModalVisible}) => {
+const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
 
-    
-
-    const [selectedProduct, setSelectedProduct] = useState();
 
     const [ dombaData, setDombaData ] = useState(values)
 
@@ -54,28 +50,8 @@ const UpdateStokForm = ({values, modalVisible, setModalVisible}) => {
         {({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => (
          <ScrollView style={styles.container} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
           <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
-          {/* <View style={styles.pickerContainer}>
-                    <Picker
-                        selectedValue={selectedProduct}
-                        onValueChange={(itemValue, itemIndex) =>
-                          setSelectedProduct(itemValue)
-                        
-                        }
-                        style={{
-                         fontSize: 22,
-                         fontWeight:'bold',
-                          color: 'black',
-                        }}
-                        prompt='Jenis Produk'
-                        
-                        >
-                        <Picker.Item label="Jenis Produk" value="jenisProduk" />
-                        <Picker.Item label="Domba" value="jenisDomba" />
-                        <Picker.Item label="Pakan" value="jenisPakan"  />
-                        <Picker.Item label="Obat dan Suplemen" value="obatSuplemen" />
-                    </Picker>
-                </View> */}
-                <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
+
+          <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
             <TextInput
               onChangeText={handleChange('jenisDomba')}
               onBlur={handleBlur('jenisDomba')}
@@ -158,7 +134,7 @@ const UpdateStokForm = ({values, modalVisible, setModalVisible}) => {
     )
 }
 
-export default UpdateStokForm
+export default UpdateDombaForm
 
 const styles = StyleSheet.create({
     container:{
