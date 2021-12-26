@@ -79,7 +79,8 @@ const initialTransaction = {
         diskon:'',
         pajak: '',
         tanggalBeli: '',
-        status:'Belum Lunas'
+        status:'Belum Lunas',
+        tipeTransaksi: 'Pembelian'
     },
     dataSelling:{
         produk:'',
@@ -89,7 +90,8 @@ const initialTransaction = {
         diskon:'',
         pajak: '',
         batasBayar: '',
-        status:'Belum Lunas'
+        status:'Belum Lunas',
+        tipeTransaksi: 'Penjualan'
     },
     listPurchasing: [],
     listSelling: []

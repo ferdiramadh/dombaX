@@ -10,7 +10,7 @@ const TotalCost = () => {
     const DATA_OBAT = varCostData.listObat;
 
     const totalBiayaDomba = DATA_DOMBA.reduce(function (s,a) {
-        return s + parseInt(a.jumlah)*parseInt(a.hargaJual);
+        return s + parseInt(a.jumlah)*parseInt(a.hargaBeli);
     },0)
     const totalBiayaPakan = DATA_PAKAN.reduce(function (s,a) {
         return s + parseInt(a.jumlah)*parseInt(a.hargaBeli);

@@ -6,7 +6,8 @@ import UpdateObatForm from './UpdateObatForm';
 import UpdateKandangForm from '../../cost/fixcost/kandang/UpdateKandangForm';
 import UpdateLahanForm from '../../cost/fixcost/lahan/UpdateLahanForm';
 import UpdatePegawaiForm from '../../cost/fixcost/pegawai/UpdatePegawaiForm';
-
+import UpdateSellingForm from '../../selling/UpdateSellingForm';
+import UpdatePurchasingForm from '../../purchasing/UpdatePurchasingForm';
 
 const GlobalModalEdit = ({modalVisible, setModalVisible, data, setEditData}) => {
     
@@ -57,7 +58,13 @@ const GlobalModalEdit = ({modalVisible, setModalVisible, data, setEditData}) => 
                 {
                   data.tipePegawai ? <UpdatePegawaiForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
                 }
-
+                {
+                  data.tipeTransaksi == 'Penjualan'? <UpdateSellingForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
+                {
+                  data.tipeTransaksi == 'Pembelian'? <UpdatePurchasingForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
+                {/* <Button title='test data' onPress={() => console.log(data)} /> */}
             </View>
           </View>
         </Modal>

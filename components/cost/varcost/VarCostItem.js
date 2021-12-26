@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View , Image, TouchableOpacity} from 'react-native'
+import { parse } from 'react-native-svg';
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
 
@@ -52,7 +53,7 @@ const VarCostItem = () => {
                     <Text style={styles.subStokTitle}>{item.kategori} - {item.jumlah} Ekor</Text>
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>{formatToCurrency(item.hargaBeli)}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
   
                         </View>
                     </View>
@@ -70,7 +71,7 @@ const VarCostItem = () => {
                     <Text style={styles.subStokTitle}>{item.jenisPakan} - {item.jumlah} Kg</Text>
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>{formatToCurrency(item.hargaBeli)}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
                         </View>
                     </View>
                 </View> 
@@ -87,7 +88,7 @@ const VarCostItem = () => {
                     <Text style={styles.subStokTitle}>{item.jenisObat} - {item.jumlah} Kg</Text>
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>{formatToCurrency(item.hargaBeli)}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
                         </View>
                     </View>
                 </View> 
