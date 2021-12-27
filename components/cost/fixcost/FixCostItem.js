@@ -117,7 +117,7 @@ const FixCostItem = () => {
                         <View style={styles.rightSection}>
                             <Text style={styles.subStokTitle}>Kandang - {item.jumlah} m2</Text>
                             <Text style={styles.subDetail}>{item.tipeKandang} - {item.bahanKandang}</Text>
-                            <Text style={styles.infoData}>{formatToCurrency(item.biayaBuat)}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(parseInt(item.biayaBuat)*parseInt(item.jumlah))}</Text>
                         </View> 
                         <View style={styles.leftDombaInfo}>
                             <View style={styles.buttonSection}>
@@ -142,7 +142,7 @@ const FixCostItem = () => {
                         <View style={styles.rightSection}>
                             <Text style={styles.subStokTitle}>Pegawai - {item.jumlah} Orang</Text>
                             <Text style={styles.subDetail}>{item.tipePegawai}</Text>
-                            <Text style={styles.infoData}>{formatToCurrency(item.gaji)}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(parseInt(item.gaji)*parseInt(item.jumlah))}</Text>
                         </View> 
                         <View style={styles.leftDombaInfo}>
                         <View style={styles.buttonSection}>
@@ -167,7 +167,7 @@ const FixCostItem = () => {
                         <View style={styles.rightSection}>
                             <Text style={styles.subStokTitle}>Lahan - {item.luas} m2</Text>
                             <Text style={styles.subDetail}>{item.jenisLahan} - {item.lokasi}</Text>
-                            <Text style={styles.infoData}>{formatToCurrency(item.hargaBeli)}</Text>
+                            <Text style={styles.infoData}>{formatToCurrency(parseInt(item.hargaBeli)*parseInt(item.luas))}</Text>
                         </View> 
                         <View style={styles.leftDombaInfo}>
                         <View style={styles.buttonSection}>

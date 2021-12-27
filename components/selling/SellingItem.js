@@ -138,7 +138,7 @@ const SellingItem = () => {
                             </View>
                             <View style={styles.dombaInfo}>
                                 <View style={styles.leftDombaInfo}>
-                                    <Text style={[styles.infoData,item.status !== 'Lunas'? {color:'#FA0E0E'}:{color:'#0EFA33'}]}>{formatToCurrency(item.hargaJual)}</Text>
+                                    <Text style={[styles.infoData,item.status !== 'Lunas'? {color:'#FA0E0E'}:{color:'#0EFA33'}]}>{formatToCurrency(parseInt(item.hargaJual)*parseInt(item.kuantitas))}</Text>
                                     <Text style={{fontSize: 16 ,color:'black'}}>{item.batasBayar}</Text>
                                 </View>
                                 <View style={styles.rightDombaInfo}>
@@ -184,7 +184,8 @@ const styles = StyleSheet.create({
         width:'80%',
         flexDirection:'column',
         paddingTop:'5%',
-        paddingHorizontal:10,
+        paddingLeft: 10,
+        paddingRight:5,
         paddingBottom:'5%'
     },
     upperRight:{
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     leftDombaInfo:{
-        width:'50%',
+        width:'70%',
         // backgroundColor:'skyblue',
         flexDirection:'column',
         justifyContent:'center',
@@ -225,14 +226,14 @@ const styles = StyleSheet.create({
         color:'#0EFA33'
     },
     rightDombaInfo:{
-        width:'50%',
+        width:'30%',
         // backgroundColor:'skyblue',
         flexDirection:'column',
         justifyContent:'center',
         alignItems:'center'
     },
     status:{
-        width:'90%',
+        width:'100%',
         height:50,
         flexDirection:'column',
         justifyContent:'center',
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     statusText:{
-        fontSize: 18,
+        fontSize: 14,
         fontWeight:'bold',
         color:'white'
     }

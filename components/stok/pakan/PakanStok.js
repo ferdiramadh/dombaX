@@ -84,6 +84,8 @@ const PakanStok = () => {
     
     const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
 
+    const formatToCurrencyLight = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props}>{value}</Text>} />
+
     return (
         <View>
             {  sortData.map((item, i) => {
@@ -107,7 +109,7 @@ const PakanStok = () => {
                   
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>Beli {item.hargaBeli}</Text>
+                            <Text style={styles.infoData}>Beli : {formatToCurrencyLight(item.hargaBeli)}</Text>
                             <Text style={styles.infoData}>Produsen : {item.merk}</Text>
                         </View>
                         <View style={styles.leftDombaInfo}>

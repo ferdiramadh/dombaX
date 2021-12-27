@@ -113,7 +113,9 @@ const DombaStok = () => {
     },[editData])
 
     
-    const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
+    const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'500'}}>{value}</Text>} />
+
+    const formatToCurrencyLight = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props}>{value}</Text>} />
     // const renderItem = ({item}) => {
     //     return (
     //         <View style={styles.container}>
@@ -168,8 +170,8 @@ const DombaStok = () => {
                     
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>Beli {item.hargaBeli}</Text>
-                            <Text style={styles.infoData}>Jual Rp.{item.hargaJual}</Text>
+                            <Text style={styles.infoData}>{formatToCurrencyLight(parseInt(item.hargaBeli))}</Text>
+                            <Text style={styles.infoData}>{formatToCurrencyLight(parseInt(item.hargaJual))}</Text>
                             <Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategori}</Text>
                         </View>
                         <View style={styles.leftDombaInfo}>
