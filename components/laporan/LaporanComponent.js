@@ -1,12 +1,33 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, {useState, useEffect}  from 'react'
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 
 const LaporanComponent = (props) => {
+    const [isLoading,setIsLoading ] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false)
+        },1000)
+    },[])
+
     return (
         <View style={styles.container}>
-            <Text style={styles.upTitle}>{props.title}</Text>
-            <Text style={[styles.saldoText,props.title == 'Rugi'?{color:'red'}:null]}>{props.saldo}</Text>
+            <View style={styles.sectionContainer}>
+                {isLoading ? <ActivityIndicator size="small" color="orange" />:
+                <View>
+                    <Text style={styles.upTitle}>{props.title1}</Text>
+                    <Text style={styles.saldoText}>{props.saldo}</Text>
+                </View>     }
+            </View>
+            <View style={styles.sectionContainer}>
+            {isLoading ? <ActivityIndicator size="small" color="orange" />:
+                <View>
+                    <Text style={styles.upTitle}>{props.title2 == false ?"Rugi":"Untung"}</Text>
+                    <Text style={[styles.saldoText,props.title2 == false ?{color:'red'}:{color:'#0EFA33'}]}>{props.profit}</Text>
+                </View>}
+            </View>
         </View>
+        
     )
 }
 
@@ -14,7 +35,13 @@ export default LaporanComponent
 
 const styles = StyleSheet.create({
     container:{
-        width:'80%',
+        flex:1,
+        // backgroundColor:'violet',
+        width: '90%',
+        paddingHorizontal:'5%'
+    },
+    sectionContainer:{
+        
         height:'35%',
         backgroundColor:'white',
         borderRadius:20,

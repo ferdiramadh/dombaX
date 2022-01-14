@@ -96,7 +96,7 @@ const PakanStok = () => {
                 </View>
                 <View style={styles.rightSection}>
                 <View style={styles.upperSection}>
-                        <Text style={styles.subStokTitle}>{item.jenisPakan} {item.jenisDomba} - {item.jumlah} Ekor</Text>
+                        <Text style={styles.subStokTitle}>{item.jenisPakan} {item.jenisDomba} - {item.jumlah} Item</Text>
                         <View style={styles.buttonSection}>
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
                                 <Feather name="trash-2" size={24} color="black" />
