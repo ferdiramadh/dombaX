@@ -260,6 +260,22 @@ export default function LaporanScreen() {
         })
     }
 
+
+    const loadProfile = () => {
+        return firebase
+        .firestore()
+        .collection("profile").where("userId","==",uid)
+        .onSnapshot((querySnapshot) => {
+            // const items = []
+            querySnapshot.forEach( function(doc){
+                let newValue = doc.data()
+                dispatch({type:'LOAD_PROFILE_DATA',results:newValue})
+            });
+
+            
+        })
+    }
+
     const checkProfit = () => {
 
        
@@ -284,6 +300,7 @@ export default function LaporanScreen() {
             loadLahan()
             loadPurchasing()
             loadSelling()
+            loadProfile()
     }
 
     useEffect(() => {

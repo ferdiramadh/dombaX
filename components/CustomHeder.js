@@ -1,25 +1,22 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons';
-import firebase from 'firebase'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Image, PixelRatio } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import {useDispatch} from 'react-redux'
+import { PhotoContext } from '../context/PhotoProfileContext';
+import { MaterialIcons } from '@expo/vector-icons';
+
+var FONT_NORMAL = 26
+
+if(PixelRatio.get() <= 2) {
+    FONT_NORMAL = 18
+}
 
 const CustomHeder = (props) => {
-    const dispatch = useDispatch();
-    const navigation = useNavigation();
+    
     const [ leftOn, setLeftOn ] = useState(true);
-    const signOut = () => {
-        firebase.auth().signOut().then(() => {
-            // Sign-out successful.
-            dispatch({type:'SIGN_OUT_CLEAR_DATA'})
-            dispatch({type:'LOGOUT'})
-            console.log('Sign Out nih')
-          }).catch((error) => {
-            // An error happened.
-            console.log(error)
-          });
-    }
+    const navigation = useNavigation();
+    const { image,setImage } = useContext(PhotoContext)
+
+    
     return (
         <View style={styles.container}>
             <View style={styles.headerContent}>
@@ -28,10 +25,10 @@ const CustomHeder = (props) => {
                         <TouchableOpacity style={{ marginLeft:20,}} onPress={() => {
                             setLeftOn(!leftOn)
                             props.setState(true)
-                        }} disabled={props.leftSubMenu == 'Simulasi' || props.leftSubMenu == 'Laporan'?true:false}><Text style={[styles.subMenuTitle,leftOn?{borderBottomColor: '#000'}:null,props.styleFont]} >{props.leftSubMenu}</Text></TouchableOpacity>
+                        }} disabled={props.descProfile  || props.leftSubMenu == 'Laporan'?true:false}><Text style={[styles.subMenuTitle,leftOn?{borderBottomColor: '#000'}:null,props.styleFont]} >{props.leftSubMenu || props.descProfile}</Text></TouchableOpacity>
                     </View>
                     <View style={[{width:'10%', flexDirection:'column', justifyContent:'center',alignItems:'center'},props.home?{display:'none'}:null]}>
-                        <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Simulasi' || props.leftSubMenu == 'Laporan' ?'':'|'}</Text>
+                        <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Simulasi' || props.leftSubMenu == 'Laporan' || props.descProfile?'':'|'}</Text>
                     </View>
 
                     <View style={[styles.leftSideSubMenus]}>
@@ -43,14 +40,16 @@ const CustomHeder = (props) => {
                 </View>
                
                 <View style={styles.righhtSide}>
-                    <TouchableOpacity onPress={() => {
+                    {/* <TouchableOpacity onPress={() => {
                         signOut()
                         navigation.replace("Login")
                     }}>
                         <FontAwesome name="sign-out" size={24} color="black" />
+                    </TouchableOpacity> */}
+                    <TouchableOpacity onPress={() => navigation.navigate("Account")}>
+                    {image ? <Image source={{ uri: image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={250} color="black" />}
                     </TouchableOpacity>
-                    
-                    <Image source={require('../assets/images/emma.jpg')} style={styles.photoProfileIcon}/>
+                   
                 </View>
             </View>
         </View>
@@ -62,7 +61,7 @@ export default CustomHeder
 const styles = StyleSheet.create({
     container:{
         width:'100%',
-        height:80,
+        height:'12%',
         backgroundColor:'#fff',
         position:'absolute',
         top:20,
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
     },
     subMenuTitle:{
-        fontSize:26,
+        fontSize:FONT_NORMAL,
         fontWeight:'bold',
         borderBottomColor: 'transparent', // Add this to specify bottom border color
         borderBottomWidth: 3 // Add this to specify bottom border thickness

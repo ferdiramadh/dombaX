@@ -9,8 +9,10 @@ const RegisterScreen = ({navigation}) => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState('')
+    const [ isLoading, setIsLoading] = useState(false)
 
     const signUp = async() => {
+        setIsLoading(true)
         let value = 'absba'
         try{
             const respons = await firebase.auth().createUserWithEmailAndPassword(email,password);
@@ -18,11 +20,12 @@ const RegisterScreen = ({navigation}) => {
             await AsyncStorage.setItem('@storage_Key', value)
             console.log(userObj)
             dispatch({type:'REGISTER',results:userObj})
-            navigation.navigate('Home')
+            navigation.navigate('RegisterProfile')
         }catch(err){
             console.log(err)
             setError(err.message)
         }
+        setIsLoading(false)
     }
 
     useEffect(() => {
@@ -42,9 +45,18 @@ const RegisterScreen = ({navigation}) => {
 
     return () => backHandler.remove();
   }, []);
+  if(isLoading){
+    return(
+      <View style={styles.container}>
+          <ActivityIndicator size="large" color="orange" />
+      </View>
+    )
+}
 
     return (
         <View style={styles.container}>
+            {isLoading?<ActivityIndicator size="large" />:null}
+            
             <Image style={styles.imgIcon} source={require('../assets/images/Kiwi_Categories-Icon.png')}/>
             { error? <Text style={{color:'red'}}>{error}</Text>:null}
             <TextInput style={styles.input}

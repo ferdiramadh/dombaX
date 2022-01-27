@@ -3,12 +3,15 @@ import { StyleSheet, Text, View} from 'react-native';
 import Routes from './navigation/Routes';
 import { Provider } from 'react-redux'
 import {store} from './redux';
+import PhotoProfileProvider from './context/PhotoProfileContext';
 
 
 export default function App() {
   return (
     <Provider store ={store}>
-      <Routes />
+      <PhotoProfileProvider>
+       <Routes />
+      </PhotoProfileProvider>
     </Provider>
   );
 }

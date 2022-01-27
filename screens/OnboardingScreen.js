@@ -39,10 +39,10 @@ const OnboardingScreen = ({navigation}) => {
     const CustomOnDone = () => {
         return(
             <TouchableOpacity onPress={() => {
-                navigation.navigate('Register')
+                navigation.navigate('Home')
                 
             }} style={{width: 100, height: 40, backgroundColor:'#ED9B83', justifyContent:'center', alignItems:'center', borderRadius:10, marginHorizontal:5, borderWidth:2}}>
-                <Text style={{fontSize:18, fontWeight:'bold'}}>Daftar</Text>
+                <Text style={{fontSize:18, fontWeight:'bold'}}>Masuk</Text>
             </TouchableOpacity>
         )
     }
@@ -98,6 +98,7 @@ const OnboardingScreen = ({navigation}) => {
             imageContainerStyles={{position:'absolute', paddingHorizontal:10, }}
             titleStyles={styles.titleOnboarding}
             DoneButtonComponent={CustomOnDone} 
+            onSkip={() => navigation.navigate('Home')}
             />
     );}
         

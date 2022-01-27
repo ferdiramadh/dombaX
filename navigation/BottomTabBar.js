@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LaporanScreen from '../screens/LaporanScreen';
 import InventoryScreen from '../screens/InventoryScreen';
 import TransactionScreen from '../screens/TransactionScreen';
-import SimulationScreen from '../screens/SimulationScreen';
+import OthersScreen from '../screens/OthersScreen';
 import PrintPdfScreen from '../screens/PrintPdfScreen';
-import { MaterialCommunityIcons,MaterialIcons,FontAwesome5 } from '@expo/vector-icons';
+import { MaterialCommunityIcons,MaterialIcons,FontAwesome5,AntDesign } from '@expo/vector-icons';
 import PDFTemplate from '../components/PDFTemplate';
 
 const Tab = createBottomTabNavigator();
@@ -59,14 +59,13 @@ function MyTabs() {
           }}
         />
         <Tab.Screen
-          name="Simulation"
-          component={SimulationScreen}
+          name="Lainnya"
+          component={OthersScreen}
           options={{
-            tabBarLabel: 'Simulation',
+            tabBarLabel: 'Lainnya',
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="money-check" size={24} color={color} />
+              <AntDesign name="profile" size={24} color={color} />
             ),
-            tabBarBadge: 3,
           }}
         />
         {/* <Tab.Screen

@@ -7,6 +7,21 @@ const initialState = {
 
 const initialUserState = {};
 
+const initialProfileState = {
+    namaDepan:'',
+    namaBelakang:'',
+    email:'',
+    password:'',
+    posisi:'',
+    namaBisnis:'',
+    whatsApp:'',
+    domisili:'',
+    tanggalLahir:'',
+    jumlahDomba:'',
+    omzet:'',
+    dapatInfo:'',
+}
+
 const initialStock = {
     formDombaTest:{
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -281,14 +296,27 @@ const userReducer = (state = initialUserState, action) => {
         }
 }
 
-
+const profileReducer = (state = initialProfileState, action) => {
+    switch(action.type){
+        case 'STORE_PROFILE_DATA':
+            return action.results;
+        case 'UPDATE_PROFILE_DATA':
+            return action.results;
+        case 'LOAD_PROFILE_DATA':
+            return action.results;
+        case 'DELETE_PROFILE_DATA':
+            return state = {};
+        default: return state;
+        }
+}
 
 const reducer = combineReducers(
     {
     costReducer,
     stokReducer,
     transactionsReducer,
-    userReducer
+    userReducer,
+    profileReducer
     }
 )
 export default reducer;
