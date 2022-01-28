@@ -4,7 +4,7 @@ import React, {createContext, useState} from 'react';
 export const PhotoContext = createContext()
 const PhotoProfileProvider = (props) => {
 
-    const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null);
   return (
     <PhotoContext.Provider value={{image,setImage}}>
       {props.children}

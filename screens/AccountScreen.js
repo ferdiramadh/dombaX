@@ -4,7 +4,7 @@ import EditAccount from '../components/akunDetail/EditAccount';
 import AccountDisplay from '../components/akunDetail/AccountDisplay';
 import {useSelector} from 'react-redux'
 
-const AccountScreen = () => {
+const AccountScreen = ({navigation}) => {
     const [isEdit, setIsEdit ] = useState(false)
     const [editData, setEditData] = useState({});
     const profileData = useSelector(state => state.profileReducer)
@@ -19,7 +19,7 @@ const AccountScreen = () => {
             <Text>{isEdit?"Cancel":"Edit"}</Text>
         </TouchableOpacity> */}
         {
-            isEdit?<EditAccount isEdit={isEdit} setIsEdit={setIsEdit} editData={editData}/> : <AccountDisplay isEdit={isEdit} setIsEdit={setIsEdit}/>
+            isEdit?<EditAccount isEdit={isEdit} setIsEdit={setIsEdit} editData={editData}/> : <AccountDisplay isEdit={isEdit} setIsEdit={setIsEdit} navigation={navigation}/>
         }
         
       

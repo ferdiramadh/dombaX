@@ -47,7 +47,7 @@ const CustomHeder = (props) => {
                         <FontAwesome name="sign-out" size={24} color="black" />
                     </TouchableOpacity> */}
                     <TouchableOpacity onPress={() => navigation.navigate("Account")}>
-                    {image ? <Image source={{ uri: image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={250} color="black" />}
+                    {image ? <Image source={{ uri: image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={80} color="black" />}
                     </TouchableOpacity>
                    
                 </View>
