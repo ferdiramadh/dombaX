@@ -112,6 +112,11 @@ const initialTransaction = {
     listSelling: []
 }
 
+const initialUserProduct = {
+
+    listUserProduct: []
+}
+
 const stokReducer = (state = initialStock, action) => {
     switch(action.type){
     case 'STORE_DATA':
@@ -284,6 +289,32 @@ const transactionsReducer = (state = initialTransaction, action) => {
             }
 }
 
+const userProductReducer = (state = initialUserProduct, action) => {
+    switch(action.type){
+        case 'STORE_DATA_USERPRODUK':
+            return {
+                ...state,
+                listUserProduct: [...state.listUserProduct, action.results]
+                
+        }
+
+        case 'LOAD_USERPRODUK':
+            return {
+                ...state,
+                listUserProduct: action.results
+                    
+            }
+        case 'SET_EMPTY_USERPRODUK':
+            return {
+                ...state,
+                listUserProduct: []
+                    
+            }
+       
+        default: return state;
+            }
+}
+
 const userReducer = (state = initialUserState, action) => {
     switch(action.type){
         case 'REGISTER':
@@ -316,7 +347,8 @@ const reducer = combineReducers(
     stokReducer,
     transactionsReducer,
     userReducer,
-    profileReducer
+    profileReducer,
+    userProductReducer
     }
 )
 export default reducer;

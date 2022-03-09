@@ -1,18 +1,22 @@
 import React from 'react'
 import { StyleSheet, TextInput, View,TouchableOpacity, Text } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
+import { MaterialIcons } from '@expo/vector-icons';
 
 const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
     
     return (
-          <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
+          <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
             <TextInput
-              onChangeText={handleChange('jenisDomba')}
-              onBlur={handleBlur('jenisDomba')}
-              value={values.jenisDomba}
+              onChangeText={handleChange('jenisHewanTernak')}
+              onBlur={handleBlur('jenisHewanTernak')}
+              value={values.jenisHewanTernak}
               style={styles.textInput}
-              placeholder='Jenis Domba'
+              placeholder='Jenis Hewan Ternak'
             />
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'#474747'}}>Contoh: Domba</Text>
+            </View>
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('hargaBeli')}
@@ -22,14 +26,14 @@ const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit})
               placeholder='Harga Beli'
               keyboardType='numeric'
             />
-            <TextInput
+            {/* <TextInput
               onChangeText={handleChange('hargaJual')}
               onBlur={handleBlur('hargaJual')}
               value={values.hargaJual}
               style={styles.textInput}
               placeholder='Harga Jual'
               keyboardType='numeric'
-            />
+            /> */}
             <TextInput
               onChangeText={handleChange('usia')}
               onBlur={handleBlur('usia')}
@@ -74,9 +78,21 @@ const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit})
               placeholder='Jumlah'
               keyboardType='numeric'
             />
-            <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
-                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Simpan</Text>                  
+            <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>Upload Gambar</Text>   
+                    <MaterialIcons name="file-upload" size={24} color="black" />      
+                </View>                
+            </TouchableOpacity>
+            <View style={styles.btnWrap}>
+              <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
+                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
+              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
+              </TouchableOpacity>
+            </View>
+            
             </View>
           </View>
     )
@@ -95,33 +111,39 @@ const styles = StyleSheet.create({
      pickerContainer:{
       // position:'absolute',
       // top: 30,
-      backgroundColor:'white',
-      width:'60%',
+      backgroundColor:'#DFE1E0',
+      width:'90%',
       height:50,                       
-      borderColor:'black',
-      borderWidth:2,                
-      borderRadius:20,
+      // borderColor:'black',
+      // borderWidth:2,                
+      // borderRadius:20,
       justifyContent:'center', 
       paddingLeft:20,
       marginVertical:10
     },
     textInput:{
-      backgroundColor:'white',
-      width:'60%',
+      backgroundColor:'#DFE1E0',
+      width:'90%',
       height:50,                       
-      borderColor:'black',
-      borderWidth:2,                
-      borderRadius:20,
+      // borderColor:'black',
+      // borderWidth:2,                
+      // borderRadius:20,
       justifyContent:'center', 
       paddingLeft:20,
-      marginVertical:10
+      marginVertical:10,
     },
     btnSave:{
       backgroundColor:'white',
-      width:'60%',
+      width:'45%',
       height:40,                       
       justifyContent:'center',
-      borderRadius:15,
-      elevation:4
+      borderRadius:5,
+      elevation: 2
+    },
+    btnWrap:{
+      flexDirection:'row',
+      justifyContent:'space-around',
+      width:'100%',
+      paddingHorizontal: 10
     }
 })

@@ -1,32 +1,23 @@
 import React from 'react'
 import { StyleSheet, TextInput, View,TouchableOpacity, Text } from 'react-native'
+import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons } from '@expo/vector-icons';
 
-const ObatForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,handleBlur, values,handleSubmit}) => {
+const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
             <TextInput
-              onChangeText={handleChange('namaObat')}
-              onBlur={handleBlur('namaObat')}
-              value={values.namaObat}
+              onChangeText={handleChange('namaProduk')}
+              onBlur={handleBlur('namaProduk')}
+              value={values.namaProduk}
               style={styles.textInput}
-              placeholder='Nama Obat dan Vitamin'
+              placeholder='Nama Produk'
             />
             <View style={{width:'90%',flex: 1}}>
-              <Text style={{color:'#474747'}}>Contoh: Probiotik</Text>
+              <Text style={{color:'#474747'}}>Contoh: Ear Tag</Text>
             </View>
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
-            <TextInput
-              onChangeText={handleChange('merk')}
-              onBlur={handleBlur('merk')}
-              value={values.merk}
-              style={styles.textInput}
-              placeholder='Produsen'
-            />
-            <View style={{width:'90%',flex: 1}}>
-              <Text style={{color:'#474747'}}>Contoh: Healthy Animal</Text>
-            </View>
             <TextInput
               onChangeText={handleChange('hargaBeli')}
               onBlur={handleBlur('hargaBeli')}
@@ -35,6 +26,14 @@ const ObatForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,han
               placeholder='Harga Beli'
               keyboardType='numeric'
             />
+            {/* <TextInput
+              onChangeText={handleChange('hargaJual')}
+              onBlur={handleBlur('hargaJual')}
+              value={values.hargaJual}
+              style={styles.textInput}
+              placeholder='Harga Jual'
+              keyboardType='numeric'
+            /> */}
             <TextInput
               onChangeText={handleChange('jumlah')}
               onBlur={handleBlur('jumlah')}
@@ -44,21 +43,28 @@ const ObatForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,han
               keyboardType='numeric'
             />
             <TextInput
-              onChangeText={handleChange('kadaluarsa')}
-              onBlur={handleBlur('kadaluarsa')}
-              value={values.kadaluarsa}
+              onChangeText={handleChange('deskripsi')}
+              onBlur={handleBlur('deskripsi')}
+              value={values.deskripsi}
               style={styles.textInput}
-              placeholder='Kadaluarsa'
+              placeholder='Deskripsi'
             />
-            {/* <TextInput
-              onChangeText={handleChange('petunjuk')}
-              onBlur={handleBlur('petunjuk')}
-              value={values.petunjuk}
-              style={[styles.textInput,{height:100,paddingVertical:5}]}
-              placeholder='Petunjuk Penggunaan/Deskripsi'
-              multiline={true}
-            /> */}
-            <TouchableOpacity style={styles.textInput} onPress={() => null}>
+            <TextInput
+              onChangeText={handleChange('kategori')}
+              onBlur={handleBlur('kategori')}
+              value={values.kategori}
+              style={styles.textInput}
+              placeholder='Kategori'
+            />
+            <TextInput
+              onChangeText={handleChange('satuan')}
+              onBlur={handleBlur('satuan')}
+              value={values.satuan}
+              style={styles.textInput}
+              placeholder='Satuan'
+              keyboardType='numeric'
+            />
+           <TouchableOpacity style={styles.textInput} onPress={() => null}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                     <Text style={{color:'#474747'}}>Upload Gambar</Text>   
                     <MaterialIcons name="file-upload" size={24} color="black" />      
@@ -77,7 +83,7 @@ const ObatForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,han
     )
 }
 
-export default ObatForm
+export default AddProductForm
 
 const styles = StyleSheet.create({
     container:{
@@ -87,6 +93,19 @@ const styles = StyleSheet.create({
     borderBottomColor:'lightgrey',
     borderBottomWidth: 2
 },
+     pickerContainer:{
+      // position:'absolute',
+      // top: 30,
+      backgroundColor:'#DFE1E0',
+      width:'90%',
+      height:50,                       
+      // borderColor:'black',
+      // borderWidth:2,                
+      // borderRadius:20,
+      justifyContent:'center', 
+      paddingLeft:20,
+      marginVertical:10
+    },
     textInput:{
       backgroundColor:'#DFE1E0',
       width:'90%',
@@ -96,7 +115,7 @@ const styles = StyleSheet.create({
       // borderRadius:20,
       justifyContent:'center', 
       paddingLeft:20,
-      marginVertical:10,
+      marginVertical:10
     },
     btnSave:{
       backgroundColor:'white',

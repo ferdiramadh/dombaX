@@ -16,7 +16,8 @@ export default function InventoryScreen() {
     return (
         <View style={styles.container}>
             <StatusBar style='auto' />
-            <CustomHeder leftSubMenu='Stok'rightSubMenu='Biaya' state={stok} setState={setStok}/>
+            {/* <CustomHeder leftSubMenu='Stok'rightSubMenu='Biaya' state={stok} setState={setStok}/> */}
+            <CustomHeder leftSubMenu='Stok' state={stok} setState={setStok}/>
             
             <View style={{marginTop:100, }}>
                 {stok?<Stok />:<Cost />}

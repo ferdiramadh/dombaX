@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, ScrollView } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, TouchableOpacity } from 'react-native';
 import {Picker} from '@react-native-picker/picker'
 import DombaForm from '../stok/domba/DombaForm'
 import FormStok from '../stok/FormStok'
+import { AntDesign } from '@expo/vector-icons';
 
 const ModalAddStok = ({modalVisible, setModalVisible}) => {
     // const [modalVisible, setModalVisible] = useState(false);
@@ -39,13 +40,21 @@ const ModalAddStok = ({modalVisible, setModalVisible}) => {
                     </Picker>
                 </View> */}
 
-                <TouchableHighlight
+                {/* <TouchableHighlight
                     style={{ ...styles.closeButton }}
                     onPress={() => {
                         setModalVisible(!modalVisible)
                     }}>
                     <Text style={styles.textStyle}>X</Text>
-                </TouchableHighlight>
+                </TouchableHighlight> */}
+
+                <TouchableOpacity
+                    style={{ ...styles.closeButton }}
+                    onPress={() => {
+                        setModalVisible(!modalVisible)
+                    }}>
+                    <AntDesign name="closecircle" size={30} color="red" />
+                </TouchableOpacity>
                 {/* <ScrollView style={styles.container}>
                 
                 </ScrollView> */}
@@ -86,7 +95,7 @@ const styles = StyleSheet.create({
         width:'90%',
         height: 630,
         marginTop: 10,
-        backgroundColor:'#ED9B83',
+        backgroundColor:'#FFFFFF',
         borderRadius: 20,
         alignItems: "center",
         shadowColor: "#000",
@@ -99,22 +108,22 @@ const styles = StyleSheet.create({
         elevation: 5,
         justifyContent:'center',
         padding:10,
-        borderWidth:2
+        borderWidth:3,
+        borderColor:'#DFE1E0'
         // position:'relative'
     },
     closeButton: {
-      backgroundColor: 'red',
+      // backgroundColor: 'white',
       borderRadius: 20,
       padding: 8,
-      elevation: 2,
+      // elevation: 2,
       position:'absolute',
       bottom:10,
-      width:40,
-      height:40,
-      position:'absolute', 
-      top:-15,
-      right:10,
-      borderWidth:1
+      width:50,
+      height:50,
+      top:-20,
+      right:5,
+      // borderWidth:1
     },
     textStyle: {
       color: 'white',

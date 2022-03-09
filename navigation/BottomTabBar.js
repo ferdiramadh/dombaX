@@ -7,6 +7,7 @@ import OthersScreen from '../screens/OthersScreen';
 import PrintPdfScreen from '../screens/PrintPdfScreen';
 import { MaterialCommunityIcons,MaterialIcons,FontAwesome5,AntDesign } from '@expo/vector-icons';
 import PDFTemplate from '../components/PDFTemplate';
+import UserProductScreen from '../screens/UserProductScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,14 +24,14 @@ function MyTabs() {
       <Tab.Navigator
         initialRouteName="Home"
         tabBarOptions={{
-          activeTintColor: '#e91e63',
+          activeTintColor: '#ED9B83',
         }}
       >
         <Tab.Screen
           name="Home"
           component={LaporanScreen}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'Beranda',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
             ),
@@ -40,22 +41,20 @@ function MyTabs() {
           name="Inventory"
           component={InventoryScreen}
           options={{
-            tabBarLabel: 'Inventory',
+            tabBarLabel: 'Stok',
             tabBarIcon: ({ color, size }) => (
                 <MaterialIcons name="insert-chart" size={24} color={color} />
-            ),
-            tabBarBadge: 3,
+            )
           }}
         />
         <Tab.Screen
           name="Transaction"
           component={TransactionScreen}
           options={{
-            tabBarLabel: 'Transaction',
+            tabBarLabel: 'Transaksi',
             tabBarIcon: ({ color, size }) => (
               <FontAwesome5 name="file-invoice" size={24} color={color} />
-            ),
-            tabBarBadge: 3,
+            )
           }}
         />
         <Tab.Screen
@@ -63,6 +62,16 @@ function MyTabs() {
           component={OthersScreen}
           options={{
             tabBarLabel: 'Lainnya',
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="profile" size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Test"
+          component={UserProductScreen}
+          options={{
+            tabBarLabel: 'Test',
             tabBarIcon: ({ color, size }) => (
               <AntDesign name="profile" size={24} color={color} />
             ),

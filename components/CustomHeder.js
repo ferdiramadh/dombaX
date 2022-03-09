@@ -25,10 +25,10 @@ const CustomHeder = (props) => {
                         <TouchableOpacity style={{ marginLeft:20,}} onPress={() => {
                             setLeftOn(!leftOn)
                             props.setState(true)
-                        }} disabled={props.descProfile  || props.leftSubMenu == 'Laporan'?true:false}><Text style={[styles.subMenuTitle,leftOn?{borderBottomColor: '#000'}:null,props.styleFont]} >{props.leftSubMenu || props.descProfile}</Text></TouchableOpacity>
+                        }} disabled={props.descProfile  || props.leftSubMenu == 'Laporan' || props.leftSubMenu == 'Stok'?true:false}><Text style={[styles.subMenuTitle,leftOn?{borderBottomColor: '#000'}:null,props.styleFont]} >{props.leftSubMenu || props.descProfile}</Text></TouchableOpacity>
                     </View>
                     <View style={[{width:'10%', flexDirection:'column', justifyContent:'center',alignItems:'center'},props.home?{display:'none'}:null]}>
-                        <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Simulasi' || props.leftSubMenu == 'Laporan' || props.descProfile?'':'|'}</Text>
+                        <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Simulasi' || props.leftSubMenu == 'Laporan' || props.leftSubMenu == 'Stok' || props.descProfile?'':'|'}</Text>
                     </View>
 
                     <View style={[styles.leftSideSubMenus]}>

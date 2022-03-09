@@ -276,6 +276,32 @@ export default function LaporanScreen() {
         })
     }
 
+    const sortTipe = (sortBy) => (a,b) => a[sortBy].toLowerCase() > b[sortBy].toLowerCase() ? 1: -1; 
+    
+
+    const loadUserProduct = () => {
+        
+        return firebase
+        .firestore()
+        .collection("userproduk").where("userId","==",uid).where("tipe", "==", "domba")
+        .onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach( function(doc){
+                let newValue = doc.data()
+                // let sortNewValue = newValue.sort(sortTipe())
+                // console.log("nih userprod" + newValue)
+                items.push(newValue)
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            const itemsSort = items.sort(sortTipe('tipe'))
+            console.log("nih itemsSort" + itemsSort)
+            
+            dispatch({type:'LOAD_USERPRODUK',results:itemsSort})
+        })
+    }
+
     const checkProfit = () => {
 
        
@@ -301,6 +327,7 @@ export default function LaporanScreen() {
             loadPurchasing()
             loadSelling()
             loadProfile()
+            loadUserProduct()
     }
 
     useEffect(() => {

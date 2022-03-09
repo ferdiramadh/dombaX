@@ -7,6 +7,7 @@ import RegisterScreen from '../screens/RegisterScreen'
 import InventoryScreen from '../screens/InventoryScreen'
 import AccountScreen from '../screens/AccountScreen'
 import RegisterProfileScreen from '../screens/RegisterProfileScreen';
+import SelectProductType from '../screens/SelectProductType';
 
 
 const Stack = createStackNavigator();
@@ -36,6 +37,9 @@ const AuthStack = ({isSignUp}) => {
           headerShown:false
         }}/>
         <Stack.Screen name="RegisterProfile" component={RegisterProfileScreen} options={{
+          headerShown:false
+        }}/>
+        <Stack.Screen name="SelectProduct" component={SelectProductType} options={{
           headerShown:false
         }}/>
       </Stack.Navigator>

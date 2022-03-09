@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, TextInput, View,TouchableOpacity, Text } from 'react-native'
-
+import { MaterialIcons } from '@expo/vector-icons';
 
 const PakanForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,handleBlur, values,handleSubmit}) => {
     
@@ -13,14 +13,20 @@ const PakanForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,ha
               style={styles.textInput}
               placeholder='Jenis Pakan'
             />
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'#474747'}}>Contoh: Silase</Text>
+            </View>
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('merk')}
               onBlur={handleBlur('merk')}
               value={values.merk}
               style={styles.textInput}
-              placeholder='Nama/Merk'
+              placeholder='Produse'
             />
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'#474747'}}>Contoh: Anugrah Jaya Perkasa</Text>
+            </View>
              <TextInput
               onChangeText={handleChange('hargaBeli')}
               onBlur={handleBlur('hargaBeli')}
@@ -52,9 +58,20 @@ const PakanForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,ha
               placeholder='Petunjuk Penggunaan/Deskripsi'
               multiline={true}
             />
-            <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
-                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'white'}}>Simpan</Text>                  
+            <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>Upload Gambar</Text>   
+                    <MaterialIcons name="file-upload" size={24} color="black" />      
+                </View>                
+            </TouchableOpacity>
+            <View style={styles.btnWrap}>
+              <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
+                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
+              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
+              </TouchableOpacity>
+            </View>
             </View>
           </View>
     )
@@ -71,22 +88,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2
 },
     textInput:{
-      backgroundColor:'white',
-      width:'60%',
+      backgroundColor:'#DFE1E0',
+      width:'90%',
       height:50,                       
-      borderColor:'black',
-      borderWidth:2,                
-      borderRadius:20,
+      // borderColor:'black',
+      // borderWidth:2,                
+      // borderRadius:20,
       justifyContent:'center', 
       paddingLeft:20,
-      marginVertical:10
+      marginVertical:10,
     },
     btnSave:{
-      backgroundColor:'blue',
-      width:'60%',
+      backgroundColor:'white',
+      width:'45%',
       height:40,                       
       justifyContent:'center',
-      borderRadius:15,
-      elevation:4
+      borderRadius:5,
+      elevation: 2
+    },
+    btnWrap:{
+      flexDirection:'row',
+      justifyContent:'space-around',
+      width:'100%',
+      paddingHorizontal: 10
     }
 })
