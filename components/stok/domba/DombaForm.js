@@ -17,6 +17,16 @@ const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit})
             <View style={{width:'90%',flex: 1}}>
               <Text style={{color:'#474747'}}>Contoh: Domba</Text>
             </View>
+            <TextInput
+              onChangeText={handleChange('jenisSpesifik')}
+              onBlur={handleBlur('jenisSpesifik')}
+              value={values.jenisSpesifik}
+              style={styles.textInput}
+              placeholder='Jenis Spesifik'
+            />
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'#474747'}}>Contoh: Garut</Text>
+            </View>
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('hargaBeli')}
@@ -26,14 +36,13 @@ const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit})
               placeholder='Harga Beli'
               keyboardType='numeric'
             />
-            {/* <TextInput
-              onChangeText={handleChange('hargaJual')}
-              onBlur={handleBlur('hargaJual')}
-              value={values.hargaJual}
+            <TextInput
+              onChangeText={handleChange('deskripsi')}
+              onBlur={handleBlur('deskripsi')}
+              value={values.deskripsi}
               style={styles.textInput}
-              placeholder='Harga Jual'
-              keyboardType='numeric'
-            /> */}
+              placeholder='Deskripsi'
+            />
             <TextInput
               onChangeText={handleChange('usia')}
               onBlur={handleBlur('usia')}

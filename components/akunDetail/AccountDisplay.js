@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const AccountDisplay = ({isEdit, setIsEdit,navigation}) => {
   const profileData = useSelector(state => state.profileReducer)
   
-  const { image,setImage } = useContext(PhotoContext)
+  const { image,setImage , testStyle} = useContext(PhotoContext)
 
   const storeImgData = async () => {
     try {
@@ -115,7 +115,7 @@ const AccountDisplay = ({isEdit, setIsEdit,navigation}) => {
         <View style={styles.upperContent}>
           <View style={{width:'100%',justifyContent:'space-around',alignItems:'flex-start',paddingLeft:10}}>
             <TouchableOpacity style={styles.btnEdit} onPress={() => navigation.goBack()} >
-              <Text>Back</Text>
+              <Text style={{fontFamily:testStyle}}>Back</Text>
             </TouchableOpacity>
           </View>
           

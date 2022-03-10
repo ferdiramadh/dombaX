@@ -22,7 +22,7 @@ const PakanForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,ha
               onBlur={handleBlur('merk')}
               value={values.merk}
               style={styles.textInput}
-              placeholder='Produse'
+              placeholder='Produsen'
             />
             <View style={{width:'90%',flex: 1}}>
               <Text style={{color:'#474747'}}>Contoh: Anugrah Jaya Perkasa</Text>
@@ -50,14 +50,14 @@ const PakanForm = ({selectedShipCategory,setSelectedShipCategory,handleChange,ha
               style={styles.textInput}
               placeholder='Kadaluarsa'
             />
-            <TextInput
+            {/* <TextInput
               onChangeText={handleChange('petunjuk')}
               onBlur={handleBlur('petunjuk')}
               value={values.petunjuk}
               style={[styles.textInput,{height:100,paddingVertical:5}]}
               placeholder='Petunjuk Penggunaan/Deskripsi'
               multiline={true}
-            />
+            /> */}
             <TouchableOpacity style={styles.textInput} onPress={() => null}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                     <Text style={{color:'#474747'}}>Upload Gambar</Text>   

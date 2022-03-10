@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { StyleSheet, TextInput, View,TouchableOpacity, Text } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import SelectCategoryModal from '../InventoryComponents/GlobalEditScreen/SelectCategoryModal'
 
 const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
-    
+    const navigation = useNavigation()
+    const [modalVisible, setModalVisible] = useState(false);
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
             <TextInput
@@ -49,13 +52,19 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
               style={styles.textInput}
               placeholder='Deskripsi'
             />
-            <TextInput
+            {/* <TextInput
               onChangeText={handleChange('kategori')}
               onBlur={handleBlur('kategori')}
               value={values.kategori}
               style={styles.textInput}
               placeholder='Kategori'
-            />
+            /> */}
+            <TouchableOpacity style={styles.textInput} onPress={() => setModalVisible(!modalVisible)}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>Kategori</Text>   
+                    <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+                </View>                
+            </TouchableOpacity>
             <TextInput
               onChangeText={handleChange('satuan')}
               onBlur={handleBlur('satuan')}
@@ -64,21 +73,22 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
               placeholder='Satuan'
               keyboardType='numeric'
             />
-           <TouchableOpacity style={styles.textInput} onPress={() => null}>
-                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>Upload Gambar</Text>   
-                    <MaterialIcons name="file-upload" size={24} color="black" />      
-                </View>                
-            </TouchableOpacity>
-            <View style={styles.btnWrap}>
-              <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
-                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
+            <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                  <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                      <Text style={{color:'#474747'}}>Upload Gambar</Text>   
+                      <MaterialIcons name="file-upload" size={24} color="black" />      
+                  </View>                
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
-                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
-              </TouchableOpacity>
+              <View style={styles.btnWrap}>
+                <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
+                    <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+                    <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
+                </TouchableOpacity>
+              </View>
             </View>
-            </View>
+            <SelectCategoryModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
           </View>
     )
 }
