@@ -117,6 +117,11 @@ const initialUserProduct = {
     listUserProduct: []
 }
 
+const initialUserCategoryProduct = {
+
+    listUserCategoryProduct: []
+}
+
 const stokReducer = (state = initialStock, action) => {
     switch(action.type){
     case 'STORE_DATA':
@@ -315,6 +320,32 @@ const userProductReducer = (state = initialUserProduct, action) => {
             }
 }
 
+const userCategoryProductReducer = (state = initialUserCategoryProduct, action) => {
+    switch(action.type){
+        case 'STORE_DATA_USER_KATEGORI':
+            return {
+                ...state,
+                listUserCategoryProduct: [...state.listUserCategoryProduct, action.results]
+                
+        }
+
+        case 'LOAD_USER_KATEGORI':
+            return {
+                ...state,
+                listUserCategoryProduct: action.results
+                    
+            }
+        case 'SET_EMPTY_USER_KATEGORI':
+            return {
+                ...state,
+                listUserCategoryProduct: []
+                    
+            }
+       
+        default: return state;
+            }
+}
+
 const userReducer = (state = initialUserState, action) => {
     switch(action.type){
         case 'REGISTER':
@@ -348,7 +379,8 @@ const reducer = combineReducers(
     transactionsReducer,
     userReducer,
     profileReducer,
-    userProductReducer
+    userProductReducer,
+    userCategoryProductReducer
     }
 )
 export default reducer;

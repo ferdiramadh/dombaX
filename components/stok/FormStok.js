@@ -73,7 +73,7 @@ const FormStok = ({setModalVisible,modalVisible}) => {
       jumlah: '',
       hargaBeli: '',
       deskripsi: '',
-      kategori:'',
+      kategori:'Kategori',
       satuan:'',
       tipe:'tambahproduk'
     }
@@ -259,7 +259,7 @@ const testPicker = [
                 { selectedProduct == 'jenisHewanTernak'? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>: null}
                 { selectedProduct == 'jenisPakan'? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} />: null}
                 { selectedProduct == 'obatSuplemen'? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} />: null}
-                { selectedProduct == 'tambahProduk'? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} />: null}
+                { selectedProduct == 'tambahProduk'? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>: null}
                 {/* <Button title='Save' onPress={handleSubmit} /> */}
                 {/* <View style={{width:'100%',}}>
                 <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>

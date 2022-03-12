@@ -302,6 +302,26 @@ export default function LaporanScreen() {
         })
     }
 
+    const loadUserCategoryProduct = () => {
+        
+        return firebase
+        .firestore()
+        .collection("userkategoriproduk").where("userId","==",uid)
+        .onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach( function(doc){
+                let newValue = doc.data()
+                items.push(newValue)
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            
+            
+            dispatch({type:'LOAD_USER_KATEGORI',results:items})
+        })
+    }
+
     const checkProfit = () => {
 
        
@@ -328,6 +348,7 @@ export default function LaporanScreen() {
             loadSelling()
             loadProfile()
             loadUserProduct()
+            loadUserCategoryProduct()
     }
 
     useEffect(() => {

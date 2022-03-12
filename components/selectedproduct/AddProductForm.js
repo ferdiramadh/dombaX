@@ -8,6 +8,8 @@ import SelectCategoryModal from '../InventoryComponents/GlobalEditScreen/SelectC
 const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
     const navigation = useNavigation()
     const [modalVisible, setModalVisible] = useState(false);
+    const [category, setCategpry] = useState("Kategori");
+    
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
             <TextInput
@@ -59,9 +61,9 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
               style={styles.textInput}
               placeholder='Kategori'
             /> */}
-            <TouchableOpacity style={styles.textInput} onPress={() => setModalVisible(!modalVisible)}>
+            <TouchableOpacity style={styles.textInput} onPress={() => setModalVisible(!modalVisible)} >
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>Kategori</Text>   
+                    <Text style={{color:'#474747'}}>{category}</Text>   
                     <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
                 </View>                
             </TouchableOpacity>
@@ -88,7 +90,7 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
                 </TouchableOpacity>
               </View>
             </View>
-            <SelectCategoryModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+            <SelectCategoryModal modalVisible={modalVisible} setModalVisible={setModalVisible} setFieldValue={setFieldValue} />
           </View>
     )
 }
