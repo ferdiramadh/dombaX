@@ -1,14 +1,50 @@
 import { StyleSheet, Text, View, TouchableOpacity, Modal, TextInput, Alert} from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import firebase from '../../Firebaseconfig'
 import {useSelector, useDispatch} from 'react-redux'
 
-const ModalAddCategoryProduct = ({ modalAddCategory , setModalAddCategory,uid,listCategory}) => {
+const ModalAddCategoryProduct = ({ modalAddCategory, setModalAddCategory, uid, listCategory, editData, setEditData,editCategory,setEditCategory }) => {
   const dispatch = useDispatch();
   
   const [category , setCategory ] = useState({
     name:''
   })
+
+  // const [ editCategory, setEditCategory ] = useState(editData)
+
+
+
+    const updateItem = (item) => {
+      let checkItem = listCategory.map(item => item.name)
+
+      if(checkItem.includes(editCategory.name)){
+        Alert.alert('Perhatian!','Item Sudah Ada.')
+      } else {
+        return firebase
+        .firestore()
+        .collection("userkategoriproduk")
+        .doc(item.id)
+        .update(item).then(() => {
+          console.log('Item Updated')
+          updateNotification()
+          setModalAddCategory(!modalAddCategory)   
+          setEditData({})
+          setEditCategory({})
+        }).catch((error) => console.log(error))
+
+        
+      }
+      
+    }
+
+    const updateNotification = () => {
+      Alert.alert(
+          "Perhatian!",
+          `Item telah diubah.`
+      )
+      
+      
+  }
 
   const addUserCategoryProduct = (values) => {
      
@@ -39,44 +75,66 @@ const ModalAddCategoryProduct = ({ modalAddCategory , setModalAddCategory,uid,li
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+          <Text style={[styles.textStyle,{color:'#000'}]}>{editCategory.id ? "Update Kategori":"Tambah Kategori"}</Text>
           <TextInput
               style={styles.textInput}
               placeholder='Nama Kategori'
-              value={category.name}
-              onChangeText={text => setCategory({name:text})}
+              value={editCategory.id? editCategory.name  : category.name }
+              onChangeText={text => {
+                if(editCategory.id) {
+                  setEditCategory(curState => ({...curState, name:text}))
+                } else {
+                  setCategory({name:text})
+                }
+              }}
             />
             <View style={styles.btnWrap}>
-                <TouchableOpacity style={styles.btnSave} onPress={() => setModalAddCategory(!modalAddCategory)}>
+                <TouchableOpacity style={styles.btnSave} onPress={() => {
+                  setModalAddCategory(!modalAddCategory)
+                  setCategory({name:''})
+                  setEditData({})
+                  setEditCategory({})
+                  
+                }}>
                     <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
-                  let checkItem = listCategory.map(item => item.name)
-
-                  if(checkItem.includes(category.name)){
-                    Alert.alert('Perhatian!','Item Sudah Ada.')
+                  if(editCategory.name) {
+                    console.log(editCategory)
+                    updateItem(editCategory)
+                    
+                    
                   } else {
-                  addUserCategoryProduct(category)
-                  Alert.alert(
-                    'Perhatian!',
-                    'Item Baru Telah Ditambahkan',
-                    [
+
+                    let checkItem = listCategory.map(item => item.name)
+
+                    if(checkItem.includes(category.name)){
+                      Alert.alert('Perhatian!','Item Sudah Ada.')
+                    } else {
+                    addUserCategoryProduct(category)
+                    Alert.alert(
+                      'Perhatian!',
+                      'Item Baru Telah Ditambahkan',
+                      [
+                        {
+                          text: 'OK',
+                          
+                          style: 'cancel',
+                        },
+                      ],
                       {
-                        text: 'OK',
-                        
-                        style: 'cancel',
-                      },
-                    ],
-                    {
-                      cancelable: true,
-                    }
-                  );
-                
-                  setModalAddCategory(!modalAddCategory)
+                        cancelable: true,
+                      }
+                    );
                   
-                }
+                    setModalAddCategory(!modalAddCategory)
+                    
+                  }
+                  }
+                  
                 setCategory({name:''})
                 }}>
-                    <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
+                    <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>{editCategory.id? "Update":"Simpan"}</Text>                  
                 </TouchableOpacity>
               </View>
           </View>
@@ -99,7 +157,7 @@ const styles = StyleSheet.create({
       },
       modalView: {
         width:'80%',
-        height:'30%',
+        height:180,
         justifyContent:'center',
         alignItems:'center',
         borderWidth: 2 ,

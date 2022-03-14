@@ -7,6 +7,7 @@ import CustomButton from '../../CustomButton'
 import ModalAddCategoryProduct from '../../selectedproduct/ModalAddCategoryProduct'
 import CategoryItem from '../../selectedproduct/CategoryItem'
 import {useSelector, useDispatch} from 'react-redux'
+import firebase from '../../../Firebaseconfig'
 
   let customFonts = {
     'Baloo': require('../../../assets/font/baloo/Baloo-Regular.ttf'),
@@ -22,6 +23,69 @@ const SelectCategoryModal = ({modalVisible, setModalVisible,setFieldValue}) => {
       let ad = objToDate(a.createdAt);
       return ad - bd;
   });
+
+  const [editData, setEditData] = useState({});
+  const [ editCategory, setEditCategory ] = useState({})
+
+    const deleteItem = (item) => {
+        Alert.alert(
+            "Perhatian!",
+            `Hapus "${item.name} ?`,
+            [
+                {
+                    text:"Batal",
+                    onPress: () => Alert.alert("Canceled"),
+                    style:'cancel'
+                },
+                {
+                    text: "OK",
+                    onPress: () => {
+                        return firebase
+                        .firestore()
+                        .collection("userkategoriproduk")
+                        .doc(item.id)
+                        .delete()
+                    }
+                }
+            ],
+            {
+                cancelable: true,
+                
+            }
+        )
+        
+        
+    }
+
+    const editItem = (item) => {
+        
+      return firebase
+      .firestore()
+      .collection("userkategoriproduk")
+      .doc(item.id)
+      .get()
+      .then((i) => {
+          setEditData(i.data())
+          setEditCategory(i.data())
+      })
+      
+      
+  }
+
+    useEffect(() => {
+        console.log("Cek Data")
+      //   if(Object.keys(editData).length !== 0) {
+      //     setModalAddCategory(!modalAddCategory)
+      //  }
+       if (editData !== undefined) {
+            console.log(editData)
+        } 
+        if(editData.name) {
+          console.log(editData)
+          setModalAddCategory(!modalAddCategory)
+        }
+
+    },[editData])
 
   function objToDate (obj) {
     let result = new Date(0);
@@ -66,7 +130,7 @@ const SelectCategoryModal = ({modalVisible, setModalVisible,setFieldValue}) => {
             </View>
           <ScrollView style={styles.modalView}>
             { listCategory.length > 0 ? sortData.map((item, i) => {
-              return <CategoryItem name={item.name} key={item.id}/>
+              return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} editData={editData}/>
             }) :
             <View style={styles.emptyStokNotif}>
                 <Text style={styles.text}>Tekan tombol tambah untuk menambahkan kategori baru</Text>
@@ -75,7 +139,7 @@ const SelectCategoryModal = ({modalVisible, setModalVisible,setFieldValue}) => {
           </ScrollView>
         </View>
         <CustomButton onPress={() => setModalAddCategory(!modalAddCategory)}/>
-        <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory}/>
+        <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} editData={editData} setEditData={setEditData} editItem={editItem} editCategory={editCategory} setEditCategory={setEditCategory}/>
       </Modal>
 
   )
