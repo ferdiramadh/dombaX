@@ -78,7 +78,7 @@ fireSQL.query(`SELECT * FROM userproduk WHERE tipe = 'pakan'`).then(documents =>
       <View style={styles.container}>
           {/* <Button title='test' onPress={() => console.log(DATA)} /> */}
           <Button title='test' onPress={() => {
-              fireSQL.query(`SELECT * FROM userproduk WHERE tipe LIKE 'dom%'`).then(documents => {
+              fireSQL.query(`SELECT * FROM userproduk WHERE tipe LIKE 'pak%'`).then(documents => {
                 documents.forEach(doc => {
                   /* Do something with the document */
                   console.log(doc)

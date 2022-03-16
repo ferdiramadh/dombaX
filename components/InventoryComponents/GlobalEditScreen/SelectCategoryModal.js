@@ -1,4 +1,4 @@
-import { Alert, Modal, StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, ScrollView, View, TouchableOpacity, TextInput, Button, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
@@ -8,11 +8,13 @@ import ModalAddCategoryProduct from '../../selectedproduct/ModalAddCategoryProdu
 import CategoryItem from '../../selectedproduct/CategoryItem'
 import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../../../Firebaseconfig'
+import { FireSQL } from 'firesql'
 
-  let customFonts = {
-    'Baloo': require('../../../assets/font/baloo/Baloo-Regular.ttf'),
-  };
+    let customFonts = {
+      'Baloo': require('../../../assets/font/baloo/Baloo-Regular.ttf'),
+    };
 const SelectCategoryModal = ({modalVisible, setModalVisible,setFieldValue}) => {
+
     const dispatch = useDispatch();
     const listCategory = useSelector(state => state.userCategoryProductReducer.listUserCategoryProduct)
     const uid = useSelector(state => state.userReducer.uid)
@@ -22,10 +24,38 @@ const SelectCategoryModal = ({modalVisible, setModalVisible,setFieldValue}) => {
       let bd = objToDate(b.createdAt);
       let ad = objToDate(a.createdAt);
       return ad - bd;
-  });
+    });
 
-  const [editData, setEditData] = useState({});
-  const [ editCategory, setEditCategory ] = useState({})
+    const [editData, setEditData] = useState({});
+    const [ editCategory, setEditCategory ] = useState({})
+
+    const [ isSearch, setIsSearch ] = useState(false)
+    const [ searchItems, setSearchItems ] = useState([])
+    const dbRef = firebase.firestore();
+    const fireSQL = new FireSQL(dbRef);
+
+    const [ searchKeyword, setSearchKeyword] = useState('')
+    const [ isLoading, setIsLoading ] = useState(false)
+
+
+
+    const searchCategory = () => {
+     
+      fireSQL.query(`SELECT * FROM userkategoriproduk WHERE name LIKE '${searchKeyword}%'`).then(documents => {
+        const items = []
+        documents.forEach(doc => {
+
+          let newValue = doc
+          items.push(newValue)
+          
+        })
+        console.log(items)
+          setSearchItems(items)
+        ;
+      });
+     
+    }
+
 
     const deleteItem = (item) => {
         Alert.alert(
@@ -57,58 +87,67 @@ const SelectCategoryModal = ({modalVisible, setModalVisible,setFieldValue}) => {
         
     }
 
-    const editItem = (item) => {
+      const editItem = (item) => {
+          
+        return firebase
+        .firestore()
+        .collection("userkategoriproduk")
+        .doc(item.id)
+        .get()
+        .then((i) => {
+            setEditData(i.data())
+            setEditCategory(i.data())
+        })
         
-      return firebase
-      .firestore()
-      .collection("userkategoriproduk")
-      .doc(item.id)
-      .get()
-      .then((i) => {
-          setEditData(i.data())
-          setEditCategory(i.data())
-      })
-      
-      
-  }
-
-    useEffect(() => {
-        console.log("Cek Data")
-      //   if(Object.keys(editData).length !== 0) {
-      //     setModalAddCategory(!modalAddCategory)
-      //  }
-       if (editData !== undefined) {
-            console.log(editData)
-        } 
-        if(editData.name) {
-          console.log(editData)
-          setModalAddCategory(!modalAddCategory)
-        }
-
-    },[editData])
-
-  function objToDate (obj) {
-    let result = new Date(0);
-    if( obj !== null) {
-        result.setSeconds(obj.seconds);
-        result.setMilliseconds(obj.nanoseconds/1000000);
-        return result;
+        
     }
-    
-}
 
-    
-    async function _loadFontsAsync() {
-        await Font.loadAsync(customFonts);
-        setFontsLoaded(true);
+      useEffect(() => {
+          console.log("Cek Data")
+        //   if(Object.keys(editData).length !== 0) {
+        //     setModalAddCategory(!modalAddCategory)
+        //  }
+        if (editData !== undefined) {
+              console.log(editData)
+          } 
+          if(editData.name) {
+            console.log(editData)
+            setModalAddCategory(!modalAddCategory)
+          }
+
+      },[editData])
+
+      function objToDate (obj) {
+          let result = new Date(0);
+          if( obj !== null) {
+              result.setSeconds(obj.seconds);
+              result.setMilliseconds(obj.nanoseconds/1000000);
+              return result;
+          }
+          
       }
 
-    useEffect(() => {
-            _loadFontsAsync()
-    },[])
-    if (!fontsLoaded) {
-        return <AppLoading />;
-    } 
+      const loadingWait = () => {
+        setIsLoading(true)
+        setTimeout(() => {
+          setIsLoading(false)
+        },1000)
+      }
+
+    
+      async function _loadFontsAsync() {
+          await Font.loadAsync(customFonts);
+          setFontsLoaded(true);
+        }
+
+      useEffect(() => {
+              _loadFontsAsync()
+      },[])
+
+      if (!fontsLoaded) {
+          return <AppLoading />;
+      } 
+
   return (
 
       <Modal
@@ -118,25 +157,87 @@ const SelectCategoryModal = ({modalVisible, setModalVisible,setFieldValue}) => {
         onRequestClose={() => {
           
           setModalVisible(!modalVisible);
+          setSearchKeyword('')
+          setSearchItems([])
+          setIsSearch(false)
         }}>
         <View style={styles.centeredView}>
             <View style={styles.upperWrap}>
-                <TouchableOpacity style={styles.backBtn} onPress={() => setModalVisible(!modalVisible)}>
+                <TouchableOpacity style={styles.backBtn} onPress={() => {
+                  setModalVisible(!modalVisible)
+                  setSearchKeyword('')
+                  setSearchItems([])
+                  setIsSearch(false)
+
+                }}>
                     <MaterialIcons name="arrow-back" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.titleWrap}>
                     <Text style={styles.title}>Kategori Produk Lainnya</Text>
                 </View>      
             </View>
+
+            { listCategory.length > 0 ?
+                  <View style={styles.searchWrap}>
+                    <TextInput
+                      style={styles.textInput}
+                      placeholder='Cari Kategori'
+                      value={ searchKeyword }
+                      onChangeText={text => setSearchKeyword(text)}
+                    />
+                    {searchKeyword.length > 0 ?
+                    <TouchableOpacity style={styles.clearBtn} onPress={() => {
+                      setSearchKeyword('')
+                      setSearchItems([])
+                      setIsSearch(false)
+                      
+                    }}>
+                      <MaterialIcons name="clear" size={24} color="black" />
+                    </TouchableOpacity>   : null } 
+                    <TouchableOpacity style={styles.searchBtn} onPress={() => {
+                      loadingWait()
+                      if(searchKeyword.length != 0) {
+                        
+                        setIsSearch(true)
+                        searchCategory()
+                      } else {
+                        console.log("keyword kosong")
+                      }
+                    }}>
+                      <MaterialIcons name="search" size={30} color="black" />
+                    </TouchableOpacity>    
+                </View>
+          
+
+               : null
+            }
+
+      
+          {isLoading? <View style={styles.container}>
+              <ActivityIndicator size="large" color="orange" />
+          </View>:
           <ScrollView style={styles.modalView}>
-            { listCategory.length > 0 ? sortData.map((item, i) => {
+            { listCategory.length > 0 && !isSearch  ? sortData.map((item, i) => {
               return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} editData={editData}/>
-            }) :
+            }) : null}
+
+            {isSearch? <View style={{paddingTop: 10}}>
+                  
+                  <Text style={{marginLeft: 20}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
+                {
+                  searchItems.map((item, i) => {
+                    return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} editData={editData}/>
+                  }) 
+                }
+              </View>: null}
+            { listCategory.length < 1 ?
             <View style={styles.emptyStokNotif}>
                 <Text style={styles.text}>Tekan tombol tambah untuk menambahkan kategori baru</Text>
-            </View>
+            </View> : null
             }
-          </ScrollView>
+            {/* <Button title="Test" onPress={() => setIsSearch(false)} />
+            <Button title="Test" onPress={() => console.log(searchItems)} /> */}
+          </ScrollView> }
         </View>
         <CustomButton onPress={() => setModalAddCategory(!modalAddCategory)}/>
         <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} editData={editData} setEditData={setEditData} editItem={editItem} editCategory={editCategory} setEditCategory={setEditCategory}/>
@@ -157,7 +258,7 @@ const styles = StyleSheet.create({
       // justifyContent:'center',
       // alignItems:'center',
       // backgroundColor:'green',
-      marginBottom:'20%'
+      marginBottom:'20%',
     },
     textStyle: {
       color: 'white',
@@ -172,7 +273,7 @@ const styles = StyleSheet.create({
     upperWrap:{
         width: '100%',
         // backgroundColor:'red',
-        height:'10%',
+        height: 60,
         justifyContent:'space-between',
         padding: 10,
         flexDirection:'row',
@@ -198,7 +299,55 @@ const styles = StyleSheet.create({
     emptyStokNotif:{
         justifyContent:'center',
         alignItems:'center',
-        marginVertical:'50%'
-    }
+        marginVertical:'75%'
+    },
+    searchWrap:{
+      flexDirection:'row',
+      justifyContent:'center',
+      alignItems:'center',
+      // backgroundColor: 'green',
+      borderBottomWidth: 1
+    },
+    textInput:{
+      // backgroundColor:'#DFE1E0',
+      width:'70%',
+      height:50,                       
+      borderColor:'black',
+      borderWidth:1,                
+      justifyContent:'center', 
+      paddingLeft:20,
+      marginVertical:10,
+      borderTopLeftRadius: 5,
+      borderBottomLeftRadius: 5
+    },
+    searchBtn:{
+      width: '10%',
+      // backgroundColor: 'orange',
+      height:50,   
+      justifyContent:'center',
+      alignItems:'center',
+      borderColor:'black',
+      borderTopWidth: 1,
+      borderRightWidth: 1,
+      borderBottomWidth: 1,
+      borderTopRightRadius: 5,
+      borderBottomRightRadius: 5
+    },
+    clearBtn: {
+      width: '10%',
+      right: '20%',
+      // backgroundColor: 'orange',
+      height:50,   
+      justifyContent:'center',
+      alignItems:'center',
+      position:'absolute'
+    }, 
+    container:{
+      // position: 'absolute',
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+      backgroundColor: 'white',
+    },
   });
   
