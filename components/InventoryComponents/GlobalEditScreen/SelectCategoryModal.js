@@ -306,7 +306,8 @@ const styles = StyleSheet.create({
       justifyContent:'center',
       alignItems:'center',
       // backgroundColor: 'green',
-      borderBottomWidth: 1
+      borderBottomWidth: 1,
+      borderBottomColor:'lightgrey'
     },
     textInput:{
       // backgroundColor:'#DFE1E0',
