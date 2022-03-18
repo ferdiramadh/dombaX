@@ -41,19 +41,35 @@ const SelectCategoryModal = ({modalVisible, setModalVisible,setFieldValue}) => {
 
     const searchCategory = () => {
      
-      fireSQL.query(`SELECT * FROM userkategoriproduk WHERE name LIKE '${searchKeyword}%'`).then(documents => {
-        const items = []
-        documents.forEach(doc => {
+      // fireSQL.query(`SELECT * FROM userkategoriproduk WHERE name LIKE '${searchKeyword}%'`).then(documents => {
+      //   const items = []
+      //   documents.forEach(doc => {
 
-          let newValue = doc
-          items.push(newValue)
+      //     let newValue = doc
+      //     items.push(newValue)
           
-        })
-        console.log(items)
+      //   })
+      //   console.log(items)
+      //     setSearchItems(items)
+      //   ;
+      // });
+
+      return firebase
+      .firestore()
+      .collection("userkategoriproduk").where("name",">=",`${searchKeyword}`).where("userId","==",uid)
+      .onSnapshot((querySnapshot) => {
+          const items = []
+          querySnapshot.forEach( function(doc){
+              let newValue = doc.data()
+              items.push(newValue)
+             
+              
+          });
+          
           setSearchItems(items)
-        ;
-      });
-     
+          console.log(items)
+      })
+      
     }
 
 
