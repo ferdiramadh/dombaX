@@ -92,24 +92,25 @@ const styles = StyleSheet.create({
       
     },
     modalView: {
-        width:'90%',
-        height: '85%',
-        marginTop: 10,
-        backgroundColor:'#ED9B83',
-        borderRadius: 20,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        justifyContent:'center',
-        padding:10,
-        borderWidth:2
-        // position:'relative',
+      width:'90%',
+      height: 630,
+      marginTop: 10,
+      backgroundColor:'#FFFFFF',
+      borderRadius: 20,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      justifyContent:'center',
+      padding:10,
+      borderWidth:3,
+      borderColor:'#DFE1E0'
+      // position:'relative'
     },
     closeButton: {
       backgroundColor: 'red',

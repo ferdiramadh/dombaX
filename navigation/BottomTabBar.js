@@ -5,7 +5,7 @@ import InventoryScreen from '../screens/InventoryScreen';
 import TransactionScreen from '../screens/TransactionScreen';
 import OthersScreen from '../screens/OthersScreen';
 import PrintPdfScreen from '../screens/PrintPdfScreen';
-import { MaterialCommunityIcons,MaterialIcons,FontAwesome5,AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons,MaterialIcons,FontAwesome5,AntDesign, Entypo } from '@expo/vector-icons';
 import PDFTemplate from '../components/PDFTemplate';
 import UserProductScreen from '../screens/UserProductScreen';
 
@@ -45,7 +45,7 @@ function MyTabs() {
           options={{
             tabBarLabel: 'Stok',
             tabBarIcon: ({ color, size }) => (
-                <MaterialIcons name="insert-chart" size={24} color={color} />
+              <Entypo name="box" size={24} color={color} />
             )
           }}
         />
@@ -55,7 +55,7 @@ function MyTabs() {
           options={{
             tabBarLabel: 'Transaksi',
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="file-invoice" size={24} color={color} />
+              <MaterialIcons name="compare-arrows" size={24} color={color} />
             )
           }}
         />
@@ -65,11 +65,11 @@ function MyTabs() {
           options={{
             tabBarLabel: 'Lainnya',
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="profile" size={24} color={color} />
+              <Entypo name="dots-three-horizontal" size={24} color={color} />
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Test"
           component={UserProductScreen}
           options={{
@@ -78,7 +78,7 @@ function MyTabs() {
               <AntDesign name="profile" size={24} color={color} />
             ),
           }}
-        />
+        /> */}
         {/* <Tab.Screen
           name="TestInvoicePDFScreen"
           component={PrintPdfScreen}

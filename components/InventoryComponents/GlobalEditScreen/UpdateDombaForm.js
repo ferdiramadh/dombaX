@@ -13,7 +13,7 @@ const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
     const updateItem = (item) => {
       return firebase
       .firestore()
-      .collection("dombastok")
+      .collection("userproduk")
       .doc(item.id)
       .update(item).then(() => {
         console.log('Item Updated')
@@ -22,8 +22,8 @@ const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
 
     const updateNotification = () => {
       Alert.alert(
-          "Confirmation",
-          `Item has been updated`,
+          "Perhatian!",
+          `Item sudah diubah.`,
           [
   
               {
@@ -52,13 +52,26 @@ const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
           <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
 
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
-            <TextInput
-              onChangeText={handleChange('jenisDomba')}
-              onBlur={handleBlur('jenisDomba')}
-              value={values.jenisDomba}
+          <TextInput
+              onChangeText={handleChange('jenisHewanTernak')}
+              onBlur={handleBlur('jenisHewanTernak')}
+              value={values.jenisHewanTernak}
               style={styles.textInput}
-              placeholder='Jenis Domba'
+              placeholder='Jenis Hewan Ternak'
             />
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'#474747'}}>Contoh: Domba</Text>
+            </View>
+            <TextInput
+              onChangeText={handleChange('jenisSpesifik')}
+              onBlur={handleBlur('jenisSpesifik')}
+              value={values.jenisSpesifik}
+              style={styles.textInput}
+              placeholder='Jenis Spesifik'
+            />
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'#474747'}}>Contoh: Garut</Text>
+            </View>
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('hargaBeli')}
@@ -69,12 +82,11 @@ const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
               keyboardType='numeric'
             />
             <TextInput
-              onChangeText={handleChange('hargaJual')}
-              onBlur={handleBlur('hargaJual')}
-              value={values.hargaJual}
+              onChangeText={handleChange('deskripsi')}
+              onBlur={handleBlur('deskripsi')}
+              value={values.deskripsi}
               style={styles.textInput}
-              placeholder='Harga Jual'
-              keyboardType='numeric'
+              placeholder='Deskripsi'
             />
             <TextInput
               onChangeText={handleChange('usia')}
@@ -94,10 +106,10 @@ const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
             />
                 <View style={styles.pickerContainer}>
                     <Picker
-                        selectedValue={values.kategori}
+                        selectedValue={values.kategoriHewanTernak}
                         onValueChange={(itemValue, itemIndex) =>
                         {
-                          setFieldValue('kategori',itemValue)
+                          setFieldValue('kategoriHewanTernak',itemValue)
                         }
                         }
                         style={{
@@ -120,8 +132,8 @@ const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
               placeholder='Jumlah'
               keyboardType='numeric'
             />
-            <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
-                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Update</Text>                  
+              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Update</Text>                  
               </TouchableOpacity>
             </View>
           </View>
@@ -138,43 +150,44 @@ export default UpdateDombaForm
 
 const styles = StyleSheet.create({
     container:{
-    width:'100%',
-    flexDirection:'column',
-    marginVertical:'10%',
-    // backgroundColor:'green'
+      width:'100%',
+      flexDirection:'column',
+      marginBottom:15,
+      borderBottomColor:'lightgrey',
+      borderBottomWidth: 2
     
 },
     pickerContainer:{
         // position:'absolute',
-        // top: 30,
-        backgroundColor:'white',
-        width:'60%',
-        height:50,                       
-        borderColor:'black',
-        borderWidth:2,                
-        borderRadius:20,
-        justifyContent:'center', 
-        paddingLeft:20,
-        marginVertical:10
+      // top: 30,
+      backgroundColor:'#DFE1E0',
+      width:'90%',
+      height:50,                       
+      // borderColor:'black',
+      // borderWidth:2,                
+      // borderRadius:20,
+      justifyContent:'center', 
+      paddingLeft:20,
+      marginVertical:10
       },
       textInput:{
-        backgroundColor:'white',
-        width:'60%',
+        backgroundColor:'#DFE1E0',
+        width:'90%',
         height:50,                       
-        borderColor:'black',
-        borderWidth:2,                
-        borderRadius:20,
+        // borderColor:'black',
+        // borderWidth:2,                
+        // borderRadius:20,
         justifyContent:'center', 
         paddingLeft:20,
-        marginVertical:10
+        marginVertical:10,
       },
       btnSave:{
         backgroundColor:'white',
-        width:'60%',
+        width:'45%',
         height:40,                       
         justifyContent:'center',
-        borderRadius:15,
-        elevation:4
-      }
+        borderRadius:5,
+        elevation: 2
+      },
 })
 

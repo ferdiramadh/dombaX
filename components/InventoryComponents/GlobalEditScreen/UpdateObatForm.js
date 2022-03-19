@@ -11,7 +11,7 @@ const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
     const updateItem = (item) => {
       return firebase
       .firestore()
-      .collection("obatstok")
+      .collection("userproduk")
       .doc(item.id)
       .update(item).then(() => {
         console.log('Item Updated')
@@ -20,8 +20,8 @@ const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
 
     const updateNotification = () => {
       Alert.alert(
-          "Confirmation",
-          `Item has been updated`,
+        "Perhatian!",
+        `Item sudah diubah.`,
           [
   
               {
@@ -50,20 +50,26 @@ const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
           <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
                 <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
                 <TextInput
-              onChangeText={handleChange('jenisObat')}
-              onBlur={handleBlur('jenisObat')}
-              value={values.jenisObat}
+              onChangeText={handleChange('namaObat')}
+              onBlur={handleBlur('namaObat')}
+              value={values.namaObat}
               style={styles.textInput}
-              placeholder='Jenis Obat'
+              placeholder='Nama Obat dan Vitamin'
             />
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'#474747'}}>Contoh: Probiotik</Text>
+            </View>
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('merk')}
               onBlur={handleBlur('merk')}
               value={values.merk}
               style={styles.textInput}
-              placeholder='Nama/Merk'
+              placeholder='Produsen'
             />
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'#474747'}}>Contoh: Healthy Animal</Text>
+            </View>
             <TextInput
               onChangeText={handleChange('hargaBeli')}
               onBlur={handleBlur('hargaBeli')}
@@ -77,7 +83,7 @@ const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
               onBlur={handleBlur('jumlah')}
               value={values.jumlah}
               style={styles.textInput}
-              placeholder='Jumlah Satuan'
+              placeholder='Jumlah'
               keyboardType='numeric'
             />
             <TextInput
@@ -87,16 +93,8 @@ const UpdateObatForm = ({values, modalVisible, setModalVisible}) => {
               style={styles.textInput}
               placeholder='Kadaluarsa'
             />
-            <TextInput
-              onChangeText={handleChange('petunjuk')}
-              onBlur={handleBlur('petunjuk')}
-              value={values.petunjuk}
-              style={[styles.textInput,{height:100,paddingVertical:5}]}
-              placeholder='Petunjuk Penggunaan/Deskripsi'
-              multiline={true}
-            />
-            <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
-                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Update</Text>                  
+            <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Update</Text>                  
               </TouchableOpacity>
             </View>
           </View>
@@ -119,37 +117,37 @@ const styles = StyleSheet.create({
     // backgroundColor:'green'
     
 },
-    pickerContainer:{
-        // position:'absolute',
-        // top: 30,
-        backgroundColor:'white',
-        width:'60%',
-        height:50,                       
-        borderColor:'black',
-        borderWidth:2,                
-        borderRadius:20,
-        justifyContent:'center', 
-        paddingLeft:20,
-        marginVertical:10
-      },
-      textInput:{
-        backgroundColor:'white',
-        width:'60%',
-        height:50,                       
-        borderColor:'black',
-        borderWidth:2,                
-        borderRadius:20,
-        justifyContent:'center', 
-        paddingLeft:20,
-        marginVertical:10
-      },
-      btnSave:{
-        backgroundColor:'white',
-        width:'60%',
-        height:40,                       
-        justifyContent:'center',
-        borderRadius:15,
-        elevation:4
-      }
+pickerContainer:{
+    // position:'absolute',
+  // top: 30,
+  backgroundColor:'#DFE1E0',
+  width:'90%',
+  height:50,                       
+  // borderColor:'black',
+  // borderWidth:2,                
+  // borderRadius:20,
+  justifyContent:'center', 
+  paddingLeft:20,
+  marginVertical:10
+  },
+  textInput:{
+    backgroundColor:'#DFE1E0',
+    width:'90%',
+    height:50,                       
+    // borderColor:'black',
+    // borderWidth:2,                
+    // borderRadius:20,
+    justifyContent:'center', 
+    paddingLeft:20,
+    marginVertical:10,
+  },
+  btnSave:{
+    backgroundColor:'white',
+    width:'45%',
+    height:40,                       
+    justifyContent:'center',
+    borderRadius:5,
+    elevation: 2
+  },
 })
 
