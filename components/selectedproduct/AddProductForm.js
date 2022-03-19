@@ -73,7 +73,6 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
               value={values.satuan}
               style={styles.textInput}
               placeholder='Satuan'
-              keyboardType='numeric'
             />
             <TouchableOpacity style={styles.textInput} onPress={() => null}>
                   <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>

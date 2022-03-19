@@ -15,6 +15,8 @@ const FormStok = ({setModalVisible,modalVisible}) => {
     const navigation = useNavigation()
     const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
+    const userProducts = useSelector(state => state.userProductReducer);
+    const dataUserProduct = userProducts.dataUserProduct
     const [selectedProduct, setSelectedProduct] = useState();
     
     const [ firebaseSetup, setFirebaseSetup ] = useState({
@@ -34,7 +36,7 @@ const FormStok = ({setModalVisible,modalVisible}) => {
         hargaBeli: '',
         usia: '',
         berat: '',
-        kategori:'Penggemukan',
+        kategoriHewanTernak:'Penggemukan',
         jumlah: '',
         tipe:'domba'
 
@@ -163,20 +165,21 @@ const testPicker = [
   id:2,
   label:"Hewan Ternak",
   value: "jenisHewanTernak"
-}, {
-  id:3,
-  label:"Pakan",
-  value: "jenisPakan"
-}, {
-  id:4,
-  label:"Obat dan Vitamin",
-  value: "obatSuplemen"
-}
-, {
-  id:5,
-  label:"Tambah Produk",
-  value: "tambahProduk"
-}]
+  }, {
+    id:3,
+    label:"Pakan",
+    value: "jenisPakan"
+  }, {
+    id:4,
+    label:"Obat dan Vitamin",
+    value: "obatSuplemen"
+  }
+  , {
+    id:5,
+    label:"Tambah Produk",
+    value: "tambahProduk"
+  }
+]
     
 //   const populate = () => {
       

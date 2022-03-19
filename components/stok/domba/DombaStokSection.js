@@ -5,7 +5,7 @@ import DombaStok from './DombaStok'
 const DombaStokSection = () => {
     return (
         <ScrollView style={styles.container}>
-            <Text style={styles.sectionTitle}>Domba</Text>
+            <Text style={styles.sectionTitle}>Daftar Items</Text>
             <DombaStok />                  
         </ScrollView>
     )
@@ -18,9 +18,8 @@ const styles = StyleSheet.create({
         // backgroundColor:'red',
         width:'100%',
         flexDirection:'column',
-        marginBottom:15,
-        borderBottomColor:'lightgrey',
-        borderBottomWidth: 2
+        paddingBottom: 60,
+        
     },
     sectionTitle:{
         fontSize: 26,

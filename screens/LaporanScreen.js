@@ -283,7 +283,7 @@ export default function LaporanScreen() {
         
         return firebase
         .firestore()
-        .collection("userproduk").where("userId","==",uid).where("tipe", "==", "domba")
+        .collection("userproduk").where("userId","==",uid)
         .onSnapshot((querySnapshot) => {
             const items = []
             querySnapshot.forEach( function(doc){
@@ -295,10 +295,10 @@ export default function LaporanScreen() {
                 // console.log('Itu newValue dari snapshot dalem')
                 
             });
-            const itemsSort = items.sort(sortTipe('tipe'))
-            console.log("nih itemsSort" + itemsSort)
+            // const itemsSort = items.sort(sortTipe('tipe'))
+            // console.log("nih itemsSort" + itemsSort)
             
-            dispatch({type:'LOAD_USERPRODUK',results:itemsSort})
+            dispatch({type:'LOAD_USERPRODUK',results:items})
         })
     }
 

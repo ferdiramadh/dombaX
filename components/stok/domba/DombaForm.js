@@ -61,10 +61,10 @@ const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit})
             />
                 <View style={styles.pickerContainer}>
                     <Picker
-                        selectedValue={values.kategori}
+                        selectedValue={values.kategoriHewanTernak}
                         onValueChange={(itemValue, itemIndex) =>
                         {
-                          setFieldValue('kategori',itemValue)
+                          setFieldValue('kategoriHewanTernak',itemValue)
                         }
                         }
                         style={{

@@ -5,6 +5,7 @@ import { useSelector} from 'react-redux'
 import { Feather } from '@expo/vector-icons';
 import firebase from '../../../Firebaseconfig'
 import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalModalEdit';
+import ProductItem from '../../selectedproduct/ProductItem'
 
 // const DATAX = [
 //     {
@@ -37,7 +38,9 @@ import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalMo
 const DombaStok = () => {
     
     const dombaState = useSelector(state => state.stokReducer)
-    const DATA = dombaState.listDomba;
+    const userProducts = useSelector(state => state.userProductReducer);
+    const DATA = userProducts.listUserProduct
+    // const DATA = dombaState.listDomba;
     const sortData = DATA.sort((a, b) => {
         let bd = objToDate(b.createdAt);
         let ad = objToDate(a.createdAt);
@@ -60,12 +63,12 @@ const DombaStok = () => {
 
     const deleteItem = (item) => {
         Alert.alert(
-            "Attention!",
-            `Do You Want to Delete "${item.jenisDomba} - ${item.jumlah} " Ekor ?`,
+            "Perhatian!",
+            `Hapus item?`,
             [
                 {
-                    text:"Cancel",
-                    onPress: () => Alert.alert("Canceled"),
+                    text:"Batal",
+                    onPress: () => Alert.alert("Dibatalkan."),
                     style:'cancel'
                 },
                 {
@@ -73,7 +76,7 @@ const DombaStok = () => {
                     onPress: () => {
                         return firebase
                         .firestore()
-                        .collection("dombastok")
+                        .collection("userproduk")
                         .doc(item.id)
                         .delete()
                     }
@@ -92,7 +95,7 @@ const DombaStok = () => {
         
         return firebase
         .firestore()
-        .collection("dombastok")
+        .collection("userproduk")
         .doc(item.id)
         .get()
         .then((i) => {
@@ -113,37 +116,13 @@ const DombaStok = () => {
     },[editData])
 
     
-    const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'500'}}>{value}</Text>} />
+    const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
 
     const formatToCurrencyLight = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props}>{value}</Text>} />
-    // const renderItem = ({item}) => {
-    //     return (
-    //         <View style={styles.container}>
-    //             <View style={styles.leftIcon}>
-    //                 <Image source={require('../../../assets/images/Kiwi_Categories-Icon.png')} style={styles.imgIcon}/>
-    //             </View>
-    //             <View style={styles.rightSection}>
-    //                 <Text style={styles.subStokTitle}>{item.jenisProduk} {item.jenisDomba} - {item.jumlah} Ekor</Text>
-    //                 <View style={styles.dombaInfo}>
-    //                     <View style={styles.leftDombaInfo}>
-    //                         <Text style={styles.infoData}>Beli Rp.{item.hargaBeli}</Text>
-    //                         <Text style={styles.infoData}>Jual Rp.{item.hargaJual}</Text>
-    //                         <Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategori}</Text>
-    //                     </View>
-    //                     <View style={styles.leftDombaInfo}>
-    //                         <Text style={styles.infoData}>Berat Rata-Rata: {item.berat}kg</Text>
-    //                         <Text style={styles.infoData}>Usia : {item.usia}Bulan</Text>
-    //                         <Text style={[styles.infoData,{fontWeight:'bold', color:'red'}]}>Rp. 25.000.000</Text>
-    //                     </View>
-    //                 </View>
-    //             </View> 
-    //         </View>
-    //         )
-    //     )
-    // }
+
     return (
         <View>
-            {  sortData.map((item, i) => {
+            {/* {  sortData.map((item, i) => {
                 return(
                     <TouchableOpacity style={styles.container} key={item.id} 
                     onPress={() =>{
@@ -157,7 +136,7 @@ const DombaStok = () => {
                 </View>
                 <View style={styles.rightSection}>
                     <View style={styles.upperSection}>
-                        <Text style={styles.subStokTitle}>{item.jenisProduk} {item.jenisDomba} - {item.jumlah} Ekor</Text>
+                        <Text style={styles.subStokTitle}>{item.jenisHewanTernak} {item.jenisSpesifik}</Text>
                         <View style={styles.buttonSection}>
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
                                 <Feather name="trash-2" size={24} color="black" />
@@ -170,20 +149,26 @@ const DombaStok = () => {
                     
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>{formatToCurrencyLight(parseInt(item.hargaBeli))}</Text>
-                            <Text style={styles.infoData}>{formatToCurrencyLight(parseInt(item.hargaJual))}</Text>
-                            <Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategori}</Text>
+                            <Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>
+                            <Text style={styles.infoData}>Harga Beli: {formatToCurrencyLight(parseInt(item.hargaBeli))}</Text>
+                            <Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>
+                            <Text style={styles.infoData}>Usia : {item.usia} Bulan</Text>
                         </View>
-                        <View style={styles.leftDombaInfo}>
-                            <Text style={styles.infoData}>Berat Rata-Rata: {item.berat + ' '}kg</Text>
-                            <Text style={styles.infoData}>Usia : {item.usia + ''} Bulan</Text>
-                            <Text style={[styles.infoData,{fontWeight:'bold', color:'red'}]}>{ formatToCurrency(parseInt(item.hargaJual)*parseInt(item.jumlah))}</Text>
+                        <View style={styles.rightDombaInfo}>
+                            <Text style={styles.infoData}></Text>
+                            <Text style={styles.infoData}></Text>
+                            <Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah} Ekor</Text>
+                            <Text style={[styles.totalHarga]}>{ formatToCurrency(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
                         </View>
                     </View>
                 </View> 
             </TouchableOpacity>
                 )
-            })}
+            })} */}
+            {sortData.map((item, i) => {
+                return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                })
+            }
             <GlobalModalEdit modalVisible={modalVisible} setModalVisible={setModalVisible} data={editData} setEditData={setEditData}/>
         </View>
         
@@ -232,21 +217,30 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     leftDombaInfo:{
-        width:'50%',
+        width:'60%',
         // backgroundColor:'skyblue',
         flexDirection:'column',
         justifyContent:'center',
-        alignItems:'flex-start'
+        alignItems:'flex-start',
+        paddingLeft: 5
+    },
+    rightDombaInfo:{
+        width:'40%',
+        // backgroundColor:'skyblue',
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'flex-start',
+        paddingLeft: 5
     },
     infoData:{
-        fontSize: 16,
+        fontSize: 14,
         fontWeight:'500',
         marginVertical:5
     },
     upperSection:{
         // backgroundColor:'green',
         flexDirection:'row',
-        justifyContent:'space-between'
+        paddingLeft: 5
         
     },
     buttonSection:{
@@ -257,5 +251,11 @@ const styles = StyleSheet.create({
         position:'absolute',
         right: 10
        
+    },
+    totalHarga: {
+        color: '#43B88E',
+        fontWeight:'bold',
+        fontSize: 16
     }
+    
 })

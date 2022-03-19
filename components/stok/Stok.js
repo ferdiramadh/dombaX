@@ -7,9 +7,12 @@ import { useSelector} from 'react-redux'
 
 const Stok = () => {
     const stokState = useSelector(state => state.stokReducer)
-    const DATA = stokState.listDomba
+    const userProducts = useSelector(state => state.userProductReducer);
+    const DATA = userProducts.listUserProduct
+    // const DATA = stokState.listDomba
     const DATA_PAKAN = stokState.listPakan
     const DATA_OBAT = stokState.listObat
+    
 
     const sectionShow = () => {
         return(
@@ -31,11 +34,11 @@ const Stok = () => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.insideContainer}>
-            { DATA.length == 0 && DATA_PAKAN.length == 0 && DATA_OBAT.length == 0 ?
+            { DATA.length == 0 ?
             <View style={styles.emptyStokNotif}>
                 <Text style={styles.text}>Inventori Kamu masih kosong, silakan tambahkan produk.</Text>
             </View>:
-            sectionShow() }      
+            <DombaStokSection /> }      
             
             </View>
         </ScrollView>

@@ -76,22 +76,18 @@ fireSQL.query(`SELECT * FROM userproduk WHERE tipe = 'pakan'`).then(documents =>
   return (
     <ScrollView >
       <View style={styles.container}>
-          {/* <Button title='test' onPress={() => console.log(DATA)} /> */}
-          <Button title='test' onPress={() => {
+          <Button title='test' onPress={() => console.log(DATA)} />
+          {/* <Button title='test' onPress={() => {
               fireSQL.query(`SELECT * FROM userproduk WHERE tipe LIKE 'pak%'`).then(documents => {
                 documents.forEach(doc => {
-                  /* Do something with the document */
+                 
                   console.log(doc)
                 });
               });
-          }} />
+          }} /> */}
           { sortData.map((item, i) => {
               return(
-                  <View key={item.id} >
-                      <Text>{item.namaProduk}</Text>
-                      <Text>{item.tipe}</Text>
-                      {/* <Text>{item.createdAt}</Text> */}
-                  </View>
+                  <ProductItem item={item} />
               )
           })}
         
@@ -106,7 +102,7 @@ export default UserProductScreen
 
 const styles = StyleSheet.create({
   container:{
-    width:'100%',
+    flex:1,
     padding: 10,
     marginTop: 20,
     justifyContent:'center',

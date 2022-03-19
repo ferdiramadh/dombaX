@@ -132,9 +132,9 @@ const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
               placeholder='Jumlah'
               keyboardType='numeric'
             />
-              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
-                  <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Update</Text>                  
-              </TouchableOpacity>
+            <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+                <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Update</Text>                  
+            </TouchableOpacity>
             </View>
           </View>
 

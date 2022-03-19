@@ -113,7 +113,38 @@ const initialTransaction = {
 }
 
 const initialUserProduct = {
+    dataUserProduct: {
+        //umum 
+        id: '',
+        deskripsi:'',
+        hargaBeli: '',
+        jumlah: '',
+        produsen:'',
+        kategori:'',
 
+        //hewan ternak
+        jenisProduk: '',
+        jenisHewanTernak:'',
+        jenisSpesifik:'',
+        usia: '',
+        berat: '',
+        kategoriHewanTernak:'Penggemukan',
+        
+
+        //pakan
+        jenisPakan: '',
+        kadaluarsa: '',
+       
+
+        //obat
+        namaObat:'',
+        kadaluarsa: '',
+        
+        //tambah produk
+        namaProduk: '',
+        satuan:'',
+
+    },
     listUserProduct: []
 }
 
@@ -314,6 +345,15 @@ const userProductReducer = (state = initialUserProduct, action) => {
                 ...state,
                 listUserProduct: []
                     
+            }
+        case 'SET_CATEGORY_PRODUCT':
+            return {
+                ...state,
+                dataUserProduct: {
+                    ...state.dataUserProduct,
+                    kategori: action.results
+
+                }
             }
        
         default: return state;
