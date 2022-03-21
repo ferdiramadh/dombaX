@@ -2,10 +2,10 @@ import { StyleSheet, Text, TouchableOpacity,View } from 'react-native'
 import React, { useState, useEffect} from 'react'
 import { Feather } from '@expo/vector-icons';
 
-const CategoryItem = ({item, deleteItem, editItem,editData}) => {
+const CategoryItem = ({item, deleteItem, editItem,editData, setCategoryValue}) => {
     
   return (
-    <TouchableOpacity style={styles.container} onPress={() => console.log(editData)}> 
+    <TouchableOpacity style={styles.container} onPress={() => setCategoryValue(item.name)}> 
       <Text style={styles.text}>{item.name}</Text>
       <View style={styles.buttonSection}>
             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>

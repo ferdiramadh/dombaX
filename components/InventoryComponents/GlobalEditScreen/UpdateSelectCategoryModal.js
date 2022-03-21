@@ -13,22 +13,22 @@ import { FireSQL } from 'firesql'
     let customFonts = {
       'Baloo': require('../../../assets/font/baloo/Baloo-Regular.ttf'),
     };
-const SelectCategoryModal = (props) => {
+const UpdateSelectCategoryModal = (props) => {
 
     const dispatch = useDispatch();
     const listCategory = useSelector(state => state.userCategoryProductReducer.listUserCategoryProduct)
     const uid = useSelector(state => state.userReducer.uid)
     const [ fontsLoaded, setFontsLoaded ] = useState(false)
     const [ modalAddCategory , setModalAddCategory ] = useState(false)
+    const modalCategoryVisible = props.modalCategoryVisible
+    const setModalCategoryVisible = props.setModalCategoryVisible
+    const setFieldValue = props.setFieldValue
+    const setCategory = props.setCategory
     const sortData = listCategory.sort((a, b) => {
       let bd = objToDate(b.createdAt);
       let ad = objToDate(a.createdAt);
       return ad - bd;
     });
-    const modalCategoryVisible = props.modalCategoryVisible
-    const setModalCategoryVisible = props.setModalCategoryVisible
-    const setFieldValue = props.setFieldValue
-    const setCategory = props.setCategory
 
     const [editData, setEditData] = useState({});
     const [ editCategory, setEditCategory ] = useState({})
@@ -272,7 +272,7 @@ const SelectCategoryModal = (props) => {
   )
 }
 
-export default SelectCategoryModal
+export default UpdateSelectCategoryModal
 
 const styles = StyleSheet.create({
     centeredView: {

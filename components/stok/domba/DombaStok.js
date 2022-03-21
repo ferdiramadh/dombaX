@@ -7,34 +7,6 @@ import firebase from '../../../Firebaseconfig'
 import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalModalEdit';
 import ProductItem from '../../selectedproduct/ProductItem'
 
-// const DATAX = [
-//     {
-//       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-//       jenisProduk: 'Domba',
-//       jenisDomba:'Garut',
-//       hargaBeli: 500000,
-//       hargaJual: 2500000,
-//       usia: 2,
-//       berat: 15,
-//       kategori:'Penggemukan',
-//       jumlah: 30
-
-//     },
-//     {
-//       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-//       jenisProduk: 'Domba',
-//       jenisDomba:'Impor',
-//       hargaBeli: 700000,
-//       hargaJual: 3500000,
-//       usia: 8,
-//       berat: 25,
-//       kategori:'Breeding',
-//       jumlah: 50
-//     },
-
-
-//   ];
-
 const DombaStok = () => {
     
     const dombaState = useSelector(state => state.stokReducer)
@@ -47,6 +19,7 @@ const DombaStok = () => {
         return ad - bd;
     });
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalGlobalVisible, setGlobalModalVisible] = useState(false);
     const [editData, setEditData] = useState({});
 
 
@@ -108,7 +81,7 @@ const DombaStok = () => {
     useEffect(() => {
         console.log("Cek Data")
         if(Object.keys(editData).length !== 0) {
-            setModalVisible(!modalVisible)
+            setGlobalModalVisible(!modalGlobalVisible)
         } if (editData !== undefined) {
             console.log(editData)
         }
@@ -169,15 +142,8 @@ const DombaStok = () => {
                 return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
                 })
             }
-            <GlobalModalEdit modalVisible={modalVisible} setModalVisible={setModalVisible} data={editData} setEditData={setEditData}/>
+            <GlobalModalEdit modalVisible={modalGlobalVisible} setModalVisible={setGlobalModalVisible} data={editData} setEditData={setEditData}/>
         </View>
-        
-            // <FlatList
-            //     data={DATA}
-            //     renderItem={renderItem}
-            //     keyExtractor={item => item.id}
-            // />
-       
     ) 
 }
 

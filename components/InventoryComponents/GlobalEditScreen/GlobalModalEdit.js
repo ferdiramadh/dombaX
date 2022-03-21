@@ -8,6 +8,7 @@ import UpdateLahanForm from '../../cost/fixcost/lahan/UpdateLahanForm';
 import UpdatePegawaiForm from '../../cost/fixcost/pegawai/UpdatePegawaiForm';
 import UpdateSellingForm from '../../selling/UpdateSellingForm';
 import UpdatePurchasingForm from '../../purchasing/UpdatePurchasingForm';
+import UpdateUserProductForm from '../../selectedproduct/UpdateUserProductForm'
 
 const GlobalModalEdit = ({modalVisible, setModalVisible, data, setEditData}) => {
     
@@ -47,6 +48,9 @@ const GlobalModalEdit = ({modalVisible, setModalVisible, data, setEditData}) => 
                 }
                 {
                   data.tipe == 'obat'? <UpdateObatForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
+                }
+                {
+                  data.tipe == 'tambahproduk'? <UpdateUserProductForm values={data} setModalVisible={setModalVisible} modalVisible={modalVisible}/>:null
                 }
 
                 {

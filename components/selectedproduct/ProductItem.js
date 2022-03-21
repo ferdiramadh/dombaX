@@ -124,6 +124,7 @@ const ProductItem = ({item, deleteItem, editItem}) => {
                             {item.tipe == 'domba' && item.kategoriHewanTernak != ''?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>:null}
                             <Text style={styles.infoData}>Harga Beli: {formatToCurrencyLight(parseInt(item.hargaBeli))}</Text>
                             {item.tipe == 'domba'?<Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>:null}
+                            {item.tipe == 'tambahproduk'?<Text style={styles.infoData}>Kategori: {item.kategori}</Text>:null}
                             {item.tipe == 'pakan' || item.tipe == 'obat'?<Text style={styles.infoData}>Produsen: {item.merk}</Text>:null}
                             {item.tipe == 'domba'?<Text style={styles.infoData}>Usia : {item.usia} Bulan</Text>:null}
                             {item.tipe == 'pakan' || item.tipe == 'obat'?<Text style={styles.infoData}>Kadaluarsa : {item.kadaluarsa}</Text>:null}
