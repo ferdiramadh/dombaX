@@ -53,9 +53,9 @@ const UpdateDombaForm = ({values, modalVisible, setModalVisible}) => {
 
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
           <TextInput
-              onChangeText={handleChange('jenisHewanTernak')}
-              onBlur={handleBlur('jenisHewanTernak')}
-              value={values.jenisHewanTernak}
+              onChangeText={handleChange('nama')}
+              onBlur={handleBlur('nama')}
+              value={values.nama}
               style={styles.textInput}
               placeholder='Jenis Hewan Ternak'
             />

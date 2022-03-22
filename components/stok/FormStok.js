@@ -29,8 +29,8 @@ const FormStok = ({setModalVisible,modalVisible}) => {
 
     const [ ternakData, setTernakData ] = useState({
         id: '',
-        jenisProduk: '',
-        jenisHewanTernak:'',
+        nama: '',
+        // jenisHewanTernak:'',
         jenisSpesifik:'',
         deskripsi:'',
         hargaBeli: '',
@@ -44,7 +44,7 @@ const FormStok = ({setModalVisible,modalVisible}) => {
 
     const [ pakanData, setPakanData ] = useState({
       id: '',
-      jenisPakan: '',
+      nama: '',
       merk:'',
       jumlah: '',
       hargaBeli: '',
@@ -57,7 +57,7 @@ const FormStok = ({setModalVisible,modalVisible}) => {
     const [ obatData, setObatData ] = useState({
       id: '',
       // jenisObat: '',
-      namaObat:'',
+      nama:'',
       merk:'',
       jumlah: '',
       hargaBeli: '',
@@ -70,7 +70,7 @@ const FormStok = ({setModalVisible,modalVisible}) => {
   const [ addProduct, setAddProduct ] = useState(
     {
       id: '',
-      namaProduk: '',
+      nama: '',
       merk:'',
       jumlah: '',
       hargaBeli: '',

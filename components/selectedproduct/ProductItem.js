@@ -105,10 +105,10 @@ const ProductItem = ({item, deleteItem, editItem}) => {
                 </View>
                 <View style={styles.rightSection}>
                     <View style={styles.upperSection}>
-                        {item.tipe == 'domba'?<Text style={styles.subStokTitle}>{item.jenisHewanTernak} {item.jenisSpesifik}</Text>:null}
-                        {item.tipe == 'pakan'?<Text style={styles.subStokTitle}>{item.jenisPakan}</Text>:null}
-                        {item.tipe == 'obat'?<Text style={styles.subStokTitle}>{item.namaObat}</Text>:null}
-                        {item.tipe == 'tambahproduk'?<Text style={styles.subStokTitle}>{item.namaProduk}</Text>:null}
+                        {item.tipe == 'domba'?<Text style={styles.subStokTitle}>{item.nama} {item.jenisSpesifik}</Text>:null}
+                        {item.tipe == 'pakan'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
+                        {item.tipe == 'obat'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
+                        {item.tipe == 'tambahproduk'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
                         <View style={styles.buttonSection}>
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
                                 <Feather name="trash-2" size={24} color="black" />
