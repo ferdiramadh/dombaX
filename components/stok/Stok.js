@@ -32,7 +32,7 @@ const Stok = () => {
         
     }
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.insideContainer}>
             { DATA.length == 0 ?
             <View style={styles.emptyStokNotif}>
@@ -41,7 +41,7 @@ const Stok = () => {
             <DombaStokSection /> }      
             
             </View>
-        </ScrollView>
+        </View>
     )
 }
 
@@ -49,7 +49,7 @@ export default Stok
 
 const styles = StyleSheet.create({
     container:{
-        
+        flex:1,
         // justifyContent:'center',
         // alignItems:'center',
         // padding:10,

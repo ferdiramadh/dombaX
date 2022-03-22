@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View ,  Alert} from 'react-native'
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
-import { Feather } from '@expo/vector-icons';
 import firebase from '../../../Firebaseconfig'
 import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalModalEdit';
 import ProductItem from '../../selectedproduct/ProductItem'
 
-const DombaStok = () => {
+
+const DombaStok = ({searchItems, isSearch, searchKeyword}) => {
     
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
@@ -18,9 +18,11 @@ const DombaStok = () => {
         let ad = objToDate(a.createdAt);
         return ad - bd;
     });
-    const [modalVisible, setModalVisible] = useState(false);
+    // const [modalVisible, setModalVisible] = useState(false);
     const [modalGlobalVisible, setGlobalModalVisible] = useState(false);
     const [editData, setEditData] = useState({});
+
+    
 
 
 
@@ -94,7 +96,7 @@ const DombaStok = () => {
     const formatToCurrencyLight = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props}>{value}</Text>} />
 
     return (
-        <View>
+        <View style={styles.container}>
             {/* {  sortData.map((item, i) => {
                 return(
                     <TouchableOpacity style={styles.container} key={item.id} 
@@ -138,10 +140,20 @@ const DombaStok = () => {
             </TouchableOpacity>
                 )
             })} */}
-            {sortData.map((item, i) => {
+                {isSearch? <View style={{paddingTop: 10}}>
+                  
+                  <Text style={{marginLeft: 20}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
+                {
+                  searchItems.map((item, i) => {
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                  }) 
+                }
+              </View>: null}
+
+            {DATA.length > 0 && !isSearch? sortData.map((item, i) => {
                 return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
                 })
-            }
+             : null}
             <GlobalModalEdit modalVisible={modalGlobalVisible} setModalVisible={setGlobalModalVisible} data={editData} setEditData={setEditData}/>
         </View>
     ) 
@@ -153,8 +165,8 @@ export default DombaStok
 const styles = StyleSheet.create({
     container:{
         // backgroundColor:'green',
-        flexDirection:'row',
-        marginBottom: 10,
+        // flexDirection:'row',
+        // marginBottom: 10,
         position:'relative'
     },
     leftIcon:{

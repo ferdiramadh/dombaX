@@ -61,7 +61,7 @@ export default CustomHeder
 const styles = StyleSheet.create({
     container:{
         width:'100%',
-        height:'12%',
+        height:80,
         backgroundColor:'#fff',
         position:'absolute',
         top:20,
