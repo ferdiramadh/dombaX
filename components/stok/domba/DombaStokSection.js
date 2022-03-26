@@ -3,20 +3,46 @@ import { StyleSheet, Text, View , ActivityIndicator, Alert, TouchableOpacity, Te
 import DombaStok from './DombaStok'
 import { MaterialIcons } from '@expo/vector-icons';
 import firebase from '../../../Firebaseconfig'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import { FireSQL } from 'firesql'
+import FilterStokModal from '../FilterStokModal';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeigth = Dimensions.get('screen').height;
 
 const DombaStokSection = () => {
 
+    const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
+
+    const [ filterVisible, setFilterVisible ] = useState(false)
 
     const [ isSearch, setIsSearch ] = useState(false)
     const [ searchItems, setSearchItems ] = useState([])
     const [ searchKeyword, setSearchKeyword] = useState('')
     const [ isLoading, setIsLoading ] = useState(false)
+
+    const [ isFilter, setIsFilter ] = useState(false)
+    const [ filterItems, setFilterItems ] = useState([])
+    const filterList = [
+      {
+        id: 1,
+        sortBy: 'Stok Terendah',
+      },
+      {
+        id: 2,
+        sortBy: 'Stok Tertinggi',
+      },
+      {
+        id: 3,
+        sortBy: 'Harga Beli Terendah',
+      },
+      {
+        id: 4,
+        sortBy: 'Harga Beli Tertinggi',
+      }
+    ]
+    const [ filterBy, setFilterBy ] = useState();
 
     const dbRef = firebase.firestore();
     const fireSQL = new FireSQL(dbRef);
@@ -39,24 +65,9 @@ const DombaStokSection = () => {
           setSearchItems(items)
         ;
       });
-  
-        // return firebase
-        // .firestore()
-        // .collection("userproduk").where("nama",">=",`${searchKeyword}`).where("userId","==",uid)
-        // .onSnapshot((querySnapshot) => {
-        //     const items = []
-        //     querySnapshot.forEach( function(doc){
-        //         let newValue = doc.data()
-        //         items.push(newValue)
-               
-                
-        //     });
-            
-        //     setSearchItems(items)
-        //     console.log(items)
-        // })
-        
+
       }
+
 
       const loadingWait = () => {
         setIsLoading(true)
@@ -85,6 +96,7 @@ const DombaStokSection = () => {
                       <MaterialIcons name="clear" size={24} color="black" />
                     </TouchableOpacity>   : null } 
                     <TouchableOpacity style={styles.searchBtn} onPress={() => {
+                      setIsFilter(false)
                       loadingWait()
                       if(searchKeyword.length != 0) {
                         
@@ -96,7 +108,9 @@ const DombaStokSection = () => {
                     }}>
                       <MaterialIcons name="search" size={30} color="black" />
                     </TouchableOpacity>    
-                    <TouchableOpacity >
+                    <TouchableOpacity  onPress={() => {
+                      setFilterVisible(!filterVisible)
+                    }}>
                        <MaterialIcons name="filter-list" size={30} color="black" />
                     </TouchableOpacity>    
                    
@@ -105,10 +119,10 @@ const DombaStokSection = () => {
             {isLoading? <View style={styles.loaderContainer}>
               <ActivityIndicator size="large" color="orange" />
                 </View>:<ScrollView>
-                    <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword}/>
+                    <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter}/>
                 </ScrollView> }         
             
-                
+              <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} />
         </View>
     )
 }

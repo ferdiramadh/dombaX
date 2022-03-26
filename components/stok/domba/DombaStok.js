@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View ,  Alert} from 'react-native'
+import { StyleSheet, Text, View ,  Alert, TouchableOpacity} from 'react-native'
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
 import firebase from '../../../Firebaseconfig'
 import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalModalEdit';
 import ProductItem from '../../selectedproduct/ProductItem'
+import { MaterialIcons } from '@expo/vector-icons';
 
 
-const DombaStok = ({searchItems, isSearch, searchKeyword}) => {
+const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter}) => {
     
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
@@ -142,7 +143,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword}) => {
             })} */}
                 {isSearch? <View style={{paddingTop: 10}}>
                   
-                  <Text style={{marginLeft: 20}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
+                  <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
                 {
                   searchItems.map((item, i) => {
                     return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
@@ -150,10 +151,42 @@ const DombaStok = ({searchItems, isSearch, searchKeyword}) => {
                 }
               </View>: null}
 
-            {DATA.length > 0 && !isSearch? sortData.map((item, i) => {
+            {DATA.length > 0 && !isSearch && !isFilter? sortData.map((item, i) => {
                 return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
                 })
              : null}
+
+                {isFilter && filterBy !== undefined? <View style={{paddingTop: 10}}>
+                  <View style={{flexDirection:'row', marginBottom: 15}}>
+                  <Text style={{marginLeft: 20}}>"{filterBy}".</Text><TouchableOpacity style={{flexDirection:'row'}} onPress={() => setIsFilter(false)}>
+                      <Text> Ulang Penyaringan.</Text>
+                      <MaterialIcons name="refresh" size={20} color="black" />
+                  </TouchableOpacity>
+                  </View>
+                  
+                  
+                { filterBy == 'Harga Beli Terendah' || filterBy == 'Harga Beli Tertinggi' ?
+                  DATA.sort((a, b) => {
+                    let bd = parseInt(b.hargaBeli);
+                    let ad = parseInt(a.hargaBeli);
+                    if(filterBy == 'Harga Beli Terendah') {
+                        return ad - bd
+                    }
+                    return bd - ad;
+                }).map((item, i) => {
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                  }) : DATA.sort((a, b) => {
+                    let bd = parseInt(b.jumlah);
+                    let ad = parseInt(a.jumlah);
+                    if(filterBy == 'Stok Terendah') {
+                        return ad - bd
+                    }
+                    return bd - ad;
+                }).map((item, i) => {
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                  })
+                }
+              </View>: null}
             <GlobalModalEdit modalVisible={modalGlobalVisible} setModalVisible={setGlobalModalVisible} data={editData} setEditData={setEditData}/>
         </View>
     ) 
