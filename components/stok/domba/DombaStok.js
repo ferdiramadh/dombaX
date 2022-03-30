@@ -37,6 +37,8 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
         
     }
 
+    
+
     const deleteItem = (item) => {
         Alert.alert(
             "Perhatian!",
@@ -49,13 +51,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                 },
                 {
                     text: "OK",
-                    onPress: () => {
-                        return firebase
-                        .firestore()
-                        .collection("userproduk")
-                        .doc(item.id)
-                        .delete()
-                    }
+                    onPress: () => deleteCollectionAndFile(item)
                 }
             ],
             {
@@ -65,6 +61,31 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
         )
         
         
+    }
+
+    const deleteCollectionAndFile = (item) => {
+        deleteCollection(item)
+        deleteFile(item)
+    }
+
+    const deleteCollection = (item) => {
+        return firebase
+        .firestore()
+        .collection("userproduk")
+        .doc(item.id)
+        .delete()
+    }
+
+    const deleteFile = (item) => {
+        if(item.image) {
+            var desertRef = firebase.storage().ref(`UserProduk/Images/${item.id}`)
+            // Delete the file
+            desertRef.delete().then(() => {
+                console.log("Dihapus file")
+            }).catch((error) => {
+                console.log("Error loh" + error)
+            });
+        }     
     }
 
     const editItem = (item) => {

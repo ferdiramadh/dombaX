@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, TouchableOpacity, View , ScrollView,Text, TextInput, Alert} from 'react-native'
+import { StyleSheet, TouchableOpacity, View , ScrollView,Text, TextInput, Alert, Image} from 'react-native'
 import { Formik } from 'formik';
 import firebase from '../../Firebaseconfig';
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import UpdateSelectCategoryModal from '../InventoryComponents/GlobalEditScreen/UpdateSelectCategoryModal'
+import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload';
 
 const UpdateUserProductForm = ({values, modalVisible, setModalVisible}) => {
 
@@ -11,14 +12,17 @@ const UpdateUserProductForm = ({values, modalVisible, setModalVisible}) => {
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
     const [category, setCategory] = useState("Kategori");
 
+    const [ img, setImg ] = useState()
+
     const updateItem = (item) => {
       return firebase
       .firestore()
       .collection("userproduk")
       .doc(item.id)
       .update(item).then(() => {
-        console.log('Item Updated')
+        uploadImageProduk(item.image, "UserProduk", item.id, "userproduk")
       }).catch((error) => console.log(error))
+      
     }
 
     const updateNotification = () => {
@@ -39,11 +43,16 @@ const UpdateUserProductForm = ({values, modalVisible, setModalVisible}) => {
       
   }
 
+  const removePhoto = (set) => {
+    set('image','')
+  }
+
     return (
         <Formik
         initialValues={dombaData}
         onSubmit={(values, actions) => {  
           updateItem(values);
+          
           updateNotification()
       
         }}
@@ -106,6 +115,22 @@ const UpdateUserProductForm = ({values, modalVisible, setModalVisible}) => {
               style={styles.textInput}
               placeholder='Satuan'
             />
+
+            {values.image? <View style={{width: '90%', height:150,  justifyContent:'center', alignItems:'center', marginVertical: 20}}>
+                      <Image source={{ uri:values.image }} style={styles.imageWrap} />
+                      <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => removePhoto(setFieldValue)}>
+                        <AntDesign name="delete" size={24} color="lightgrey" /><Text style={{color:"grey"}}>Hapus Foto</Text>
+                      </TouchableOpacity>
+                    </View>:<TouchableOpacity style={styles.textInput} onPress={() => {
+                      let isUpdate = true
+                        pickImageOnly(isUpdate, setFieldValue)
+                        
+                      }}>
+                  <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                      <Text style={{color:'#474747'}}>Upload Gambar</Text>   
+                      <MaterialIcons name="file-upload" size={24} color="black" />      
+                  </View>                
+              </TouchableOpacity>}
             <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Update</Text>                  
               </TouchableOpacity>
@@ -162,5 +187,11 @@ pickerContainer:{
     borderRadius:5,
     elevation: 2
   },
+  imageWrap:{
+    width: undefined,
+    height: '100%',
+    aspectRatio: 1
+    
+  }
 })
 

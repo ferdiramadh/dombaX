@@ -114,6 +114,28 @@ export const storeImgData = async (image) => {
     }
   };
 
+  export const pickImageOnly = async (isUpdate, setFunc) => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      maxWidth: 500,
+      maxHeight: 500,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled && isUpdate) {
+      setFunc('image', result.uri);
+    }
+
+    if (!result.cancelled) {
+      setFunc(result.uri);
+    }
+  };
+
   export const updateImageDoc = (collection, itemId, downloadUrl) => {
     if(downloadUrl){
       return firebase
@@ -192,6 +214,58 @@ export const storeImgData = async (image) => {
         updateImageDoc(collection, id, downloadUrl)
         // setFunc(downloadUrl)
         setLoad(false)
+        blob.close()
+        return downloadUrl
+      })
+    }
+    )
+  }
+
+  export const uploadImageProduk = async (image, storageFolder, id, collection) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', image, true);
+      xhr.send(null);
+    });
+
+    const ref = firebase.storage().ref(`${storageFolder}/Images/${id}`)
+    const snapshot = ref.put(blob)
+
+    snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
+    (snapshot) => {
+            let progress = snapshot.bytesTransferred/snapshot.totalBytes * 100
+            
+            console.log("Sukses")
+            console.log(snapshot)
+            console.log("snapshot" + snapshot.state)
+            console.log("PROGRES" + progress)
+            // console.log((snapshot.bytesTransferred/snapshot.totalBytes * 100).toString + "%")
+           
+            if(snapshot.state === firebase.storage.TaskEvent.SUCCESS){
+              console.log("Sukses")
+            }
+          },
+    (error) => {
+      // unsubscribe()
+      
+      console.log("error wak" + error)
+      blob.close()
+      return
+    },
+    () => {
+      snapshot.snapshot.ref.getDownloadURL()
+      .then((downloadUrl) => {
+        console.log("File available at" + downloadUrl)
+        updateImageDoc(collection, id, downloadUrl)
+        // setFunc(downloadUrl)
+        
         blob.close()
         return downloadUrl
       })

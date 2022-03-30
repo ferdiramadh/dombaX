@@ -3,10 +3,10 @@ import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-na
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
 import { Feather } from '@expo/vector-icons';
-import firebase from '../../Firebaseconfig'
+import { useNavigation } from '@react-navigation/native';
 
 const ProductItem = ({item, deleteItem, editItem}) => {
-    
+    const navigation = useNavigation();
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
     const DATA = userProducts.listUserProduct
@@ -32,59 +32,7 @@ const ProductItem = ({item, deleteItem, editItem}) => {
         
     }
 
-    // const deleteItem = (item) => {
-    //     Alert.alert(
-    //         "Attention!",
-    //         `Do You Want to Delete "${item.jenisDomba} - ${item.jumlah} " Ekor ?`,
-    //         [
-    //             {
-    //                 text:"Cancel",
-    //                 onPress: () => Alert.alert("Canceled"),
-    //                 style:'cancel'
-    //             },
-    //             {
-    //                 text: "OK",
-    //                 onPress: () => {
-    //                     return firebase
-    //                     .firestore()
-    //                     .collection("dombastok")
-    //                     .doc(item.id)
-    //                     .delete()
-    //                 }
-    //             }
-    //         ],
-    //         {
-    //             cancelable: true,
-                
-    //         }
-    //     )
-        
-        
-    // }
 
-    // const editItem = (item) => {
-        
-    //     return firebase
-    //     .firestore()
-    //     .collection("dombastok")
-    //     .doc(item.id)
-    //     .get()
-    //     .then((i) => {
-    //         setEditData(i.data());
-    //     })
-        
-        
-    // }
-
-    // useEffect(() => {
-    //     console.log("Cek Data")
-    //     if(Object.keys(editData).length !== 0) {
-    //         setModalVisible(!modalVisible)
-    //     } if (editData !== undefined) {
-    //         console.log(editData)
-    //     }
-
-    // },[editData])
 
     
     const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
@@ -96,12 +44,13 @@ const ProductItem = ({item, deleteItem, editItem}) => {
             <TouchableOpacity style={styles.container} key={item.id} 
                     onPress={() =>{
                         console.log(item)
+                        navigation.navigate("DetailProduct",{item})
                    }}
                     onLongPress={() => console.log("ni lama beut")}
                     delayLongPress={1000}
                     >
                 <View style={styles.leftIcon}>
-                    <Image source={require('../../assets/images/Kiwi_Categories-Icon.png')} style={styles.imgIcon}/>
+                    {item.image? <Image source={{ uri: item.image }} style={styles.imgIcon}/>:<Image source={require('../../assets/images/Kiwi_Categories-Icon.png')} style={styles.imgIcon}/>}
                 </View>
                 <View style={styles.rightSection}>
                     <View style={styles.upperSection}>
@@ -161,11 +110,13 @@ const styles = StyleSheet.create({
         // backgroundColor:'yellow',
         width:'20%',
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        // marginRight: 5
     },
     imgIcon:{
-        width: 100,
-        height: 100
+        width: '100%',
+        height: undefined,
+        aspectRatio: 1
     },
     rightSection:{
         // backgroundColor:'orange',

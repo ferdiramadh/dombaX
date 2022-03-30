@@ -48,14 +48,15 @@ const AccountDisplay = ({isEdit, setIsEdit,navigation}) => {
             </TouchableOpacity>
           </View>
           
-          {/* <Button title="Remove Photo" onPress={() => {
-            let test = 2
-            console.log(test.toString())
-          }} /> */}
-          <View style={styles.progressBar}>
+          <Button title="Remove Photo" onPress={() => {
+            let a = null
+            let b = null
+            funcTest(a,b,"teset")
+          }} />
+          {/* <View style={styles.progressBar}>
             <View style={[styles.progressPercentage, {width:percent}]}></View>
           </View>
-          
+           */}
             
         </View>
         

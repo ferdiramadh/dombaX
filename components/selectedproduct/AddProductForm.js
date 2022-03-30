@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TextInput, View,TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, TextInput, View,TouchableOpacity, Text, Image } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import SelectCategoryModal from '../InventoryComponents/GlobalEditScreen/SelectCategoryModal'
-import { pickImage } from '../../utils/ImageUpload';
+import { pickImageOnly } from '../../utils/ImageUpload';
 
 const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
     const navigation = useNavigation()
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
     const [category, setCategory] = useState("Kategori");
     const [ img, setImg ] = useState()
+
+    const removePhoto = () => {
+      setImg()
+      setFieldValue('image','')
+    }
 
     useEffect(() => {
       setFieldValue('image', img)
@@ -82,7 +87,8 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
               placeholder='Satuan'
             />
             <TouchableOpacity style={styles.textInput} onPress={() => {
-              pickImage(setImg)
+              let isUpdate = false
+              pickImageOnly(isUpdate, setImg)
               // setFieldValue('image',img)
             }}>
                   <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
@@ -90,6 +96,15 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
                       <MaterialIcons name="file-upload" size={24} color="black" />      
                   </View>                
               </TouchableOpacity>
+
+              {img? <View style={{width: '90%', height:150,  justifyContent:'center', alignItems:'center', marginVertical: 20}}>
+                      <Image source={{ uri:img }} style={styles.imageWrap} />
+                      <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={removePhoto}>
+                        <AntDesign name="delete" size={24} color="lightgrey" /><Text style={{color:"grey"}}>Hapus Foto</Text>
+                      </TouchableOpacity>
+                    </View>:null}
+
+                    
               <View style={styles.btnWrap}>
                 <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
                     <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
@@ -150,6 +165,13 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'space-around',
       width:'100%',
-      paddingHorizontal: 10
+      paddingHorizontal: 10,
+      marginTop: 10
+    },
+    imageWrap:{
+      width: undefined,
+      height: '100%',
+      aspectRatio: 1
+      
     }
 })
