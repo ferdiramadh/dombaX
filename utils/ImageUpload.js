@@ -52,6 +52,26 @@ export const storeImgData = async (image) => {
     }
   }
 
+  export const deleteCollection = (collection, item) => {
+    return firebase
+    .firestore()
+    .collection(collection)
+    .doc(item.id)
+    .delete()
+}
+
+  export const deleteFile = (collection, item) => {
+    if(item.image) {
+        var desertRef = firebase.storage().ref(`${collection}/Images/${item.id}`)
+        // Delete the file
+        desertRef.delete().then(() => {
+            console.log("Dihapus file")
+        }).catch((error) => {
+            console.log("Error loh" + error)
+        });
+    }     
+}
+
 
 
   export const pickCamera = async (storageFolder, id, setLoad, collection, setPercent) => {

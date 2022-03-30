@@ -6,6 +6,7 @@ import firebase from '../../../Firebaseconfig'
 import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalModalEdit';
 import ProductItem from '../../selectedproduct/ProductItem'
 import { MaterialIcons } from '@expo/vector-icons';
+import { deleteCollection, deleteFile } from '../../../utils/ImageUpload';
 
 
 const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter}) => {
@@ -64,29 +65,10 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
     }
 
     const deleteCollectionAndFile = (item) => {
-        deleteCollection(item)
-        deleteFile(item)
+        deleteCollection("userproduk", item)
+        deleteFile("UserProduk", item)
     }
 
-    const deleteCollection = (item) => {
-        return firebase
-        .firestore()
-        .collection("userproduk")
-        .doc(item.id)
-        .delete()
-    }
-
-    const deleteFile = (item) => {
-        if(item.image) {
-            var desertRef = firebase.storage().ref(`UserProduk/Images/${item.id}`)
-            // Delete the file
-            desertRef.delete().then(() => {
-                console.log("Dihapus file")
-            }).catch((error) => {
-                console.log("Error loh" + error)
-            });
-        }     
-    }
 
     const editItem = (item) => {
         
