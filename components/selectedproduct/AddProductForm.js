@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, TextInput, View,TouchableOpacity, Text } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import SelectCategoryModal from '../InventoryComponents/GlobalEditScreen/SelectCategoryModal'
+import { pickImage } from '../../utils/ImageUpload';
 
 const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
     const navigation = useNavigation()
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
     const [category, setCategory] = useState("Kategori");
+    const [ img, setImg ] = useState()
+
+    useEffect(() => {
+      setFieldValue('image', img)
+    },[img])
     
+
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
             <TextInput
@@ -74,7 +81,10 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
               style={styles.textInput}
               placeholder='Satuan'
             />
-            <TouchableOpacity style={styles.textInput} onPress={() => null}>
+            <TouchableOpacity style={styles.textInput} onPress={() => {
+              pickImage(setImg)
+              // setFieldValue('image',img)
+            }}>
                   <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                       <Text style={{color:'#474747'}}>Upload Gambar</Text>   
                       <MaterialIcons name="file-upload" size={24} color="black" />      

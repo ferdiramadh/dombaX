@@ -9,6 +9,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../../Firebaseconfig'
 import { useNavigation } from '@react-navigation/native';
 import AddProductForm from '../selectedproduct/AddProductForm';
+import { uploadImage } from '../../utils/ImageUpload';
 
 
 const FormStok = ({setModalVisible,modalVisible}) => {
@@ -77,7 +78,8 @@ const FormStok = ({setModalVisible,modalVisible}) => {
       deskripsi: '',
       kategori:'Kategori',
       satuan:'',
-      tipe:'tambahproduk'
+      tipe:'tambahproduk',
+      image: ''
     }
   )
 
@@ -133,6 +135,7 @@ useEffect(() => {
         .doc(datas.id)
         .set(newValue)
         dispatch({type:firebaseSetup.typeReducer,results:newValue})
+        uploadImage(values.image, "UserProduk", newValue.id)
       
   
 }
@@ -152,6 +155,7 @@ const newValue = Object.assign(values,addedProperties)
     .doc(datas.id)
     .set(newValue)
     dispatch({type:'STORE_DATA_USERPRODUK',results:newValue})
+    uploadImage(values.image, "UserProduk", newValue.id, "userproduk", newValue.id)
   
 
 }

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, PixelRatio } from 'rea
 import { useNavigation } from '@react-navigation/native';
 import { PhotoContext } from '../context/PhotoProfileContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import {useSelector} from 'react-redux'
 
 var FONT_NORMAL = 26
 
@@ -11,10 +12,11 @@ if(PixelRatio.get() <= 2) {
 }
 
 const CustomHeder = (props) => {
+    const image = useSelector(state => state.profileReducer.image)
     
     const [ leftOn, setLeftOn ] = useState(true);
     const navigation = useNavigation();
-    const { image,setImage } = useContext(PhotoContext)
+    // const { image,setImage } = useContext(PhotoContext)
 
     
     return (
