@@ -5,7 +5,7 @@ import { useSelector} from 'react-redux'
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const ProductItem = ({item, deleteItem, editItem}) => {
+const ProductItem = ({item, deleteItem, editItem, data, setEditData}) => {
     const navigation = useNavigation();
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
@@ -18,7 +18,7 @@ const ProductItem = ({item, deleteItem, editItem}) => {
         return ad - bd;
     });
     const [modalVisible, setModalVisible] = useState(false);
-    const [editData, setEditData] = useState({});
+    // const [editData, setEditData] = useState({});
 
 
 
@@ -44,7 +44,8 @@ const ProductItem = ({item, deleteItem, editItem}) => {
             <TouchableOpacity style={styles.container} key={item.id} 
                     onPress={() =>{
                         console.log(item)
-                        navigation.navigate("DetailProduct",{item})
+                        editItem(item)
+                        
                    }}
                     onLongPress={() => console.log("ni lama beut")}
                     delayLongPress={1000}
@@ -62,9 +63,9 @@ const ProductItem = ({item, deleteItem, editItem}) => {
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
                                 <Feather name="trash-2" size={24} color="black" />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{marginLeft:10}} onPress={() => editItem(item)}>
+                            {/* <TouchableOpacity style={{marginLeft:10}} onPress={() => editItem(item)}>
                                 <Feather name="edit" size={24} color="black" />
-                            </TouchableOpacity>  
+                            </TouchableOpacity>   */}
                         </View>
                     </View>
                     

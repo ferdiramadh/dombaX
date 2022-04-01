@@ -7,9 +7,12 @@ import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalMo
 import ProductItem from '../../selectedproduct/ProductItem'
 import { MaterialIcons } from '@expo/vector-icons';
 import { deleteCollection, deleteFile } from '../../../utils/ImageUpload';
+import { useNavigation } from '@react-navigation/native';
 
 
 const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter}) => {
+
+    const navigation = useNavigation();
     
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
@@ -87,9 +90,12 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
     useEffect(() => {
         console.log("Cek Data")
         if(Object.keys(editData).length !== 0) {
-            setGlobalModalVisible(!modalGlobalVisible)
+            // setGlobalModalVisible(!modalGlobalVisible)
+            console.log("ada nih edit data"+editData)
+            navigation.navigate("DetailProduct",{editData, navigation})
         } if (editData !== undefined) {
-            console.log(editData)
+            console.log("MANA nih edit data")
+            // navigation.navigate("DetailProduct",{editData, setEditData})
         }
 
     },[editData])
@@ -177,7 +183,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                     }
                     return bd - ad;
                 }).map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} data={editData} setEditData={setEditData}/> 
                   }) : DATA.sort((a, b) => {
                     let bd = parseInt(b.jumlah);
                     let ad = parseInt(a.jumlah);
@@ -186,7 +192,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                     }
                     return bd - ad;
                 }).map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} data={editData} setEditData={setEditData}/> 
                   })
                 }
               </View>: null}

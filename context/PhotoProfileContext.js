@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, {createContext, useState, useEffect} from 'react';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
+import { useFonts, Inter_400Regular, Inter_300Light } from '@expo-google-fonts/inter';
 
 
   
@@ -10,7 +10,8 @@ export const PhotoContext = createContext()
 const PhotoProfileProvider = (props) => {
   let customFonts = {
     'Baloo': require('../assets/font/baloo/Baloo.ttf'),
-    'Inter': Inter_900Black,
+    'Inter-Light': Inter_300Light,
+    'Inter': Inter_400Regular,
   };
 
   const [image, setImage] = useState(null);

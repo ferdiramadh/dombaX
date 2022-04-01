@@ -44,7 +44,12 @@ const AuthStack = ({isSignUp}) => {
           headerShown:false
         }}/>
         <Stack.Screen name="DetailProduct" component={ProductDetailScreen} options={{
-          headerShown:false
+          title: "Rincian Produk",
+          headerTitleStyle:{
+            fontFamily:'Baloo',
+            fontSize: 26,
+         
+          }
         }}/>
       </Stack.Navigator>
     )
