@@ -242,6 +242,9 @@ export const storeImgData = async (image) => {
   }
 
   export const uploadImageProduk = async (image, storageFolder, id, collection) => {
+    
+
+    if(image) {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function() {
@@ -257,7 +260,7 @@ export const storeImgData = async (image) => {
 
     const ref = firebase.storage().ref(`${storageFolder}/Images/${id}`)
     const snapshot = ref.put(blob)
-
+    
     snapshot.on(firebase.storage.TaskEvent.STATE_CHANGED,
     (snapshot) => {
             let progress = snapshot.bytesTransferred/snapshot.totalBytes * 100
@@ -290,7 +293,14 @@ export const storeImgData = async (image) => {
         return downloadUrl
       })
     }
-    )
+    )} else {
+      let tempObj = {
+        id: id,
+        image: 'test_hapus'
+      }
+      console.log("Hapuslah nih file")
+      deleteFile(storageFolder, tempObj)
+    }
   }
 
 
