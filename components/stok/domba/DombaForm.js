@@ -1,9 +1,21 @@
-import React from 'react'
-import { StyleSheet, TextInput, View,TouchableOpacity, Text } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, TextInput, View,TouchableOpacity, Text, Image } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, AntDesign } from '@expo/vector-icons'
+import { pickImageOnly } from '../../../utils/ImageUpload';
 
 const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
+
+  const [ img, setImg ] = useState()
+
+  const removePhoto = () => {
+    setImg()
+    setFieldValue('image','')
+  }
+
+  useEffect(() => {
+    setFieldValue('image', img)
+  },[img])
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
@@ -87,12 +99,21 @@ const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit})
               placeholder='Jumlah'
               keyboardType='numeric'
             />
-            <TouchableOpacity style={styles.textInput} onPress={() => null}>
+            <TouchableOpacity style={styles.textInput} onPress={() => {
+              let isUpdate = false
+              pickImageOnly(isUpdate, setImg)
+            }}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                     <Text style={{color:'#474747'}}>Upload Gambar</Text>   
                     <MaterialIcons name="file-upload" size={24} color="black" />      
                 </View>                
             </TouchableOpacity>
+            {img? <View style={{width: '90%', height:150,  justifyContent:'center', alignItems:'center', marginVertical: 20}}>
+                      <Image source={{ uri:img }} style={styles.imageWrap} />
+                      <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={removePhoto}>
+                        <AntDesign name="delete" size={24} color="lightgrey" /><Text style={{color:"grey"}}>Hapus Foto</Text>
+                      </TouchableOpacity>
+                    </View>:null}
             <View style={styles.btnWrap}>
               <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
@@ -154,5 +175,11 @@ const styles = StyleSheet.create({
       justifyContent:'space-around',
       width:'100%',
       paddingHorizontal: 10
+    },
+    imageWrap:{
+      width: undefined,
+      height: '100%',
+      aspectRatio: 1
+      
     }
 })

@@ -5,7 +5,7 @@ import { useSelector} from 'react-redux'
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const ProductItem = ({item, deleteItem, editItem, data, setEditData}) => {
+const ProductItem = ({item, deleteItem, editItem}) => {
     const navigation = useNavigation();
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);

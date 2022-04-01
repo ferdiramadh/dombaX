@@ -39,7 +39,8 @@ const FormStok = ({setModalVisible,modalVisible}) => {
         berat: '',
         kategoriHewanTernak:'Penggemukan',
         jumlah: '',
-        tipe:'domba'
+        tipe:'domba',
+        image: ''
 
     })
 
@@ -51,7 +52,8 @@ const FormStok = ({setModalVisible,modalVisible}) => {
       hargaBeli: '',
       kadaluarsa: '',
       petunjuk:'',
-      tipe:'pakan'
+      tipe:'pakan',
+      image: ''
 
   })
  
@@ -64,7 +66,8 @@ const FormStok = ({setModalVisible,modalVisible}) => {
       hargaBeli: '',
       kadaluarsa: '',
       petunjuk:'',
-      tipe:'obat'
+      tipe:'obat',
+      image: ''
 
   })
 

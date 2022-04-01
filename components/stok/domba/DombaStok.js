@@ -183,7 +183,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                     }
                     return bd - ad;
                 }).map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} data={editData} setEditData={setEditData}/> 
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
                   }) : DATA.sort((a, b) => {
                     let bd = parseInt(b.jumlah);
                     let ad = parseInt(a.jumlah);
@@ -192,7 +192,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                     }
                     return bd - ad;
                 }).map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} data={editData} setEditData={setEditData}/> 
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
                   })
                 }
               </View>: null}
