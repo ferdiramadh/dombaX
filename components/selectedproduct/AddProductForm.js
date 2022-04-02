@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import SelectCategoryModal from '../InventoryComponents/GlobalEditScreen/SelectCategoryModal'
 import { pickImageOnly } from '../../utils/ImageUpload';
 
-const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
+const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,setModalVisible, modalVisible}) => {
     const navigation = useNavigation()
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
     const [category, setCategory] = useState("Kategori");
@@ -106,7 +106,7 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
 
                     
               <View style={styles.btnWrap}>
-                <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
+                <TouchableOpacity style={styles.btnSave} onPress={() => setModalVisible(!modalVisible)}>
                     <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>

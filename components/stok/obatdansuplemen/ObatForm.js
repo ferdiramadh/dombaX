@@ -2,8 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, TextInput, View,TouchableOpacity, Text, Image  } from 'react-native'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-const ObatForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
+const ObatForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,setModalVisible, modalVisible}) => {
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    if(selectedDate){
+        const currentDate = selectedDate;
+        setShow(false);
+        setFieldValue('kadaluarsa', selectedDate.toDateString())
+    } else {
+        console.log("eweuh")
+        setShow(false);
+        setFieldValue('kadaluarsa', '')
+    }
+    
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
 
   const [ img, setImg ] = useState()
 
@@ -18,6 +45,15 @@ const ObatForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) 
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10}}>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChange}
+              />
+            )}
             <TextInput
               onChangeText={handleChange('nama')}
               onBlur={handleBlur('nama')}
@@ -55,13 +91,12 @@ const ObatForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) 
               placeholder='Jumlah'
               keyboardType='numeric'
             />
-            <TextInput
-              onChangeText={handleChange('kadaluarsa')}
-              onBlur={handleBlur('kadaluarsa')}
-              value={values.kadaluarsa}
-              style={styles.textInput}
-              placeholder='Kadaluarsa'
-            />
+            <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>{values.kadaluarsa?values.kadaluarsa:"Kadaluarsa"}</Text>   
+                    <MaterialIcons name="date-range" size={24} color="black" />    
+                </View>                
+            </TouchableOpacity>
             <TouchableOpacity style={styles.textInput} onPress={() => {
               let isUpdate = false
               pickImageOnly(isUpdate, setImg)
@@ -78,7 +113,7 @@ const ObatForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) 
                       </TouchableOpacity>
                     </View>:null}
             <View style={styles.btnWrap}>
-              <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
+              <TouchableOpacity style={styles.btnSave} onPress={() => setModalVisible(!modalVisible)}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>

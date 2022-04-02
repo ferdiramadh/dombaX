@@ -266,10 +266,10 @@ const testPicker = [
                     </Picker>
                 </View>             */}
                 {/* <Button title='selected product' onPress={() => console.log(selectedProduct)} /> */}
-                { selectedProduct == 'jenisHewanTernak'? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>: null}
-                { selectedProduct == 'jenisPakan'? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} />: null}
-                { selectedProduct == 'obatSuplemen'? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>: null}
-                { selectedProduct == 'tambahProduk'? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>: null}
+                { selectedProduct == 'jenisHewanTernak'? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible}/>: null}
+                { selectedProduct == 'jenisPakan'? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} />: null}
+                { selectedProduct == 'obatSuplemen'? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible}/>: null}
+                { selectedProduct == 'tambahProduk'? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible}/>: null}
                 {/* <Button title='Save' onPress={handleSubmit} /> */}
                 {/* <View style={{width:'100%',}}>
                 <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>

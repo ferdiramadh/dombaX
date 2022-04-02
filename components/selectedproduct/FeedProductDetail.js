@@ -5,8 +5,38 @@ import { Feather, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-ico
 import firebase from '../../Firebaseconfig'
 import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload'
 import { formatToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePickerField from './DatePickerField';
 
 const FeedProductDetail = ({ editData, navigation }) => {
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [ date, setDate ] = useState()
+
+  const onChange = (event, selectedDate) => {
+    if(selectedDate){
+        const currentDate = selectedDate;
+        setShow(false);
+        setDate(selectedDate.toDateString())
+    } else {
+        console.log("eweuh")
+        setShow(false);
+        setDate()
+    }
+    
+  };
+
+  
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
 
   const [data, setData] = useState(editData)
   const [isUpdate, setIsUpdate] = useState(false)
@@ -58,6 +88,15 @@ const FeedProductDetail = ({ editData, navigation }) => {
         {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
           <ScrollView style={styles.container}>
             <View style={styles.upperSection}>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChange}
+              />
+            )}
               <Text style={styles.titlePage}>Pakan</Text>
               <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => {
                 // editItem(item)
@@ -92,13 +131,7 @@ const FeedProductDetail = ({ editData, navigation }) => {
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Kadaluarsa</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('kadaluarsa')}
-                onBlur={handleBlur('kadaluarsa')}
-                value={values.kadaluarsa}
-                style={styles.textInput}
-                placeholder='Kadaluarsa'
-              /> : <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
+              {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values}/> : <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Harga Beli</Text>

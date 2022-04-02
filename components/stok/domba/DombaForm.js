@@ -4,7 +4,7 @@ import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 
-const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit}) => {
+const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,setModalVisible, modalVisible}) => {
 
   const [ img, setImg ] = useState()
 
@@ -115,7 +115,7 @@ const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit})
                       </TouchableOpacity>
                     </View>:null}
             <View style={styles.btnWrap}>
-              <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
+              <TouchableOpacity style={styles.btnSave} onPress={() => setModalVisible(!modalVisible)}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
