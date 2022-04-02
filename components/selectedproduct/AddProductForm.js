@@ -97,7 +97,7 @@ const AddProductForm = ({setFieldValue,handleChange,handleBlur, values,handleSub
                   </View>                
               </TouchableOpacity>
 
-              {img? <View style={{width: '90%', height:150,  justifyContent:'center', alignItems:'center', marginVertical: 20}}>
+              {img? <View style={{width: '90%', height:150,  justifyContent:'center', alignItems:'center', marginVertical: 30}}>
                       <Image source={{ uri:img }} style={styles.imageWrap} />
                       <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={removePhoto}>
                         <AntDesign name="delete" size={24} color="lightgrey" /><Text style={{color:"grey"}}>Hapus Foto</Text>

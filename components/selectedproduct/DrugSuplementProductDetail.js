@@ -5,7 +5,7 @@ import { Feather, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-ico
 import firebase from '../../Firebaseconfig'
 import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload'
 
-const UserProductDetail = ({ editData, navigation }) => {
+const DrugSuplementProductDetail = ({ editData, navigation }) => {
 
   const [data, setData] = useState(editData)
   const [isUpdate, setIsUpdate] = useState(false)
@@ -57,7 +57,7 @@ const UserProductDetail = ({ editData, navigation }) => {
         {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
           <ScrollView style={styles.container}>
             <View style={styles.upperSection}>
-              <Text style={styles.titlePage}>User Produk</Text>
+              <Text style={styles.titlePage}>Obat dan Vitamin</Text>
               <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => {
                 // editItem(item)
                 setIsUpdate(!isUpdate)
@@ -68,15 +68,36 @@ const UserProductDetail = ({ editData, navigation }) => {
             </View>
 
             <View style={styles.itemWrap}>
-              <Text style={styles.subTitle}>Nama Produk</Text>
+              <Text style={styles.subTitle}>Nama Obat dan Vitamin</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('nama')}
                 onBlur={handleBlur('nama')}
                 value={values.nama}
                 style={styles.textInput}
-                placeholder='Nama Produk'
+                placeholder='Nama Obat dan Vitamin'
               /> : <Text style={styles.itemText}>{data.nama}</Text>}
 
+            </View>
+            <View style={styles.itemWrap}>
+              <Text style={styles.subTitle}>Produsen</Text>
+              {isUpdate ? <TextInput
+                onChangeText={handleChange('merk')}
+                onBlur={handleBlur('merk')}
+                value={values.merk}
+                style={styles.textInput}
+                placeholder='Produsen'
+              /> : <Text style={styles.itemText}>{data.merk}</Text>}
+
+            </View>
+            <View style={styles.itemWrap}>
+              <Text style={styles.subTitle}>Kadaluarsa</Text>
+              {isUpdate ? <TextInput
+                onChangeText={handleChange('kadaluarsa')}
+                onBlur={handleBlur('kadaluarsa')}
+                value={values.kadaluarsa}
+                style={styles.textInput}
+                placeholder='Kadaluarsa'
+              /> : <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Harga Beli</Text>
@@ -86,27 +107,8 @@ const UserProductDetail = ({ editData, navigation }) => {
                 value={values.hargaBeli}
                 style={styles.textInput}
                 placeholder='Harga Beli'
+                keyboardType='numeric'
               /> : <Text style={styles.itemText}>{data.hargaBeli}</Text>}
-            </View>
-            <View style={styles.itemWrap}>
-              <Text style={styles.subTitle}>Deskripsi</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('deskripsi')}
-                onBlur={handleBlur('deskripsi')}
-                value={values.deskripsi}
-                style={styles.textInput}
-                placeholder='Deskripsi'
-              /> : <Text style={styles.itemText}>{data.deskripsi}</Text>}
-            </View>
-            <View style={styles.itemWrap}>
-              <Text style={styles.subTitle}>Kategori</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('kategori')}
-                onBlur={handleBlur('kategori')}
-                value={values.kategori}
-                style={styles.textInput}
-                placeholder='Kategori'
-              /> : <Text style={styles.itemText}>{data.kategori}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Jumlah</Text>
@@ -116,9 +118,11 @@ const UserProductDetail = ({ editData, navigation }) => {
                 value={values.jumlah}
                 style={styles.textInput}
                 placeholder='Jumlah'
+                keyboardType='numeric'
               /> : <Text style={styles.itemText}>{data.jumlah} {data.satuan}</Text>}
             </View>
-
+            <Text style={styles.subTitle}>Total</Text>
+            <Text style={styles.itemText}>Rp. 12,000</Text>
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
               {values.image ?
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
@@ -159,7 +163,7 @@ const UserProductDetail = ({ editData, navigation }) => {
   )
 }
 
-export default UserProductDetail
+export default DrugSuplementProductDetail
 
 const styles = StyleSheet.create({
   container: {

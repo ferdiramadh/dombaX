@@ -267,8 +267,8 @@ const testPicker = [
                 </View>             */}
                 {/* <Button title='selected product' onPress={() => console.log(selectedProduct)} /> */}
                 { selectedProduct == 'jenisHewanTernak'? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>: null}
-                { selectedProduct == 'jenisPakan'? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} />: null}
-                { selectedProduct == 'obatSuplemen'? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} />: null}
+                { selectedProduct == 'jenisPakan'? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} />: null}
+                { selectedProduct == 'obatSuplemen'? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>: null}
                 { selectedProduct == 'tambahProduk'? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>: null}
                 {/* <Button title='Save' onPress={handleSubmit} /> */}
                 {/* <View style={{width:'100%',}}>

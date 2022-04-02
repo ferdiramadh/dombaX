@@ -11,7 +11,7 @@ import LaporanComponent from '../components/laporan/LaporanComponent'
 import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../Firebaseconfig'
 import NumberFormat from 'react-number-format';
-
+import { StatusBar } from 'expo-status-bar'
 
 
 export default function LaporanScreen() {
@@ -381,6 +381,7 @@ export default function LaporanScreen() {
     return (
       
         <View style={styles.container}>
+            <StatusBar style='auto' />
             <CustomHeder leftSubMenu='Laporan' />
             <View style={styles.componentContainer}>
                 <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrency(arusKas)} profit={formatToCurrency(profit)}/>

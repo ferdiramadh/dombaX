@@ -207,14 +207,15 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   textInput: {
-    // backgroundColor:'#DFE1E0',
-    width: '100%',
-    height: 40,
-    borderColor: 'black',
-    borderWidth: 1,
+    backgroundColor:'#DFE1E0',
+    width:'100%',
+    height:50,                       
+    // borderColor:'black',
+    // borderWidth:2,                
     // borderRadius:20,
-    justifyContent: 'center',
-    paddingLeft: 20,
+    justifyContent:'center', 
+    paddingLeft:20,
+    marginVertical:10,
   },
   upperSection: {
     // backgroundColor:'green',
