@@ -46,7 +46,8 @@
     "redux": "^4.0.5",
     "rxfire": "^6.0.3",
     "rxjs": "^7.5.4",
-    "victory": "^35.5.1"
+    "victory": "^35.5.1",
+    "@react-native-community/datetimepicker": "4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

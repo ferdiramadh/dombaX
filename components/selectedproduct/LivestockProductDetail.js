@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { Feather, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
 import firebase from '../../Firebaseconfig'
 import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload'
+import { formatToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency';
 
 const LivestockProductDetail = ({ editData, navigation }) => {
 
@@ -97,7 +98,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
                 value={values.hargaBeli}
                 style={styles.textInput}
                 placeholder='Harga Beli'
-              /> : <Text style={styles.itemText}>{data.hargaBeli}</Text>}
+              /> : <Text style={styles.itemText}>{formatToCurrencyLight(data.hargaBeli)}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Deskripsi</Text>
@@ -140,7 +141,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
               /> : <Text style={styles.itemText}>{data.jumlah} {data.satuan}</Text>}
             </View>
             <Text style={styles.subTitle}>Total</Text>
-            <Text style={styles.itemText}>Rp. 12,000</Text>
+            <Text style={styles.itemText}>{formatToCurrency(parseInt(data.jumlah) * parseInt(data.hargaBeli))}</Text>
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
               {values.image ?
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
