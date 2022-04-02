@@ -1,11 +1,11 @@
 import firebase from '../Firebaseconfig'
 import React, {useState} from 'react'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity,ActivityIndicator} from 'react-native'
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 
 const LoginScreen = ({navigation}) => {
     const dispatch = useDispatch();
-    const uid = useSelector(state => state.userReducer.uid)
+    
     const [isLoading,setIsLoading ] = useState(false)
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('')
@@ -53,9 +53,6 @@ const LoginScreen = ({navigation}) => {
                 onChangeText={setPassword}
                 secureTextEntry
             />
-            <TouchableOpacity onPress={() => console.log(uid)} style={styles.btn}>
-                <Text>Cek uid</Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={
                 signIn
                 

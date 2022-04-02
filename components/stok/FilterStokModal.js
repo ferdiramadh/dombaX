@@ -55,7 +55,7 @@ const FilterStokModal = ({filterVisible, setFilterVisible, setIsFilter, setFilte
                       setIsFilter(true)
                       setFilterVisible(!filterVisible)
                     }}>
-                      <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>{item.sortBy}</Text>
+                      <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
                     </TouchableOpacity>
                   )
                 })}

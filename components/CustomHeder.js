@@ -5,7 +5,7 @@ import { PhotoContext } from '../context/PhotoProfileContext';
 import { MaterialIcons } from '@expo/vector-icons';
 import {useSelector} from 'react-redux'
 
-var FONT_NORMAL = 26
+var FONT_NORMAL = 48
 
 if(PixelRatio.get() <= 2) {
     FONT_NORMAL = 18
@@ -27,7 +27,7 @@ const CustomHeder = (props) => {
                         <TouchableOpacity style={{ marginLeft:20,}} onPress={() => {
                             setLeftOn(!leftOn)
                             props.setState(true)
-                        }} disabled={props.descProfile  || props.leftSubMenu == 'Laporan' || props.leftSubMenu == 'Stok'?true:false}><Text style={[styles.subMenuTitle,leftOn?{borderBottomColor: '#000'}:null,props.styleFont]} >{props.leftSubMenu || props.descProfile}</Text></TouchableOpacity>
+                        }} disabled={true}><Text style={[styles.subMenuTitle,props.styleFont]} >{props.leftSubMenu || props.descProfile}</Text></TouchableOpacity>
                     </View>
                     <View style={[{width:'10%', flexDirection:'column', justifyContent:'center',alignItems:'center'},props.home?{display:'none'}:null]}>
                         <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Simulasi' || props.leftSubMenu == 'Laporan' || props.leftSubMenu == 'Stok' || props.descProfile?'':'|'}</Text>
@@ -48,9 +48,9 @@ const CustomHeder = (props) => {
                     }}>
                         <FontAwesome name="sign-out" size={24} color="black" />
                     </TouchableOpacity> */}
-                    <TouchableOpacity onPress={() => navigation.navigate("Account")}>
+                    {/* <TouchableOpacity onPress={() => navigation.navigate("Account")}>
                     {image ? <Image source={{ uri: image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={80} color="black" />}
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                    
                 </View>
             </View>
@@ -70,9 +70,8 @@ const styles = StyleSheet.create({
         elevation:2
     },
     headerContent:{
-        flexDirection:'row',
         width:'100%',
-        height:'100%'
+        height:'100%',
     },
     leftSide:{
         flexDirection:'row',
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     },
     subMenuTitle:{
         fontSize:FONT_NORMAL,
-        fontWeight:'bold',
+        fontFamily:'Baloo',
         borderBottomColor: 'transparent', // Add this to specify bottom border color
         borderBottomWidth: 3 // Add this to specify bottom border thickness
         
