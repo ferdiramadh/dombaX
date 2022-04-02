@@ -36,7 +36,7 @@ const Stok = () => {
             <View style={styles.insideContainer}>
             { DATA.length == 0 ?
             <View style={styles.emptyStokNotif}>
-                <Text style={styles.text}>Inventori Kamu masih kosong, silakan tambahkan produk.</Text>
+                <Text style={styles.text}>Stok Kamu masih kosong, silahkan tekan <Text style={{fontWeight:'bold'}}>tombol tambah</Text> untuk menambahkan produk </Text>
             </View>:
             <DombaStokSection /> }      
             
@@ -67,14 +67,16 @@ const styles = StyleSheet.create({
        
     },
     text:{
-        fontSize: 23,
+        fontSize: 20,
         fontWeight:'500',
-        textAlign:'center'
+        textAlign:'center',
+        fontFamily:'Inter'
     },
     emptyStokNotif:{
         justifyContent:'center',
         alignItems:'center',
-        marginVertical:'50%'
+        marginVertical:'50%', 
+        paddingHorizontal: 30
     }
 
 })
