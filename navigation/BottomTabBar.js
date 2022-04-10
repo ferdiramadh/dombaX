@@ -8,6 +8,7 @@ import PrintPdfScreen from '../screens/PrintPdfScreen';
 import { MaterialCommunityIcons,MaterialIcons,FontAwesome5,AntDesign, Entypo } from '@expo/vector-icons';
 import PDFTemplate from '../components/PDFTemplate';
 import UserProductScreen from '../screens/UserProductScreen';
+import TopTabTransactions from '../components/transactionsComponents/TopTabTransactions';
 
 const Tab = createBottomTabNavigator();
 
@@ -69,16 +70,16 @@ function MyTabs() {
             ),
           }}
         />
-        {/* <Tab.Screen
+        <Tab.Screen
           name="Test"
-          component={UserProductScreen}
+          component={TopTabTransactions}
           options={{
             tabBarLabel: 'Test',
             tabBarIcon: ({ color, size }) => (
               <AntDesign name="profile" size={24} color={color} />
             ),
           }}
-        /> */}
+        />
         {/* <Tab.Screen
           name="TestInvoicePDFScreen"
           component={PrintPdfScreen}

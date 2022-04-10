@@ -11,7 +11,7 @@ const Purchasing = () => {
             <View style={styles.insideContainer}>
                 { purchasingData.length !== 0? <PurchaseSection />:
                 <View style={styles.emptyPurchaseNotif}>
-                    <Text style={styles.text}>Pembelian Kamu masih kosong, silakan tambahkan biaya.</Text>
+                    <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{fontWeight:'bold'}}>tombol tambah</Text> untuk menambahkan Pemasukan</Text>
                     
                 </View>
                 }
@@ -42,9 +42,10 @@ const styles = StyleSheet.create({
        
     },
     text:{
-        fontSize: 23,
+        fontSize: 20,
         fontWeight:'500',
-        textAlign:'center'
+        textAlign:'center',
+        fontFamily:'Inter'
     },
     emptyPurchaseNotif:{
         justifyContent:'center',

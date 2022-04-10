@@ -1,5 +1,5 @@
 import React , { useEffect, useState } from 'react'
-import { StyleSheet, Text, View , Dimensions} from 'react-native'
+import { StyleSheet, Text, View , Dimensions, BackHandler, Alert} from 'react-native'
 import CustomHeder from '../components/CustomHeder'
 import CustomButton from '../components/CustomButton'
 import {
@@ -332,6 +332,24 @@ export default function LaporanScreen() {
         }
 
     }
+
+    useEffect(() => {
+        const backAction = () => {
+          Alert.alert('Perhatian!', 'Anda yakin ingin keluar aplikasi?', [
+            {
+              text: 'Batal',
+              onPress: () => null,
+              style: 'batal',
+            },
+            { text: 'YA', onPress: () => BackHandler.exitApp() },
+          ]);
+          return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    
+        return () => backHandler.remove();
+      }, []);
 
 
 
