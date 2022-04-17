@@ -5,7 +5,7 @@ import CustomButton from '../components/CustomButton'
 import Purchasing from '../components/purchasing/Purchasing'
 import Selling from '../components/selling/Selling'
 import ModalAddTransaction from '../components/transactionsComponents/ModalAddTransaction'
-import TopTabTransactions from '../components/transactionsComponents/TopTabTransactions'
+import TopTabTransaction from '../navigation/transactiontoptab/TopTabTransaction'
 import { windowWidth, windowHeigth } from '../utils/DimensionSetup'
 
 const TransactionScreen = () => {
@@ -17,7 +17,7 @@ const TransactionScreen = () => {
             <CustomHeder leftSubMenu='Transaksi' styleFont={{fontSize:24}} state={purchasing} setState={setPurchasing}/>     
             <View style={{marginTop:100, width:windowWidth, height:windowHeigth * .8 }}>
                 {/* {purchasing?<Purchasing />:<Selling />} */}
-                <TopTabTransactions />
+                <TopTabTransaction />
             </View>    
             <ModalAddTransaction setModalTransaction={setModalTransaction}  modalTransaction={modalTransaction} purchasing={purchasing}/>
             <CustomButton onPress={() => {

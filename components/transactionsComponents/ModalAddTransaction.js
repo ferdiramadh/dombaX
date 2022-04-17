@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, ScrollView } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import FormPurchase from '../purchasing/FormPurchase'
 import FormSelling from '../selling/FormSelling'
+import { AntDesign } from '@expo/vector-icons';
+import IncomeForm from '../income/IncomeForm';
 
 const ModalAddTransaction = ({modalTransaction, setModalTransaction,purchasing}) => {
     const [selectedProduct, setSelectedProduct] = useState();
@@ -16,18 +18,18 @@ const ModalAddTransaction = ({modalTransaction, setModalTransaction,purchasing})
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-                <TouchableHighlight
+                <TouchableOpacity
                     style={{ ...styles.closeButton }}
                     onPress={() => {
                         setModalTransaction(!modalTransaction)
                     }}>
-                    <Text style={styles.textStyle}>X</Text>
-                </TouchableHighlight>
+                    <AntDesign name="closecircle" size={30} color="red" />
+                </TouchableOpacity>
                 {/* <ScrollView style={styles.container}>
                 
                 </ScrollView> */}
                 <View style={styles.formSection}>
-                    {purchasing?<FormPurchase modalTransaction={modalTransaction} setModalTransaction={setModalTransaction}/>:<FormSelling modalTransaction={modalTransaction} setModalTransaction={setModalTransaction}/>}
+                    {purchasing?<IncomeForm modalTransaction={modalTransaction} setModalTransaction={setModalTransaction}/>:<FormSelling modalTransaction={modalTransaction} setModalTransaction={setModalTransaction}/>}
                   
                 </View>
 
@@ -61,38 +63,38 @@ const styles = StyleSheet.create({
       
     },
     modalView: {
-        width:'90%',
-        height: 630,
-        marginTop: 10,
-        backgroundColor:'#ED9B83',
-        borderRadius: 20,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        justifyContent:'center',
-        padding:10,
-        borderWidth:2
-        // position:'relative'
+      width:'90%',
+      height: 630,
+      marginTop: 10,
+      backgroundColor:'#FFFFFF',
+      borderRadius: 20,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      justifyContent:'center',
+      padding:10,
+      borderWidth:3,
+      borderColor:'#DFE1E0'
+      // position:'relative'
     },
     closeButton: {
-      backgroundColor: 'red',
+      // backgroundColor: 'white',
       borderRadius: 20,
       padding: 8,
-      elevation: 2,
+      // elevation: 2,
       position:'absolute',
       bottom:10,
-      width:40,
-      height:40,
-      position:'absolute', 
-      top:-15,
-      right:10,
-      borderWidth:1
+      width:50,
+      height:50,
+      top:-20,
+      right:5,
+      // borderWidth:1
     },
     textStyle: {
       color: 'white',

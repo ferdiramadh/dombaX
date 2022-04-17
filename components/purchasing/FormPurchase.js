@@ -5,12 +5,16 @@ import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons } from '@expo/vector-icons';
 import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../../Firebaseconfig'
+import SelectCategoryPurchasing from './SelectCategoryPurchasing';
 
 const FormPurchase = ({modalTransaction, setModalTransaction}) => {
     const dispatch = useDispatch();
     const transactionState = useSelector(state => state.transactionsReducer);
     const uid = useSelector(state => state.userReducer.uid)
     const dataPurchasing = transactionState.dataPurchasing
+    const [selectedProduct, setSelectedProduct] = useState();
+    const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
+    const [category, setCategory] = useState("Kategori");
 
     const [ firebaseSetup, setFirebaseSetup ] = useState({
       collection:'purchasing',
@@ -34,6 +38,31 @@ const FormPurchase = ({modalTransaction, setModalTransaction}) => {
       
   
 }
+
+    const testPicker = [
+      {
+        id:1,
+        label:"Jenis Produk",
+        value: "jenisProduk"
+      },{
+      id:2,
+      label:"Hewan Ternak",
+      value: "jenisHewanTernak"
+      }, {
+        id:3,
+        label:"Pakan",
+        value: "jenisPakan"
+      }, {
+        id:4,
+        label:"Obat dan Vitamin",
+        value: "obatSuplemen"
+      }
+      , {
+        id:5,
+        label:"Tambah Produk",
+        value: "tambahProduk"
+      }
+    ]
     return (
         <Formik
         initialValues={dataPurchasing}
@@ -45,6 +74,34 @@ const FormPurchase = ({modalTransaction, setModalTransaction}) => {
         {({ handleChange, handleBlur, handleSubmit, values,setFieldValue}) => (
          <ScrollView style={styles.container} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
           <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
+          {/* <View style={styles.pickerContainer}>
+                    <Picker
+                        selectedValue={selectedProduct}
+                        onValueChange={(itemValue, itemIndex) =>
+                          setSelectedProduct(itemValue)
+                        }
+                        style={{
+                         fontSize: 22,
+                         fontWeight:'bold',
+                          color: '#474747',
+                        }}
+                        prompt='Jenis Produk'
+                        
+                        >
+                    
+                        { testPicker.map((item, i) => {
+                          return(
+                            <Picker.Item label={item.label} value={item.value} key={item.id} />
+                          )
+                        })}
+                    </Picker>
+                </View> */}
+                <TouchableOpacity style={styles.textInput} onPress={() => setModalCategoryVisible(!modalCategoryVisible)} >
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>{category}</Text>   
+                    <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+                </View>                
+              </TouchableOpacity>
                 <TextInput
                     onChangeText={handleChange('produk')}
                     onBlur={handleBlur('produk')}
@@ -127,6 +184,7 @@ const FormPurchase = ({modalTransaction, setModalTransaction}) => {
               </TouchableOpacity>
 
           </View>
+          <SelectCategoryPurchasing modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} setFieldValue={setFieldValue} setCategory={setCategory} />
 
           </ScrollView>
         )}
@@ -145,28 +203,28 @@ const styles = StyleSheet.create({
     
 },
     pickerContainer:{
-        // position:'absolute',
-        // top: 30,
-        backgroundColor:'white',
-        width:'60%',
-        height:50,                       
-        borderColor:'black',
-        borderWidth:2,                
-        borderRadius:20,
-        justifyContent:'center', 
-        paddingLeft:20,
-        marginVertical:10
+       // position:'absolute',
+      // top: 30,
+      backgroundColor:'#DFE1E0',
+      width:'90%',
+      height:50,                       
+      // borderColor:'black',
+      // borderWidth:2,                
+      // borderRadius:20,
+      justifyContent:'center', 
+      paddingLeft:20,
+      marginVertical:10
       },
       textInput:{
-        backgroundColor:'white',
-        width:'60%',
+        backgroundColor:'#DFE1E0',
+        width:'90%',
         height:50,                       
-        borderColor:'black',
-        borderWidth:2,                
-        borderRadius:20,
+        // borderColor:'black',
+        // borderWidth:2,                
+        // borderRadius:20,
         justifyContent:'center', 
         paddingLeft:20,
-        marginVertical:10
+        marginVertical:10,
       },
       btnSave:{
         width: '25%',
