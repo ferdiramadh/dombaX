@@ -8,7 +8,7 @@ import PrintPdfScreen from '../screens/PrintPdfScreen';
 import { MaterialCommunityIcons,MaterialIcons,FontAwesome5,AntDesign, Entypo } from '@expo/vector-icons';
 import PDFTemplate from '../components/PDFTemplate';
 import UserProductScreen from '../screens/UserProductScreen';
-import TopTabTransactions from '../components/transactionsComponents/TopTabTransactions';
+import TopTabTransaction from './transactiontoptab/TopTabTransaction';
 
 const Tab = createBottomTabNavigator();
 
@@ -72,7 +72,7 @@ function MyTabs() {
         />
         <Tab.Screen
           name="Test"
-          component={TopTabTransactions}
+          component={TopTabTransaction}
           options={{
             tabBarLabel: 'Test',
             tabBarIcon: ({ color, size }) => (

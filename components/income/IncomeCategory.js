@@ -2,9 +2,9 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 
-const IncomeCategory = ({item, key, setCategory, modalCategoryVisible, setModalCategoryVisible}) => {
+const IncomeCategory = ({item, setCategory, modalCategoryVisible, setModalCategoryVisible}) => {
   return (
-    <TouchableOpacity style={styles.container} key={key} onPress={() => {
+    <TouchableOpacity style={styles.container} onPress={() => {
       setCategory(item.title)
       setModalCategoryVisible(!modalCategoryVisible)
     }}>

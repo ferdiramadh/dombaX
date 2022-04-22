@@ -1,73 +1,100 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { StyleSheet, TextInput, View ,TouchableOpacity, ScrollView,Text} from 'react-native'
 import { Formik } from 'formik';
-import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons } from '@expo/vector-icons';
 import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../../Firebaseconfig'
 import SelectCategoryIncome from './SelectCategoryIncome';
+import SellingForm from './selling/SellingForm';
+import { uploadImageProduk } from '../../utils/ImageUpload';
 
 const IncomeForm = ({modalTransaction, setModalTransaction}) => {
     const dispatch = useDispatch();
     const transactionState = useSelector(state => state.transactionsReducer);
     const uid = useSelector(state => state.userReducer.uid)
-    const dataPurchasing = transactionState.dataPurchasing
-    const [selectedProduct, setSelectedProduct] = useState();
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
     const [category, setCategory] = useState("Kategori");
 
-    const [ firebaseSetup, setFirebaseSetup ] = useState({
-      collection:'purchasing',
-      typeReducer:'STORE_PURCHASING'
-    })
+    const [ penjualan, setPenjualan ] = useState({
+      id: '',
+      kategori: 'penjualan',
+      produk:'',
+      jumlah: '',
+      hargaJual: '',
+      pembeli: '',
+      diskon: '',
+      pajak:'',
+      tanggalJual: '',
+      statusBayar: '',
+      tipePembayaran: '',
+      batasBayar: '',
+      deskripsi: '',
+      image: ''
 
-    const addToFirebase = (values) => {
+  })
+
+  const [initialData, setInitialData] = useState({})
+
+  const initialDataFunction = () => {
+ 
+    if(category == 'penjualan'){
+      let setData = Object.assign(initialData, penjualan)
+      setInitialData(setData)
+      }
+    // } else if(category == 'jenisPakan'){
+    //   let z = Object.assign(test, pakanData)
+    //   setTest(z)
+    //   setFirebaseSetup({
+    //     collection:'pakanstok',
+    //     typeReducer:'STORE_DATA_PAKAN'
+    //   })
+    // } else if(category == 'obatSuplemen'){
+    //   let z = Object.assign(test, obatData)
+    //   setTest(z)
+    //   setFirebaseSetup({
+    //     collection:'obatstok',
+    //     typeReducer:'STORE_DATA_OBAT'
+    //   })
+    // } else if(category == 'tambahProduk') {
+    //   let z = Object.assign(test, addProduct)
+    //   setTest(z)
+    //   // navigation.navigate("SelectProduct")
+    //   // setModalVisible(!modalVisible)
+    // }
+    
+  }
+useEffect(() => {
+  initialDataFunction()
+},[category])
+
+  const addTransaction = (values) => {
      
-      const datas = {
-        id: firebase.firestore()
-        .collection(firebaseSetup.collection)
-        .doc().id
-    }
-    let addedProperties = {id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp(),userId:uid}
-    const newValue = Object.assign(values,addedProperties)
-        const db = firebase.firestore();
-        db.collection(firebaseSetup.collection)
-        .doc(datas.id)
-        .set(newValue)
-        dispatch({type:firebaseSetup.typeReducer,results:newValue})
-      
-  
-}
+    const datas = {
+      id: firebase.firestore()
+      .collection("income")
+      .doc().id
+  }
+  let addedProperties = {id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp(),userId:uid}
 
-    const testPicker = [
-      {
-        id:1,
-        label:"Jenis Produk",
-        value: "jenisProduk"
-      },{
-      id:2,
-      label:"Hewan Ternak",
-      value: "jenisHewanTernak"
-      }, {
-        id:3,
-        label:"Pakan",
-        value: "jenisPakan"
-      }, {
-        id:4,
-        label:"Obat dan Vitamin",
-        value: "obatSuplemen"
-      }
-      , {
-        id:5,
-        label:"Tambah Produk",
-        value: "tambahProduk"
-      }
-    ]
+  if(values.image) {
+    uploadImageProduk(values.image, "Income", datas.id, "income")
+  }
+  const newValue = Object.assign(values,addedProperties)
+      const db = firebase.firestore();
+      db.collection("income")
+      .doc(datas.id)
+      .set(newValue)
+      dispatch({type:'STORE_INCOME',results:newValue})
+      
+    
+  
+  }
+
     return (
         <Formik
-        initialValues={dataPurchasing}
+        initialValues={initialData}
         onSubmit={(values, actions) => {
-          addToFirebase(values)
+          addTransaction(values)
           setModalTransaction(!modalTransaction)
         }}
       >
@@ -81,6 +108,7 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
                 </View>                
               </TouchableOpacity>
           </View>
+          { category == 'Penjualan'? <SellingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
           <SelectCategoryIncome modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} setFieldValue={setFieldValue} setCategory={setCategory} />
 
           </ScrollView>

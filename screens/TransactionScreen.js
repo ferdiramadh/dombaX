@@ -1,4 +1,4 @@
-import React , { useState } from 'react'
+import React , { useState, useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import CustomHeder from '../components/CustomHeder'
 import CustomButton from '../components/CustomButton'
@@ -7,10 +7,12 @@ import Selling from '../components/selling/Selling'
 import ModalAddTransaction from '../components/transactionsComponents/ModalAddTransaction'
 import TopTabTransaction from '../navigation/transactiontoptab/TopTabTransaction'
 import { windowWidth, windowHeigth } from '../utils/DimensionSetup'
+import { PhotoContext } from '../context/PhotoProfileContext'
 
 const TransactionScreen = () => {
     const [ purchasing, setPurchasing ] = useState(true)
     const [modalTransaction, setModalTransaction] = useState(false);
+    const { topTabTransactionFocus} = useContext(PhotoContext)
 
     return (
         <View style={styles.container}>
@@ -21,7 +23,12 @@ const TransactionScreen = () => {
             </View>    
             <ModalAddTransaction setModalTransaction={setModalTransaction}  modalTransaction={modalTransaction} purchasing={purchasing}/>
             <CustomButton onPress={() => {
-                setModalTransaction(!modalTransaction)
+                if(topTabTransactionFocus == 'Income'){
+                    setModalTransaction(!modalTransaction)
+                } else {
+                    console.log('Apaan tuh')
+                }
+                
             }}/>
         </View>
     )

@@ -109,7 +109,9 @@ const initialTransaction = {
         tipeTransaksi: 'Penjualan'
     },
     listPurchasing: [],
-    listSelling: []
+    listSelling: [],
+    listIncome: [],
+    listExpense: []
 }
 
 const initialUserProduct = {
@@ -296,6 +298,12 @@ const transactionsReducer = (state = initialTransaction, action) => {
                 listSelling: [...state.listSelling, action.results]
                 
         }
+        case 'STORE_INCOME':
+            return {
+                ...state,
+                listIncome: [...state.listIncome, action.results]
+                
+        }
         case 'LOAD_PURCHASING':
             return {
                 ...state,
@@ -314,6 +322,12 @@ const transactionsReducer = (state = initialTransaction, action) => {
                 listSelling: action.results
                     
             }
+        case 'LOAD_INCOME':
+        return {
+            ...state,
+            listIncome: action.results
+                
+        }
         case 'SET_EMPTY_SELLING':
             return {
                 ...state,

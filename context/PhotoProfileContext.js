@@ -17,6 +17,7 @@ const PhotoProfileProvider = (props) => {
   const [image, setImage] = useState(null);
   const [ fontsLoaded, setFontsLoaded ] = useState(false)
   const [testStyle, setTestStyle] = useState();  
+  const [ topTabTransactionFocus, setTopTabTransactionFocus ] = useState('Income')
     async function _loadFontsAsync() {
         await Font.loadAsync(customFonts);
         setFontsLoaded(true);
@@ -30,7 +31,7 @@ const PhotoProfileProvider = (props) => {
         return <AppLoading />;
     } 
   return (
-    <PhotoContext.Provider value={{image,setImage,testStyle}}>
+    <PhotoContext.Provider value={{image,setImage,testStyle, topTabTransactionFocus, setTopTabTransactionFocus}}>
       {props.children}
     </PhotoContext.Provider>
   );

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View , ActivityIndicator, Alert, TouchableOpacity, Te
 import DombaStok from './DombaStok'
 import { MaterialIcons } from '@expo/vector-icons';
 import firebase from '../../../Firebaseconfig'
-import {useSelector, useDispatch} from 'react-redux'
+import { useSelector } from 'react-redux'
 import { FireSQL } from 'firesql'
 import FilterStokModal from '../FilterStokModal';
 
@@ -12,7 +12,6 @@ export const windowHeigth = Dimensions.get('screen').height;
 
 const DombaStokSection = () => {
 
-    const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
 
     const [ filterVisible, setFilterVisible ] = useState(false)
@@ -73,7 +72,7 @@ const DombaStokSection = () => {
         setIsLoading(true)
         setTimeout(() => {
           setIsLoading(false)
-        },1000)
+        },1800)
       }
 
     return (

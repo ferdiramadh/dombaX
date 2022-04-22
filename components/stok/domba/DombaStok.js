@@ -10,7 +10,7 @@ import { deleteCollection, deleteFile } from '../../../utils/ImageUpload';
 import { useNavigation } from '@react-navigation/native';
 
 
-const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter}) => {
+const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible}) => {
 
     const navigation = useNavigation();
     
@@ -155,13 +155,13 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
                 {
                   searchItems.map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible}/> 
                   }) 
                 }
               </View>: null}
 
             {DATA.length > 0 && !isSearch && !isFilter? sortData.map((item, i) => {
-                return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible}/> 
                 })
              : null}
 
@@ -183,7 +183,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                     }
                     return bd - ad;
                 }).map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible}/> 
                   }) : DATA.sort((a, b) => {
                     let bd = parseInt(b.jumlah);
                     let ad = parseInt(a.jumlah);
@@ -192,7 +192,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                     }
                     return bd - ad;
                 }).map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} /> 
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible}/> 
                   })
                 }
               </View>: null}

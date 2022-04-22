@@ -5,7 +5,7 @@ import { useSelector} from 'react-redux'
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const ProductItem = ({item, deleteItem, editItem}) => {
+const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible}) => {
     const navigation = useNavigation();
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
@@ -43,8 +43,14 @@ const ProductItem = ({item, deleteItem, editItem}) => {
     return (
             <TouchableOpacity style={styles.container} key={item.id} 
                     onPress={() =>{
-                        console.log(item)
-                        editItem(item)
+                        if(isTransaction) {
+                            setSelectedProduct(item.nama)
+                            setModalProductVisible(!modalProductVisible)
+                        } else {
+                            console.log(item)
+                            editItem(item)
+                        }
+                        
                         
                    }}
                     onLongPress={() => console.log("ni lama beut")}
@@ -59,6 +65,7 @@ const ProductItem = ({item, deleteItem, editItem}) => {
                         {item.tipe == 'pakan'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
                         {item.tipe == 'obat'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
                         {item.tipe == 'tambahproduk'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
+                        {isTransaction? null :
                         <View style={styles.buttonSection}>
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
                                 <Feather name="trash-2" size={24} color="black" />
@@ -66,7 +73,7 @@ const ProductItem = ({item, deleteItem, editItem}) => {
                             {/* <TouchableOpacity style={{marginLeft:10}} onPress={() => editItem(item)}>
                                 <Feather name="edit" size={24} color="black" />
                             </TouchableOpacity>   */}
-                        </View>
+                        </View>}
                     </View>
                     
                     <View style={styles.dombaInfo}>
