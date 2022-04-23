@@ -4,6 +4,7 @@ import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import SelectProductModal from './SelectProductModal';
+import firebase from '../../../Firebaseconfig'
 
 const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
 
@@ -30,8 +31,20 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
     if( num > jml) {
       Alert.alert('Perhatian', 'Item Melebihi Ketersediaan Stok Saat Ini');
       setFieldValue('jumlah', selectedProduct.jumlah);
-    }     
+     }     
+    }
   }
+
+  const updateSelectedProduct = (selectedProduct, formValues) => {
+    return firebase
+      .firestore()
+      .collection("userproduk")
+      .doc(selectedProduct.id)
+      .update({
+        "jumlah": (parseInt(selectedProduct.jumlah) - parseInt(formValues.jumlah)).toString()
+      }).then(() => {
+        console.log('Item Updated')
+      }).catch((error) => console.log(error))
   }
 
   useEffect(() => {
@@ -208,7 +221,10 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
               <TouchableOpacity style={styles.btnSave} onPress={() => setModalTransaction(!modalTransaction)}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
+                updateSelectedProduct(selectedProduct, values)
+                handleSubmit()
+              }}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
               </TouchableOpacity>
             </View>
