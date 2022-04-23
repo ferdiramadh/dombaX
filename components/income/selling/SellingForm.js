@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TextInput, View, TouchableOpacity, Text, Image } from 'react-native'
+import { StyleSheet, TextInput, View, TouchableOpacity, Text, Image, Alert } from 'react-native'
 import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
@@ -9,25 +9,75 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
 
   const [ img, setImg ] = useState()
   const [modalProductVisible, setModalProductVisible] = useState(false);
-  const [ selectedProduct, setSelectedProduct ] = useState('Pilih Produk')
+  const [ selectedProduct, setSelectedProduct ] = useState({
+    nama: 'Pilih Produk'
+  })
+
+  const [ stockCount, setStokCount] = useState(false)
 
   const removePhoto = () => {
     setImg()
     setFieldValue('image','')
   }
 
+  const checkAvailability = (val) => {
+    console.log('checkAvailability')
+    console.log(val)
+    if( selectedProduct.jumlah && values !== 'undefined' ) {
+ 
+    let num = parseInt(val)
+    let jml = parseInt(selectedProduct.jumlah) 
+    if( num > jml) {
+      Alert.alert('Perhatian', 'Item Melebihi Ketersediaan Stok Saat Ini');
+      setFieldValue('jumlah', selectedProduct.jumlah);
+    }     
+  }
+  }
+
   useEffect(() => {
     setFieldValue('image', img)
   },[img])
+
+  useEffect(() => {
+    if(selectedProduct.jumlah && values !== 'undefined' ) {
+      console.log("Check COK selectedProduct")
+    console.log(selectedProduct)
+    // checkAvailability(values.jumlah)
+    setFieldValue('jumlah', '')
+    if(selectedProduct.jumlah) {
+      setStokCount(true)
+      
+    }
+  } else {
+    console.log("WWW")
+  }
+  },[selectedProduct])
+
+  useEffect(() => {
+    
+    if(selectedProduct.jumlah && values !== 'undefined') {
+      
+      console.log("Check jumlah")
+    console.log(values.jumlah)
+    checkAvailability(values.jumlah)
+    } else {
+      console.log("Check Values")
+      console.log(values)
+    }
+  }, [values])
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
             <TouchableOpacity style={styles.textInput} onPress={() => setModalProductVisible(!modalProductVisible)} >
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                <Text style={{color:'#474747'}}>{selectedProduct}</Text>   
+                <Text style={{color:'#474747'}}>{selectedProduct.nama}</Text>   
                 <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
             </View>                
             </TouchableOpacity>
+            {stockCount? 
+            <View style={{width:'90%',flex: 1}}>
+              <Text style={{color:'green'}}>Jumlah Stok Tersedia: {selectedProduct.jumlah}</Text>
+            </View>: null}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('jumlah')}

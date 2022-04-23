@@ -44,7 +44,7 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
             <TouchableOpacity style={styles.container} key={item.id} 
                     onPress={() =>{
                         if(isTransaction) {
-                            setSelectedProduct(item.nama)
+                            setSelectedProduct(item)
                             setModalProductVisible(!modalProductVisible)
                         } else {
                             console.log(item)
