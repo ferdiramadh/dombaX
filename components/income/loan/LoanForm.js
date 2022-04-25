@@ -59,11 +59,9 @@ const LoanForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,mo
                       fontSize: 22,
                       fontWeight:'bold',
                       color: 'black',
-                    }}
-                    prompt='Status Bayar'
-                    
+                    }}                    
                     >
-                    {/* <Picker.Item label="Status Bayar" value="status" /> */}
+                    <Picker.Item label="Status Bayar" value="status" style={{color:"#ED9B83"}}/>
                     <Picker.Item label="Lunas" value="lunas" />
                     <Picker.Item label="Belum Lunas" value="belumlunas" />
                 </Picker>

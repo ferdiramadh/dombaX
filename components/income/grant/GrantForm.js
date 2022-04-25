@@ -34,10 +34,8 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
                       fontWeight:'bold',
                       color: 'black',
                     }}
-                    prompt='Bentuk Hibah'
-                    
                     >
-                    {/* <Picker.Item label="Status Bayar" value="status" /> */}
+                    <Picker.Item label="Bentuk Hibah" value="status" style={{color:"#ED9B83"}}/>
                     <Picker.Item label="Uang" value="uang" />
                     <Picker.Item label="Barang" value="barang" />
                 </Picker>

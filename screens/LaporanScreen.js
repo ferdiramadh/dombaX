@@ -260,6 +260,25 @@ export default function LaporanScreen() {
         })
     }
 
+    const loadIncome = () => {
+        return firebase
+        .firestore()
+        .collection("income").where("userId","==",uid)
+        .onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach( function(doc){
+                let newValue = doc.data()
+                items.push(newValue)
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            // console.log(items)
+            // console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_INCOME',results:items})
+        })
+    }
+
 
     const loadProfile = () => {
         return firebase
@@ -358,12 +377,13 @@ export default function LaporanScreen() {
             testLoadSnapshotDataPakan()
             // loadDataDomba()
             // loadDataPakan()
-            loadDataObat()
-            loadKandang()
-            loadPegawai()
-            loadLahan()
-            loadPurchasing()
-            loadSelling()
+            // loadDataObat()
+            // loadKandang()
+            // loadPegawai()
+            // loadLahan()
+            // loadPurchasing()
+            // loadSelling()
+            loadIncome()
             loadProfile()
             loadUserProduct()
             loadUserCategoryProduct()

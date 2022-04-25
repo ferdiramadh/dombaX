@@ -158,11 +158,9 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                       fontSize: 22,
                       fontWeight:'bold',
                       color: 'black',
-                    }}
-                    prompt='Status Bayar'
-                    
+                    }} 
                     >
-                    {/* <Picker.Item label="Status Bayar" value="status" /> */}
+                    <Picker.Item label="Status Bayar" value="status" style={{color:"#ED9B83"}}/>
                     <Picker.Item label="Lunas" value="lunas" />
                     <Picker.Item label="Belum Lunas" value="belumlunas" />
                 </Picker>
@@ -179,11 +177,9 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                       fontSize: 22,
                       fontWeight:'bold',
                       color: 'black',
-                    }}
-                    prompt='Tipe Pembayaran'
-                    
+                    }}     
                     >
-                    {/* <Picker.Item label="Tipe Pembayaran" value="status" /> */}
+                    <Picker.Item label="Tipe Pembayaran" value="status" style={{color:"#ED9B83"}}/>
                     <Picker.Item label="Tunai" value="tunai" />
                     <Picker.Item label="Tempo" value="tempo" />
                 </Picker>

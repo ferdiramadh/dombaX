@@ -1,15 +1,18 @@
 import React from 'react'
 import { StyleSheet, Text, View,TouchableOpacity , ScrollView} from 'react-native'
-import PurchaseSection from '../purchasing/PurchaseSection'
 import { useSelector} from 'react-redux'
 
 const Income = () => {
     const transactionSData = useSelector(state => state.transactionsReducer)
-    const purchasingData = transactionSData.listPurchasing
+    const listIncome = transactionSData.listIncome
     return (
         <ScrollView style={styles.container}>
             <View style={styles.insideContainer}>
-                { purchasingData.length !== 0? <PurchaseSection />:
+                { listIncome.length !== 0? listIncome.map((item, i) => {
+                    return <TouchableOpacity key={item.id} style={{marginBottom: 10}} onPress={() => console.log(item)}>
+                                 <Text>Test</Text>
+                            </TouchableOpacity>
+                }):
                 <View style={styles.emptyPurchaseNotif}>
                     <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{fontWeight:'bold'}}>tombol tambah</Text> untuk menambahkan Pemasukan</Text>
                     
