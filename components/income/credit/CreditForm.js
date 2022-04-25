@@ -27,7 +27,7 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
               onBlur={handleBlur('jumlah')}
               value={values.jumlah}
               style={styles.textInput}
-              placeholder='Jumlah Pinjaman'
+              placeholder='Jumlah Piutang'
               keyboardType='numeric'
               placeholderTextColor="#474747" 
             />
@@ -90,7 +90,7 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
               pickImageOnly(isUpdate, setImg)
             }}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>Unggah Bukti Pinjam</Text>   
+                    <Text style={{color:'#474747'}}>Unggah Bukti Piutang</Text>   
                     <MaterialIcons name="file-upload" size={24} color="black" />      
                 </View>                
             </TouchableOpacity>
@@ -104,7 +104,10 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
               <TouchableOpacity style={styles.btnSave} onPress={() => setModalTransaction(!modalTransaction)}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
+                setFieldValue('kategori', 'piutang')
+                handleSubmit()
+              }}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
               </TouchableOpacity>
             </View>

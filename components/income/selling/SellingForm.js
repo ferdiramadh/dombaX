@@ -56,8 +56,10 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
       console.log("Check COK selectedProduct")
     console.log(selectedProduct)
     // checkAvailability(values.jumlah)
+    setFieldValue('produk', selectedProduct.nama )
     setFieldValue('jumlah', '')
     if(selectedProduct.jumlah) {
+      console.log('setStokCount')
       setStokCount(true)
       
     }
@@ -222,6 +224,7 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
+                setFieldValue('kategori', 'penjualan')
                 updateSelectedProduct(selectedProduct, values)
                 handleSubmit()
               }}>
