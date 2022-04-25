@@ -7,6 +7,10 @@ import firebase from '../../Firebaseconfig'
 import SelectCategoryIncome from './SelectCategoryIncome';
 import SellingForm from './selling/SellingForm';
 import { uploadImageProduk } from '../../utils/ImageUpload';
+import CapitalForm from './capital/CapitalForm';
+import GrantForm from './grant/GrantForm'
+import LoanForm from './loan/LoanForm';
+import CreditForm from './credit/CreditForm';
 
 const IncomeForm = ({modalTransaction, setModalTransaction}) => {
     const dispatch = useDispatch();
@@ -33,6 +37,55 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
 
   })
 
+  const [ penambahanModal, setPenambahanModal ] = useState({
+      id: '',
+      kategori: 'penambahanModal',
+      bentukModal:'',
+      jumlah: '',
+      diberikanDari: '',
+      kepemilikanModal: '',
+      pajak:'',
+      tanggalMasuk: '',
+      deskripsi: '',
+      image: ''
+  })
+
+  const [ hibah, setHibah ] = useState({
+      id: '',
+      kategori: 'hibah',
+      bentukHibah:'',
+      jumlah: '',
+      diberikanDari: '',
+      pajak:'',
+      tanggalMasuk: '',
+      deskripsi: '',
+      image: ''
+  })
+
+  const [ pinjaman, setPinjaman ] = useState({
+      id: '',
+      kategori: 'pinjam',
+      jumlah: '',
+      pinjamDari: '',
+      bunga:'',
+      statusBayar: '',
+      tanggalPinjam: '',
+      deskripsi: '',
+      image: ''
+  })
+
+  const [ piutang, setPiutang ] = useState({
+    id: '',
+    kategori: 'piutang',
+    jumlah: '',
+    dipinjamKe: '',
+    bunga:'',
+    statusBayar: '',
+    tanggalPemberian: '',
+    deskripsi: '',
+    image: ''
+})
+
   const [initialData, setInitialData] = useState({})
 
   const initialDataFunction = () => {
@@ -40,6 +93,18 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
     if(category == 'penjualan'){
       let setData = Object.assign(initialData, penjualan)
       setInitialData(setData)
+      } else if (category == 'Penambahan Modal') {
+        let setData = Object.assign(initialData, penambahanModal)
+        setInitialData(setData)
+      } else if (category == 'Hibah') {
+        let setData = Object.assign(initialData, hibah)
+        setInitialData(setData)
+      } else if (category == 'Pinjaman') {
+        let setData = Object.assign(initialData, pinjaman)
+        setInitialData(setData)
+      } else if (category == 'Piutang') {
+        let setData = Object.assign(initialData, piutang)
+        setInitialData(setData)
       }
     // } else if(category == 'jenisPakan'){
     //   let z = Object.assign(test, pakanData)
@@ -109,6 +174,10 @@ useEffect(() => {
               </TouchableOpacity>
           </View>
           { category == 'Penjualan'? <SellingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
+          { category == 'Penambahan Modal'? <CapitalForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
+          { category == 'Hibah'? <GrantForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
+          { category == 'Pinjaman'? <LoanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
+          { category == 'Piutang'? <CreditForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
           <SelectCategoryIncome modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} setFieldValue={setFieldValue} setCategory={setCategory} />
 
           </ScrollView>
