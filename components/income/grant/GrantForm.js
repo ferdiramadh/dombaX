@@ -103,7 +103,7 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
-                setFieldValue('kategori', 'hibah')
+                setFieldValue('kategori', 'Hibah')
                 handleSubmit()
               }}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  

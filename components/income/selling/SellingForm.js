@@ -220,7 +220,7 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
-                setFieldValue('kategori', 'penjualan')
+                setFieldValue('kategori', 'Penjualan')
                 updateSelectedProduct(selectedProduct, values)
                 handleSubmit()
               }}>
