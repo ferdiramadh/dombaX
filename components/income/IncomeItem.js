@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
-import { color } from 'react-native-reanimated'
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
+import { formatToCurrencyLight } from '../../utils/FormatCurrency'
 
 const IncomeItem = ({item}) => {
 
@@ -55,7 +54,7 @@ const IncomeItem = ({item}) => {
             <Text style={{color: '#B3B3B3'}}>{itemDate}</Text>
         </View>
         <View style={styles.rightWrapper}>
-            <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{item.jumlah}</Text>
+            <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
             <Text style={{color: '#000'}}>{item.kategori}</Text>
             {item.kategori == 'Penjualan' || item.kategori == 'Pinjaman' || item.kategori == 'Piutang'?
             <View style={[styles.status, item.statusBayar == 'lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>

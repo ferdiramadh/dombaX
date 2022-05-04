@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import IncomeItem from './IncomeItem'
+import { formatTotalToCurrency } from '../../utils/FormatCurrency'
 
 const IncomeSection = ({listIncome}) => {
 
@@ -20,12 +21,20 @@ const IncomeSection = ({listIncome}) => {
     }
     
   }
+  function getSum(arr, type) {
+    return arr.reduce((total, obj) => {
+      if (typeof obj[type] === 'string') {
+        return total + Number(obj[type]);
+      }
+      return total + obj[type];
+    }, 0);
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.totalIncomeWrapper}>
         <Text style={styles.totalIncomeTitle}>Total Pemasukan</Text>
-        <Text style={styles.totalIncomeCount}>Rp. 50.000.000</Text>
+        <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listIncome, "jumlah"))}</Text>
       </View>
       
       <ScrollView >
