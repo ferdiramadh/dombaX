@@ -3,8 +3,35 @@ import { StyleSheet, TextInput, View, TouchableOpacity, Text, Image, Alert } fro
 import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    if(selectedDate){
+        const currentDate = selectedDate;
+        setShow(false);
+        setFieldValue('tanggalMasuk', selectedDate.toDateString())
+    } else {
+        console.log("eweuh")
+        setShow(false);
+        setFieldValue('tanggalMasuk', '')
+    }
+    
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
 
   const [ img, setImg ] = useState()
 
@@ -21,6 +48,15 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
+             {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChange}
+              />
+            )}
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.bentukHibah}
@@ -58,14 +94,12 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
               placeholder='Diberikan Dari'
               placeholderTextColor="#474747" 
             />
-            <TextInput
-              onChangeText={handleChange('tanggalMasuk')}
-              onBlur={handleBlur('tanggalMasuk')}
-              value={values.tanggalMasuk}
-              style={styles.textInput}
-              placeholder='Tanggal Modal Masuk'
-              placeholderTextColor="#474747" 
-            />
+            <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>{values.tanggalMasuk?values.tanggalMasuk:"Tanggal Hibah Masuk"}</Text>   
+                    <MaterialIcons name="date-range" size={24} color="black" />    
+                </View>                
+            </TouchableOpacity>
             <TextInput
               onChangeText={handleChange('pajak')}
               onBlur={handleBlur('pajak')}

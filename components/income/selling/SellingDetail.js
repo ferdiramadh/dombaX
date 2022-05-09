@@ -7,8 +7,22 @@ import { pickImageOnly, uploadImageProduk } from '../../../utils/ImageUpload'
 import { formatTotalToCurrency, formatToCurrencyLight } from '../../../utils/FormatCurrency';
 import { windowHeigth } from '../../../utils/DimensionSetup';
 import { windowWidth } from '../../stok/FilterStokModal';
+import {Picker} from '@react-native-picker/picker'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const SellingDetail = ({ editData, navigation }) => {
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
 
   const [data, setData] = useState(editData)
   const [isUpdate, setIsUpdate] = useState(false)
@@ -59,6 +73,24 @@ const SellingDetail = ({ editData, navigation }) => {
       >
         {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
           <View style={{justifyContent: 'center', alignItems:'center'}}>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date}
+                mode={mode}
+                is24Hour={true}
+                onChange={(event, selectedDate) => {
+                  if(selectedDate){
+                      setShow(false);
+                      setFieldValue('tanggalJual', selectedDate.toDateString())
+                  } else {
+                      console.log("eweuh")
+                      setShow(false);
+                      setFieldValue('tanggalJual', '')
+                  }           
+                }}
+              />
+            )}
           <View style={[styles.container, isUpdate? {height: windowHeigth*.7}: {height: windowHeigth*.35}]}>
             <View style={styles.upperSection}>
               <Text style={styles.titlePage}>{data.kategori}</Text>
@@ -70,11 +102,13 @@ const SellingDetail = ({ editData, navigation }) => {
                 {isUpdate ? <MaterialIcons name="cancel" size={24} color="black" /> : <MaterialCommunityIcons name="pencil-outline" size={24} color="black" />}
               </TouchableOpacity>
             </View>
+            { !isUpdate? 
             <View style={styles.upperImageSection}>
               <Image source={require('../../../assets/images/purchasingcategory/Sell.png')} style={styles.img} resizeMode='contain'/>
               <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(parseInt(data.jumlah))}</Text>
-            </View>
-            <ScrollView style={styles.containerScroll}>           
+            </View> : null}
+            <ScrollView style={styles.containerScroll}>       
+            <View>  
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Nama Produk</Text>
               {isUpdate ? <TextInput
@@ -132,23 +166,56 @@ const SellingDetail = ({ editData, navigation }) => {
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Tanggal Jual</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('tanggalJual')}
-                onBlur={handleBlur('tanggalJual')}
-                value={values.tanggalJual}
-                style={styles.textInput}
-                placeholder='Tanggal Jual'
-              /> : <Text style={styles.itemText}>{data.tanggalJual}</Text>}
+              {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>{values.tanggalJual?values.tanggalJual:"Tanggal Terjual"}</Text>   
+                    <MaterialIcons name="date-range" size={24} color="black" />    
+                </View>                
+            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggalJual}</Text>}
+            </View>
+            <View style={styles.itemWrap}>
+              <Text style={styles.subTitle}>Status Bayar</Text>
+              {isUpdate ? <View style={styles.pickerContainer}>
+                <Picker
+                    selectedValue={values.statusBayar}
+                    onValueChange={(itemValue, itemIndex) =>
+                    {
+                      setFieldValue('statusBayar',itemValue)
+                    }
+                    }
+                    style={{
+                      fontSize: 22,
+                      fontWeight:'bold',
+                      color: 'black',
+                    }}
+                    prompt="Status Bayar"
+                    >
+                    <Picker.Item label="Lunas" value="lunas" />
+                    <Picker.Item label="Belum Lunas" value="belumlunas" />
+                </Picker>
+            </View> : null }
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Tipe Pembayaran</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('tipePembayaran')}
-                onBlur={handleBlur('tipePembayaran')}
-                value={values.tipePembayaran}
-                style={styles.textInput}
-                placeholder='Tipe Pembayaran'
-              /> : <Text style={styles.itemText}>{data.tipePembayaran}</Text>}
+              {isUpdate ? <View style={styles.pickerContainer}>
+                <Picker
+                    selectedValue={values.tipeBayar}
+                    onValueChange={(itemValue, itemIndex) =>
+                    {
+                      setFieldValue('tipeBayar',itemValue)
+                    }
+                    }
+                    style={{
+                      fontSize: 22,
+                      fontWeight:'bold',
+                      color: 'black',
+                    }}     
+                    prompt="Tipe Pembayaran"
+                    >
+                    <Picker.Item label="Tunai" value="tunai" />
+                    <Picker.Item label="Tempo" value="tempo" />
+                </Picker>
+            </View> : <Text style={styles.itemText}>{data.tipePembayaran}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Batas Bayar</Text>
@@ -170,6 +237,7 @@ const SellingDetail = ({ editData, navigation }) => {
                 placeholder='Deskripsi'
               /> : <Text style={styles.itemText}>{data.deskripsi}</Text>}
             </View>
+            </View>  
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
               {values.image && isUpdate ?
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
@@ -349,5 +417,13 @@ const styles = StyleSheet.create({
       fontFamily: 'Inter',
       fontWeight: 'bold',
       fontSize: 20,
-  }
+  },
+  pickerContainer:{
+   backgroundColor:'#DFE1E0',
+   width:'100%',
+   height:50,                       
+   justifyContent:'center', 
+   paddingLeft:10,
+   marginVertical:10
+ },
 })

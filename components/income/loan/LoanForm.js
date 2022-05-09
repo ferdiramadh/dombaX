@@ -3,8 +3,34 @@ import { StyleSheet, TextInput, View, TouchableOpacity, Text, Image, Alert } fro
 import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const LoanForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    if(selectedDate){
+        const currentDate = selectedDate;
+        setShow(false);
+        setFieldValue('tanggalPinjam', selectedDate.toDateString())
+    } else {
+        console.log("eweuh")
+        setShow(false);
+        setFieldValue('tanggalPinjam', '')
+    }
+    
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
 
   const [ img, setImg ] = useState()
 
@@ -21,6 +47,15 @@ const LoanForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,mo
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChange}
+              />
+            )}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('jumlah')}
@@ -39,14 +74,12 @@ const LoanForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,mo
               placeholder='Pinjam Dari'
               placeholderTextColor="#474747" 
             />
-            <TextInput
-              onChangeText={handleChange('tanggalPinjam')}
-              onBlur={handleBlur('tanggalPinjam')}
-              value={values.tanggalPinjam}
-              style={styles.textInput}
-              placeholder='Tanggal Pinjam'
-              placeholderTextColor="#474747" 
-            />
+            <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>{values.tanggalPinjam?values.tanggalPinjam:"Tanggal Pinjam"}</Text>   
+                    <MaterialIcons name="date-range" size={24} color="black" />    
+                </View>                
+            </TouchableOpacity>
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.statusBayar}

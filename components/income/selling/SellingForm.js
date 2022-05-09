@@ -5,8 +5,34 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import SelectProductModal from './SelectProductModal';
 import firebase from '../../../Firebaseconfig'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
+
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    if(selectedDate){
+        const currentDate = selectedDate;
+        setShow(false);
+        setFieldValue('tanggalJual', selectedDate.toDateString())
+    } else {
+        console.log("eweuh")
+        setShow(false);
+        setFieldValue('tanggalJual', '')
+    }
+    
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
 
   const [ img, setImg ] = useState()
   const [modalProductVisible, setModalProductVisible] = useState(false);
@@ -83,6 +109,15 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChange}
+              />
+            )}
             <TouchableOpacity style={styles.textInput} onPress={() => setModalProductVisible(!modalProductVisible)} >
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                 <Text style={{color:'#474747'}}>{selectedProduct.nama}</Text>   
@@ -138,14 +173,12 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
               keyboardType='numeric'
               placeholderTextColor="#474747" 
             />
-            <TextInput
-              onChangeText={handleChange('tanggalJual')}
-              onBlur={handleBlur('tanggalJual')}
-              value={values.tanggalJual}
-              style={styles.textInput}
-              placeholder='Tanggal Terjual'
-              placeholderTextColor="#474747" 
-            />
+            <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>{values.tanggalJual?values.tanggalJual:"Tanggal Terjual"}</Text>   
+                    <MaterialIcons name="date-range" size={24} color="black" />    
+                </View>                
+            </TouchableOpacity>
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.statusBayar}
