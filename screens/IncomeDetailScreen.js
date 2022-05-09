@@ -8,6 +8,7 @@ import FeedProductDetail from '../components/selectedproduct/FeedProductDetail';
 import DrugSuplementProductDetail from '../components/selectedproduct/DrugSuplementProductDetail';
 import { MaterialIcons } from '@expo/vector-icons';
 import { deleteFile, deleteCollection } from '../utils/ImageUpload';
+import IncomeDetails from '../components/income/IncomeDetails';
 
 const IncomeDetailScreen = ({ route }) => {
   const { editData, navigation } = route.params;
@@ -62,7 +63,8 @@ const deleteCollectionAndFile = (editData) => {
         </TouchableOpacity>
         
       </View>
-      <SellingDetail editData={editData} navigation={navigation}/>
+      {/* <SellingDetail editData={editData} navigation={navigation}/> */}
+      <IncomeDetails editData={editData} navigation={navigation}/>
       {/* {editData.tipe == "tambahproduk"?<UserProductDetail editData={editData} navigation={navigation}/>:null }
       {editData.tipe == "domba"?<LivestockProductDetail editData={editData} navigation={navigation}/>:null }
       {editData.tipe == "pakan"?<FeedProductDetail editData={editData} navigation={navigation}/>:null }
