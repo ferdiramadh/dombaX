@@ -12,9 +12,11 @@ import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../Firebaseconfig'
 import NumberFormat from 'react-number-format';
 import { StatusBar } from 'expo-status-bar'
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function LaporanScreen() {
+    const navigation = useNavigation();
     const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
     const [isProfit, setIsProfit] = useState(true)
@@ -352,23 +354,28 @@ export default function LaporanScreen() {
 
     }
 
-    useEffect(() => {
-        const backAction = () => {
-          Alert.alert('Perhatian!', 'Anda yakin ingin keluar aplikasi?', [
-            {
-              text: 'Batal',
-              onPress: () => null,
-              style: 'batal',
-            },
-            { text: 'YA', onPress: () => BackHandler.exitApp() },
-          ]);
-          return true;
-        };
-    
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-    
-        return () => backHandler.remove();
-      }, []);
+    // useEffect(() => {
+       
+    //         const backAction = () => {
+    //             Alert.alert('Perhatian!', 'Anda yakin ingin keluar aplikasi?', [
+    //               {
+    //                 text: 'Batal',
+    //                 onPress: () => null,
+    //                 style: 'batal',
+    //               },
+    //               { text: 'YA', onPress: () => BackHandler.exitApp() },
+    //             ]);
+    //             return true;
+    //           };
+          
+                
+                
+    //                 const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    //                 return () => backHandler.remove();
+                
+              
+ 
+    //   }, []);
 
 
 
@@ -453,7 +460,7 @@ export default function LaporanScreen() {
             
 
                 <CustomButton onPress={
-                   () => console.log(isProfit)
+                   () => console.log(navigation.getState())
             //         () => {
             //         if(uid !== "undefined"){
             //             loadDataPakan()

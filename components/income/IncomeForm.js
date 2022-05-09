@@ -24,6 +24,7 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
       kategori: 'penjualan',
       produk:'',
       jumlah: '',
+      jumlahProduk: '',
       hargaJual: '',
       pembeli: '',
       diskon: '',

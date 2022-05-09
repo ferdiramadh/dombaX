@@ -30,7 +30,7 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
     let jml = parseInt(selectedProduct.jumlah) 
     if( num > jml) {
       Alert.alert('Perhatian', 'Item Melebihi Ketersediaan Stok Saat Ini');
-      setFieldValue('jumlah', selectedProduct.jumlah);
+      setFieldValue('jumlahProduk', selectedProduct.jumlah);
      }     
     }
   }
@@ -41,7 +41,7 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
       .collection("userproduk")
       .doc(selectedProduct.id)
       .update({
-        "jumlah": (parseInt(selectedProduct.jumlah) - parseInt(formValues.jumlah)).toString()
+        "jumlah": (parseInt(selectedProduct.jumlah) - parseInt(formValues.jumlahProduk)).toString()
       }).then(() => {
         console.log('Item Updated')
       }).catch((error) => console.log(error))
@@ -73,8 +73,8 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
     if(selectedProduct.jumlah && values !== 'undefined') {
       
       console.log("Check jumlah")
-    console.log(values.jumlah)
-    checkAvailability(values.jumlah)
+    console.log(values.jumlahProduk)
+    checkAvailability(values.jumlahProduk)
     } else {
       console.log("Check Values")
       console.log(values)
@@ -95,9 +95,9 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
             </View>: null}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
-              onChangeText={handleChange('jumlah')}
-              onBlur={handleBlur('jumlah')}
-              value={values.jumlah}
+              onChangeText={handleChange('jumlahProduk')}
+              onBlur={handleBlur('jumlahProduk')}
+              value={values.jumlahProduk}
               style={styles.textInput}
               placeholder='Jumlah'
               keyboardType='numeric'
@@ -221,6 +221,7 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
                 setFieldValue('kategori', 'Penjualan')
+                setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
                 updateSelectedProduct(selectedProduct, values)
                 handleSubmit()
               }}>

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-native'
 import NumberFormat from 'react-number-format';
 import { useSelector} from 'react-redux'
-import { Feather } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible}) => {
@@ -68,7 +68,7 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                         {isTransaction? null :
                         <View style={styles.buttonSection}>
                             <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
-                                <Feather name="trash-2" size={24} color="black" />
+                                <MaterialIcons name="delete" size={24} color="black" />
                             </TouchableOpacity>
                             {/* <TouchableOpacity style={{marginLeft:10}} onPress={() => editItem(item)}>
                                 <Feather name="edit" size={24} color="black" />

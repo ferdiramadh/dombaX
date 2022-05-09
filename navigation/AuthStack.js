@@ -9,6 +9,7 @@ import AccountScreen from '../screens/AccountScreen'
 import RegisterProfileScreen from '../screens/RegisterProfileScreen';
 import SelectProductType from '../screens/SelectProductType';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
+import IncomeDetailScreen from '../screens/IncomeDetailScreen';
 
 
 const Stack = createStackNavigator();
@@ -45,6 +46,14 @@ const AuthStack = ({isSignUp}) => {
         }}/>
         <Stack.Screen name="DetailProduct" component={ProductDetailScreen} options={{
           title: "Rincian Produk",
+          headerTitleStyle:{
+            fontFamily:'Baloo',
+            fontSize: 26,
+         
+          }
+        }}/>
+        <Stack.Screen name="IncomeDetail" component={IncomeDetailScreen} options={{
+          title: "Rincian Transaksi",
           headerTitleStyle:{
             fontFamily:'Baloo',
             fontSize: 26,

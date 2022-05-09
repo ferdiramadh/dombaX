@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import { formatToCurrencyLight } from '../../utils/FormatCurrency'
 
-const IncomeItem = ({item}) => {
+const IncomeItem = ({item, editItem}) => {
 
     const purchaseCategoryIcon = 
         {
@@ -36,7 +36,7 @@ const IncomeItem = ({item}) => {
         //   console.log(date, atTime);
     
   return (
-    <TouchableOpacity key={item.id} style={styles.container} onPress={() => console.log(item)}>
+    <TouchableOpacity key={item.id} style={styles.container} onPress={() => editItem(item)}>
         <View style={styles.iconWrapper}>
             {item.kategori == 'Penjualan'?<Image source={purchaseCategoryIcon.penjualan} style={styles.img} resizeMode='contain'/>: null  }
             {item.kategori == 'Penambahan Modal'?<Image source={purchaseCategoryIcon.modal} style={styles.img} resizeMode='contain'/>: null  }
@@ -56,7 +56,7 @@ const IncomeItem = ({item}) => {
         <View style={styles.rightWrapper}>
             <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
             <Text style={{color: '#000'}}>{item.kategori}</Text>
-            {item.kategori == 'Penjualan' || item.kategori == 'Pinjaman' || item.kategori == 'Piutang'?
+            {(item.kategori == 'Penjualan' || item.kategori == 'Pinjaman' || item.kategori == 'Piutang') && item.statusBayar !== 'status'?
             <View style={[styles.status, item.statusBayar == 'lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>
                 <Text style={styles.statusText}>{item.statusBayar == 'lunas'?'Lunas': 'Belum Lunas'}</Text>
             </View>: null}
