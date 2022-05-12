@@ -4,7 +4,7 @@ import { formatToCurrencyLight } from '../../../utils/FormatCurrency'
 import { MaterialIcons } from '@expo/vector-icons';
 import {Picker} from '@react-native-picker/picker'
 
-const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange}) => {
+const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue}) => {
   return (
     <View>
       <View style={styles.itemWrap}>
@@ -71,9 +71,9 @@ const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                 </View>                
             </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggalJual}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            {isUpdate ? <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Status Bayar</Text>
-              {isUpdate ? <View style={styles.pickerContainer}>
+              <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.statusBayar}
                     onValueChange={(itemValue, itemIndex) =>
@@ -88,19 +88,19 @@ const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                     }}
                     prompt="Status Bayar"
                     >
-                    <Picker.Item label="Lunas" value="lunas" />
-                    <Picker.Item label="Belum Lunas" value="belumlunas" />
+                    <Picker.Item label="Lunas" value="Lunas" />
+                    <Picker.Item label="Belum Lunas" value="Belum Lunas" />
                 </Picker>
-            </View> : null }
-            </View>
+            </View> 
+            </View>: null }
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Tipe Pembayaran</Text>
               {isUpdate ? <View style={styles.pickerContainer}>
                 <Picker
-                    selectedValue={values.tipeBayar}
+                    selectedValue={values.tipePembayaran}
                     onValueChange={(itemValue, itemIndex) =>
                     {
-                      setFieldValue('tipeBayar',itemValue)
+                      setFieldValue('tipePembayaran',itemValue)
                     }
                     }
                     style={{
@@ -110,8 +110,8 @@ const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                     }}     
                     prompt="Tipe Pembayaran"
                     >
-                    <Picker.Item label="Tunai" value="tunai" />
-                    <Picker.Item label="Tempo" value="tempo" />
+                    <Picker.Item label="Tunai" value="Tunai" />
+                    <Picker.Item label="Tempo" value="Tempo" />
                 </Picker>
             </View> : <Text style={styles.itemText}>{data.tipePembayaran}</Text>}
             </View>

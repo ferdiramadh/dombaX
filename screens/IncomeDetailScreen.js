@@ -48,7 +48,7 @@ const deleteCollectionAndFile = (editData) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={{marginLeft:10, position: 'absolute', top: 10, right: 10}} onPress={() => console.log(editData)}>
+      <TouchableOpacity style={{marginLeft:10, position: 'absolute', top: 10, right: 10}} onPress={() => deleteItem(editData)}>
           <MaterialIcons name="delete" size={24} color="black" />
       </TouchableOpacity>
       <View style={styles.iconContainer}>

@@ -57,8 +57,8 @@ const IncomeItem = ({item, editItem}) => {
             <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
             <Text style={{color: '#000'}}>{item.kategori}</Text>
             {(item.kategori == 'Penjualan' || item.kategori == 'Pinjaman' || item.kategori == 'Piutang') && item.statusBayar !== 'status'?
-            <View style={[styles.status, item.statusBayar == 'lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>
-                <Text style={styles.statusText}>{item.statusBayar == 'lunas'?'Lunas': 'Belum Lunas'}</Text>
+            <View style={[styles.status, item.statusBayar == 'Lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>
+                <Text style={styles.statusText}>{item.statusBayar == 'Lunas'?'Lunas': 'Belum Lunas'}</Text>
             </View>: null}
         </View>
     </TouchableOpacity>

@@ -194,16 +194,16 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                     }} 
                     >
                     <Picker.Item label="Status Bayar" value="status" style={{color:"#ED9B83"}}/>
-                    <Picker.Item label="Lunas" value="lunas" />
-                    <Picker.Item label="Belum Lunas" value="belumlunas" />
+                    <Picker.Item label="Lunas" value="Lunas" />
+                    <Picker.Item label="Belum Lunas" value="Belum Lunas" />
                 </Picker>
             </View>
             <View style={styles.pickerContainer}>
                 <Picker
-                    selectedValue={values.tipeBayar}
+                    selectedValue={values.tipePembayaran}
                     onValueChange={(itemValue, itemIndex) =>
                     {
-                      setFieldValue('tipeBayar',itemValue)
+                      setFieldValue('tipePembayaran',itemValue)
                     }
                     }
                     style={{
@@ -213,8 +213,8 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                     }}     
                     >
                     <Picker.Item label="Tipe Pembayaran" value="status" style={{color:"#ED9B83"}}/>
-                    <Picker.Item label="Tunai" value="tunai" />
-                    <Picker.Item label="Tempo" value="tempo" />
+                    <Picker.Item label="Tunai" value="Tunai" />
+                    <Picker.Item label="Tempo" value="Tempo" />
                 </Picker>
             </View>
             <TextInput

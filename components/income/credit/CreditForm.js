@@ -95,8 +95,8 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
                     }}                    
                     >
                     <Picker.Item label="Status Bayar" value="status" style={{color:"#ED9B83"}}/>
-                    <Picker.Item label="Lunas" value="lunas" />
-                    <Picker.Item label="Belum Lunas" value="belumlunas" />
+                    <Picker.Item label="Lunas" value="Lunas" />
+                    <Picker.Item label="Belum Lunas" value="Belum Lunas" />
                 </Picker>
             </View>
             <TextInput

@@ -72,8 +72,8 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
                     }}
                     >
                     <Picker.Item label="Bentuk Hibah" value="status" style={{color:"#ED9B83"}}/>
-                    <Picker.Item label="Uang" value="uang" />
-                    <Picker.Item label="Barang" value="barang" />
+                    <Picker.Item label="Uang" value="Uang" />
+                    <Picker.Item label="Barang" value="Barang" />
                 </Picker>
             </View>
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>

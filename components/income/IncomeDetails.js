@@ -9,6 +9,10 @@ import { windowHeigth } from '../../utils/DimensionSetup';
 import { windowWidth } from '../stok/FilterStokModal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SellingDetail from './selling/SellingDetail';
+import CapitalDetail from './capital/CapitalDetail';
+import CreditDetail from './credit/CreditDetail';
+import GrantDetail from './grant/GrantDetail';
+import LoanDetail from './loan/LoanDetail';
 
 const IncomeDetails = ({ editData, navigation }) => {
 
@@ -122,7 +126,11 @@ const IncomeDetails = ({ editData, navigation }) => {
               <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(parseInt(data.jumlah))}</Text>
             </View> : null}
             <ScrollView style={styles.containerScroll}>      
-            {data.kategori == 'Penjualan'?<SellingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange}/> : null  }  
+            {data.kategori == 'Penjualan'?<SellingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Penambahan Modal'?<CapitalDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Piutang'?<CreditDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Hibah'?<GrantDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Pinjaman'?<LoanDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
               {values.image && isUpdate ?
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
@@ -145,8 +153,11 @@ const IncomeDetails = ({ editData, navigation }) => {
                 </TouchableOpacity>
               </View> : null}
               {isUpdate?<TouchableOpacity style={[styles.btnSave, { backgroundColor: '#ED9B83' }]} onPress={() => {
+                if(data.kategori == "Penjualan") {
                 setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
-                handleSubmit()
+                handleSubmit() } else {
+                  handleSubmit()
+                }
               }}>
                 <Text style={{ fontSize: 18, fontWeight: '700', textAlign: 'center', color: '#FFF' }}>Update</Text>
               </TouchableOpacity>:null}
@@ -182,7 +193,7 @@ const IncomeDetails = ({ editData, navigation }) => {
             </View>
             { data.statusBayar !== 'status' && data.statusBayar && !isUpdate ? 
             <View style={styles.statusBayarSection}>
-            <Text style={[styles.statusText, data.statusBayar == 'lunas'?{color:'#43B88E'}:{color:'#EB3223'}]}>{data.statusBayar == 'lunas'?'Lunas': 'Belum Lunas'}</Text>
+            <Text style={[styles.statusText, data.statusBayar == 'Lunas'?{color:'#43B88E'}:{color:'#EB3223'}]}>{data.statusBayar == 'Lunas'?'Lunas': 'Belum Lunas'}</Text>
             </View>: null}
                         
             { data.image && data.image !== '' && !isUpdate ?<Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, marginTop: 10 }} />:null}
