@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, View,TouchableOpacity , ScrollView} from 'react-native'
 import { useSelector} from 'react-redux'
 import IncomeSection from './IncomeSection'
 
-const Income = () => {
+const Income = ({searchList,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading}) => {
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listIncome = transactionsData.listIncome
+
+
     return (
         <View style={styles.container}>
             <View style={styles.insideContainer}>
-                { listIncome.length > 0? <IncomeSection listIncome={listIncome} /> :
+                { listIncome.length > 0? <IncomeSection listIncome={listIncome} searchList={searchList} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading}/> :
                 <View style={styles.emptyPurchaseNotif}>
                     <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{fontWeight:'bold'}}>tombol tambah</Text> untuk menambahkan Pemasukan</Text>
                     
