@@ -153,9 +153,18 @@ const IncomeDetails = ({ editData, navigation }) => {
                 </TouchableOpacity>
               </View> : null}
               {isUpdate?<TouchableOpacity style={[styles.btnSave, { backgroundColor: '#ED9B83' }]} onPress={() => {
-                if(data.kategori == "Penjualan") {
-                setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
-                handleSubmit() } else {
+                if (values.jumlahProduk == '' || values.jumlahProduk == "0" || values.hargaJual == "" || values.hargaJual == '0' && data.kategori == "Penjualan") {
+                  Alert.alert(
+                    "Perhatian!",
+                    `Jumlah dan Harga Jual Harus Lebih Dari 0!`)
+                }else if(values.jumlah == '' || values.jumlah == '0' && data.kategori !== 'Penjualan') {
+                  Alert.alert(
+                    "Perhatian!",
+                    `Jumlah Harus Lebih Dari 0!`)
+                } else if( data.kategori == "Penjualan" ) {
+                  setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
+                  handleSubmit() } 
+                  else {
                   handleSubmit()
                 }
               }}>

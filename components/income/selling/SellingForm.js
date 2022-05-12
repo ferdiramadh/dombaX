@@ -253,10 +253,24 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
-                setFieldValue('kategori', 'Penjualan')
-                setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
-                updateSelectedProduct(selectedProduct, values)
-                handleSubmit()
+                console.log(values)
+                if( !values.produk ) {
+                  Alert.alert(
+                    "Perhatian!",
+                    `Pilih Produk Dahulu!`)
+                }
+                else if(!values.jumlahProduk || !values.hargaJual || values.jumlahProduk == '' || values.jumlahProduk == "0" || values.hargaJual == "" || values.hargaJual == '0') {
+                  Alert.alert(
+                    "Perhatian!",
+                    `Jumlah dan Harga Jual Harus Lebih Dari 0!`)
+                } else {
+                  
+                  setFieldValue('kategori', 'Penjualan')
+                  setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
+                  updateSelectedProduct(selectedProduct, values)
+                  handleSubmit()
+                }
+                
               }}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
               </TouchableOpacity>

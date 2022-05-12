@@ -4,8 +4,8 @@ import { useSelector} from 'react-redux'
 import IncomeSection from './IncomeSection'
 
 const Income = () => {
-    const transactionSData = useSelector(state => state.transactionsReducer)
-    const listIncome = transactionSData.listIncome
+    const transactionsData = useSelector(state => state.transactionsReducer)
+    const listIncome = transactionsData.listIncome
     return (
         <View style={styles.container}>
             <View style={styles.insideContainer}>

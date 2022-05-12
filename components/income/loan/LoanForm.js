@@ -136,8 +136,14 @@ const LoanForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,mo
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
+                if (!values.jumlah || values.jumlah == '' || values.jumlah == "0") {
+                  Alert.alert(
+                    "Perhatian!",
+                    `Jumlah Harus Lebih Dari 0!`)
+                } else {
                 setFieldValue('kategori', 'Pinjaman')
                 handleSubmit()
+                }
               }}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
               </TouchableOpacity>
