@@ -142,7 +142,7 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
                     "Perhatian!",
                     `Jumlah Harus Lebih Dari 0!`)
                 } else {
-                setFieldValue('kategori', 'Pinjaman')
+                setFieldValue('kategori', 'Hibah')
                 handleSubmit()
                 }
               }}>

@@ -141,7 +141,7 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
                     "Perhatian!",
                     `Jumlah Harus Lebih Dari 0!`)
                 } else {
-                setFieldValue('kategori', 'Pinjaman')
+                setFieldValue('kategori', 'Piutang')
                 handleSubmit()
                 }
               }}>

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PhotoContext } from '../context/PhotoProfileContext';
 import { MaterialIcons } from '@expo/vector-icons';
 import {useSelector} from 'react-redux'
+import { windowHeigth } from '../utils/DimensionSetup'
 
 var FONT_NORMAL = 48
 
@@ -30,7 +31,7 @@ const CustomHeder = (props) => {
                         }} disabled={true}><Text style={[styles.subMenuTitle,props.styleFont]} >{props.leftSubMenu || props.descProfile}</Text></TouchableOpacity>
                     </View>
                     <View style={[{width:'10%', flexDirection:'column', justifyContent:'center',alignItems:'center'},props.home?{display:'none'}:null]}>
-                        <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Simulasi' || props.leftSubMenu == 'Laporan' || props.leftSubMenu == 'Stok' || props.descProfile?'':'|'}</Text>
+                        <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Transaksi' || props.leftSubMenu == 'Laporan' || props.leftSubMenu == 'Stok' || props.descProfile?'':'|'}</Text>
                     </View>
 
                     <View style={[styles.leftSideSubMenus]}>
@@ -63,7 +64,7 @@ export default CustomHeder
 const styles = StyleSheet.create({
     container:{
         width:'100%',
-        height:80,
+        height:windowHeigth*.08,
         backgroundColor:'#fff',
         position:'absolute',
         top:20,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
     },
     subMenuTitle:{
-        fontSize:FONT_NORMAL,
+        fontSize:48,
         fontFamily:'Baloo',
         borderBottomColor: 'transparent', // Add this to specify bottom border color
         borderBottomWidth: 3 // Add this to specify bottom border thickness

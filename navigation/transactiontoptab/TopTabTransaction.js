@@ -2,6 +2,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Income from '../../components/income/Income'
 import { useContext } from 'react';
 import { PhotoContext } from '../../context/PhotoProfileContext';
+import Expense from '../../components/expense/Expense';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -25,7 +26,7 @@ function TopTabTransaction({listIncome,searchItems, isSearch, searchKeyword, isF
       }}
       children={() => <Income searchList={searchList} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading}/>}
       />
-      <Tab.Screen name="Pengeluaran" component={Income} listeners={{
+      <Tab.Screen name="Pengeluaran" component={Expense} listeners={{
         tabPress: () => {
           console.log(listIncome)
           setTopTabTransactionFocus('Expense')

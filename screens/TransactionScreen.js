@@ -34,19 +34,23 @@ const TransactionScreen = () => {
     const filterList = [
       {
         id: 1,
-        sortBy: 'Stok Terendah',
+        sortBy: 'Hari Ini',
       },
       {
         id: 2,
-        sortBy: 'Stok Tertinggi',
+        sortBy: '7 Hari Terakhir',
       },
       {
         id: 3,
-        sortBy: 'Harga Beli Terendah',
+        sortBy: '30 Hari Terakhir',
       },
       {
         id: 4,
-        sortBy: 'Harga Beli Tertinggi',
+        sortBy: 'Bulan Ini',
+      },
+      {
+        id: 5,
+        sortBy: 'Pilih Tanggal',
       }
     ]
     const [ filterBy, setFilterBy ] = useState();
@@ -84,7 +88,7 @@ const TransactionScreen = () => {
 
     return (
         <View style={styles.container}>
-            <CustomHeder leftSubMenu='Transaksi' styleFont={{fontSize:24}} state={purchasing} setState={setPurchasing}/>     
+            <CustomHeder leftSubMenu='Transaksi' styleFont={{fontSize:48}} state={purchasing} setState={setPurchasing}/>     
             <View style={{marginTop:100, width:windowWidth, height:windowHeigth * .8 }}>
                 <View style={{flex: 1, width: windowWidth}}>
 

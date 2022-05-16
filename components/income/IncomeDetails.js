@@ -5,8 +5,7 @@ import { MaterialIcons, MaterialCommunityIcons, AntDesign, FontAwesome } from '@
 import firebase from '../../Firebaseconfig'
 import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload'
 import { formatTotalToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency';
-import { windowHeigth } from '../../utils/DimensionSetup';
-import { windowWidth } from '../stok/FilterStokModal';
+import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SellingDetail from './selling/SellingDetail';
 import CapitalDetail from './capital/CapitalDetail';
@@ -230,7 +229,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     marginBottom: 10,
-    width: windowWidth*.9
+    width: windowWidth*.9,
+    marginBottom: windowHeigth*.3
+  
   },
   containerScroll:{
     padding: 10,
