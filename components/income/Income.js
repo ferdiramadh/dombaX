@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { StyleSheet, Text, View,TouchableOpacity , ScrollView} from 'react-native'
 import { useSelector} from 'react-redux'
 import IncomeSection from './IncomeSection'
+import { windowHeigth } from '../../utils/DimensionSetup'
 
 const Income = ({searchList,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading}) => {
     const transactionsData = useSelector(state => state.transactionsReducer)
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
         // padding:10,
         // backgroundColor:'purple',
         width:'100%',
+        // height: windowHeigth
        
     },
     insideContainer:{
