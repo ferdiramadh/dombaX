@@ -19,6 +19,16 @@ const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
 
             </View>
             <View style={styles.itemWrap}>
+              <Text style={styles.subTitle}>Nama Transaksi</Text>
+              {isUpdate ? <TextInput
+                onChangeText={handleChange('namaTransaksi')}
+                onBlur={handleBlur('namaTransaksi')}
+                value={values.namaTransaksi}
+                style={styles.textInput}
+                placeholder='Nama Transaksi'
+              /> : <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
+            </View>
+            <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Jumlah</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('jumlahProduk')}
@@ -66,10 +76,10 @@ const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
               <Text style={styles.subTitle}>Tanggal Jual</Text>
               {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggalJual?values.tanggalJual:"Tanggal Terjual"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Terjual"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
-            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggalJual}</Text>}
+            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggal}</Text>}
             </View>
             {isUpdate ? <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Status Bayar</Text>
@@ -117,13 +127,12 @@ const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Batas Bayar</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('batasBayar')}
-                onBlur={handleBlur('batasBayar')}
-                value={values.batasBayar}
-                style={styles.textInput}
-                placeholder='Batas Bayar'
-              /> : <Text style={styles.itemText}>{data.batasBayar}</Text>}
+              {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>{values.batasBayar?values.batasBayar:"Batas Bayar"}</Text>   
+                    <MaterialIcons name="date-range" size={24} color="black" />    
+                </View>                
+            </TouchableOpacity> : <Text style={styles.itemText}>{data.batasBayar}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Deskripsi</Text>

@@ -14,11 +14,11 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
     if(selectedDate){
         const currentDate = selectedDate;
         setShow(false);
-        setFieldValue('tanggalMasuk', selectedDate.toDateString())
+        setFieldValue('tanggal', selectedDate.toDateString())
     } else {
         console.log("eweuh")
         setShow(false);
-        setFieldValue('tanggalMasuk', '')
+        setFieldValue('tanggal', '')
     }
     
   };
@@ -57,6 +57,14 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
                 onChange={onChange}
               />
             )}
+            <TextInput
+              onChangeText={handleChange('namaTransaksi')}
+              onBlur={handleBlur('namaTransaksi')}
+              value={values.namaTransaksi}
+              style={styles.textInput}
+              placeholder='Nama Transaksi'
+              placeholderTextColor="#474747" 
+            />
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.bentukHibah}
@@ -96,7 +104,7 @@ const GrantForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,m
             />
             <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggalMasuk?values.tanggalMasuk:"Tanggal Hibah Masuk"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Hibah Masuk"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>

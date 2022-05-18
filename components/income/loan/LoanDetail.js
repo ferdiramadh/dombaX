@@ -7,6 +7,16 @@ const LoanDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleC
   return (
     <View>
             <View style={styles.itemWrap}>
+              <Text style={styles.subTitle}>Nama Transaksi</Text>
+              {isUpdate ? <TextInput
+                onChangeText={handleChange('namaTransaksi')}
+                onBlur={handleBlur('namaTransaksi')}
+                value={values.namaTransaksi}
+                style={styles.textInput}
+                placeholder='Nama Transaksi'
+              /> : <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
+            </View>
+            <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Jumlah</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('jumlah')}
@@ -31,10 +41,10 @@ const LoanDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleC
               <Text style={styles.subTitle}>Tanggal Pinjam</Text>
               {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggalPinjam?values.tanggalPinjam:"Tanggal Pinjam"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Pinjam"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
-            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggalPinjam}</Text>}
+            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggal}</Text>}
             </View>
             {isUpdate ? <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Status Bayar</Text>

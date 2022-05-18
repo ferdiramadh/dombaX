@@ -21,7 +21,8 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
 
     const [ penjualan, setPenjualan ] = useState({
       id: '',
-      kategori: 'penjualan',
+      kategori: '',
+      namaTransaksi: '',
       produk:'',
       jumlah: '',
       jumlahProduk: '',
@@ -29,7 +30,7 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
       pembeli: '',
       diskon: '',
       pajak:'',
-      tanggalJual: '',
+      tanggal: '',
       statusBayar: '',
       tipePembayaran: '',
       batasBayar: '',
@@ -40,49 +41,53 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
 
   const [ penambahanModal, setPenambahanModal ] = useState({
       id: '',
-      kategori: 'penambahanModal',
+      kategori: '',
+      namaTransaksi: '',
       bentukModal:'',
       jumlah: '',
       diberikanDari: '',
       kepemilikanModal: '',
       pajak:'',
-      tanggalMasuk: '',
+      tanggal: '',
       deskripsi: '',
       image: ''
   })
 
   const [ hibah, setHibah ] = useState({
       id: '',
-      kategori: 'hibah',
+      kategori: '',
+      namaTransaksi: '',
       bentukHibah:'',
       jumlah: '',
       diberikanDari: '',
       pajak:'',
-      tanggalMasuk: '',
+      tanggal: '',
       deskripsi: '',
       image: ''
   })
 
   const [ pinjaman, setPinjaman ] = useState({
       id: '',
-      kategori: 'pinjam',
+      kategori: '',
+      namaTransaksi: '',
       jumlah: '',
       pinjamDari: '',
       bunga:'',
       statusBayar: '',
-      tanggalPinjam: '',
+      tanggal: '',
       deskripsi: '',
       image: ''
   })
 
   const [ piutang, setPiutang ] = useState({
     id: '',
-    kategori: 'piutang',
+    kategori: '',
+    namaTransaksi: '',
     jumlah: '',
     dipinjamKe: '',
     bunga:'',
     statusBayar: '',
-    tanggalPemberian: '',
+    tanggal: '',
     deskripsi: '',
     image: ''
 })

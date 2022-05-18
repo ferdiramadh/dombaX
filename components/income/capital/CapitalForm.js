@@ -14,11 +14,11 @@ const CapitalForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
     if(selectedDate){
         const currentDate = selectedDate;
         setShow(false);
-        setFieldValue('tanggalMasuk', selectedDate.toDateString())
+        setFieldValue('tanggal', selectedDate.toDateString())
     } else {
         console.log("eweuh")
         setShow(false);
-        setFieldValue('tanggalMasuk', '')
+        setFieldValue('tanggal', '')
     }
     
   };
@@ -56,6 +56,14 @@ const CapitalForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                 onChange={onChange}
               />
             )}
+            <TextInput
+              onChangeText={handleChange('namaTransaksi')}
+              onBlur={handleBlur('namaTransaksi')}
+              value={values.namaTransaksi}
+              style={styles.textInput}
+              placeholder='Nama Transaksi'
+              placeholderTextColor="#474747" 
+            />
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.bentukModal}
@@ -103,7 +111,7 @@ const CapitalForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
             />
             <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggalMasuk?values.tanggalMasuk:"Tanggal Modal Masuk"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Modal Masuk"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>

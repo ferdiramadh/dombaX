@@ -16,11 +16,11 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
     if(selectedDate){
         const currentDate = selectedDate;
         setShow(false);
-        setFieldValue('tanggalJual', selectedDate.toDateString())
+        setFieldValue('tanggal', selectedDate.toDateString())
     } else {
         console.log("eweuh")
         setShow(false);
-        setFieldValue('tanggalJual', '')
+        setFieldValue('tanggal', '')
     }
     
   };
@@ -130,6 +130,14 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
             </View>: null}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
+              onChangeText={handleChange('namaTransaksi')}
+              onBlur={handleBlur('namaTransaksi')}
+              value={values.namaTransaksi}
+              style={styles.textInput}
+              placeholder='Nama Transaksi'
+              placeholderTextColor="#474747" 
+            />
+            <TextInput
               onChangeText={handleChange('jumlahProduk')}
               onBlur={handleBlur('jumlahProduk')}
               value={values.jumlahProduk}
@@ -175,7 +183,7 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
             />
             <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggalJual?values.tanggalJual:"Tanggal Terjual"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Terjual"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>
@@ -217,14 +225,12 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                     <Picker.Item label="Tempo" value="Tempo" />
                 </Picker>
             </View>
-            <TextInput
-              onChangeText={handleChange('batasBayar')}
-              onBlur={handleBlur('batasBayar')}
-              value={values.batasBayar}
-              style={styles.textInput}
-              placeholder='Batas Bayar'
-              placeholderTextColor="#474747" 
-            />
+            <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
+                    <Text style={{color:'#474747'}}>{values.batasBayar?values.batasBayar:"Batas Bayar"}</Text>   
+                    <MaterialIcons name="date-range" size={24} color="black" />    
+                </View>                
+            </TouchableOpacity>
             <TextInput
               onChangeText={handleChange('deskripsi')}
               onBlur={handleBlur('deskripsi')}

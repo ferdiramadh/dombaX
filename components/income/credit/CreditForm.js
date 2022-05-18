@@ -14,11 +14,11 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
     if(selectedDate){
         const currentDate = selectedDate;
         setShow(false);
-        setFieldValue('tanggalPemberian', selectedDate.toDateString())
+        setFieldValue('tanggal', selectedDate.toDateString())
     } else {
         console.log("eweuh")
         setShow(false);
-        setFieldValue('tanggalPemberian', '')
+        setFieldValue('tanggal', '')
     }
     
   };
@@ -58,6 +58,14 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
             )}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
+              onChangeText={handleChange('namaTransaksi')}
+              onBlur={handleBlur('namaTransaksi')}
+              value={values.namaTransaksi}
+              style={styles.textInput}
+              placeholder='Nama Transaksi'
+              placeholderTextColor="#474747" 
+            />
+            <TextInput
               onChangeText={handleChange('jumlah')}
               onBlur={handleBlur('jumlah')}
               value={values.jumlah}
@@ -76,7 +84,7 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
             />
             <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggalPemberian?values.tanggalPemberian:"Tanggal Pemberian"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Pemberian"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>

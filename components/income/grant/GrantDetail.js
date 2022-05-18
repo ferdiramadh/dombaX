@@ -6,6 +6,16 @@ import {Picker} from '@react-native-picker/picker'
 const GrantDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue }) => {
   return (
     <View>
+            <View style={styles.itemWrap}>
+              <Text style={styles.subTitle}>Nama Transaksi</Text>
+              {isUpdate ? <TextInput
+                onChangeText={handleChange('namaTransaksi')}
+                onBlur={handleBlur('namaTransaksi')}
+                value={values.namaTransaksi}
+                style={styles.textInput}
+                placeholder='Nama Transaksi'
+              /> : <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
+            </View>
         <View style={styles.itemWrap}>
             <Text style={styles.subTitle}>Bentuk Hibah</Text>
             {isUpdate ? <View style={styles.pickerContainer}>
@@ -53,10 +63,10 @@ const GrantDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handle
               <Text style={styles.subTitle}>Tanggal Hibah Masuk</Text>
               {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggalMasuk?values.tanggalMasuk:"Tanggal Hibah Masuk"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Hibah Masuk"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
-            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggalMasuk}</Text>}
+            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggal}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Pajak</Text>
