@@ -118,6 +118,14 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                 onChange={onChange}
               />
             )}
+            <TextInput
+              onChangeText={handleChange('namaTransaksi')}
+              onBlur={handleBlur('namaTransaksi')}
+              value={values.namaTransaksi}
+              style={styles.textInput}
+              placeholder='Nama Transaksi'
+              placeholderTextColor="#474747" 
+            />
             <TouchableOpacity style={styles.textInput} onPress={() => setModalProductVisible(!modalProductVisible)} >
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                 <Text style={{color:'#474747'}}>{selectedProduct.nama}</Text>   
@@ -129,14 +137,6 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
               <Text style={{color:'green'}}>Jumlah Stok Tersedia: {selectedProduct.jumlah}</Text>
             </View>: null}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
-            <TextInput
-              onChangeText={handleChange('namaTransaksi')}
-              onBlur={handleBlur('namaTransaksi')}
-              value={values.namaTransaksi}
-              style={styles.textInput}
-              placeholder='Nama Transaksi'
-              placeholderTextColor="#474747" 
-            />
             <TextInput
               onChangeText={handleChange('jumlahProduk')}
               onBlur={handleBlur('jumlahProduk')}

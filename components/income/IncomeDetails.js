@@ -13,7 +13,7 @@ import CreditDetail from './credit/CreditDetail';
 import GrantDetail from './grant/GrantDetail';
 import LoanDetail from './loan/LoanDetail';
 
-const IncomeDetails = ({ editData, navigation }) => {
+const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
 
     const purchaseCategoryIcon = 
     {
@@ -38,7 +38,7 @@ const IncomeDetails = ({ editData, navigation }) => {
   };
 
   const [data, setData] = useState(editData)
-  const [isUpdate, setIsUpdate] = useState(false)
+  
   const [ tempImg, setTempImg ] = useState(false)
 
   const removePhoto = (set) => {
@@ -104,7 +104,7 @@ const IncomeDetails = ({ editData, navigation }) => {
                 }}
               />
             )}
-          <View style={[styles.container, isUpdate? {height: windowHeigth*.7}: {height: windowHeigth*.35}]}>
+          <View style={[styles.container, isUpdate? {height: windowHeigth*.8, marginTop:windowHeigth*.03}: {height: windowHeigth*.35}]}>
             <View style={styles.upperSection}>
               <Text style={styles.titlePage}>{data.kategori}</Text>
               <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => {
@@ -171,40 +171,13 @@ const IncomeDetails = ({ editData, navigation }) => {
               </TouchableOpacity>:null}
             </View>
             </ScrollView>
-            {/* <Text style={styles.subTitle}>Total</Text>
-            <Text style={styles.itemText}>{formatToCurrency(parseInt(data.jumlah) * parseInt(data.hargaBeli))}</Text>
-            <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
-              {values.image ?
-                <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
-
-                : null}
-              {isUpdate? <View style={styles.photoOptionsWrap}>
-              <TouchableOpacity onPress={() => {
-                  removePhoto(setFieldValue)
-                  // setTempImg(true)
-                  
-                }} style={styles.photoButton}>
-                  <AntDesign name="delete" size={24} color="lightgrey" /><Text style={{ color: "grey" }}>Remove Photo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                  let isTrue = true
-                  pickImageOnly(isTrue, setFieldValue)
-                  
-                }} style={styles.photoButton}>
-                  <FontAwesome name="file-image-o" size={24} color="lightgrey" /><Text style={{ color: "grey" }}>Select A Photo</Text>
-                </TouchableOpacity>
-              </View> : null}
-              {isUpdate?<TouchableOpacity style={[styles.btnSave, { backgroundColor: '#ED9B83' }]} onPress={handleSubmit}>
-                <Text style={{ fontSize: 18, fontWeight: '700', textAlign: 'center', color: '#FFF' }}>Update</Text>
-              </TouchableOpacity>:null}
-            </View> */}
             </View>
             { data.statusBayar !== 'status' && data.statusBayar && !isUpdate ? 
             <View style={styles.statusBayarSection}>
             <Text style={[styles.statusText, data.statusBayar == 'Lunas'?{color:'#43B88E'}:{color:'#EB3223'}]}>{data.statusBayar == 'Lunas'?'Lunas': 'Belum Lunas'}</Text>
             </View>: null}
                         
-            { data.image && data.image !== '' && !isUpdate ?<Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, marginTop: 10 }} />:null}
+            { data.image && data.image !== '' && !isUpdate ?<Image source={{ uri: values.image }} resizeMode="cover" style={{ width: windowWidth*.7, height: windowHeigth*.2, }} />:null}
           </View>)}
           
       </Formik>
@@ -229,9 +202,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     marginBottom: 10,
-    width: windowWidth*.9,
-    marginBottom: windowHeigth*.3
-  
+    width: windowWidth*.9,  
   },
   containerScroll:{
     padding: 10,
@@ -285,7 +256,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     height: 40,
-    width: windowWidth*.9
+    width: windowWidth*.9,
+    marginBottom: 10
   },
   btnSave: {
     backgroundColor: 'white',

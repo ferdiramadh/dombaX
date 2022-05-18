@@ -7,17 +7,6 @@ import {Picker} from '@react-native-picker/picker'
 const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue}) => {
   return (
     <View>
-      <View style={styles.itemWrap}>
-              <Text style={styles.subTitle}>Nama Produk</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('produk')}
-                onBlur={handleBlur('produk')}
-                value={values.produk}
-                style={styles.textInput}
-                placeholder='Nama Produk'
-              /> : <Text style={styles.itemText}>{data.produk}</Text>}
-
-            </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Nama Transaksi</Text>
               {isUpdate ? <TextInput
@@ -27,6 +16,17 @@ const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                 style={styles.textInput}
                 placeholder='Nama Transaksi'
               /> : <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
+            </View>
+            <View style={styles.itemWrap}>
+              <Text style={styles.subTitle}>Nama Produk</Text>
+              {isUpdate ? <TextInput
+                onChangeText={handleChange('produk')}
+                onBlur={handleBlur('produk')}
+                value={values.produk}
+                style={styles.textInput}
+                placeholder='Nama Produk'
+              /> : <Text style={styles.itemText}>{data.produk}</Text>}
+
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Jumlah</Text>

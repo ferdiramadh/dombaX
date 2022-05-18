@@ -45,12 +45,7 @@ const IncomeItem = ({item, editItem}) => {
             {item.kategori == 'Piutang'?<Image source={purchaseCategoryIcon.piutang} style={styles.img} resizeMode='contain'/>: null  }     
         </View>
         <View style={styles.mainWrapper}>
-            {item.kategori == 'Penjualan'?<Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}}>{ item.produk}</Text>:  
-            <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}}>{item.kategori}</Text>}
-            {/* {item.kategori == 'Penambahan Modal'?<Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}}>{}</Text>: null  }
-            {item.kategori == 'hibah'?<Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}}>Hibah</Text>: null  }
-            {item.kategori == 'Pinjaman'?<Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}}>Pinjaman</Text>: null  }     
-            {item.kategori == 'Piutang'?<Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}}>Piutang</Text>: null  }      */}
+        <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}}>{item.namaTransaksi}</Text>
             <Text style={{color: '#B3B3B3'}}>{itemDate}</Text>
         </View>
         <View style={styles.rightWrapper}>
