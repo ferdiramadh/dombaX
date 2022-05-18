@@ -48,7 +48,7 @@ const IncomeItem = ({item, editItem}) => {
             {item.kategori == 'Piutang'?<Image source={purchaseCategoryIcon.piutang} style={styles.img} resizeMode='contain'/>: null  }     
         </View>
         <View style={styles.mainWrapper}>
-        <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}}>{item.namaTransaksi}</Text>
+        <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}} numberOfLines={2} ellipsizeMode='tail'>{item.namaTransaksi}</Text>
             <Text style={{color: '#B3B3B3'}}>{itemDate}</Text>
         </View>
         <View style={styles.rightWrapper}>
