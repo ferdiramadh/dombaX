@@ -18,22 +18,25 @@ const IncomeItem = ({item, editItem}) => {
         const [ itemDate, setItemDate ] = useState('')
 
         useEffect(() => {
-            if(item.createdAt) {
-                const fireBaseTime = new Date(
-                    item.createdAt.seconds * 1000 + item.createdAt.nanoseconds / 1000000,
-                  );
-                  const date = fireBaseTime.toDateString();
+            if(item.tanggal) {
+                  let date = item.tanggal
                   setItemDate(date.substring(4))
             } else {
-                console.log("Kagak ada createdAt")
+                console.log("Kagak ada tanggal")
+                setItemDate('')
             }
+            // if(item.createdAt) {
+            //     const fireBaseTime = new Date(
+            //         item.createdAt.seconds * 1000 + item.createdAt.nanoseconds / 1000000,
+            //       );
+            //       const date = fireBaseTime.toDateString();
+            //       setItemDate(date.substring(4))
+            // } else {
+            //     console.log("Kagak ada createdAt")
+            // }
             
         }, [item])
 
-          
-      
-      
-        //   console.log(date, atTime);
     
   return (
     <TouchableOpacity key={item.id} style={styles.container} onPress={() => editItem(item)}>
