@@ -64,7 +64,7 @@ const TransactionScreen = () => {
 
     const searchProduct = () => {
 
-        fireSQL.query(`SELECT * FROM income WHERE ( produk LIKE '${searchKeyword}%' OR produk LIKE '${Capitalize(searchKeyword)}%' OR produk LIKE '${searchKeyword.toLowerCase()}%' ) AND userId = "${uid}" `).then(documents => {
+        fireSQL.query(`SELECT * FROM income WHERE ( namaTransaksi LIKE '${searchKeyword}%' OR namaTransaksi LIKE '${Capitalize(searchKeyword)}%' OR namaTransaksi LIKE '${searchKeyword.toLowerCase()}%' ) AND userId = "${uid}" `).then(documents => {
         const items = []
         documents.forEach(doc => {
 
