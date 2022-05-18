@@ -12,6 +12,8 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
+  const [ isBatasBayar, setIsBatasBayar ] = useState(false)
+
   const onChange = (event, selectedDate) => {
     if(selectedDate){
         const currentDate = selectedDate;
@@ -21,6 +23,21 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
         console.log("eweuh")
         setShow(false);
         setFieldValue('tanggal', '')
+    }
+    
+  };
+
+  const onChangeBatasBayar = (event, selectedDate) => {
+    if(selectedDate){
+        const currentDate = selectedDate;
+        setShow(false);
+        setFieldValue('batasBayar', selectedDate.toDateString())
+        setIsBatasBayar(false)
+    } else {
+        console.log("eweuh")
+        setShow(false);
+        setFieldValue('batasBayar', '')
+        setIsBatasBayar(false)
     }
     
   };
@@ -115,7 +132,7 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={onChange}
+                onChange={isBatasBayar?onChangeBatasBayar:onChange}
               />
             )}
             <TextInput
@@ -225,7 +242,10 @@ const SellingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                     <Picker.Item label="Tempo" value="Tempo" />
                 </Picker>
             </View>
-            <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+            <TouchableOpacity style={styles.textInput} onPress={() => {
+              setIsBatasBayar(!isBatasBayar)
+              showDatepicker()
+            }}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                     <Text style={{color:'#474747'}}>{values.batasBayar?values.batasBayar:"Batas Bayar"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    

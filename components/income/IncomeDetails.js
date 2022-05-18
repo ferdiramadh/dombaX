@@ -27,6 +27,7 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [ isBatasBayar, setIsBatasBayar ] = useState(false)
 
   const showMode = (currentMode) => {
     setShow(true);
@@ -92,15 +93,26 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={(event, selectedDate) => {
+                onChange={!isBatasBayar?(event, selectedDate) => {
                   if(selectedDate){
                       setShow(false);
-                      setFieldValue('tanggalJual', selectedDate.toDateString())
+                      setFieldValue('tanggal', selectedDate.toDateString())
                   } else {
                       console.log("eweuh")
                       setShow(false);
-                      setFieldValue('tanggalJual', '')
+                     
                   }           
+                }:(event, selectedDate) => {
+                  if(selectedDate){
+                    const currentDate = selectedDate;
+                    setShow(false);
+                    setFieldValue('batasBayar', selectedDate.toDateString())
+                    setIsBatasBayar(false)
+                } else {
+                    console.log("eweuh")
+                    setShow(false);
+                    setIsBatasBayar(false)
+                }   
                 }}
               />
             )}
@@ -125,7 +137,7 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
               <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(parseInt(data.jumlah))}</Text>
             </View> : null}
             <ScrollView style={styles.containerScroll}>      
-            {data.kategori == 'Penjualan'?<SellingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Penjualan'?<SellingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} isBatasBayar={isBatasBayar} setIsBatasBayar={setIsBatasBayar}/> : null  }  
             {data.kategori == 'Penambahan Modal'?<CapitalDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             {data.kategori == 'Piutang'?<CreditDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             {data.kategori == 'Hibah'?<GrantDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  

@@ -4,7 +4,7 @@ import { formatToCurrencyLight } from '../../../utils/FormatCurrency'
 import { MaterialIcons } from '@expo/vector-icons';
 import {Picker} from '@react-native-picker/picker'
 
-const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue}) => {
+const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue, isBatasBayar, setIsBatasBayar}) => {
   return (
     <View>
             <View style={styles.itemWrap}>
@@ -127,7 +127,10 @@ const SellingDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Batas Bayar</Text>
-              {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+              {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={() => {
+              setIsBatasBayar(!isBatasBayar)
+              showDatepicker()
+            }}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                     <Text style={{color:'#474747'}}>{values.batasBayar?values.batasBayar:"Batas Bayar"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
