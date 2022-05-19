@@ -129,7 +129,7 @@ const TransactionScreen = () => {
                     </TouchableOpacity>    
                    
                 </View>: null}
-                <TopTabTransaction listIncome={listIncome} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading}/>
+                <TopTabTransaction listIncome={listIncome} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/>
                 </View>
             </View>    
             <ModalAddTransaction setModalTransaction={setModalTransaction}  modalTransaction={modalTransaction} purchasing={purchasing}/>

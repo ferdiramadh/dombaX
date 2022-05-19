@@ -6,8 +6,9 @@ import { deleteFile, deleteCollection } from '../utils/ImageUpload';
 import IncomeDetails from '../components/income/IncomeDetails';
 
 const IncomeDetailScreen = ({ route }) => {
-  const { editData, navigation } = route.params;
+  const { editData, navigation, isSearch, searchItems, setSearchItems } = route.params;
   const [isUpdate, setIsUpdate] = useState(false)
+
 
   const deleteItem = (item) => {
     Alert.alert(
@@ -40,12 +41,21 @@ const deleteCollectionAndFile = (editData) => {
     deleteCollection("income", editData)
     deleteFile("Income", editData)
 }
-  
+
 
   return (
     <View style={styles.container}>
       {!isUpdate? 
-      <TouchableOpacity style={{marginLeft:10, position: 'absolute', top: 10, right: 10}} onPress={() => deleteItem(editData)}>
+      <TouchableOpacity style={{marginLeft:10, position: 'absolute', top: 10, right: 10}} onPress={() => {
+        if(isSearch) {
+          let tempList = searchItems.filter(({id}) => id !== editData.id)
+          console.log("coba set newitems")
+          setSearchItems(tempList)
+          deleteItem(editData)      
+        } else {
+          deleteItem(editData)
+        }
+      }}>
           <MaterialIcons name="delete" size={24} color="black" />
       </TouchableOpacity>: null}
       {!isUpdate? 

@@ -10,25 +10,23 @@ import { deleteCollection, deleteFile } from '../../../utils/ImageUpload';
 import { useNavigation } from '@react-navigation/native';
 
 
-const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible}) => {
+const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible, setIsSearch, setSearchItems}) => {
 
     const navigation = useNavigation();
     
-    const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
     const DATA = userProducts.listUserProduct
-    // const DATA = dombaState.listDomba;
+   
     const sortData = DATA.sort((a, b) => {
         let bd = objToDate(b.createdAt);
         let ad = objToDate(a.createdAt);
         return ad - bd;
     });
-    // const [modalVisible, setModalVisible] = useState(false);
+    
     const [modalGlobalVisible, setGlobalModalVisible] = useState(false);
     const [editData, setEditData] = useState({});
 
-    
-
+    const [ itemId , setItemId ] = useState()
 
 
     function objToDate (obj) {
@@ -55,7 +53,10 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                 },
                 {
                     text: "OK",
-                    onPress: () => deleteCollectionAndFile(item)
+                    onPress: () => {
+                        setItemId(item.id)
+                        deleteCollectionAndFile(item)
+                    }
                 }
             ],
             {
@@ -100,62 +101,26 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
 
     },[editData])
 
-    
-    const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
+    useEffect(() => {
+        if(isSearch) {
+           let tempList = searchItems.filter(({id}) => id !== itemId)
+           setSearchItems(tempList)
+        } else {
+            console.log("coba set items")
+        }
 
-    const formatToCurrencyLight = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} renderText={(value, props) => <Text {...props}>{value}</Text>} />
+    },[DATA])
+
+    
 
     return (
         <View style={styles.container}>
-            {/* {  sortData.map((item, i) => {
-                return(
-                    <TouchableOpacity style={styles.container} key={item.id} 
-                    onPress={() =>{
-                        console.log(sortData)
-                   }}
-                    onLongPress={() => console.log("ni lama beut")}
-                    delayLongPress={1000}
-                    >
-                <View style={styles.leftIcon}>
-                    <Image source={require('../../../assets/images/Kiwi_Categories-Icon.png')} style={styles.imgIcon}/>
-                </View>
-                <View style={styles.rightSection}>
-                    <View style={styles.upperSection}>
-                        <Text style={styles.subStokTitle}>{item.jenisHewanTernak} {item.jenisSpesifik}</Text>
-                        <View style={styles.buttonSection}>
-                            <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
-                                <Feather name="trash-2" size={24} color="black" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{marginLeft:10}} onPress={() => editItem(item)}>
-                                <Feather name="edit" size={24} color="black" />
-                            </TouchableOpacity>  
-                        </View>
-                    </View>
-                    
-                    <View style={styles.dombaInfo}>
-                        <View style={styles.leftDombaInfo}>
-                            <Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>
-                            <Text style={styles.infoData}>Harga Beli: {formatToCurrencyLight(parseInt(item.hargaBeli))}</Text>
-                            <Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>
-                            <Text style={styles.infoData}>Usia : {item.usia} Bulan</Text>
-                        </View>
-                        <View style={styles.rightDombaInfo}>
-                            <Text style={styles.infoData}></Text>
-                            <Text style={styles.infoData}></Text>
-                            <Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah} Ekor</Text>
-                            <Text style={[styles.totalHarga]}>{ formatToCurrency(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
-                        </View>
-                    </View>
-                </View> 
-            </TouchableOpacity>
-                )
-            })} */}
                 {isSearch? <View style={{paddingTop: 10}}>
                   
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
                 {
                   searchItems.map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible}/> 
+                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} isSearch={isSearch} setIsSearch={setIsSearch}/> 
                   }) 
                 }
               </View>: null}

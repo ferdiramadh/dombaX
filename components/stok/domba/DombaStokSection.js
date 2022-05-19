@@ -118,7 +118,7 @@ const DombaStokSection = () => {
             {isLoading? <View style={styles.loaderContainer}>
               <ActivityIndicator size="large" color="orange" />
                 </View>:<ScrollView>
-                    <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter}/>
+                    <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems}/>
                 </ScrollView> }         
             
               <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} />

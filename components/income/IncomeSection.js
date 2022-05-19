@@ -6,7 +6,7 @@ import { formatTotalToCurrency } from '../../utils/FormatCurrency'
 import firebase from '../../Firebaseconfig'
 import { useNavigation } from '@react-navigation/native';
 
-const IncomeSection = ({listIncome, searchList,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading}) => {
+const IncomeSection = ({listIncome,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems}) => {
 
   const [editData, setEditData] = useState({});
   const navigation = useNavigation();
@@ -54,7 +54,7 @@ useEffect(() => {
   if(Object.keys(editData).length !== 0) {
       // setGlobalModalVisible(!modalGlobalVisible)
       console.log("ada nih edit data"+editData)
-      navigation.navigate("IncomeDetail",{editData, navigation})
+      navigation.navigate("IncomeDetail",{editData, navigation, isSearch, searchItems, setSearchItems})
   } if (editData !== undefined) {
       console.log("MANA nih edit data")
       // navigation.navigate("DetailProduct",{editData, setEditData})

@@ -4,7 +4,7 @@ import { useSelector} from 'react-redux'
 import IncomeSection from './IncomeSection'
 import { windowHeigth } from '../../utils/DimensionSetup'
 
-const Income = ({searchList,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading}) => {
+const Income = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems}) => {
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listIncome = transactionsData.listIncome
 
@@ -12,7 +12,7 @@ const Income = ({searchList,searchItems, isSearch, searchKeyword, isFilter, filt
     return (
         <View style={styles.container}>
             <View style={styles.insideContainer}>
-                { listIncome.length > 0? <IncomeSection listIncome={listIncome} searchList={searchList} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading}/> :
+                { listIncome.length > 0? <IncomeSection listIncome={listIncome} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/> :
                 <View style={styles.emptyPurchaseNotif}>
                     <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{fontWeight:'bold'}}>tombol tambah</Text> untuk menambahkan <Text style={{fontWeight:'bold'}}>Pemasukan</Text></Text>
                     
