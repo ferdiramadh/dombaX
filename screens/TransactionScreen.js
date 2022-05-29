@@ -132,15 +132,8 @@ const TransactionScreen = () => {
                 <TopTabTransaction listIncome={listIncome} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/>
                 </View>
             </View>    
-            <ModalAddTransaction setModalTransaction={setModalTransaction}  modalTransaction={modalTransaction} purchasing={purchasing}/>
-            <CustomButton onPress={() => {
-                if(topTabTransactionFocus == 'Income'){
-                    setModalTransaction(!modalTransaction)
-                } else {
-                    console.log('Apaan tuh')
-                }
-                
-            }}/>
+            <ModalAddTransaction setModalTransaction={setModalTransaction}  modalTransaction={modalTransaction} topTabTransactionFocus={topTabTransactionFocus}/>
+            <CustomButton onPress={() => setModalTransaction(!modalTransaction)}/>
             <FilterIncomeModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} />
         </View>
     )

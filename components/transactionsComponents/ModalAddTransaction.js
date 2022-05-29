@@ -4,8 +4,9 @@ import FormPurchase from '../purchasing/FormPurchase'
 import FormSelling from '../selling/FormSelling'
 import { AntDesign } from '@expo/vector-icons';
 import IncomeForm from '../income/IncomeForm';
+import ExpenseForm from '../expense/ExpenseForm'
 
-const ModalAddTransaction = ({modalTransaction, setModalTransaction,purchasing}) => {
+const ModalAddTransaction = ({modalTransaction, setModalTransaction, topTabTransactionFocus}) => {
     const [selectedProduct, setSelectedProduct] = useState();
     return (
         <View style={styles.centeredView}>
@@ -29,7 +30,7 @@ const ModalAddTransaction = ({modalTransaction, setModalTransaction,purchasing})
                 
                 </ScrollView> */}
                 <View style={styles.formSection}>
-                    {purchasing?<IncomeForm modalTransaction={modalTransaction} setModalTransaction={setModalTransaction}/>:<FormSelling modalTransaction={modalTransaction} setModalTransaction={setModalTransaction}/>}
+                    {topTabTransactionFocus == 'Income' ?<IncomeForm modalTransaction={modalTransaction} setModalTransaction={setModalTransaction}/>:<ExpenseForm modalTransaction={modalTransaction} setModalTransaction={setModalTransaction}/>}
                   
                 </View>
 
