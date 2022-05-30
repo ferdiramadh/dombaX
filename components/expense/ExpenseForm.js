@@ -16,7 +16,7 @@ import OtherExpenseForm from './otherexpenses/OtherExpenseForm';
 
 const ExpenseForm = ({modalTransaction, setModalTransaction}) => {
     const dispatch = useDispatch();
-    const transactionState = useSelector(state => state.transactionsReducer);
+    
     const uid = useSelector(state => state.userReducer.uid)
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
     const [category, setCategory] = useState("Kategori");
@@ -122,42 +122,29 @@ const ExpenseForm = ({modalTransaction, setModalTransaction}) => {
 
   const initialDataFunction = () => {
  
-    if(category == 'penjualan'){
-      let setData = Object.assign(initialData, penjualan)
+    if(category == 'Pembelian Stok'){
+      let setData = Object.assign(initialData, pembelianStok)
       setInitialData(setData)
-      } else if (category == 'Penambahan Modal') {
-        let setData = Object.assign(initialData, penambahanModal)
+      } else if (category == 'Pembelian Alat dan Mesin') {
+        let setData = Object.assign(initialData, pembelianAlat)
         setInitialData(setData)
-      } else if (category == 'Hibah') {
-        let setData = Object.assign(initialData, hibah)
+      } else if (category == 'Pembayaran Utang') {
+        let setData = Object.assign(initialData, pembayaranUtang)
         setInitialData(setData)
-      } else if (category == 'Pinjaman') {
-        let setData = Object.assign(initialData, pinjaman)
+      } else if (category == 'Pemberian Utang') {
+        let setData = Object.assign(initialData, pemberianUtang)
         setInitialData(setData)
-      } else if (category == 'Piutang') {
-        let setData = Object.assign(initialData, piutang)
+      } else if (category == 'Gaji Pekerja') {
+        let setData = Object.assign(initialData, gajiPekerja)
         setInitialData(setData)
-      }
-    // } else if(category == 'jenisPakan'){
-    //   let z = Object.assign(test, pakanData)
-    //   setTest(z)
-    //   setFirebaseSetup({
-    //     collection:'pakanstok',
-    //     typeReducer:'STORE_DATA_PAKAN'
-    //   })
-    // } else if(category == 'obatSuplemen'){
-    //   let z = Object.assign(test, obatData)
-    //   setTest(z)
-    //   setFirebaseSetup({
-    //     collection:'obatstok',
-    //     typeReducer:'STORE_DATA_OBAT'
-    //   })
-    // } else if(category == 'tambahProduk') {
-    //   let z = Object.assign(test, addProduct)
-    //   setTest(z)
-    //   // navigation.navigate("SelectProduct")
-    //   // setModalVisible(!modalVisible)
-    // }
+      } else if(category == 'Tabungan atau Investasi'){
+        let setData = Object.assign(initialData, tabunganInvestasi)
+        setInitialData(setData)
+      } else if(category == 'Pengeluaran Lain-Lain'){
+        let setData = Object.assign(initialData, pengeluaranLain)
+        setInitialData(setData)
+      } 
+      
     
   }
 useEffect(() => {
@@ -168,20 +155,20 @@ useEffect(() => {
      
     const datas = {
       id: firebase.firestore()
-      .collection("income")
+      .collection("expense")
       .doc().id
   }
   let addedProperties = {id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp(),userId:uid}
 
   if(values.image) {
-    uploadImageProduk(values.image, "Income", datas.id, "income")
+    uploadImageProduk(values.image, "Expense", datas.id, "expense")
   }
   const newValue = Object.assign(values,addedProperties)
       const db = firebase.firestore();
-      db.collection("income")
+      db.collection("expense")
       .doc(datas.id)
       .set(newValue)
-      dispatch({type:'STORE_INCOME',results:newValue})
+      dispatch({type:'STORE_EXPENSE',results:newValue})
       
     
   

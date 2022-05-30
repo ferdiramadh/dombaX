@@ -164,11 +164,11 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
               placeholderTextColor="#474747" 
             />
             <TextInput
-              onChangeText={handleChange('hargaJual')}
-              onBlur={handleBlur('hargaJual')}
-              value={values.hargaJual}
+              onChangeText={handleChange('hargaBeli')}
+              onBlur={handleBlur('hargaBeli')}
+              value={values.hargaBeli}
               style={styles.textInput}
-              placeholder='Harga Jual'
+              placeholder='Harga Beli'
               keyboardType='numeric'
               placeholderTextColor="#474747" 
             />
@@ -285,14 +285,14 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
                     "Perhatian!",
                     `Pilih Produk Dahulu!`)
                 }
-                else if(!values.jumlahProduk || !values.hargaJual || values.jumlahProduk == '' || values.jumlahProduk == "0" || values.hargaJual == "" || values.hargaJual == '0') {
+                else if(!values.jumlahProduk || !values.hargaBeli || values.jumlahProduk == '' || values.jumlahProduk == "0" || values.hargaBeli == "" || values.hargaBeli == '0') {
                   Alert.alert(
                     "Perhatian!",
                     `Jumlah dan Harga Jual Harus Lebih Dari 0!`)
                 } else {
                   
-                  setFieldValue('kategori', 'Penjualan')
-                  setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
+                  setFieldValue('kategori', 'Pembelian Stok')
+                  setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaBeli)).toString())
                   updateSelectedProduct(selectedProduct, values)
                   handleSubmit()
                 }

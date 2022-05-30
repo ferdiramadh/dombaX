@@ -281,6 +281,25 @@ export default function LaporanScreen() {
         })
     }
 
+    const loadExpense = () => {
+        return firebase
+        .firestore()
+        .collection("expense").where("userId","==",uid)
+        .onSnapshot((querySnapshot) => {
+            const items = []
+            querySnapshot.forEach( function(doc){
+                let newValue = doc.data()
+                items.push(newValue)
+                // console.log(newValue)
+                // console.log('Itu newValue dari snapshot dalem')
+                
+            });
+            // console.log(items)
+            // console.log('Itu items dari snapshot')
+            dispatch({type:'LOAD_EXPENSE',results:items})
+        })
+    }
+
 
     const loadProfile = () => {
         return firebase
@@ -390,6 +409,7 @@ export default function LaporanScreen() {
             // loadLahan()
             // loadPurchasing()
             // loadSelling()
+            loadExpense()
             loadIncome()
             loadProfile()
             loadUserProduct()

@@ -3,8 +3,6 @@ import { StyleSheet, TextInput, View, TouchableOpacity, Text, Image, Alert } fro
 import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
-import SelectProductModal from '../../income/selling/SelectProductModal'
-import firebase from '../../../Firebaseconfig'
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
@@ -53,76 +51,17 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
 
   const [ img, setImg ] = useState()
   const [modalProductVisible, setModalProductVisible] = useState(false);
-  const [ selectedProduct, setSelectedProduct ] = useState({
-    nama: 'Pilih Produk'
-  })
 
-  const [ stockCount, setStokCount] = useState(false)
 
   const removePhoto = () => {
     setImg()
     setFieldValue('image','')
   }
 
-  const checkAvailability = (val) => {
-    console.log('checkAvailability')
-    console.log(val)
-    if( selectedProduct.jumlah && values !== 'undefined' ) {
- 
-    let num = parseInt(val)
-    let jml = parseInt(selectedProduct.jumlah) 
-    if( num > jml) {
-      Alert.alert('Perhatian', 'Item Melebihi Ketersediaan Stok Saat Ini');
-      setFieldValue('jumlahProduk', selectedProduct.jumlah);
-     }     
-    }
-  }
-
-  const updateSelectedProduct = (selectedProduct, formValues) => {
-    return firebase
-      .firestore()
-      .collection("userproduk")
-      .doc(selectedProduct.id)
-      .update({
-        "jumlah": (parseInt(selectedProduct.jumlah) - parseInt(formValues.jumlahProduk)).toString()
-      }).then(() => {
-        console.log('Item Updated')
-      }).catch((error) => console.log(error))
-  }
-
   useEffect(() => {
     setFieldValue('image', img)
   },[img])
 
-  useEffect(() => {
-    if(selectedProduct.jumlah && values !== 'undefined' ) {
-      console.log("Check COK selectedProduct")
-    console.log(selectedProduct)
-    // checkAvailability(values.jumlah)
-    setFieldValue('produk', selectedProduct.nama )
-    setFieldValue('jumlah', '')
-    if(selectedProduct.jumlah) {
-      console.log('setStokCount')
-      setStokCount(true)
-      
-    }
-  } else {
-    console.log("WWW")
-  }
-  },[selectedProduct])
-
-  useEffect(() => {
-    
-    if(selectedProduct.jumlah && values !== 'undefined') {
-      
-      console.log("Check jumlah")
-    console.log(values.jumlahProduk)
-    checkAvailability(values.jumlahProduk)
-    } else {
-      console.log("Check Values")
-      console.log(values)
-    }
-  }, [values])
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
@@ -151,16 +90,6 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
               placeholder='Nama Produk'
               placeholderTextColor="#474747" 
             />
-            {/* <TouchableOpacity style={styles.textInput} onPress={() => setModalProductVisible(!modalProductVisible)} >
-                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                <Text style={{color:'#474747'}}>{selectedProduct.nama}</Text>   
-                <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
-            </View>                
-            </TouchableOpacity> */}
-            {stockCount? 
-            <View style={{width:'90%',flex: 1}}>
-              <Text style={{color:'green'}}>Jumlah Stok Tersedia: {selectedProduct.jumlah}</Text>
-            </View>: null}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('jumlahProduk')}
@@ -172,20 +101,20 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
               placeholderTextColor="#474747" 
             />
             <TextInput
-              onChangeText={handleChange('hargaJual')}
-              onBlur={handleBlur('hargaJual')}
-              value={values.hargaJual}
+              onChangeText={handleChange('hargaBeli')}
+              onBlur={handleBlur('hargaBeli')}
+              value={values.hargaBeli}
               style={styles.textInput}
               placeholder='Harga Jual'
               keyboardType='numeric'
               placeholderTextColor="#474747" 
             />
             <TextInput
-              onChangeText={handleChange('pembeli')}
-              onBlur={handleBlur('pembeli')}
-              value={values.pembeli}
+              onChangeText={handleChange('beliDari')}
+              onBlur={handleBlur('beliDari')}
+              value={values.beliDari}
               style={styles.textInput}
-              placeholder='Pembeli'
+              placeholder='Beli Dari'
               placeholderTextColor="#474747" 
             />
             <TextInput
@@ -287,21 +216,14 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
-                console.log(values)
-                if( !values.produk ) {
+                if(!values.jumlahProduk || values.jumlahProduk == '' || values.jumlahProduk == "0" || values.hargaBeli == "" || values.hargaBeli == '0') {
                   Alert.alert(
                     "Perhatian!",
-                    `Pilih Produk Dahulu!`)
-                }
-                else if(!values.jumlahProduk || !values.hargaJual || values.jumlahProduk == '' || values.jumlahProduk == "0" || values.hargaJual == "" || values.hargaJual == '0') {
-                  Alert.alert(
-                    "Perhatian!",
-                    `Jumlah dan Harga Jual Harus Lebih Dari 0!`)
+                    `Jumlah dan Harga Beli Harus Lebih Dari 0!`)
                 } else {
                   
-                  setFieldValue('kategori', 'Penjualan')
-                  setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
-                  updateSelectedProduct(selectedProduct, values)
+                  setFieldValue('kategori', 'Pembelian Alat dan Mesin')
+                  setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaBeli)).toString())
                   handleSubmit()
                 }
                 
@@ -311,7 +233,6 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
             </View>
             
             </View>
-            <SelectProductModal modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} setFieldValue={setFieldValue} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct}/>
           </View>
     )
 }

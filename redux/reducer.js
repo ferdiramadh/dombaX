@@ -304,6 +304,11 @@ const transactionsReducer = (state = initialTransaction, action) => {
                 listIncome: [...state.listIncome, action.results]
                 
         }
+        case 'STORE_EXPENSE':
+            return {
+                ...state,
+                listExpense: [...state.listExpense, action.results]           
+        }
         case 'LOAD_PURCHASING':
             return {
                 ...state,
@@ -326,6 +331,12 @@ const transactionsReducer = (state = initialTransaction, action) => {
         return {
             ...state,
             listIncome: action.results
+                
+        }
+        case 'LOAD_EXPENSE':
+        return {
+            ...state,
+            listExpense: action.results
                 
         }
         case 'SET_EMPTY_SELLING':
