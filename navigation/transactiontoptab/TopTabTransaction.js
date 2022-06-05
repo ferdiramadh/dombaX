@@ -25,7 +25,7 @@ function TopTabTransaction({listIncome,searchItems, isSearch, searchKeyword, isF
       }}
       children={() => <Income isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/>}
       />
-      <Tab.Screen name="Pengeluaran" component={Expense} listeners={{
+      <Tab.Screen name="Pengeluaran" listeners={{
         tabPress: () => {
           console.log(listIncome)
           setTopTabTransactionFocus('Expense')
@@ -34,7 +34,8 @@ function TopTabTransaction({listIncome,searchItems, isSearch, searchKeyword, isF
         tabBarActiveTintColor: '#EB3223', tabBarInactiveTintColor: '#000',tabBarIndicatorStyle: {
           backgroundColor: '#EB3223', 
         }
-      }}/>
+      }}
+      children={() => <Expense isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/>}/>
     </Tab.Navigator>
   );
 }

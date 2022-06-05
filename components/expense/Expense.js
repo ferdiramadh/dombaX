@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, View,TouchableOpacity , ScrollView} from 'react-native'
 import { useSelector} from 'react-redux'
+import ExpenseSection from './ExpenseSection'
 
 
-const Expense = () => {
+const Expense = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems}) => {
+    const transactionsData = useSelector(state => state.transactionsReducer)
+    const listExpense = transactionsData.listExpense
     
     return (
         <View style={styles.container}>
             <View style={styles.insideContainer}>
-                    <View style={styles.emptyPurchaseNotif}>
+            { listExpense.length > 0? <ExpenseSection listExpense={listExpense} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/> :
+                 <View style={styles.emptyPurchaseNotif}>
                     <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{fontWeight:'bold'}}>tombol tambah</Text> untuk menambahkan <Text style={{fontWeight:'bold'}}>Pengeluaran</Text></Text>
-                    
-                </View>
+                 </View>
+                }
+                   
             </View>
         </View>
     )
