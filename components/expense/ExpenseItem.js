@@ -5,7 +5,7 @@ import { formatToCurrencyLight } from '../../utils/FormatCurrency'
 
 const ExpenseItem = ({item, editItem}) => {
 
-    const purchaseCategoryIcon = 
+    const sellingCategoryIcone = 
         {
             pembelianStok: require('../../assets/images/expensecategory/PurchasingStock.png'),
             pembelianAlat: require('../../assets/images/expensecategory/PurchasingEquipment.png'),
@@ -27,15 +27,6 @@ const ExpenseItem = ({item, editItem}) => {
                 console.log("Kagak ada tanggal")
                 setItemDate('')
             }
-            // if(item.createdAt) {
-            //     const fireBaseTime = new Date(
-            //         item.createdAt.seconds * 1000 + item.createdAt.nanoseconds / 1000000,
-            //       );
-            //       const date = fireBaseTime.toDateString();
-            //       setItemDate(date.substring(4))
-            // } else {
-            //     console.log("Kagak ada createdAt")
-            // }
             
         }, [item])
 
@@ -43,13 +34,13 @@ const ExpenseItem = ({item, editItem}) => {
   return (
     <TouchableOpacity key={item.id} style={styles.container} onPress={() => editItem(item)}>
         <View style={styles.iconWrapper}>
-            {item.kategori == 'Pembelian Stok'?<Image source={purchaseCategoryIcon.pembelianStok} style={styles.img} resizeMode='contain'/>: null  }
-            {item.kategori == 'Pembelian Alat dan Mesin'?<Image source={purchaseCategoryIcon.pembelianAlat} style={styles.img} resizeMode='contain'/>: null  }
-            {item.kategori == 'Pembayaran Utang'?<Image source={purchaseCategoryIcon.pembayaranUtang} style={styles.img} resizeMode='contain'/>: null  }
-            {item.kategori == 'Pemberian Utang'?<Image source={purchaseCategoryIcon.pemberianUtang} style={styles.img} resizeMode='contain'/>: null  }     
-            {item.kategori == 'Gaji Pekerja'?<Image source={purchaseCategoryIcon.gajiPekerja} style={styles.img} resizeMode='contain'/>: null  }   
-            {item.kategori == 'Tabungan atau Investasi'?<Image source={purchaseCategoryIcon.savingInvest} style={styles.img} resizeMode='contain'/>: null  }     
-            {item.kategori == 'Pengeluaran Lain-Lain'?<Image source={purchaseCategoryIcon.others} style={styles.img} resizeMode='contain'/>: null  }     
+            {item.kategori == 'Pembelian Stok'?<Image source={sellingCategoryIcone.pembelianStok} style={styles.img} resizeMode='contain'/>: null  }
+            {item.kategori == 'Pembelian Alat dan Mesin'?<Image source={sellingCategoryIcone.pembelianAlat} style={styles.img} resizeMode='contain'/>: null  }
+            {item.kategori == 'Pembayaran Utang'?<Image source={sellingCategoryIcone.pembayaranUtang} style={styles.img} resizeMode='contain'/>: null  }
+            {item.kategori == 'Pemberian Utang'?<Image source={sellingCategoryIcone.pemberianUtang} style={styles.img} resizeMode='contain'/>: null  }     
+            {item.kategori == 'Gaji Pekerja'?<Image source={sellingCategoryIcone.gajiPekerja} style={styles.img} resizeMode='contain'/>: null  }   
+            {item.kategori == 'Tabungan atau Investasi'?<Image source={sellingCategoryIcone.savingInvest} style={styles.img} resizeMode='contain'/>: null  }     
+            {item.kategori == 'Pengeluaran Lain-Lain'?<Image source={sellingCategoryIcone.others} style={styles.img} resizeMode='contain'/>: null  }     
         </View>
         <View style={styles.mainWrapper}>
         <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}} numberOfLines={2} ellipsizeMode='tail'>{item.namaTransaksi}</Text>

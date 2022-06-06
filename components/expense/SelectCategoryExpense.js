@@ -6,7 +6,7 @@ import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 
 const SelectCategoryExpense = ({modalCategoryVisible, setModalCategoryVisible, setCategory}) => {
 
-    const [ purchaseCategory, setPurchaseCategory ] = useState([
+    const [ sellingCategory, setSellingCategory ] = useState([
         {
             id: 1,
             image: require('../../assets/images/expensecategory/PurchasingStock.png'),
@@ -72,14 +72,14 @@ const SelectCategoryExpense = ({modalCategoryVisible, setModalCategoryVisible, s
                     <MaterialIcons name="arrow-back" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.titleWrap}>
-                    <Text style={styles.title}>Kategori Pemasukan</Text>
+                    <Text style={styles.title}>Kategori Pengeluaran</Text>
                 </View>      
             </View>
             <ScrollView style={styles.lowerWrap}>
                 
 
                
-                { purchaseCategory.map((item, i) => {
+                { sellingCategory.map((item, i) => {
                     return(
                     <ExpenseCategory item={item} key={item.id} setCategory={setCategory} modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible}/>
                     )

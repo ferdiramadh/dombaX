@@ -7,23 +7,20 @@ import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload'
 import { formatTotalToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency';
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import SellingDetail from './selling/SellingDetail';
-import CapitalDetail from './capital/CapitalDetail';
-import CreditDetail from './credit/CreditDetail';
-import GrantDetail from './grant/GrantDetail';
-import LoanDetail from './loan/LoanDetail';
 
-const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
+const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
 
-    const purchaseCategoryIcon = 
-    {
-        penjualan: require('../../assets/images/purchasingcategory/Sell.png'),
-        modal: require('../../assets/images/purchasingcategory/Request_Money.png'),
-        hibah: require('../../assets/images/purchasingcategory/Gift.png'),
-        pinjam: require('../../assets/images/purchasingcategory/Lend.png'),
-        piutang: require('../../assets/images/purchasingcategory/Piutang.png'),
-        
-    }
+    const sellingCategoryIcone = 
+        {
+            pembelianStok: require('../../assets/images/expensecategory/PurchasingStock.png'),
+            pembelianAlat: require('../../assets/images/expensecategory/PurchasingEquipment.png'),
+            pembayaranUtang: require('../../assets/images/expensecategory/PayLoan.png'),
+            pemberianUtang: require('../../assets/images/expensecategory/GivingLoan.png'),
+            gajiPekerja: require('../../assets/images/expensecategory/PaymentEmployee.png'),
+            savingInvest: require('../../assets/images/expensecategory/SaveOrInvest.png'),
+            others: require('../../assets/images/expensecategory/OtherPaycments.png'),
+            
+        }
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -48,10 +45,10 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
   const updateItem = (item) => {
     return firebase
     .firestore()
-    .collection("income")
+    .collection("expense")
     .doc(item.id)
     .update(item).then(() => {
-      uploadImageProduk(item.image, "Income", item.id, "income")
+      uploadImageProduk(item.image, "Expense", item.id, "expense")
     }).catch((error) => console.log(error))
     
   }
@@ -129,19 +126,21 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
             </View>
             { !isUpdate? 
             <View style={styles.upperImageSection}>
-                {data.kategori == 'Penjualan'?<Image source={purchaseCategoryIcon.penjualan} style={styles.img} resizeMode='contain'/>: null  }
-                {data.kategori == 'Penambahan Modal'?<Image source={purchaseCategoryIcon.modal} style={styles.img} resizeMode='contain'/>: null  }
-                {data.kategori == 'Hibah'?<Image source={purchaseCategoryIcon.hibah} style={styles.img} resizeMode='contain'/>: null  }
-                {data.kategori == 'Pinjaman'?<Image source={purchaseCategoryIcon.pinjam} style={styles.img} resizeMode='contain'/>: null  }     
-                {data.kategori == 'Piutang'?<Image source={purchaseCategoryIcon.piutang} style={styles.img} resizeMode='contain'/>: null  }  
-              <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(parseInt(data.jumlah), '#43B88E')}</Text>
+                 {data.kategori == 'Pembelian Stok'?<Image source={sellingCategoryIcone.pembelianStok} style={styles.img} resizeMode='contain'/>: null  }
+                {data.kategori == 'Pembelian Alat dan Mesin'?<Image source={sellingCategoryIcone.pembelianAlat} style={styles.img} resizeMode='contain'/>: null  }
+                {data.kategori == 'Pembayaran Utang'?<Image source={sellingCategoryIcone.pembayaranUtang} style={styles.img} resizeMode='contain'/>: null  }
+                {data.kategori == 'Pemberian Utang'?<Image source={sellingCategoryIcone.pemberianUtang} style={styles.img} resizeMode='contain'/>: null  }     
+                {data.kategori == 'Gaji Pekerja'?<Image source={sellingCategoryIcone.gajiPekerja} style={styles.img} resizeMode='contain'/>: null  }   
+                {data.kategori == 'Tabungan atau Investasi'?<Image source={sellingCategoryIcone.savingInvest} style={styles.img} resizeMode='contain'/>: null  }     
+                {data.kategori == 'Pengeluaran Lain-Lain'?<Image source={sellingCategoryIcone.others} style={styles.img} resizeMode='contain'/>: null  }    
+                <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(parseInt(data.jumlah), '#EB3223')}</Text>    
             </View> : null}
             <ScrollView style={styles.containerScroll}>      
-            {data.kategori == 'Penjualan'?<SellingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} isBatasBayar={isBatasBayar} setIsBatasBayar={setIsBatasBayar}/> : null  }  
+            {/* {data.kategori == 'Penjualan'?<SellingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} isBatasBayar={isBatasBayar} setIsBatasBayar={setIsBatasBayar}/> : null  }  
             {data.kategori == 'Penambahan Modal'?<CapitalDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             {data.kategori == 'Piutang'?<CreditDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             {data.kategori == 'Hibah'?<GrantDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
-            {data.kategori == 'Pinjaman'?<LoanDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Pinjaman'?<LoanDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }   */}
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
               {values.image && isUpdate ?
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
@@ -205,7 +204,7 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
   )
 }
 
-export default IncomeDetails
+export default ExpenseDetails
 
 const styles = StyleSheet.create({
   container: {
@@ -301,7 +300,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight:'700',
       fontFamily:'Inter',
-      color: '#43B88E'
   },
   statusText: {
       fontFamily: 'Inter',

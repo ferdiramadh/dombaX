@@ -39,7 +39,7 @@ const ExpenseSection = ({listExpense,searchItems, isSearch, searchKeyword, isFil
         
     return firebase
     .firestore()
-    .collection("income")
+    .collection("expense")
     .doc(item.id)
     .get()
     .then((i) => {
@@ -51,10 +51,11 @@ const ExpenseSection = ({listExpense,searchItems, isSearch, searchKeyword, isFil
 
 useEffect(() => {
   console.log("Cek Data")
+  let isExpense = true
   if(Object.keys(editData).length !== 0) {
       // setGlobalModalVisible(!modalGlobalVisible)
       console.log("ada nih edit data"+editData)
-      navigation.navigate("IncomeDetail",{editData, navigation, isSearch, searchItems, setSearchItems})
+      navigation.navigate("IncomeDetail",{editData, navigation, isSearch, searchItems, setSearchItems, isExpense })
   } if (editData !== undefined) {
       console.log("MANA nih edit data")
       // navigation.navigate("DetailProduct",{editData, setEditData})

@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View , ActivityIndicator, Alert, TouchableOpacity, TextInput, ScrollView, Image} from 'react-native'
 import React, { useState } from 'react'
-import { windowHeigth, windowWidth } from '../utils/DimensionSetup';
+import { windowWidth } from '../utils/DimensionSetup';
 import { MaterialIcons } from '@expo/vector-icons';
 import { deleteFile, deleteCollection } from '../utils/ImageUpload';
 import IncomeDetails from '../components/income/IncomeDetails';
+import ExpenseDetails from '../components/expense/ExpenseDetails';
 
 const IncomeDetailScreen = ({ route }) => {
-  const { editData, navigation, isSearch, searchItems, setSearchItems } = route.params;
+  const { editData, navigation, isSearch, searchItems, setSearchItems, isExpense } = route.params;
   const [isUpdate, setIsUpdate] = useState(false)
 
 
@@ -66,7 +67,7 @@ const deleteCollectionAndFile = (editData) => {
         </View>
         
       </View> : null}
-      <IncomeDetails editData={editData} navigation={navigation} isUpdate={isUpdate} setIsUpdate={setIsUpdate}/>
+      {isExpense? <ExpenseDetails editData={editData} navigation={navigation} isUpdate={isUpdate} setIsUpdate={setIsUpdate}/> : <IncomeDetails editData={editData} navigation={navigation} isUpdate={isUpdate} setIsUpdate={setIsUpdate}/>}
     </View>
   )
 }
