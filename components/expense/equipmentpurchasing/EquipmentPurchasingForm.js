@@ -105,7 +105,7 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
               onBlur={handleBlur('hargaBeli')}
               value={values.hargaBeli}
               style={styles.textInput}
-              placeholder='Harga Jual'
+              placeholder='Harga Beli'
               keyboardType='numeric'
               placeholderTextColor="#474747" 
             />
@@ -137,7 +137,7 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
             />
             <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Terjual"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Pembelian"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>

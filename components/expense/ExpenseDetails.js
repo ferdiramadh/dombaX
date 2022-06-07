@@ -7,6 +7,12 @@ import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload'
 import { formatTotalToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency';
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DebtOfferingDetail from './debtoffering/DebtOfferingDetail';
+import DebtPaymentDetail from './debtpayment/DebtPaymentDetail';
+import EmployeeSalaryDetail from './employeesalary/EmployeeSalaryDetail';
+import EquipmentPurchasingDetail from './equipmentpurchasing/EquipmentPurchasingDetail'
+import OtherExpenseDetail from './otherexpenses/OtherExpenseDetail';
+import StockPurchasingDetail from './stockpurchasing/StockPurchasingDetail';
 
 const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
 
@@ -136,11 +142,12 @@ const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
                 <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(parseInt(data.jumlah), '#EB3223')}</Text>    
             </View> : null}
             <ScrollView style={styles.containerScroll}>      
-            {/* {data.kategori == 'Penjualan'?<SellingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} isBatasBayar={isBatasBayar} setIsBatasBayar={setIsBatasBayar}/> : null  }  
-            {data.kategori == 'Penambahan Modal'?<CapitalDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
-            {data.kategori == 'Piutang'?<CreditDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
-            {data.kategori == 'Hibah'?<GrantDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
-            {data.kategori == 'Pinjaman'?<LoanDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }   */}
+            {data.kategori == 'Pemberian Utang'?<DebtOfferingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} isBatasBayar={isBatasBayar} setIsBatasBayar={setIsBatasBayar}/> : null  }  
+            {data.kategori == 'Pembayaran Utang'?<DebtPaymentDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Gaji Pekerja'?<EmployeeSalaryDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Pembelian Alat dan Mesin'?<EquipmentPurchasingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Pengeluaran Lain-Lain'?<OtherExpenseDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Pembelian Stok'?<StockPurchasingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
               {values.image && isUpdate ?
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />

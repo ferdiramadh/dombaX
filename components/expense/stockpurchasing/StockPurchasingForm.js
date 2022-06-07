@@ -64,19 +64,6 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
     setFieldValue('image','')
   }
 
-  const checkAvailability = (val) => {
-    console.log('checkAvailability')
-    console.log(val)
-    if( selectedProduct.jumlah && values !== 'undefined' ) {
- 
-    let num = parseInt(val)
-    let jml = parseInt(selectedProduct.jumlah) 
-    if( num > jml) {
-      Alert.alert('Perhatian', 'Item Melebihi Ketersediaan Stok Saat Ini');
-      setFieldValue('jumlahProduk', selectedProduct.jumlah);
-     }     
-    }
-  }
 
   const updateSelectedProduct = (selectedProduct, formValues) => {
     return firebase
@@ -84,7 +71,7 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
       .collection("userproduk")
       .doc(selectedProduct.id)
       .update({
-        "jumlah": (parseInt(selectedProduct.jumlah) - parseInt(formValues.jumlahProduk)).toString()
+        "jumlah": (parseInt(selectedProduct.jumlah) + parseInt(formValues.jumlahProduk)).toString()
       }).then(() => {
         console.log('Item Updated')
       }).catch((error) => console.log(error))
@@ -95,6 +82,7 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
   },[img])
 
   useEffect(() => {
+    setFieldValue('hargaBeli', selectedProduct.hargaBeli)
     if(selectedProduct.jumlah && values !== 'undefined' ) {
       console.log("Check COK selectedProduct")
     console.log(selectedProduct)
@@ -111,18 +99,6 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
   }
   },[selectedProduct])
 
-  useEffect(() => {
-    
-    if(selectedProduct.jumlah && values !== 'undefined') {
-      
-      console.log("Check jumlah")
-    console.log(values.jumlahProduk)
-    checkAvailability(values.jumlahProduk)
-    } else {
-      console.log("Check Values")
-      console.log(values)
-    }
-  }, [values])
     
     return (
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
@@ -200,7 +176,7 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
             />
             <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Terjual"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Pembelian"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>

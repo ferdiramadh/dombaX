@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View , ActivityIndicator, Alert, TouchableOpacity, TextInput, ScrollView, Image} from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { windowWidth } from '../utils/DimensionSetup';
 import { MaterialIcons } from '@expo/vector-icons';
 import { deleteFile, deleteCollection } from '../utils/ImageUpload';
@@ -9,6 +9,11 @@ import ExpenseDetails from '../components/expense/ExpenseDetails';
 const IncomeDetailScreen = ({ route }) => {
   const { editData, navigation, isSearch, searchItems, setSearchItems, isExpense } = route.params;
   const [isUpdate, setIsUpdate] = useState(false)
+
+  const [ database, setDatabase ] = useState({
+    collection: '',
+    storage: ''
+  })
 
 
   const deleteItem = (item) => {
@@ -39,10 +44,23 @@ const IncomeDetailScreen = ({ route }) => {
 }
 
 const deleteCollectionAndFile = (editData) => {
-    deleteCollection("income", editData)
-    deleteFile("Income", editData)
+    deleteCollection(database.collection, editData)
+    deleteFile(database.storage, editData)
 }
 
+useEffect(() => {
+  if(isExpense) {
+    setDatabase({
+      collection: 'expense',
+      storage: 'Expense'
+    })
+  } else {
+    setDatabase({
+      collection: 'income',
+      storage: 'Income'
+    })
+  }
+}, [editData])
 
   return (
     <View style={styles.container}>
