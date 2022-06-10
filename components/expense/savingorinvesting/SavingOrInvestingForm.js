@@ -89,7 +89,7 @@ const SavingOrInvestingForm = ({setFieldValue,handleChange,handleBlur, values,ha
             />           
             <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal"}</Text>   
+                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Pengeluaran"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>

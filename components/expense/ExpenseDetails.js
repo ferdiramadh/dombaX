@@ -13,6 +13,7 @@ import EmployeeSalaryDetail from './employeesalary/EmployeeSalaryDetail';
 import EquipmentPurchasingDetail from './equipmentpurchasing/EquipmentPurchasingDetail'
 import OtherExpenseDetail from './otherexpenses/OtherExpenseDetail';
 import StockPurchasingDetail from './stockpurchasing/StockPurchasingDetail';
+import SavingOrInvestingDetail from './savingorinvesting/SavingOrInvestingDetail';
 
 const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
 
@@ -148,6 +149,7 @@ const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
             {data.kategori == 'Pembelian Alat dan Mesin'?<EquipmentPurchasingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             {data.kategori == 'Pengeluaran Lain-Lain'?<OtherExpenseDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             {data.kategori == 'Pembelian Stok'?<StockPurchasingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
+            {data.kategori == 'Tabungan atau Investasi'?<SavingOrInvestingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
               {values.image && isUpdate ?
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
