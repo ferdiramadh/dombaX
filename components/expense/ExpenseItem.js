@@ -48,8 +48,8 @@ const ExpenseItem = ({item, editItem}) => {
         </View>
         <View style={styles.rightWrapper}>
             <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
-            <Text style={{color: '#000'}}>{item.kategori}</Text>
-            {(item.kategori == 'Penjualan' || item.kategori == 'Pinjaman' || item.kategori == 'Piutang') && item.statusBayar !== 'status'?
+            <Text style={{color: '#000'}} ellipsizeMode='tail' numberOfLines={1}>{item.kategori}</Text>
+            {(item.kategori !== 'Tabungan atau Investasi' || item.kategori !== 'Pengeluaran Lain-Lain' ) && (item.statusBayar)?
             <View style={[styles.status, item.statusBayar == 'Lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>
                 <Text style={styles.statusText}>{item.statusBayar == 'Lunas'?'Lunas': 'Belum Lunas'}</Text>
             </View>: null}
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     rightWrapper: {
         height: '100%',
         width: '40%',
-        // backgroundColor: 'cyan',
         paddingTop: 5,
         paddingRight: 10,
         alignItems: 'flex-end',
