@@ -7,7 +7,7 @@ import Expense from '../../components/expense/Expense';
 const Tab = createMaterialTopTabNavigator();
 
 
-function TopTabTransaction({listIncome,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems}) {
+function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems, setTransaction, setSearchKeyword}) {
   const { setTopTabTransactionFocus} = useContext(PhotoContext)
   return (
     <Tab.Navigator screenOptions={{
@@ -15,9 +15,27 @@ function TopTabTransaction({listIncome,searchItems, isSearch, searchKeyword, isF
        
       }}>
       <Tab.Screen name="Pemasukan" listeners={{
-        tabPress: () => {setTopTabTransactionFocus('Income')},
-        swipeEnd: () => {setTopTabTransactionFocus('Income')},
-        swipeStart: () => {setTopTabTransactionFocus('Expense')},
+        tabPress: () => {
+          setSearchKeyword('')
+          setSearchItems([])
+          setIsSearch(false)
+          setTransaction('income')
+          setTopTabTransactionFocus('Income')
+        },
+        swipeEnd: () => {
+          setSearchKeyword('')
+          setSearchItems([])
+          setIsSearch(false)
+          setTransaction('income')
+          setTopTabTransactionFocus('Income')
+        },
+        swipeStart: () => {
+          setSearchKeyword('')
+          setSearchItems([])
+          setIsSearch(false)
+          setTransaction('expense')
+          setTopTabTransactionFocus('Expense')
+        },
       }} options={{
         tabBarActiveTintColor: '#43B88E', tabBarInactiveTintColor: '#000', tabBarIndicatorStyle: {
           backgroundColor: '#43B88E', 
@@ -27,7 +45,10 @@ function TopTabTransaction({listIncome,searchItems, isSearch, searchKeyword, isF
       />
       <Tab.Screen name="Pengeluaran" listeners={{
         tabPress: () => {
-          console.log(listIncome)
+          setSearchKeyword('')
+          setSearchItems([])
+          setIsSearch(false)
+          setTransaction('expense')
           setTopTabTransactionFocus('Expense')
         }
       }} options={{

@@ -22,6 +22,8 @@ const TransactionScreen = () => {
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listIncome = transactionsData.listIncome
 
+    const [ transaction, setTransaction ] = useState('income')
+
     const [ isSearch, setIsSearch ] = useState(false)
     const [ searchItems, setSearchItems ] = useState([])
     const [ searchKeyword, setSearchKeyword] = useState('')
@@ -64,7 +66,7 @@ const TransactionScreen = () => {
 
     const searchProduct = () => {
 
-        fireSQL.query(`SELECT * FROM income WHERE ( namaTransaksi LIKE '${searchKeyword}%' OR namaTransaksi LIKE '${Capitalize(searchKeyword)}%' OR namaTransaksi LIKE '${searchKeyword.toLowerCase()}%' ) AND userId = "${uid}" `).then(documents => {
+        fireSQL.query(`SELECT * FROM ${transaction} WHERE ( namaTransaksi LIKE '${searchKeyword}%' OR namaTransaksi LIKE '${Capitalize(searchKeyword)}%' OR namaTransaksi LIKE '${searchKeyword.toLowerCase()}%' ) AND userId = "${uid}" `).then(documents => {
         const items = []
         documents.forEach(doc => {
 
@@ -129,7 +131,7 @@ const TransactionScreen = () => {
                     </TouchableOpacity>    
                    
                 </View>: null}
-                <TopTabTransaction listIncome={listIncome} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/>
+                <TopTabTransaction isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems} setTransaction={setTransaction} setIsSearch={setIsSearch} setSearchKeyword={setSearchKeyword}/>
                 </View>
             </View>    
             <ModalAddTransaction setModalTransaction={setModalTransaction}  modalTransaction={modalTransaction} topTabTransactionFocus={topTabTransactionFocus}/>
