@@ -2,23 +2,25 @@ import React , { useEffect, useState } from 'react'
 import { StyleSheet, Text, View , Dimensions, BackHandler, Alert} from 'react-native'
 import CustomHeder from '../components/CustomHeder'
 import CustomButton from '../components/CustomButton'
-import {
-
-    PieChart,
-
-  } from 'react-native-chart-kit'
+import { PieChart } from 'react-native-chart-kit'
 import LaporanComponent from '../components/laporan/LaporanComponent'
 import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../Firebaseconfig'
 import NumberFormat from 'react-number-format';
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native';
+import { windowHeigth, windowWidth } from '../utils/DimensionSetup'
 
 
 export default function LaporanScreen() {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
+
+    const transactionsData = useSelector(state => state.transactionsReducer)
+    const listExpense = transactionsData.listExpense
+    const listIncome = transactionsData.listIncome
+
     const [isProfit, setIsProfit] = useState(true)
     const dombaCost = useSelector(state => state.stokReducer.listDomba)
     const pakanCost = useSelector(state => state.stokReducer.listPakan)
@@ -53,9 +55,13 @@ export default function LaporanScreen() {
 
     const totalBiayaOverall = totalBiayaDomba + totalBiayaPakan + totalBiayaObat + totalBiayaKandang + totalBiayaPegawai + totalBiayaLahan;
 
+    const screenWidth = Dimensions.get('window').width - 60;
+    const totalExpense = parseInt(getSum(listExpense, "jumlah"))
+    const totalIncome = parseInt(getSum(listIncome, "jumlah"))
 
-    const arusKas = 0 - totalBiayaOverall + totalPenjualan;
-    const profit = totalPenjualan - (totalBiayaDomba + totalBiayaPakan + totalBiayaObat);
+
+    const arusKas = 0 - totalExpense + totalIncome;
+    const profit = totalIncome - (totalExpense);
 
     const testLoadSnapshot = () => {
         return firebase
@@ -96,58 +102,7 @@ export default function LaporanScreen() {
         })
     }
 
-    // const loadDataDomba = () => {
-      
-    //     return firebase
-    //     .firestore()
-    //     .collection("dombastok").where("userId","==",uid)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //         if(querySnapshot.docs.length === 0){
-    //             console.log('TIDAK ada nih')
-    //             dispatch({type:'SET_EMPTY_DOMBA_DATA'})
-                
-    //         } else {
-    //             console.log('ada nih')
-    //             querySnapshot.forEach( function(doc){
-    //                 let newValue = doc.data()
-    //                 console.log(newValue);
-    //                 dispatch({type:'LOAD_DOMBA_DATA',results:newValue})
-                    
-    //             });
-    //         }
 
-    //     }).catch((error) => {
-    //         console.log("Error getting document:", error);
-    //     });
-        
-    // }
-    // const loadDataPakan = () => {
-      
-    //     return firebase
-    //     .firestore()
-    //     .collection("pakanstok").where("userId","==",uid)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //         if(querySnapshot.docs.length === 0){
-    //             // console.log('TIDAK ada nih')
-    //             dispatch({type:'SET_EMPTY_PAKAN_DATA'})
-                
-    //         } else {
-    //             // console.log('ada nih')
-    //             querySnapshot.forEach( function(doc){
-    //                 let newValue = doc.data()
-    //                 dispatch({type:'LOAD_PAKAN_DATA',results:newValue})
-                    
-    //             });
-    //         }
-          
-        
-    //     }).catch((error) => {
-    //         console.log("Error getting document:", error);
-    //     });
-        
-    // }
     const loadDataObat = () => {
         return firebase
         .firestore()
@@ -430,17 +385,32 @@ export default function LaporanScreen() {
         console.log('jalankan isprofit')
         checkProfit()
     },[profit])
-    
+
+    function objToDate (obj) {
+        let result = new Date(0);
+        if( obj !== null) {
+            result.setSeconds(obj.seconds);
+            result.setMilliseconds(obj.nanoseconds/1000000);
+            return result;
+        }
+        
+      }
+      function getSum(arr, jumlah) {
+        return arr.reduce((total, obj) => {
+          if (typeof obj[jumlah] === 'string') {
+            return total +  parseInt(obj.jumlah);;
+          }
+          return total +  parseInt(obj.jumlah);;
+        }, 0);
+      }
+      const generateColor = () => {
+        const randomColor = Math.floor(Math.random() * 16777215)
+          .toString(16)
+          .padStart(6, '0');
+        return `#${randomColor}`;
+      };
+      
    
-    const data = [
-        { name: 'Domba', population: 30, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Pakan', population: 10, color: 'orange', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'Obat & Vit', population: 10, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        // { name: 'Kandang', population: 5, color: 'yellow', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        // { name: 'Pegawai', population: 15, color: 'violet', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        // { name: 'Lahan', population: 20, color: 'cyan', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-      ]
-      const screenWidth = Dimensions.get('window').width - 60;
 
 
     return (
@@ -454,10 +424,21 @@ export default function LaporanScreen() {
             
             
             <View >
-            <Text style={styles.textPengeluaran}>Pengeluaran</Text>
+            
+            { listExpense.length > 0? 
             <View style={styles.chartContainer}>
+            <Text style={styles.textPengeluaran}>Pengeluaran</Text>
                 <PieChart
-                    data={data}
+                    data={listExpense.map(data => {
+                        let newObj = {
+                            population: parseInt(data.jumlah)/totalExpense,
+                            name: data.namaTransaksi,
+                            color:generateColor(), 
+                            legendFontColor: '#7F7F7F', 
+                            legendFontSize: 11
+                        }
+                        return Object.assign(data, newObj)
+                    })}
                     width={screenWidth}
                     height={200}
                     chartConfig={{
@@ -474,24 +455,25 @@ export default function LaporanScreen() {
                     backgroundColor="transparent"
                     paddingLeft="5"
                     />
-            </View>
+            </View>: 
+                <View style={{height: '30%', width: windowWidth*.8, marginTop: 5, justifyContent:'center', alignItems:'center'}}>
+                    <Text style={styles.textPengeluaran}>Tidak Ada Pengeluaran</Text>
+                </View>}
 
             </View>
             
 
-                <CustomButton onPress={
-                   () => console.log(navigation.getState())
-            //         () => {
-            //         if(uid !== "undefined"){
-            //             loadDataPakan()
-            //             console.log('Aya Yeuh UID')
-            //         } else {
-            //             console.log('Eweuh UID')
-            //         }
-                    
-            //   console.log(uid)
-            // }
-            }/>
+                <CustomButton onPress={() => console.log(listExpense.map(data => {
+                        let testColor = "#" + Math.floor(Math.random()*16777215).toString(16)
+                        let newObj = {
+                            population: parseInt(data.jumlah)/totalJumlah,
+                            name: data.namaTransaksi,
+                            color:testColor, 
+                            legendFontColor: '#7F7F7F', 
+                            legendFontSize: 15
+                        }
+                        return Object.assign(data, newObj)
+                    }))}/>
             
             
             
