@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import { Alert,  StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
 import Modal from "react-native-modal";
 import { PhotoContext } from '../../context/PhotoProfileContext';
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup';
+import { FilterTransactionContext } from '../../context/FilterTransactionContext';
 
-
-const FilterIncomeModal = ({filterVisible, setFilterVisible, setIsFilter, setFilterBy, filterList}) => {
+const FilterIncomeModal = () => {
   const { testStyle } = useContext(PhotoContext)
+  const {filterVisible, setFilterVisible, setIsFilter, setFilterBy, isFilter,filterList} = useContext(FilterTransactionContext)
 
   return (
-   
       <Modal
       backdropColor='white'
       deviceWidth={windowWidth}
@@ -49,8 +49,9 @@ const FilterIncomeModal = ({filterVisible, setFilterVisible, setIsFilter, setFil
                 { filterList.map((item, i) => {
                   return (
                     <TouchableOpacity style={styles.filterSelection} key={item.id} onPress={() => {
+                      console.log('filterList')
                       setFilterBy(item.sortBy)
-                      setIsFilter(true)
+                      setIsFilter(!isFilter)
                       setFilterVisible(!filterVisible)
                     }}>
                       <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
@@ -88,8 +89,6 @@ const FilterIncomeModal = ({filterVisible, setFilterVisible, setIsFilter, setFil
           </View>
         </View>
       </Modal>
-
-   
   )
 }
 

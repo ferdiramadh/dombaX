@@ -4,13 +4,16 @@ import Routes from './navigation/Routes';
 import { Provider } from 'react-redux'
 import {store} from './redux';
 import PhotoProfileProvider from './context/PhotoProfileContext';
+import FilterTransactionProvider from './context/FilterTransactionContext';
 
 
 export default function App() {
   return (
     <Provider store ={store}>
       <PhotoProfileProvider>
-       <Routes />
+        <FilterTransactionProvider>
+          <Routes />
+        </FilterTransactionProvider>
       </PhotoProfileProvider>
     </Provider>
   );

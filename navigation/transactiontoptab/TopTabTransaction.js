@@ -7,7 +7,7 @@ import Expense from '../../components/expense/Expense';
 const Tab = createMaterialTopTabNavigator();
 
 
-function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems, setTransaction, setSearchKeyword}) {
+function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, isLoading, setSearchItems, setTransaction, setSearchKeyword}) {
   const { setTopTabTransactionFocus} = useContext(PhotoContext)
   return (
     <Tab.Navigator screenOptions={{
@@ -41,7 +41,7 @@ function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, is
           backgroundColor: '#43B88E', 
         }
       }}
-      children={() => <Income isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/>}
+      children={() => <Income isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isLoading={isLoading} setSearchItems={setSearchItems}/>}
       />
       <Tab.Screen name="Pengeluaran" listeners={{
         tabPress: () => {
@@ -56,7 +56,7 @@ function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, is
           backgroundColor: '#EB3223', 
         }
       }}
-      children={() => <Expense isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/>}/>
+      children={() => <Expense isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isLoading={isLoading} setSearchItems={setSearchItems}/>}/>
     </Tab.Navigator>
   );
 }

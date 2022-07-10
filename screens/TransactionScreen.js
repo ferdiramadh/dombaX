@@ -32,29 +32,7 @@ const TransactionScreen = () => {
     const [ filterVisible, setFilterVisible ] = useState(false)
 
     const [ isFilter, setIsFilter ] = useState(false)
-    const [ filterItems, setFilterItems ] = useState([])
-    const filterList = [
-      {
-        id: 1,
-        sortBy: 'Hari Ini',
-      },
-      {
-        id: 2,
-        sortBy: '7 Hari Terakhir',
-      },
-      {
-        id: 3,
-        sortBy: '30 Hari Terakhir',
-      },
-      {
-        id: 4,
-        sortBy: 'Bulan Ini',
-      },
-      {
-        id: 5,
-        sortBy: 'Pilih Tanggal',
-      }
-    ]
+   
     const [ filterBy, setFilterBy ] = useState();
 
     const dbRef = firebase.firestore();
@@ -131,12 +109,12 @@ const TransactionScreen = () => {
                     </TouchableOpacity>    
                    
                 </View>: null}
-                <TopTabTransaction isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems} setTransaction={setTransaction} setIsSearch={setIsSearch} setSearchKeyword={setSearchKeyword}/>
+                <TopTabTransaction isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isLoading={isLoading} setSearchItems={setSearchItems} setTransaction={setTransaction} setIsSearch={setIsSearch} setSearchKeyword={setSearchKeyword}/>
                 </View>
             </View>    
             <ModalAddTransaction setModalTransaction={setModalTransaction}  modalTransaction={modalTransaction} topTabTransactionFocus={topTabTransactionFocus}/>
             <CustomButton onPress={() => setModalTransaction(!modalTransaction)}/>
-            <FilterIncomeModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} />
+            <FilterIncomeModal />
         </View>
     )
 }
