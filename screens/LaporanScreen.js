@@ -1,6 +1,5 @@
 import React , { useEffect, useState } from 'react'
-import { StyleSheet, Text, View , Dimensions, BackHandler, Alert} from 'react-native'
-import CustomHeder from '../components/CustomHeder'
+import { StyleSheet, Text, View , Dimensions, BackHandler, Alert, ScrollView, ToastAndroid, TouchableOpacity} from 'react-native'
 import CustomButton from '../components/CustomButton'
 import { PieChart } from 'react-native-chart-kit'
 import LaporanComponent from '../components/laporan/LaporanComponent'
@@ -10,6 +9,9 @@ import NumberFormat from 'react-number-format';
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native';
 import { windowHeigth, windowWidth } from '../utils/DimensionSetup'
+import ProfileHeader from '../components/laporan/ProfileHeader'
+import ExpenseChart from '../components/laporan/ExpenseChart'
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 export default function LaporanScreen() {
@@ -62,6 +64,16 @@ export default function LaporanScreen() {
 
     const arusKas = 0 - totalExpense + totalIncome;
     const profit = totalIncome - (totalExpense);
+
+    const [ showMore, setShowMore ] = useState(false)
+    const [ slice, setSlice ] = useState(3)
+
+
+    const sortData = listExpense.sort((a, b) => {
+        let bd = b.jumlah;
+        let ad = a.jumlah;
+        return bd - ad;
+      });
 
     const testLoadSnapshot = () => {
         return firebase
@@ -417,63 +429,57 @@ export default function LaporanScreen() {
       
         <View style={styles.container}>
             <StatusBar style='auto' />
-            <CustomHeder leftSubMenu='Laporan' />
+            <ProfileHeader navigation={navigation}/>
+            <View style={styles.upperWrapper}>
+                <View style={{justifyContent: 'center', alignItems: 'center', flexDirection:'row'}}>
+                    <Text style={{fontSize: 18, }}>Pilih Periode</Text>
+                    <TouchableOpacity style={{marginLeft: 5}}>
+                        <MaterialIcons name="filter-list" size={30} color="black" />
+                    </TouchableOpacity>
+                </View>              
+            </View>
             <View style={styles.componentContainer}>
                 <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrency(arusKas)} profit={formatToCurrency(profit)}/>
             </View>
             
             
-            <View >
             
-            { listExpense.length > 0? 
-            <View style={styles.chartContainer}>
-            <Text style={styles.textPengeluaran}>Pengeluaran</Text>
-                <PieChart
-                    data={listExpense.map(data => {
-                        let newObj = {
-                            population: parseInt(data.jumlah)/totalExpense,
-                            name: data.namaTransaksi,
-                            color:generateColor(), 
-                            legendFontColor: '#7F7F7F', 
-                            legendFontSize: 11
-                        }
-                        return Object.assign(data, newObj)
-                    })}
-                    width={screenWidth}
-                    height={200}
-                    chartConfig={{
-                        backgroundColor: '#e26a00',
-                        backgroundGradientFrom: '#fb8c00',
-                        backgroundGradientTo: '#ffa726',
-                        decimalPlaces: 2, // optional, defaults to 2dp
-                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        style: {
-                        borderRadius: 16
-                        }
-                    }}
-                    accessor="population"
-                    backgroundColor="transparent"
-                    paddingLeft="5"
-                    />
-            </View>: 
-                <View style={{height: '30%', width: windowWidth*.8, marginTop: 5, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={styles.textPengeluaran}>Tidak Ada Pengeluaran</Text>
+           
+                { listExpense.length > 0? 
+                <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', position: 'relative', bottom: 0}}>
+                    <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>
+                        <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>
+                    </View>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+
+                    
+                        {sortData.map((item, i) => {
+                            return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
+                        }).slice(0, slice)} 
+                    { !showMore && listExpense.length > 3? 
+                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth*.9, marginTop: 5}} onPress={() => {
+                        setShowMore(!showMore)
+                        setSlice(listExpense.length)
+                        ToastAndroid.show("Scroll Untuk Melihat Item", ToastAndroid.SHORT)
+                    }}>
+                        <Text style={{fontSize: 18,color: '#000' }}>Lihat Lainnya</Text>
+                    </TouchableOpacity>: null}
+                    {listExpense.length > 3 && showMore?<TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth*.9, marginVertical: 10}} onPress={() => {
+                        setShowMore(!showMore)
+                        setSlice(3)
+                    }}>
+                        <Text style={{fontSize: 18,color: '#000' }}>Tutup</Text>
+                    </TouchableOpacity>:null}
+                    </ScrollView>
+                </View>: 
+                <View style={{flex: 1, height: '30%', width: windowWidth, marginTop: 5, justifyContent:'center', alignItems:'center'}}>
+                    <Text style={[styles.textPengeluaran]}>Tidak Ada Pengeluaran</Text>
                 </View>}
 
-            </View>
+            
             
 
-                <CustomButton onPress={() => console.log(listExpense.map(data => {
-                        let testColor = "#" + Math.floor(Math.random()*16777215).toString(16)
-                        let newObj = {
-                            population: parseInt(data.jumlah)/totalJumlah,
-                            name: data.namaTransaksi,
-                            color:testColor, 
-                            legendFontColor: '#7F7F7F', 
-                            legendFontSize: 15
-                        }
-                        return Object.assign(data, newObj)
-                    }))}/>
+                {/* <CustomButton onPress={() => ToastAndroid.show("Test toast", ToastAndroid.SHORT)}/> */}
             
             
             
@@ -484,31 +490,33 @@ export default function LaporanScreen() {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        justifyContent:'center',
-        alignItems:'center',
+        // justifyContent:'center',
+        // alignItems:'center',
         backgroundColor:'white',
-        position:'relative',
+        // position:'relative',
         
     },
     textPengeluaran:{
         fontSize: 26,
         color:'#ED9B83',
-        fontWeight:'600'
+        fontWeight:'600', 
     },
     componentContainer:{
         width:'100%',
         flexDirection:'column',
         justifyContent:'center',
         alignItems:'center',
-        height:'40%',
+        height:windowHeigth*.3,
         // backgroundColor:'red',
-        marginTop:60
+       
     },
-    chartContainer:{
-        width:'100%',
+
+    upperWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        textAlign: 'center',
+        marginTop:windowHeigth*.13,
+        marginHorizontal: 10,
         
-        flexDirection:'column',
-        justifyContent:'center',
-        // backgroundColor:'red',
     }
 })

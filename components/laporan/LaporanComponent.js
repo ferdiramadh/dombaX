@@ -1,5 +1,6 @@
 import React, {useState, useEffect}  from 'react'
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { windowWidth } from '../../utils/DimensionSetup'
 
 const LaporanComponent = (props) => {
     const [isLoading,setIsLoading ] = useState(true)
@@ -36,8 +37,7 @@ export default LaporanComponent
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        // backgroundColor:'violet',
-        width: '90%',
+        width: windowWidth,
         paddingHorizontal:'5%'
     },
     sectionContainer:{
@@ -45,13 +45,11 @@ const styles = StyleSheet.create({
         height:'35%',
         backgroundColor:'white',
         borderRadius:20,
-        shadowColor: 'red',
+        shadowColor: '#000',
         shadowOffset: { width: 10, height: 20 },
         shadowOpacity: 1,
         shadowRadius: 5,
         elevation: 4,
-        borderColor:'#ED9B83',
-        borderWidth:2,
         flexDirection:'column',
         justifyContent:'center',
         padding:20,
