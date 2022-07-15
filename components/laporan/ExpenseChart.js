@@ -5,6 +5,7 @@ import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 const ExpenseChart = ({item, totalExpense}) => {
   const value = (parseInt(item.jumlah)/totalExpense*100).toFixed(2)
   return (
+    <View style={styles.c}>
     <View style={styles.container}>
         <View style={styles.upperWrapper}>
             <Text>{item.namaTransaksi}</Text>
@@ -13,7 +14,7 @@ const ExpenseChart = ({item, totalExpense}) => {
         <View style={[styles.progressWrapper, { width:`${value}%`}, value > 50? {backgroundColor: "red"}:{backgroundColor:"grey"}]}>
 
         </View>
-    </View>
+    </View></View>
   )
 }
 
@@ -43,5 +44,10 @@ const styles = StyleSheet.create({
         height: '25%',
         marginTop: 5,
         borderRadius: 8
+    },
+    c: {
+        flex:1,
+        width: windowWidth,
+        paddingHorizontal:'5%'
     }
 })
