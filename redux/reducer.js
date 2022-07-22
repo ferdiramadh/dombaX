@@ -20,6 +20,11 @@ const initialProfileState = {
     jumlahDomba:'',
     omzet:'',
     dapatInfo:'',
+    jenisKelamin: '',
+    noHpBisnis: '',
+    emailBisnis: '',
+    alamatBisnis: ''
+
 }
 
 const initialStock = {

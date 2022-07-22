@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
         marginVertical:10,
     },
     upTitle:{
-        fontSize: 24,
-        fontWeight:'bold',
+        fontSize: 26,
+        fontWeight:'600',
         color:'#ED9B83'
     },
     saldoText:{

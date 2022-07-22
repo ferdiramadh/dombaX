@@ -61,16 +61,20 @@ function MyTabs() {
           }}
         />
         <Tab.Screen
-          name="Lainnya"
+          name="Profile"
           component={OthersScreen}
+          tabBarOptions={{
+            title: "Profile Bisnis",
+          }}
           options={{
-            tabBarLabel: 'Lainnya',
+            
+            tabBarLabel: 'Profil',
             tabBarIcon: ({ color, size }) => (
-              <Entypo name="dots-three-horizontal" size={24} color={color} />
+              <MaterialIcons name="account-circle" size={24} color={color} />
             ),
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Test"
           component={TopTabTransaction}
           options={{
@@ -79,7 +83,7 @@ function MyTabs() {
               <AntDesign name="profile" size={24} color={color} />
             ),
           }}
-        />
+        /> */}
         {/* <Tab.Screen
           name="TestInvoicePDFScreen"
           component={PrintPdfScreen}

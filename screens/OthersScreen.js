@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
-import CustomHeder from '../components/CustomHeder';
+import ProfileHeader from '../components/laporan/ProfileHeader';
 import firebase from 'firebase'
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const OthersScreen = ({navigation}) => {
+    
     const dispatch = useDispatch();
-    const profileData = useSelector(state => state.profileReducer)
     const signOut = () => {
         firebase.auth().signOut().then(() => {
             // Sign-out successful.
@@ -20,16 +20,22 @@ const OthersScreen = ({navigation}) => {
     }
   return (
     <View style={styles.container}>
-        <CustomHeder descProfile={profileData.namaBisnis} styleFont={{fontSize:24}}/>
+        <ProfileHeader navigation={navigation}/>
         <View style={styles.main}>
             <TouchableOpacity style={styles.contentWrapper} onPress={() => navigation.navigate('Account')}>
-                <Text>Detail Akun</Text>
+                <Text style={styles.text}>Profil</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.contentWrapper} onPress={() => navigation.navigate('BusinessProfile')}>
+                <Text style={styles.text}>Profil Bisnis</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.contentWrapper} onPress={() => null}>
+                <Text style={styles.text}>Bantuan</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.contentWrapper} onPress={() => {
                 signOut()
                 navigation.replace("Login")
             }}>
-                <Text>Log Out</Text>
+                <Text style={styles.text}>Keluar</Text>
             </TouchableOpacity>
         </View>
     </View>
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent:'center',
         alignItems:'center',
-        // backgroundColor:'red',  
+        backgroundColor:'#FFF',  
     },
     main: {
         // backgroundColor:'blue',
@@ -53,15 +59,17 @@ const styles = StyleSheet.create({
         marginTop:'40%'
     },
     contentWrapper:{
-        alignItems:'flex-start',
         justifyContent:'center',
-        // backgroundColor:'yellow',
+        backgroundColor:'#ED9B83',
         width:'90%',
-        height:'10%',
+        height:60,
         padding:8,
-        borderWidth:2,
         borderRadius:10,
-        borderColor:'grey',
-        marginVertical: 8
+        marginVertical: 8,
+        fontSize:14,
+        elevation: 2
+    },
+    text: {
+        color: "#FFF"
     }
 });

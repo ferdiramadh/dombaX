@@ -2,15 +2,13 @@ import { StyleSheet, View, ScrollView, Alert } from 'react-native';
 import React from 'react';
 import { Formik } from 'formik';
 import AccountDetailForm from './AccountDetailForm';
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
 import firebase from '../../Firebaseconfig'
 
-const EditAccount = ({isEdit, setIsEdit}) => {
-    const dispatch = useDispatch();
-    const uid = useSelector(state => state.userReducer.uid)
+const EditAccount = ({navigation}) => {
+    
     const profileData = useSelector(state => state.profileReducer)
     
-
     const updateItem = (item) => {
       return firebase
       .firestore()
@@ -23,8 +21,8 @@ const EditAccount = ({isEdit, setIsEdit}) => {
 
     const updateNotification = () => {
       Alert.alert(
-          "Confirmation",
-          `Item has been updated`,
+          "Konfirmasi",
+          `Profil Telah Dirubah`,
           
       )
       
@@ -39,16 +37,16 @@ const EditAccount = ({isEdit, setIsEdit}) => {
         onSubmit={(values, actions) => {  
           updateItem(values);
           updateNotification()
-          setIsEdit(!isEdit)
+          navigation.goBack()
       
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => (
-      <ScrollView style={styles.container} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
-        <View style={{width:'100%', justifyContent:'center',alignItems:'center',paddingBottom:20}}>
-          <AccountDetailForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} isEdit={isEdit} setIsEdit={setIsEdit}/>
+     
+        <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
+          <AccountDetailForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue}/>
         </View>
-      </ScrollView>
+      
     )}
     </Formik>
   );

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff',
         position:'absolute',
         top:20,
-        elevation:2
+        // elevation:2
     },
     wrapper:{
         flexDirection: 'row',

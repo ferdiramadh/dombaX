@@ -180,8 +180,8 @@ const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
                   Alert.alert(
                     "Perhatian!",
                     `Jumlah Harus Lebih Dari 0!`)
-                } else if( data.kategori == "Penjualan" ) {
-                  setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaJual)).toString())
+                } else if( data.kategori == "Pembelian Alat dan Mesin" || data.kategori == "Pembelian Stok" ) {
+                  setFieldValue('jumlah', (parseInt(values.jumlahProduk) * parseInt(values.hargaBeli)).toString())
                   handleSubmit() } 
                   else {
                   handleSubmit()

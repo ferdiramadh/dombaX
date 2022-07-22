@@ -1,5 +1,5 @@
 import React , { useEffect, useState } from 'react'
-import { StyleSheet, Text, View , Dimensions, BackHandler, Alert, ScrollView, ToastAndroid, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View , Dimensions, BackHandler, Alert, ScrollView, ToastAndroid, TouchableOpacity, ActivityIndicator} from 'react-native'
 import CustomButton from '../components/CustomButton'
 import { PieChart } from 'react-native-chart-kit'
 import LaporanComponent from '../components/laporan/LaporanComponent'
@@ -74,6 +74,14 @@ export default function LaporanScreen() {
         let ad = a.jumlah;
         return bd - ad;
       });
+
+    const [isLoading,setIsLoading ] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false)
+        },1000)
+    },[])
 
     const testLoadSnapshot = () => {
         return firebase
@@ -431,7 +439,7 @@ export default function LaporanScreen() {
             <StatusBar style='auto' />
             <ProfileHeader navigation={navigation}/>
             <View style={styles.upperWrapper}>
-                <View style={{justifyContent: 'center', alignItems: 'center', flexDirection:'row'}}>
+                <View style={{justifyContent: 'center', alignItems: 'center', flexDirection:'row', marginRight: 18}}>
                     <Text style={{fontSize: 18, }}>Pilih Periode</Text>
                     <TouchableOpacity style={{marginLeft: 5}}>
                         <MaterialIcons name="filter-list" size={30} color="black" />
@@ -442,14 +450,15 @@ export default function LaporanScreen() {
                 <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrency(arusKas)} profit={formatToCurrency(profit)}/>
             </View>
             
-            
-            
-           
                 { listExpense.length > 0? 
                 <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', position: 'relative', bottom: 0}}>
                     <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>
                         <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>
                     </View>
+                    {isLoading ? 
+                    <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', justifyContent:'center'}}>
+                        <ActivityIndicator size="small" color="orange" />
+                    </View>:
                     <ScrollView showsVerticalScrollIndicator={false}>
 
                     
@@ -457,20 +466,20 @@ export default function LaporanScreen() {
                             return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
                         }).slice(0, slice)} 
                     { !showMore && listExpense.length > 3? 
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth*.9, marginTop: 5}} onPress={() => {
+                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginTop: 5}} onPress={() => {
                         setShowMore(!showMore)
                         setSlice(listExpense.length)
                         ToastAndroid.show("Scroll Untuk Melihat Item", ToastAndroid.SHORT)
                     }}>
                         <Text style={{fontSize: 18,color: '#000' }}>Lihat Lainnya</Text>
                     </TouchableOpacity>: null}
-                    {listExpense.length > 3 && showMore?<TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth*.9, marginVertical: 10}} onPress={() => {
+                    {listExpense.length > 3 && showMore?<TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginVertical: 10}} onPress={() => {
                         setShowMore(!showMore)
                         setSlice(3)
                     }}>
                         <Text style={{fontSize: 18,color: '#000' }}>Tutup</Text>
                     </TouchableOpacity>:null}
-                    </ScrollView>
+                    </ScrollView>}
                 </View>: 
                 <View style={{flex: 1, height: '30%', width: windowWidth, marginTop: 5, justifyContent:'center', alignItems:'center'}}>
                     <Text style={[styles.textPengeluaran]}>Tidak Ada Pengeluaran</Text>
