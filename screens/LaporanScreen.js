@@ -24,45 +24,59 @@ export default function LaporanScreen() {
     const listIncome = transactionsData.listIncome
 
     const [isProfit, setIsProfit] = useState(true)
-    const dombaCost = useSelector(state => state.stokReducer.listDomba)
-    const pakanCost = useSelector(state => state.stokReducer.listPakan)
-    const obatCost = useSelector(state => state.stokReducer.listObat)
+    // const dombaCost = useSelector(state => state.stokReducer.listDomba)
+    // const pakanCost = useSelector(state => state.stokReducer.listPakan)
+    // const obatCost = useSelector(state => state.stokReducer.listObat)
 
-    const kandangCost = useSelector(state => state.costReducer.listKandang)
-    const pegawaiCost = useSelector(state => state.costReducer.listPegawai)
-    const lahanCost = useSelector(state => state.costReducer.listLahan)
+    // const kandangCost = useSelector(state => state.costReducer.listKandang)
+    // const pegawaiCost = useSelector(state => state.costReducer.listPegawai)
+    // const lahanCost = useSelector(state => state.costReducer.listLahan)
 
-    const penjualan = useSelector(state => state.transactionsReducer.listSelling)
-    const pembelian = useSelector(state => state.transactionsReducer.listPurchasing)
+    // const penjualan = useSelector(state => state.transactionsReducer.listSelling)
+    // const pembelian = useSelector(state => state.transactionsReducer.listPurchasing)
 
-    const varCostReduce = (s,a) => {
-        return s + parseInt(a.jumlah)*parseInt(a.hargaBeli);
-    }
+    // const varCostReduce = (s,a) => {
+    //     return s + parseInt(a.jumlah)*parseInt(a.hargaBeli);
+    // }
 
     const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
 
 
-    const totalBiayaDomba = dombaCost.reduce((s,a) => varCostReduce(s,a),0)
-    const totalBiayaPakan = pakanCost.reduce((s,a) => varCostReduce(s,a),0)
-    const totalBiayaObat = obatCost.reduce((s,a) => varCostReduce(s,a),0)
+    // const totalBiayaDomba = dombaCost.reduce((s,a) => varCostReduce(s,a),0)
+    // const totalBiayaPakan = pakanCost.reduce((s,a) => varCostReduce(s,a),0)
+    // const totalBiayaObat = obatCost.reduce((s,a) => varCostReduce(s,a),0)
 
-    const totalBiayaKandang = kandangCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.biayaBuat)},0)
-    const totalBiayaPegawai = pegawaiCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.gaji)},0)
-    const totalBiayaLahan = lahanCost.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.luas)},0)
+    // const totalBiayaKandang = kandangCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.biayaBuat)},0)
+    // const totalBiayaPegawai = pegawaiCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.gaji)},0)
+    // const totalBiayaLahan = lahanCost.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.luas)},0)
 
-    const totalPenjualan = penjualan.reduce((s,a) => {return s + parseInt(a.hargaJual)*parseInt(a.kuantitas)},0)
-    const totalPembelian = pembelian.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.kuantitas)},0)
+    // const totalPenjualan = penjualan.reduce((s,a) => {return s + parseInt(a.hargaJual)*parseInt(a.kuantitas)},0)
+    // const totalPembelian = pembelian.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.kuantitas)},0)
 
 
 
-    const totalBiayaOverall = totalBiayaDomba + totalBiayaPakan + totalBiayaObat + totalBiayaKandang + totalBiayaPegawai + totalBiayaLahan;
+    // const totalBiayaOverall = totalBiayaDomba + totalBiayaPakan + totalBiayaObat + totalBiayaKandang + totalBiayaPegawai + totalBiayaLahan;
 
-    const screenWidth = Dimensions.get('window').width - 60;
+    // const screenWidth = Dimensions.get('window').width - 60;
     const totalExpense = parseInt(getSum(listExpense, "jumlah"))
     const totalIncome = parseInt(getSum(listIncome, "jumlah"))
 
+    //Total Selling Product
+    const sellingProcutList = listIncome.filter(function (el) {
+       
+            return el.kategori == "Penjualan"
+        
+    })
+    const totalSellingProduct = parseInt(getSum(sellingProcutList, "jumlah"))
 
-    const arusKas = 0 - totalExpense + totalIncome;
+    //Total Var Cost
+    const totalVarCost = listExpense.filter(function (val) {
+        return val.kategori == "Gaji Pekerja" || val.kategori == "Pembelian Stok"
+    })
+
+    const varCost = parseInt(getSum(totalVarCost, "jumlah"))
+
+    const arusKas = totalSellingProduct - varCost
     const profit = totalIncome - (totalExpense);
 
     const [ showMore, setShowMore ] = useState(false)
@@ -290,8 +304,6 @@ export default function LaporanScreen() {
             
         })
     }
-
-    const sortTipe = (sortBy) => (a,b) => a[sortBy].toLowerCase() > b[sortBy].toLowerCase() ? 1: -1; 
     
 
     const loadUserProduct = () => {
@@ -340,7 +352,7 @@ export default function LaporanScreen() {
     const checkProfit = () => {
 
        
-        if(profit <= 0){
+        if(arusKas <= 0){
             setIsProfit(false)
         } else if (profit > 0){
             setIsProfit(true)
@@ -447,7 +459,7 @@ export default function LaporanScreen() {
                 </View>              
             </View>
             <View style={styles.componentContainer}>
-                <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrency(arusKas)} profit={formatToCurrency(profit)}/>
+                <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrency(profit)} profit={formatToCurrency(arusKas)}/>
             </View>
             
                 { listExpense.length > 0? 
@@ -488,7 +500,7 @@ export default function LaporanScreen() {
             
             
 
-                {/* <CustomButton onPress={() => ToastAndroid.show("Test toast", ToastAndroid.SHORT)}/> */}
+                <CustomButton onPress={() => console.log(arusKas)}/>
             
             
             
