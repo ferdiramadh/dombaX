@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
         flex: 1,
         // backgroundColor:'blue',
         height: windowHeigth,
-        width:windowWidth
+        width:windowWidth,
+        marginBottom: 20
     },
     totalIncomeWrapper: {
         width: windowWidth,

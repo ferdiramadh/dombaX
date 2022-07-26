@@ -12,6 +12,7 @@ import { windowHeigth, windowWidth } from '../utils/DimensionSetup'
 import ProfileHeader from '../components/laporan/ProfileHeader'
 import ExpenseChart from '../components/laporan/ExpenseChart'
 import { MaterialIcons } from '@expo/vector-icons';
+import FilterLaporanModal from '../components/laporan/FilterLaporanModal'
 
 
 export default function LaporanScreen() {
@@ -90,6 +91,36 @@ export default function LaporanScreen() {
       });
 
     const [isLoading,setIsLoading ] = useState(true)
+
+    //Filter Laporan
+    const [ filterVisible, setFilterVisible ] = useState(false)
+
+    const [ isFilter, setIsFilter ] = useState(false)
+    const [ filterItems, setFilterItems ] = useState([])
+    const filterList = [
+      {
+        id: 1,
+        sortBy: 'Hari Ini',
+      },
+      {
+        id: 2,
+        sortBy: '7 Hari Terakhir',
+      },
+      {
+        id: 3,
+        sortBy: '30 Hari Terakhir',
+      },
+      {
+        id: 4,
+        sortBy: 'Bulan Ini',
+      },
+      {
+        id: 5,
+        sortBy: 'Pilih Tanggal',
+      }
+    ]
+
+    const [ filterBy, setFilterBy ] = useState();
 
     useEffect(() => {
         setTimeout(() => {
@@ -453,7 +484,7 @@ export default function LaporanScreen() {
             <View style={styles.upperWrapper}>
                 <View style={{justifyContent: 'center', alignItems: 'center', flexDirection:'row', marginRight: 18}}>
                     <Text style={{fontSize: 18, }}>Pilih Periode</Text>
-                    <TouchableOpacity style={{marginLeft: 5}}>
+                    <TouchableOpacity style={{marginLeft: 5}} onPress={() => setFilterVisible(!filterVisible)}>
                         <MaterialIcons name="filter-list" size={30} color="black" />
                     </TouchableOpacity>
                 </View>              
@@ -500,9 +531,10 @@ export default function LaporanScreen() {
             
             
 
-                <CustomButton onPress={() => console.log(arusKas)}/>
+                {/* <CustomButton onPress={() => console.log(arusKas)}/> */}
+                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} />
             
-            
+                    
             
         </View>
     )

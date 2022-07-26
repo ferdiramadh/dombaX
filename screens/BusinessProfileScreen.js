@@ -4,12 +4,14 @@ import {useSelector} from 'react-redux'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import firebase from '../Firebaseconfig'
-import { useNavigation } from '@react-navigation/native';
+import DisplayBusinessProfile from '../components/akunDetail/DisplayBusinessProfile';
 
 const BusinessProfileScreen = () => {
-    const navigation = useNavigation();
+   
     const profileData = useSelector(state => state.profileReducer)
     const [ isLoading, setIsLoading ] = useState(false)
+
+    const [isEdit, setIsEdit ] = useState(false)
 
     const updateItem = (item) => {
         return firebase
@@ -36,52 +38,61 @@ const BusinessProfileScreen = () => {
         onSubmit={(values, actions) => {  
           updateItem(values);
           updateNotification()
-          navigation.goBack()
       
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => (
             <View style={styles.container}>
-            {isLoading?<ActivityIndicator size="small" color="orange" />: <View>
+              {isLoading?<ActivityIndicator size="small" color="orange" />: <View>
                 {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={200} color="black" />}</View>
-            }
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder='Nama Bisnis'
-                    placeholderTextColor="#fff" 
-                    onChangeText={handleChange('namaBisnis')}
-                    onBlur={handleBlur('namaBisnis')}
-                    value={values.namaBisnis}
-                    />
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder='Posisi Sebagai'
-                    placeholderTextColor="#fff" 
-                    onChangeText={handleChange('posisi')}
-                    onBlur={handleBlur('posisi')}
-                    value={values.posisi}
-                    />
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder='No. HP Bisnis'
-                    placeholderTextColor="#fff" 
-                    onChangeText={handleChange('noHpBisnis')}
-                    onBlur={handleBlur('noHpBisnis')}
-                    value={values.noHpBisnis}
-                    keyboardType='numeric'
-                    />
-                    <TextInput
-                    style={styles.textInput}
-                    placeholder='Alamat Bisnis'
-                    placeholderTextColor="#fff" 
-                    onChangeText={handleChange('alamatBisnis')}
-                    onBlur={handleBlur('alamatBisnis')}
-                    value={values.alamatBisnis}
-                    />
-
-                    <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
-                        <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'white'}}>Simpan</Text>                  
+              }
+                  { isEdit? 
+                    <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
+                      <TextInput
+                      style={styles.textInput}
+                      placeholder='Nama Bisnis'
+                      placeholderTextColor="#fff" 
+                      onChangeText={handleChange('namaBisnis')}
+                      onBlur={handleBlur('namaBisnis')}
+                      value={values.namaBisnis}
+                      />
+                      <TextInput
+                      style={styles.textInput}
+                      placeholder='Posisi Sebagai'
+                      placeholderTextColor="#fff" 
+                      onChangeText={handleChange('posisi')}
+                      onBlur={handleBlur('posisi')}
+                      value={values.posisi}
+                      />
+                      <TextInput
+                      style={styles.textInput}
+                      placeholder='No. HP Bisnis'
+                      placeholderTextColor="#fff" 
+                      onChangeText={handleChange('noHpBisnis')}
+                      onBlur={handleBlur('noHpBisnis')}
+                      value={values.noHpBisnis}
+                      keyboardType='numeric'
+                      />
+                      <TextInput
+                      style={styles.textInput}
+                      placeholder='Alamat Bisnis'
+                      placeholderTextColor="#fff" 
+                      onChangeText={handleChange('alamatBisnis')}
+                      onBlur={handleBlur('alamatBisnis')}
+                      value={values.alamatBisnis}
+                      />
+                    </View>: <DisplayBusinessProfile profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit} />}
+                    <TouchableOpacity style={styles.btnSave} onPress={() => {
+                      if(isEdit) {
+                        handleSubmit()
+                        setIsEdit(!isEdit)
+                      } else {
+                        setIsEdit(!isEdit)
+                      }
+                    }}>
+                        <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'white'}}>{isEdit? 'Simpan': 'Ubah'}</Text>                  
                     </TouchableOpacity>
+                    
             </View>)}
     </Formik>
   )

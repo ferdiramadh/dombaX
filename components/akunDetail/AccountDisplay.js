@@ -3,13 +3,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import {useSelector} from 'react-redux'
 import { MaterialIcons, Feather,AntDesign,FontAwesome } from '@expo/vector-icons';
 import { PhotoContext } from '../../context/PhotoProfileContext';
-import firebase from '../../Firebaseconfig'
 import { pickImage, pickCamera, removeImage} from '../../utils/ImageUpload';
 import { windowWidth, windowHeigth } from '../../utils/DimensionSetup'
 import EditAccount from './EditAccount';
+import DisplayProfile from './DisplayProfile';
 
 
 const AccountDisplay = ({navigation}) => {
+
+  const [isEdit, setIsEdit ] = useState(false)
+
   const profileData = useSelector(state => state.profileReducer)
   const [ dwnldUrl, setDwnldUrl ] = useState()
   const [ isLoading, setIsLoading ] = useState(false)
@@ -42,7 +45,7 @@ const AccountDisplay = ({navigation}) => {
         </View>
         
           <View style={styles.lowerContent}>
-            <EditAccount navigation={navigation} />
+            { isEdit? <EditAccount navigation={navigation} profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/>: <DisplayProfile profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/>}
           </View>
       </View>
       </ScrollView>
@@ -53,23 +56,18 @@ export default AccountDisplay;
 
 const styles = StyleSheet.create({
   main: {
-    
+    flex: 1,
     width:'100%',
-    height:windowHeigth*1.1
-    // backgroundColor:'blue',
-    
+  
     
   },
   lowerContent:{
-    // backgroundColor:'yellow',
-    width:'100%',
-    height:windowHeigth*.7,
+    width:'100%',  
     justifyContent:'center',
-    alignItems:'center',
-    marginTop: 50
+    alignItems:'center',  
   },
   upperContent:{
-    
+  
     width:'100%',
     height:windowHeigth*.2,
     justifyContent:'center',
