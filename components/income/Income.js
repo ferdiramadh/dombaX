@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         flex:1,
         // justifyContent:'center',
         // alignItems:'center',
-        // padding:10,
         // backgroundColor:'purple',
         width:'100%',
         // height: windowHeigth
@@ -40,10 +39,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        padding:10,
-        // backgroundColor:'cyan',
-        width:'100%',
-       
+        width:'100%',     
     },
     text:{
         fontSize: 20,

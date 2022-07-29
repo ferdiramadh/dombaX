@@ -89,6 +89,7 @@ useEffect(() => {
                 return <IncomeItem item={item} key={item.id} editItem={editItem}/>
                 })
              : null}
+             <View style={{width: windowWidth, height: 10}}></View>
       </ScrollView>}
     </View>
   )
@@ -98,11 +99,11 @@ export default IncomeSection
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        // backgroundColor:'blue',
+        flex: 1,     
         height: windowHeigth,
         width:windowWidth,
-        marginBottom: 20
+         
+        
     },
     totalIncomeWrapper: {
         width: windowWidth,

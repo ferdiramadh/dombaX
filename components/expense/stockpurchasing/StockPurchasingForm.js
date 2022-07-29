@@ -7,7 +7,7 @@ import SelectProductModal from '../../income/selling/SelectProductModal'
 import firebase from '../../../Firebaseconfig'
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
+const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -119,6 +119,7 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
               placeholder='Nama Transaksi'
               placeholderTextColor="#474747" 
             />
+            { errors.namaTransaksi && <Text style={{fontSize: 14, color: "red"}}>{errors.namaTransaksi}</Text>}
             <TouchableOpacity style={styles.textInput} onPress={() => setModalProductVisible(!modalProductVisible)} >
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                 <Text style={{color:'#474747'}}>{selectedProduct.nama}</Text>   
@@ -180,6 +181,7 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>
+            { errors.tanggal && <Text style={{fontSize: 14, color: "red"}}>{errors.tanggal}</Text>}
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.statusBayar}
@@ -265,6 +267,12 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
                   Alert.alert(
                     "Perhatian!",
                     `Jumlah dan Harga Jual Harus Lebih Dari 0!`)
+                } else if(!isValid){
+                  
+                  Alert.alert(
+                    "Perhatian!",
+                    `Cek Kembali Form Anda.`)
+                  
                 } else {
                   
                   setFieldValue('kategori', 'Pembelian Stok')

@@ -27,12 +27,12 @@ export default Expense
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        flex:1,
         // justifyContent:'center',
         // alignItems:'center',
-        // padding:10,
         // backgroundColor:'purple',
         width:'100%',
-       
+        // height: windowHeigth       
     },
     insideContainer:{
         flex:1,

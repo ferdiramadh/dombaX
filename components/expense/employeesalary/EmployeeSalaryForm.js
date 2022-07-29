@@ -5,7 +5,7 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const EmployeeSalaryForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
+const EmployeeSalaryForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -70,6 +70,7 @@ const EmployeeSalaryForm = ({setFieldValue,handleChange,handleBlur, values,handl
               placeholder='Nama Transaksi'
               placeholderTextColor="#474747" 
             />
+            { errors.namaTransaksi && <Text style={{fontSize: 14, color: "red"}}>{errors.namaTransaksi}</Text>}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('jumlah')}
@@ -103,6 +104,7 @@ const EmployeeSalaryForm = ({setFieldValue,handleChange,handleBlur, values,handl
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>
+            { errors.tanggal && <Text style={{fontSize: 14, color: "red"}}>{errors.tanggal}</Text>}
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.statusBayar}
@@ -154,10 +156,16 @@ const EmployeeSalaryForm = ({setFieldValue,handleChange,handleBlur, values,handl
                     Alert.alert(
                       "Perhatian!",
                       `Jumlah Gaji Harus Lebih Dari 0!`)
+                  } else if(!isValid){
+                  
+                    Alert.alert(
+                      "Perhatian!",
+                      `Cek Kembali Form Anda.`)
+                    
                   } else {
                     
-                    setFieldValue('kategori', 'Gaji Pekerja')
-                    handleSubmit()
+                      setFieldValue('kategori', 'Gaji Pekerja')
+                      handleSubmit()
                   }
               }}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  

@@ -5,7 +5,7 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
+const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -65,6 +65,7 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
               placeholder='Nama Transaksi'
               placeholderTextColor="#474747" 
             />
+              { errors.namaTransaksi && <Text style={{fontSize: 14, color: "red"}}>{errors.namaTransaksi}</Text>}
             <TextInput
               onChangeText={handleChange('jumlah')}
               onBlur={handleBlur('jumlah')}
@@ -88,6 +89,7 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>
+            { errors.tanggal && <Text style={{fontSize: 14, color: "red"}}>{errors.tanggal}</Text>}
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.statusBayar}
@@ -148,9 +150,15 @@ const CreditForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,
                   Alert.alert(
                     "Perhatian!",
                     `Jumlah Harus Lebih Dari 0!`)
+                } else if(!isValid){
+                  
+                  Alert.alert(
+                    "Perhatian!",
+                    `Cek Kembali Form Anda.`)
+                  
                 } else {
-                setFieldValue('kategori', 'Piutang')
-                handleSubmit()
+                      setFieldValue('kategori', 'Piutang')
+                      handleSubmit()
                 }
               }}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  

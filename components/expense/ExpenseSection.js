@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
         // backgroundColor:'blue',
         height: windowHeigth,
         width:windowWidth,
-        marginBottom: 20
     },
     totalIncomeWrapper: {
         width: windowWidth,

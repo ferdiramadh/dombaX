@@ -5,7 +5,7 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const DebtOfferingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction}) => {
+const DebtOfferingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
@@ -75,6 +75,7 @@ const DebtOfferingForm = ({setFieldValue,handleChange,handleBlur, values,handleS
               placeholder='Nama Transaksi'
               placeholderTextColor="#474747" 
             />
+            { errors.namaTransaksi && <Text style={{fontSize: 14, color: "red"}}>{errors.namaTransaksi}</Text>}
             <View style={{width:'100%',height:'100%', backgroundColor:'transparent', flex: 1, justifyContent:'center',alignItems:'center'}}>
             <TextInput
               onChangeText={handleChange('jumlah')}
@@ -108,6 +109,7 @@ const DebtOfferingForm = ({setFieldValue,handleChange,handleBlur, values,handleS
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
             </TouchableOpacity>
+            { errors.tanggal && <Text style={{fontSize: 14, color: "red"}}>{errors.tanggal}</Text>}
             <View style={styles.pickerContainer}>
                 <Picker
                     selectedValue={values.statusBayar}
@@ -159,10 +161,16 @@ const DebtOfferingForm = ({setFieldValue,handleChange,handleBlur, values,handleS
                   Alert.alert(
                     "Perhatian!",
                     `Jumlah Harus Lebih Dari 0!`)
+                } else if(!isValid){
+                  
+                  Alert.alert(
+                    "Perhatian!",
+                    `Cek Kembali Form Anda.`)
+                  
                 } else {
                   
-                  setFieldValue('kategori', 'Pemberian Utang')
-                  handleSubmit()
+                    setFieldValue('kategori', 'Pemberian Utang')
+                    handleSubmit()
                 }
                 
               }}>

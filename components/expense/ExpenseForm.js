@@ -13,6 +13,7 @@ import DebtOfferingForm from './debtoffering/DebtOfferingForm'
 import EmployeeSalaryForm from './employeesalary/EmployeeSalaryForm';
 import SavingOrInvestingForm from './savingorinvesting/SavingOrInvestingForm';
 import OtherExpenseForm from './otherexpenses/OtherExpenseForm';
+import * as yup from 'yup'
 
 const ExpenseForm = ({modalTransaction, setModalTransaction}) => {
     const dispatch = useDispatch();
@@ -174,6 +175,11 @@ useEffect(() => {
   
   }
 
+  const formValidation = yup.object().shape({
+    tanggal: yup.string().required("Harap Isi Tanggal Transaksi"),
+    namaTransaksi: yup.string().required("Harap Isi Nama Transaksi"),
+  });
+
     return (
         <Formik
         initialValues={initialData}
@@ -181,8 +187,9 @@ useEffect(() => {
           addTransaction(values)
           setModalTransaction(!modalTransaction)
         }}
+        validationSchema={formValidation}
       >
-        {({ handleChange, handleBlur, handleSubmit, values,setFieldValue}) => (
+        {({ handleChange, handleBlur, handleSubmit, values,setFieldValue, errors, isValid}) => (
          <ScrollView style={styles.container} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
           <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
                 <TouchableOpacity style={styles.textInput} onPress={() => setModalCategoryVisible(!modalCategoryVisible)} >
@@ -192,13 +199,13 @@ useEffect(() => {
                 </View>                
               </TouchableOpacity>
           </View>
-          { category == 'Pembelian Stok'? <StockPurchasingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Pembelian Alat dan Mesin'? <EquipmentPurchasingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Pembayaran Utang'? <DebtPaymentForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Pemberian Utang'? <DebtOfferingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Gaji Pekerja'? <EmployeeSalaryForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Tabungan atau Investasi'? <SavingOrInvestingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Pengeluaran Lain-Lain'? <OtherExpenseForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
+          { category == 'Pembelian Stok'? <StockPurchasingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Pembelian Alat dan Mesin'? <EquipmentPurchasingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Pembayaran Utang'? <DebtPaymentForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Pemberian Utang'? <DebtOfferingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Gaji Pekerja'? <EmployeeSalaryForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Tabungan atau Investasi'? <SavingOrInvestingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Pengeluaran Lain-Lain'? <OtherExpenseForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
           <SelectCategoryExpense modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} setFieldValue={setFieldValue} setCategory={setCategory} />
 
           </ScrollView>

@@ -11,6 +11,7 @@ import CapitalForm from './capital/CapitalForm';
 import GrantForm from './grant/GrantForm'
 import LoanForm from './loan/LoanForm';
 import CreditForm from './credit/CreditForm';
+import * as yup from 'yup'
 
 const IncomeForm = ({modalTransaction, setModalTransaction}) => {
     const dispatch = useDispatch();
@@ -112,31 +113,13 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
         let setData = Object.assign(initialData, piutang)
         setInitialData(setData)
       }
-    // } else if(category == 'jenisPakan'){
-    //   let z = Object.assign(test, pakanData)
-    //   setTest(z)
-    //   setFirebaseSetup({
-    //     collection:'pakanstok',
-    //     typeReducer:'STORE_DATA_PAKAN'
-    //   })
-    // } else if(category == 'obatSuplemen'){
-    //   let z = Object.assign(test, obatData)
-    //   setTest(z)
-    //   setFirebaseSetup({
-    //     collection:'obatstok',
-    //     typeReducer:'STORE_DATA_OBAT'
-    //   })
-    // } else if(category == 'tambahProduk') {
-    //   let z = Object.assign(test, addProduct)
-    //   setTest(z)
-    //   // navigation.navigate("SelectProduct")
-    //   // setModalVisible(!modalVisible)
-    // }
     
   }
-useEffect(() => {
-  initialDataFunction()
-},[category])
+
+
+  useEffect(() => {
+    initialDataFunction()
+  },[category])
 
   const addTransaction = (values) => {
      
@@ -161,6 +144,11 @@ useEffect(() => {
   
   }
 
+  const formValidation = yup.object().shape({
+    tanggal: yup.string().required("Harap Isi Tanggal Transaksi"),
+    namaTransaksi: yup.string().required("Harap Isi Nama Transaksi"),
+  });
+
     return (
         <Formik
         initialValues={initialData}
@@ -168,8 +156,9 @@ useEffect(() => {
           addTransaction(values)
           setModalTransaction(!modalTransaction)
         }}
+        validationSchema={formValidation}
       >
-        {({ handleChange, handleBlur, handleSubmit, values,setFieldValue}) => (
+        {({ handleChange, handleBlur, handleSubmit, values,setFieldValue, errors, isValid}) => (
          <ScrollView style={styles.container} contentContainerStyle={{justifyContent:'center', alignItems:'center'}}>
           <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
                 <TouchableOpacity style={styles.textInput} onPress={() => setModalCategoryVisible(!modalCategoryVisible)} >
@@ -179,11 +168,11 @@ useEffect(() => {
                 </View>                
               </TouchableOpacity>
           </View>
-          { category == 'Penjualan'? <SellingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Penambahan Modal'? <CapitalForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Hibah'? <GrantForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Pinjaman'? <LoanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
-          { category == 'Piutang'? <CreditForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction}/>: null}
+          { category == 'Penjualan'? <SellingForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Penambahan Modal'? <CapitalForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Hibah'? <GrantForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Pinjaman'? <LoanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
+          { category == 'Piutang'? <CreditForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalTransaction={setModalTransaction} modalTransaction={modalTransaction} errors={errors} isValid={isValid}/>: null}
           <SelectCategoryIncome modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} setFieldValue={setFieldValue} setCategory={setCategory} />
 
           </ScrollView>
