@@ -96,29 +96,34 @@ export default function LaporanScreen() {
     const [ filterVisible, setFilterVisible ] = useState(false)
 
     const [ isFilter, setIsFilter ] = useState(false)
-    const [ filterItems, setFilterItems ] = useState([])
-    const filterList = [
+ 
+    const [filterList, setFilterList] = useState([
       {
         id: 1,
         sortBy: 'Hari Ini',
+        isChecked: false,
       },
       {
         id: 2,
         sortBy: '7 Hari Terakhir',
+        isChecked: false,
       },
       {
         id: 3,
         sortBy: '30 Hari Terakhir',
+        isChecked: false,
       },
       {
         id: 4,
         sortBy: 'Bulan Ini',
+        isChecked: false,
       },
       {
         id: 5,
         sortBy: 'Pilih Tanggal',
+        isChecked: false,
       }
-    ]
+    ])
 
     const [ filterBy, setFilterBy ] = useState();
 
@@ -473,6 +478,14 @@ export default function LaporanScreen() {
         return `#${randomColor}`;
       };
       
+      const datax = [
+        {id: 1, tanggal: '2022-8-12'},
+        {id: 2, tanggal: '2022-8-13'},
+        {id: 3, tanggal: '2022-8-1'},
+        {id: 4, tanggal: '2022-7-13'},
+        {id: 5, tanggal: '2022-7-2'},
+    ]
+
    
 
 
@@ -528,11 +541,19 @@ export default function LaporanScreen() {
                     <Text style={[styles.textPengeluaran]}>Tidak Ada Pengeluaran</Text>
                 </View>}
 
+                
+
             
             
 
-                {/* <CustomButton onPress={() => console.log(arusKas)}/> */}
-                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} />
+                <CustomButton onPress={() => {
+                   var today = new Date();
+                    var priorDate = new Date(new Date().setDate(today.getDate() - 7));
+
+                    console.log(today)
+                    console.log(priorDate);
+                } }/>
+                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
             
                     
             

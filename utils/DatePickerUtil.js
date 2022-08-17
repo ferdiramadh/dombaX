@@ -53,3 +53,21 @@ const DatePickerUtil = () => {
 }
 
 export default DatePickerUtil
+
+export const onChangeNew = (event, selectedDate, setShow, setFunc) => {
+  if(selectedDate){
+    const currentDate = selectedDate;
+    let day = currentDate.getDay()
+    let month = currentDate.getMonth() + 1
+    let year = currentDate.getFullYear()
+    let tanggal = day + '-' + month + '-' + year
+    console.log(tanggal)
+
+    setShow(false);
+    setFunc('tanggal', selectedDate.toDateString())
+} else {
+    console.log("eweuh")
+    setShow(false);
+    setFunc('tanggal', '')
+}
+}

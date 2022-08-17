@@ -4,6 +4,7 @@ import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { onChangeNew } from '../../../utils/DatePickerUtil';
 
 const CapitalForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
@@ -13,6 +14,7 @@ const CapitalForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
   const onChange = (event, selectedDate) => {
     if(selectedDate){
         const currentDate = selectedDate;
+        console.log(currentDate.getMonth() + 1)
         setShow(false);
         setFieldValue('tanggal', selectedDate.toDateString())
     } else {
@@ -53,7 +55,7 @@ const CapitalForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={onChange}
+                onChange={(event, selectedDate) => onChangeNew(event, selectedDate, setShow, setFieldValue)}
               />
             )}
             <TextInput

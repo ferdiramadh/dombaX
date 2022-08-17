@@ -1,27 +1,42 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert,  StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
 import Modal from "react-native-modal";
+import { CheckBox } from 'react-native-elements'
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeigth = Dimensions.get('screen').height;
 
 
-const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, setFilterBy, filterList}) => {
+const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, setFilterBy, filterList, setFilterList}) => {
+
+  const checkboxHandler = (value, index) => {
+    const newValue = filterList.map((checkbox, i) => {
+     if (i !== index)
+       return {
+         ...checkbox,
+         isChecked: false,
+       }
+     if (i === index) {
+       const item = {
+         ...checkbox,
+         isChecked: !checkbox.isChecked,
+       }
+       return item
+     }
+    return checkbox
+  })
+  setFilterList(newValue)
+  }    
+
 
   return (
    
       <Modal
-      backdropColor='white'
-      deviceWidth={windowWidth}
-      deviceHeight={windowHeigth}
-      backdropOpacity={0.8}
-        // animationType="slide"
-        // transparent={true}
+        backdropColor='white'
+        deviceWidth={windowWidth}
+        deviceHeight={windowHeigth}
+        backdropOpacity={0.8}
         isVisible={filterVisible}
-        // onRequestClose={() => {
-        //   Alert.alert('Modal has been closed.');
-        //   setFilterVisible(!filterVisible);
-        // }}
         onSwipeComplete={() => setFilterVisible(!filterVisible)}
         swipeDirection="down"
         >
@@ -29,41 +44,28 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, setFi
           <View style={styles.modalView}>
             <View style={styles.handleModal}></View>
               <View style={styles.filterWrap}>
-                {/* <TouchableOpacity style={styles.filterSelection} onPress={() => {
-                  // loadUserProduct()
-                  setIsFilter(true)
-                  setFilterVisible(!filterVisible)
-                }}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Stok Terendah</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterSelection}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Stok Tertinggi</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterSelection}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Harga Beli Terendah</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterSelection}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Harga Beli Tertinggi</Text>
-                </TouchableOpacity> */}
 
-                { filterList.map((item, i) => {
+                { 
+                  filterList.map((item, i) => {
+                  
                   return (
-                    <TouchableOpacity style={styles.filterSelection} key={item.id} onPress={() => {
+                    <View style={styles.filterSelection} key={item.id} onPress={() => {
                       setFilterBy(item.sortBy)
                       setIsFilter(true)
                       setFilterVisible(!filterVisible)
                     }}>
                       <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
-                    </TouchableOpacity>
+                      <CheckBox
+                      center
+                      checked={item.isChecked}
+                      checkedIcon='dot-circle-o'
+                      uncheckedIcon='circle-o'
+                      onPress={() => checkboxHandler(item, i)}
+                    />
+                    </View>
                   )
                 })}
-                {/* <TouchableOpacity style={styles.filterSelection} onPress={() => {
-                  setIsFilter(false)
-                  setFilterVisible(!filterVisible)
-                  setFilterBy()
-                }}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Reset</Text>
-                </TouchableOpacity> */}
+                
               </View>
             
             
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
       width:windowWidth,
-      height:windowHeigth * .35,
+      height:windowHeigth * .45,
       margin: 20,
       backgroundColor: 'white',
       borderTopRightRadius: 20,
@@ -129,15 +131,19 @@ const styles = StyleSheet.create({
       marginBottom: windowHeigth * .05
     },
     filterSelection:{
-      marginVertical: windowHeigth * .005
+      flexDirection:'row',
+      justifyContent:'space-between',
+      alignItems:'center',
+      
+      paddingHorizontal: 5,
 
     },
     textFilter: {
       fontSize: 18,
     },
     filterWrap:{
-      // backgroundColor:'red',
+
       width:'80%',
-      height: windowHeigth * .25
+      height: windowHeigth * .5
     }
   });
