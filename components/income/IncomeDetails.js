@@ -12,6 +12,7 @@ import CapitalDetail from './capital/CapitalDetail';
 import CreditDetail from './credit/CreditDetail';
 import GrantDetail from './grant/GrantDetail';
 import LoanDetail from './loan/LoanDetail';
+import { onChangeNew } from '../../utils/DatePickerUtil';
 
 const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
 
@@ -93,16 +94,7 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={!isBatasBayar?(event, selectedDate) => {
-                  if(selectedDate){
-                      setShow(false);
-                      setFieldValue('tanggal', selectedDate.toDateString())
-                  } else {
-                      console.log("eweuh")
-                      setShow(false);
-                     
-                  }           
-                }:(event, selectedDate) => {
+                onChange={!isBatasBayar?(event, selectedDate) => onChangeNew(event, selectedDate, setShow, setFieldValue):(event, selectedDate) => {
                   if(selectedDate){
                     const currentDate = selectedDate;
                     setShow(false);

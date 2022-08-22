@@ -478,17 +478,7 @@ export default function LaporanScreen() {
         return `#${randomColor}`;
       };
       
-      const datax = [
-        {id: 1, tanggal: '2022-8-12'},
-        {id: 2, tanggal: '2022-8-13'},
-        {id: 3, tanggal: '2022-8-1'},
-        {id: 4, tanggal: '2022-7-13'},
-        {id: 5, tanggal: '2022-7-2'},
-    ]
-
-   
-
-
+     
     return (
       
         <View style={styles.container}>
@@ -547,11 +537,20 @@ export default function LaporanScreen() {
             
 
                 <CustomButton onPress={() => {
+                     const datax = [
+                        {id: 1, tanggal: new Date( '2022-08-21')},
+                        {id: 2, tanggal:  new Date ('2022-07-22')},
+                       
+                    ]
                    var today = new Date();
-                    var priorDate = new Date(new Date().setDate(today.getDate() - 7));
+                    var priorDate = new Date(new Date().setDate(today.getDate() - 30));
 
-                    console.log(today)
-                    console.log(priorDate);
+                    // console.log(today.toISOString().split('T')[0])
+                    // console.log(priorDate.toISOString().split('T')[0]);
+                    // console.log(listIncome)
+                    console.log(listIncome.filter((item, i) => {
+                        return new Date(item.tanggal) >= new Date(priorDate.toISOString().split('T')[0]) && new Date(item.tanggal) <=  new Date(today.toISOString().split('T')[0])
+                    }))
                 } }/>
                 <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
             
