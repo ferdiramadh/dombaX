@@ -14,6 +14,7 @@ import EquipmentPurchasingDetail from './equipmentpurchasing/EquipmentPurchasing
 import OtherExpenseDetail from './otherexpenses/OtherExpenseDetail';
 import StockPurchasingDetail from './stockpurchasing/StockPurchasingDetail';
 import SavingOrInvestingDetail from './savingorinvesting/SavingOrInvestingDetail';
+import { onChangeNew } from '../../utils/DatePickerUtil';
 
 const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
 
@@ -97,16 +98,7 @@ const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={!isBatasBayar?(event, selectedDate) => {
-                  if(selectedDate){
-                      setShow(false);
-                      setFieldValue('tanggal', selectedDate.toDateString())
-                  } else {
-                      console.log("eweuh")
-                      setShow(false);
-                     
-                  }           
-                }:(event, selectedDate) => {
+                onChange={!isBatasBayar?(event, selectedDate) => onChangeNew(event, selectedDate, setShow, setFieldValue):(event, selectedDate) => {
                   if(selectedDate){
                     const currentDate = selectedDate;
                     setShow(false);

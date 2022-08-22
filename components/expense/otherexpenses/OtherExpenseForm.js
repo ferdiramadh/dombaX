@@ -3,6 +3,7 @@ import { StyleSheet, TextInput, View, TouchableOpacity, Text, Image, Alert } fro
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { onChangeNew } from '../../../utils/DatePickerUtil';
 
 const OtherExpenseForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
@@ -10,19 +11,6 @@ const OtherExpenseForm = ({setFieldValue,handleChange,handleBlur, values,handleS
   const [show, setShow] = useState(false);
 
   const [ isBatasBayar, setIsBatasBayar ] = useState(false)
-
-  const onChange = (event, selectedDate) => {
-    if(selectedDate){
-        const currentDate = selectedDate;
-        setShow(false);
-        setFieldValue('tanggal', selectedDate.toDateString())
-    } else {
-        console.log("eweuh")
-        setShow(false);
-        setFieldValue('tanggal', '')
-    }
-    
-  };
 
   const onChangeBatasBayar = (event, selectedDate) => {
     if(selectedDate){
@@ -58,7 +46,7 @@ const OtherExpenseForm = ({setFieldValue,handleChange,handleBlur, values,handleS
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={isBatasBayar?onChangeBatasBayar:onChange}
+                onChange={isBatasBayar?onChangeBatasBayar:(event, selectedDate) => onChangeNew(event, selectedDate, setShow, setFieldValue)}
               />
             )}
             <TextInput

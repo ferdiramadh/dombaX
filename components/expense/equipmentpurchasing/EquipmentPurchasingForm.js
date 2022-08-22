@@ -4,6 +4,7 @@ import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { onChangeNew } from '../../../utils/DatePickerUtil';
 
 const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
@@ -11,19 +12,6 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
   const [show, setShow] = useState(false);
 
   const [ isBatasBayar, setIsBatasBayar ] = useState(false)
-
-  const onChange = (event, selectedDate) => {
-    if(selectedDate){
-        const currentDate = selectedDate;
-        setShow(false);
-        setFieldValue('tanggal', selectedDate.toDateString())
-    } else {
-        console.log("eweuh")
-        setShow(false);
-        setFieldValue('tanggal', '')
-    }
-    
-  };
 
   const onChangeBatasBayar = (event, selectedDate) => {
     if(selectedDate){
@@ -71,7 +59,7 @@ const EquipmentPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={isBatasBayar?onChangeBatasBayar:onChange}
+                onChange={isBatasBayar?onChangeBatasBayar:(event, selectedDate) => onChangeNew(event, selectedDate, setShow, setFieldValue)}
               />
             )}
             <TextInput

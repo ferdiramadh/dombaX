@@ -4,6 +4,7 @@ import {Picker} from '@react-native-picker/picker'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { pickImageOnly } from '../../../utils/ImageUpload';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { onChangeNew } from '../../../utils/DatePickerUtil';
 
 const DebtPaymentForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
@@ -11,19 +12,6 @@ const DebtPaymentForm = ({setFieldValue,handleChange,handleBlur, values,handleSu
   const [show, setShow] = useState(false);
 
   const [ isBatasBayar, setIsBatasBayar ] = useState(false)
-
-  const onChange = (event, selectedDate) => {
-    if(selectedDate){
-        const currentDate = selectedDate;
-        setShow(false);
-        setFieldValue('tanggal', selectedDate.toDateString())
-    } else {
-        console.log("eweuh")
-        setShow(false);
-        setFieldValue('tanggal', '')
-    }
-    
-  };
 
   const onChangeBatasBayar = (event, selectedDate) => {
     if(selectedDate){
@@ -61,11 +49,11 @@ const DebtPaymentForm = ({setFieldValue,handleChange,handleBlur, values,handleSu
           <View style={{width:'100%',flex: 1, justifyContent:'center',alignItems:'center', marginBottom:10, }}>
             {show && (
               <DateTimePicker
-                testID="dateTimePicker"
+                testID="dateTimePicker"ß
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={isBatasBayar?onChangeBatasBayar:onChange}
+                onChange={isBatasBayar?onChangeBatasBayar:(event, selectedDate) => onChangeNew(event, selectedDate, setShow, setFieldValue)}
               />
             )}
             <TextInput

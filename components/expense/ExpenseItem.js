@@ -17,18 +17,18 @@ const ExpenseItem = ({item, editItem}) => {
             
         }
 
-        const [ itemDate, setItemDate ] = useState('')
+        // const [ itemDate, setItemDate ] = useState('')
 
-        useEffect(() => {
-            if(item.tanggal) {
-                  let date = item.tanggal
-                  setItemDate(date.substring(4))
-            } else {
-                console.log("Kagak ada tanggal")
-                setItemDate('')
-            }
+        // useEffect(() => {
+        //     if(item.tanggal) {
+        //           let date = item.tanggal
+        //           setItemDate(date.substring(4))
+        //     } else {
+        //         console.log("Kagak ada tanggal")
+        //         setItemDate('')
+        //     }
             
-        }, [item])
+        // }, [item])
 
     
   return (
@@ -44,7 +44,7 @@ const ExpenseItem = ({item, editItem}) => {
         </View>
         <View style={styles.mainWrapper}>
         <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}} numberOfLines={2} ellipsizeMode='tail'>{item.namaTransaksi}</Text>
-            <Text style={{color: '#B3B3B3'}}>{itemDate}</Text>
+            <Text style={{color: '#B3B3B3'}}>Tanggal Transaksi: {item.tanggal}</Text>
         </View>
         <View style={styles.rightWrapper}>
             <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>

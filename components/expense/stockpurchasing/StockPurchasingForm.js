@@ -6,6 +6,7 @@ import { pickImageOnly } from '../../../utils/ImageUpload';
 import SelectProductModal from '../../income/selling/SelectProductModal'
 import firebase from '../../../Firebaseconfig'
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { onChangeNew } from '../../../utils/DatePickerUtil';
 
 const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,modalTransaction, setModalTransaction, errors, isValid}) => {
 
@@ -13,19 +14,6 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
   const [show, setShow] = useState(false);
 
   const [ isBatasBayar, setIsBatasBayar ] = useState(false)
-
-  const onChange = (event, selectedDate) => {
-    if(selectedDate){
-        const currentDate = selectedDate;
-        setShow(false);
-        setFieldValue('tanggal', selectedDate.toDateString())
-    } else {
-        console.log("eweuh")
-        setShow(false);
-        setFieldValue('tanggal', '')
-    }
-    
-  };
 
   const onChangeBatasBayar = (event, selectedDate) => {
     if(selectedDate){
@@ -108,7 +96,7 @@ const StockPurchasingForm = ({setFieldValue,handleChange,handleBlur, values,hand
                 value={new Date}
                 mode={mode}
                 is24Hour={true}
-                onChange={isBatasBayar?onChangeBatasBayar:onChange}
+                onChange={isBatasBayar?onChangeBatasBayar:(event, selectedDate) => onChangeNew(event, selectedDate, setShow, setFieldValue)}
               />
             )}
             <TextInput
