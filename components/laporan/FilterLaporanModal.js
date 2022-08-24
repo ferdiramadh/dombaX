@@ -1,15 +1,19 @@
-import React, { useContext, useState } from 'react';
-import { Alert,  StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { Alert,  StyleSheet, Text, ToastAndroid, View, Dimensions, TouchableOpacity } from 'react-native';
 import Modal from "react-native-modal";
 import { CheckBox } from 'react-native-elements'
+import { MaterialIcons } from '@expo/vector-icons'
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeigth = Dimensions.get('screen').height;
 
 
-const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, setFilterBy, filterList, setFilterList}) => {
+const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList}) => {
+
+  const [ filterBy, setFilterBy ] = useState();
 
   const checkboxHandler = (value, index) => {
+    setIsFilter(true)
     const newValue = filterList.map((checkbox, i) => {
      if (i !== index)
        return {
@@ -26,6 +30,20 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, setFi
     return checkbox
   })
   setFilterList(newValue)
+ 
+  
+  setTimeout(() => {
+    let filterTrue = newValue.filter((item, i) => {
+        return item.isChecked == true
+       })
+
+      let res = filterTrue[0]['sortBy']
+
+    setFilterVisible(!filterVisible)
+    ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT) 
+    console.log(res)
+  }, 500)
+  
   }    
 
 
@@ -62,14 +80,25 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, setFi
                       uncheckedIcon='circle-o'
                       onPress={() => checkboxHandler(item, i)}
                     />
+
                     </View>
                   )
                 })}
-                
+                 <View style={styles.txtInputWrapper}>
+                  <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                          <Text style={{color:'#474747'}}>Pilih Tanggal</Text>   
+                          <MaterialIcons name="date-range" size={24} color="black" />    
+                      </View>                
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                          <Text style={{color:'#474747'}}>Pilih Tanggal</Text>   
+                          <MaterialIcons name="date-range" size={24} color="black" />    
+                      </View>                
+                  </TouchableOpacity>
+                </View>
               </View>
-            
-            
-
           </View>
         </View>
       </Modal>
@@ -91,7 +120,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
       width:windowWidth,
-      height:windowHeigth * .45,
+      height:windowHeigth * .6,
       margin: 20,
       backgroundColor: 'white',
       borderTopRightRadius: 20,
@@ -134,7 +163,6 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'space-between',
       alignItems:'center',
-      
       paddingHorizontal: 5,
 
     },
@@ -142,8 +170,25 @@ const styles = StyleSheet.create({
       fontSize: 18,
     },
     filterWrap:{
-
+     
       width:'80%',
-      height: windowHeigth * .5
-    }
+      height: windowHeigth * .1
+    },
+    txtInputWrapper:{
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: windowWidth *.8
+    },
+    textInput:{
+      backgroundColor:'#DFE1E0',
+      width:'40%',
+      height:50,                       
+      // borderColor:'black',
+      // borderWidth:2,                
+      // borderRadius:20,
+      justifyContent:'center', 
+      
+      
+
+    },
   });

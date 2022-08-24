@@ -102,6 +102,10 @@ export default function LaporanScreen() {
         id: 1,
         sortBy: 'Hari Ini',
         isChecked: false,
+        filteredList: listExpense.filter((item, i) => {
+            let today = new Date()
+            return new Date(item.tanggal).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString() 
+        })
       },
       {
         id: 2,
@@ -125,7 +129,6 @@ export default function LaporanScreen() {
       }
     ])
 
-    const [ filterBy, setFilterBy ] = useState();
 
     useEffect(() => {
         setTimeout(() => {
@@ -498,8 +501,12 @@ export default function LaporanScreen() {
             
                 { listExpense.length > 0? 
                 <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', position: 'relative', bottom: 0}}>
+                    
                     <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>
-                        <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>
+                        {isFilter? <TouchableOpacity onPress={() => setIsFilter(false)}>
+                                        <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Hapus Filter</Text>
+                                    </TouchableOpacity>:
+                        <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>}
                     </View>
                     {isLoading ? 
                     <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', justifyContent:'center'}}>
@@ -507,10 +514,10 @@ export default function LaporanScreen() {
                     </View>:
                     <ScrollView showsVerticalScrollIndicator={false}>
 
-                    
-                        {sortData.map((item, i) => {
+                    {/* hvhvh*/}
+                    { !isFilter?sortData.map((item, i) => {
                             return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
-                        }).slice(0, slice)} 
+                    }).slice(0, slice):null} 
                     { !showMore && listExpense.length > 3? 
                     <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginTop: 5}} onPress={() => {
                         setShowMore(!showMore)
@@ -538,8 +545,8 @@ export default function LaporanScreen() {
 
                 <CustomButton onPress={() => {
                      const datax = [
-                        {id: 1, tanggal: new Date( '2022-08-21')},
-                        {id: 2, tanggal:  new Date ('2022-07-22')},
+                        {id: 1, tanggal: '2022-08-24'},
+                        {id: 2, tanggal:  '2022-07-22'},
                        
                     ]
                    var today = new Date();
@@ -547,12 +554,12 @@ export default function LaporanScreen() {
 
                     // console.log(today.toISOString().split('T')[0])
                     // console.log(priorDate.toISOString().split('T')[0]);
-                    // console.log(listIncome)
-                    console.log(listIncome.filter((item, i) => {
-                        return new Date(item.tanggal) >= new Date(priorDate.toISOString().split('T')[0]) && new Date(item.tanggal) <=  new Date(today.toISOString().split('T')[0])
-                    }))
+                    console.log(filterList[0]['filteredList'])
+                    // console.log(datax.filter((item, i) => {
+                    //     return new Date(item.tanggal) >=  new Date(priorDate.toISOString().split('T')[0])
+                    // }))
                 } }/>
-                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
+                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList}/>
             
                     
             
