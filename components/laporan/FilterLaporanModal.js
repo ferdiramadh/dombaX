@@ -41,7 +41,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
 
     setFilterVisible(!filterVisible)
     ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT) 
-    console.log(res)
+    console.log(filterTrue)
   }, 500)
   
   }    
@@ -98,6 +98,11 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                       </View>                
                   </TouchableOpacity>
                 </View>
+                <View style={styles.pilihWrapper}>
+                  <Text style={{color:'#474747'}}>Dari</Text>   
+                  <Text style={{color:'#474747'}}>Sampai</Text>   
+                </View>
+                
               </View>
           </View>
         </View>
@@ -177,18 +182,22 @@ const styles = StyleSheet.create({
     txtInputWrapper:{
       flexDirection: 'row',
       justifyContent: 'space-around',
-      width: windowWidth *.8
+      width: windowWidth *.8,
     },
     textInput:{
-      backgroundColor:'#DFE1E0',
-      width:'40%',
+      padding: 5,
+      width:'45%',
       height:50,                       
-      // borderColor:'black',
-      // borderWidth:2,                
-      // borderRadius:20,
+      borderColor:'black',
+      borderWidth: .8,                
+      borderRadius:8,
       justifyContent:'center', 
       
-      
-
     },
+    pilihWrapper :{
+      padding: 5,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: windowWidth *.8,
+    }
   });
