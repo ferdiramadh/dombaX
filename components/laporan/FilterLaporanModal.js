@@ -11,6 +11,7 @@ export const windowHeigth = Dimensions.get('screen').height;
 const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList}) => {
 
   const [ filterBy, setFilterBy ] = useState();
+  const [ showTanggal, setShowTanggal ] = useState(false)
 
   const checkboxHandler = (value, index) => {
     setIsFilter(true)
@@ -38,9 +39,16 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
        })
 
       let res = filterTrue[0]['sortBy']
+    if (res !== "Pilih Tanggal" ) {
+      setShowTanggal(false)
+      setFilterVisible(!filterVisible)
+      ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT) 
+    } else {
+      setShowTanggal(true)
+      ToastAndroid.show('Pilih Rentang Tanggal', ToastAndroid.SHORT) 
+    }
 
-    setFilterVisible(!filterVisible)
-    ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT) 
+   
     console.log(filterTrue)
   }, 500)
   
@@ -55,7 +63,13 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
         deviceHeight={windowHeigth}
         backdropOpacity={0.8}
         isVisible={filterVisible}
-        onSwipeComplete={() => setFilterVisible(!filterVisible)}
+        onSwipeComplete={() => {
+          // setFilterList( {
+          //   isChecked: false
+          // })
+          setFilterVisible(!filterVisible)
+          setShowTanggal(false)
+        }}
         swipeDirection="down"
         >
         <View style={styles.centeredView}>
@@ -84,26 +98,28 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                     </View>
                   )
                 })}
-                 <View style={styles.txtInputWrapper}>
-                  <TouchableOpacity style={styles.textInput} onPress={() => null}>
-                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                          <Text style={{color:'#474747'}}>Pilih Tanggal</Text>   
-                          <MaterialIcons name="date-range" size={24} color="black" />    
-                      </View>                
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.textInput} onPress={() => null}>
-                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                          <Text style={{color:'#474747'}}>Pilih Tanggal</Text>   
-                          <MaterialIcons name="date-range" size={24} color="black" />    
-                      </View>                
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.pilihWrapper}>
-                  <Text style={{color:'#474747'}}>Dari</Text>   
-                  <Text style={{color:'#474747'}}>Sampai</Text>   
-                </View>
-                
-              </View>
+                {showTanggal? 
+                <View>
+                  <View style={styles.txtInputWrapper}>
+                    <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                            <Text style={{color:'#474747'}}>Pilih Tanggal</Text>   
+                            <MaterialIcons name="date-range" size={24} color="black" />    
+                        </View>                
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                            <Text style={{color:'#474747'}}>Pilih Tanggal</Text>   
+                            <MaterialIcons name="date-range" size={24} color="black" />    
+                        </View>                
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.pilihWrapper}>
+                    <Text style={{color:'#474747'}}>Dari</Text>   
+                    <Text style={{color:'#474747'}}>Sampai</Text>   
+                  </View>
+                </View> : null}
+              </View> 
           </View>
         </View>
       </Modal>
