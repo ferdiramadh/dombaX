@@ -28,6 +28,13 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
        }
        return item
      }
+     if (value.isChecked && i === index) {
+      const item = {
+        ...checkbox,
+        isChecked: !checkbox.isChecked,
+      }
+      return item
+     }
     return checkbox
   })
   setFilterList(newValue)
@@ -37,11 +44,13 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
     let filterTrue = newValue.filter((item, i) => {
         return item.isChecked == true
        })
-
-      let res = filterTrue[0]['sortBy']
-    if (res !== "Pilih Tanggal" ) {
+    let res = filterTrue[0]['sortBy']
+    
+    if (res !== 'Pilih Tanggal') {
+      
       setShowTanggal(false)
       setFilterVisible(!filterVisible)
+      console.log(filterTrue)
       ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT) 
     } else {
       setShowTanggal(true)
@@ -64,9 +73,15 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
         backdropOpacity={0.8}
         isVisible={filterVisible}
         onSwipeComplete={() => {
-          // setFilterList( {
-          //   isChecked: false
-          // })
+          
+          let newList = filterList.map((checkbox, i) => {
+            return {
+              ...checkbox,
+              isChecked: false,
+            }
+             
+         })
+          setFilterList(newList)
           setFilterVisible(!filterVisible)
           setShowTanggal(false)
         }}
@@ -92,7 +107,13 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                       checked={item.isChecked}
                       checkedIcon='dot-circle-o'
                       uncheckedIcon='circle-o'
-                      onPress={() => checkboxHandler(item, i)}
+                      onPress={() => {
+                        if(item.isChecked) {
+                          console.log('do nothing')
+                        } else {
+                          checkboxHandler(item, i)
+                        }
+                      }}
                     />
 
                     </View>
