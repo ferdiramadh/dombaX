@@ -92,7 +92,38 @@ export default function LaporanScreen() {
 
     const [isLoading,setIsLoading ] = useState(true)
 
+
+    //Setting Range Tanggal
+    const [ selectDate, setSelectDate ] = useState({
+        fromDate : '',
+        toDate: ''
+      })
+
+    //Check if ToDate > FromDate
+    const checkingDate = (fromDate, toDate ) => {
+        let a = new Date(fromDate)
+        let b = new Date(toDate)
+        if( a > b ) {
+            
+            setIsDateError(true)
+            Alert.alert( "Perhatian!", "Tanggal Dari Harus Lebih Dari Tanggal Sampai", [{ text: "Reset Tanggal", onPress: () => {
+                setIsDateError(false)
+                setSelectDate({
+                    fromDate : '',
+                    toDate: ''
+                  }) }
+            }])
+            console.log("Salah Tanggal")
+        } else {
+            setIsDateError(false)
+        }
+
+    }
+    const [ isDateError, setIsDateError ] = useState(false)
+
     //Filter Laporan
+    const [ filterBy, setFilterBy ] = useState();
+
     const [ filterVisible, setFilterVisible ] = useState(false)
 
     const [ isFilter, setIsFilter ] = useState(false)
@@ -544,6 +575,7 @@ export default function LaporanScreen() {
             
 
                 <CustomButton onPress={() => {
+
                      const datax = [
                         {id: 1, tanggal: '2022-08-24'},
                         {id: 2, tanggal:  '2022-07-22'},
@@ -554,12 +586,13 @@ export default function LaporanScreen() {
 
                     // console.log(today.toISOString().split('T')[0])
                     // console.log(priorDate.toISOString().split('T')[0]);
-                    console.log(filterList[0]['filteredList'])
+                    // console.log(filterList[0]['filteredList'])
                     // console.log(datax.filter((item, i) => {
                     //     return new Date(item.tanggal) >=  new Date(priorDate.toISOString().split('T')[0])
                     // }))
+                    console.log(selectDate)
                 } }/>
-                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList}/>
+                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError}/>
             
                     
             

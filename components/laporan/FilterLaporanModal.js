@@ -1,17 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert,  StyleSheet, Text, ToastAndroid, View, Dimensions, TouchableOpacity } from 'react-native';
 import Modal from "react-native-modal";
 import { CheckBox } from 'react-native-elements'
 import { MaterialIcons } from '@expo/vector-icons'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeigth = Dimensions.get('screen').height;
 
 
-const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList}) => {
+const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList, filterBy, setFilterBy, selectDate, setSelectDate, checkingDate, isDateError, setIsDateError }) => {
 
-  const [ filterBy, setFilterBy ] = useState();
+  //Pilih Tanggal checkbox
   const [ showTanggal, setShowTanggal ] = useState(false)
+  const [ isFromDate, setIsFromDate ] = useState(true)
+
+  //datetimepicker
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    let day = currentDate.getDate()
+    let month = currentDate.getMonth() + 1
+    let year = currentDate.getFullYear()
+    let tanggal = day + '-' + month + '-' + year
+    // console.log(new Date(currentDate.toISOString().split('T')[0]))
+    if(selectedDate && isFromDate){
+
+      setShow(false);
+      setSelectDate((prevState) => ({
+        ...prevState,
+        fromDate: currentDate.toISOString().split('T')[0]
+      }))
+       
+    } else if(selectedDate && !isFromDate){
+      setShow(false);
+      setSelectDate((prevState) => ({
+        ...prevState,
+        toDate: currentDate.toISOString().split('T')[0]
+      }))
+    } else {
+        console.log("eweuh")
+        setShow(false);
+        // setFieldValue('tanggal', '')
+    }
+  };
+
+  //Checking Date
+  useEffect(() => {
+    console.log('Yok Cek')
+    if(selectDate.fromDate !== '' && selectDate.toDate !== '') {
+      console.log('Cek Tanggal Nih')
+      checkingDate(selectDate.fromDate, selectDate.toDate)
+    }
+
+  }, [selectDate])
+
+
+  //function when selecting the checkboxes
 
   const checkboxHandler = (value, index) => {
     setIsFilter(true)
@@ -57,7 +113,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
       ToastAndroid.show('Pilih Rentang Tanggal', ToastAndroid.SHORT) 
     }
 
-   
+    setFilterBy(filterTrue)
     console.log(filterTrue)
   }, 500)
   
@@ -84,10 +140,22 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
           setFilterList(newList)
           setFilterVisible(!filterVisible)
           setShowTanggal(false)
+          setSelectDate({fromDate:'', toDate:''})
+          setIsFilter(false)
+          setIsDateError(false)
         }}
         swipeDirection="down"
         >
         <View style={styles.centeredView}>
+        {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChange}
+              />
+            )}
           <View style={styles.modalView}>
             <View style={styles.handleModal}></View>
               <View style={styles.filterWrap}>
@@ -96,11 +164,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                   filterList.map((item, i) => {
                   
                   return (
-                    <View style={styles.filterSelection} key={item.id} onPress={() => {
-                      setFilterBy(item.sortBy)
-                      setIsFilter(true)
-                      setFilterVisible(!filterVisible)
-                    }}>
+                    <View style={styles.filterSelection} key={item.id}>
                       <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
                       <CheckBox
                       center
@@ -122,22 +186,40 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                 {showTanggal? 
                 <View>
                   <View style={styles.txtInputWrapper}>
-                    <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                    <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => {
+                      setIsFromDate(true)
+                      showDatepicker()
+                    }}>
                         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                            <Text style={{color:'#474747'}}>Pilih Tanggal</Text>   
+                            <Text style={{color:'#474747'}}>{selectDate.fromDate !== ''?selectDate.fromDate: 'Pilih Tanggal'}</Text>   
                             <MaterialIcons name="date-range" size={24} color="black" />    
                         </View>                
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.textInput} onPress={() => null}>
+                    <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => {
+                      setIsFromDate(false)
+                      showDatepicker()
+                    }}>
                         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                            <Text style={{color:'#474747'}}>Pilih Tanggal</Text>   
+                            <Text style={{color:'#474747'}}>{selectDate.toDate !== ''?selectDate.toDate: 'Pilih Tanggal'}</Text>   
                             <MaterialIcons name="date-range" size={24} color="black" />    
                         </View>                
                     </TouchableOpacity>
                   </View>
-                  <View style={styles.pilihWrapper}>
-                    <Text style={{color:'#474747'}}>Dari</Text>   
-                    <Text style={{color:'#474747'}}>Sampai</Text>   
+                  <View>
+                    <View style={styles.pilihWrapper}>
+                      <Text style={{color:'#474747'}}>Dari</Text>   
+                      <Text style={{color:'#474747'}}>Sampai</Text>  
+                    </View> 
+                   {isDateError? null:
+                    <TouchableOpacity style={styles.pilihWrapper} onPress={() => {
+                      if(selectDate.fromDate !== '' && selectDate.toDate !== '') {
+                        console.log('Tanggal Ok Nih')
+                      } else {
+                        Alert.alert( "Perhatian!", "Silakan Pilih Tanggal Dahulu")
+                      }
+                    }}>
+                      <Text>Terapkan</Text>
+                    </TouchableOpacity>}
                   </View>
                 </View> : null}
               </View> 
@@ -225,7 +307,6 @@ const styles = StyleSheet.create({
       padding: 5,
       width:'45%',
       height:50,                       
-      borderColor:'black',
       borderWidth: .8,                
       borderRadius:8,
       justifyContent:'center', 
