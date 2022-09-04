@@ -124,6 +124,8 @@ export default function LaporanScreen() {
     //Filter Laporan
     const [ filterBy, setFilterBy ] = useState();
 
+    const [ filteredList, setFilteredList ] = useState()
+
     const [ filterVisible, setFilterVisible ] = useState(false)
 
     const [ isFilter, setIsFilter ] = useState(false)
@@ -159,6 +161,55 @@ export default function LaporanScreen() {
         isChecked: false,
       }
     ])
+
+
+    //Filter Functions
+    const filterFunction = (value, i) => {
+        let res = filterBy[0]['sortBy']
+        let today = new Date()
+        let thisMonth = today.getMonth()
+        let thisYear = today.getFullYear()
+      
+
+        let newList = sortData.filter((item, i) => {
+            if( res == 'Hari Ini') {
+                return new Date(item.tanggal).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString()
+                console.log("Iya Hri Ini")
+               
+            } else if( res == '7 Hari Terakhir') {
+                let priorDate = new Date(new Date().setDate(today.getDate() - 7));
+                return new Date(item.tanggal).toDateString()  >= new Date(priorDate.toISOString().split('T')[0]).toDateString()
+                console.log("Iya Hri Ini")
+               
+            } else if( res == '30 Hari Terakhir') {
+                let priorDate = new Date(new Date().setDate(today.getDate() - 30));
+                return new Date(item.tanggal).toDateString()  >= new Date(priorDate.toISOString().split('T')[0]).toDateString()
+                console.log("Iya Hri Ini")
+               
+            } else if( res == 'Bulan Ini') {
+                let itemTanggal = new Date(item.tanggal)
+                let month = itemTanggal.getMonth() + 1
+                let year = itemTanggal.getFullYear()
+                console.log(month)
+                console.log(year)
+                let priorDate = new Date(new Date().setDate(today.getDate() - 30));
+                return month  == thisMonth && year == thisYear
+                
+               
+            }
+            return item
+        })
+        setFilteredList(newList)
+
+       
+    }
+
+    useEffect(() => {
+        if(filterBy) {
+            filterFunction()
+        }
+
+    }, filterBy)
 
 
     useEffect(() => {
@@ -534,7 +585,10 @@ export default function LaporanScreen() {
                 <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', position: 'relative', bottom: 0}}>
                     
                     <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>
-                        {isFilter? <TouchableOpacity onPress={() => setIsFilter(false)}>
+                        {isFilter? <TouchableOpacity onPress={() => {
+                            setIsFilter(false)
+                            setFilterBy()
+                            }}>
                                         <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Hapus Filter</Text>
                                     </TouchableOpacity>:
                         <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>}
@@ -581,8 +635,8 @@ export default function LaporanScreen() {
                         {id: 2, tanggal:  '2022-07-22'},
                        
                     ]
-                   var today = new Date();
-                    var priorDate = new Date(new Date().setDate(today.getDate() - 30));
+                //    var today = new Date();
+                //     var priorDate = new Date(new Date().setDate(today.getDate() - 30));
 
                     // console.log(today.toISOString().split('T')[0])
                     // console.log(priorDate.toISOString().split('T')[0]);
@@ -590,7 +644,10 @@ export default function LaporanScreen() {
                     // console.log(datax.filter((item, i) => {
                     //     return new Date(item.tanggal) >=  new Date(priorDate.toISOString().split('T')[0])
                     // }))
-                    console.log(selectDate)
+                    let today = new Date()
+                    let thisMonth = today.getMonth()
+                    let thisYear = today.getFullYear()
+                    console.log(filteredList)
                 } }/>
                 <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError}/>
             
