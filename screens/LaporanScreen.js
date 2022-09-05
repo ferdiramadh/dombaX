@@ -174,30 +174,25 @@ export default function LaporanScreen() {
         let newList = sortData.filter((item, i) => {
             if( res == 'Hari Ini') {
                 return new Date(item.tanggal).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString()
-                console.log("Iya Hri Ini")
                
             } else if( res == '7 Hari Terakhir') {
                 let priorDate = new Date(new Date().setDate(today.getDate() - 7));
-                return new Date(item.tanggal).toDateString()  >= new Date(priorDate.toISOString().split('T')[0]).toDateString()
-                console.log("Iya Hri Ini")
+                return new Date(item.tanggal)  >= new Date(priorDate.toISOString().split('T')[0])
                
             } else if( res == '30 Hari Terakhir') {
                 let priorDate = new Date(new Date().setDate(today.getDate() - 30));
-                return new Date(item.tanggal).toDateString()  >= new Date(priorDate.toISOString().split('T')[0]).toDateString()
-                console.log("Iya Hri Ini")
+                return new Date(item.tanggal)  >= new Date(priorDate.toISOString().split('T')[0])
                
             } else if( res == 'Bulan Ini') {
                 let itemTanggal = new Date(item.tanggal)
                 let month = itemTanggal.getMonth() + 1
                 let year = itemTanggal.getFullYear()
-                console.log(month)
-                console.log(year)
-                let priorDate = new Date(new Date().setDate(today.getDate() - 30));
+                
                 return month  == thisMonth && year == thisYear
                 
                
             }
-            return item
+            return []
         })
         setFilteredList(newList)
 
@@ -205,11 +200,16 @@ export default function LaporanScreen() {
     }
 
     useEffect(() => {
-        if(filterBy) {
+        console.log('filter fungso')
+        console.log(filterBy)
+        if(filterBy != undefined) {
             filterFunction()
+            console.log(filterBy)
+            console.log('tidak undefined')
+            
         }
 
-    }, filterBy)
+    }, [filterBy])
 
 
     useEffect(() => {
@@ -630,24 +630,25 @@ export default function LaporanScreen() {
 
                 <CustomButton onPress={() => {
 
-                     const datax = [
-                        {id: 1, tanggal: '2022-08-24'},
-                        {id: 2, tanggal:  '2022-07-22'},
+                //      const datax = [
+                //         {id: 1, tanggal: '2022-08-05'},
+                //         {id: 2, tanggal:  '2022-09-04'},
                        
-                    ]
+                //     ]
                 //    var today = new Date();
-                //     var priorDate = new Date(new Date().setDate(today.getDate() - 30));
+                //     let priorDate = new Date(new Date().setDate(today.getDate() - 30));
 
                     // console.log(today.toISOString().split('T')[0])
                     // console.log(priorDate.toISOString().split('T')[0]);
-                    // console.log(filterList[0]['filteredList'])
+      
                     // console.log(datax.filter((item, i) => {
-                    //     return new Date(item.tanggal) >=  new Date(priorDate.toISOString().split('T')[0])
+                        
+                    //     return new Date(item.tanggal).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString()
                     // }))
-                    let today = new Date()
-                    let thisMonth = today.getMonth()
-                    let thisYear = today.getFullYear()
+                    
+               
                     console.log(filteredList)
+
                 } }/>
                 <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError}/>
             
