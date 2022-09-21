@@ -124,7 +124,7 @@ export default function LaporanScreen() {
     //Filter Laporan
     const [ filterBy, setFilterBy ] = useState();
 
-    const [ filteredList, setFilteredList ] = useState()
+    const [ filteredList, setFilteredList ] = useState([])
 
     const [ filterVisible, setFilterVisible ] = useState(false)
 
@@ -191,25 +191,37 @@ export default function LaporanScreen() {
                 return month  == thisMonth && year == thisYear
                 
                
+            } else if( res == 'Pilih Tanggal') {
+                console.log("Nih Pilih Tanggal Yow")
+                return new Date(item.tanggal)  >= new Date(selectDate.fromDate) && new Date(item.tanggal)  <= new Date(selectDate.toDate)
             }
             return []
         })
+        if(newList.length == 0) {
+            Alert.alert( "Perhatian!", "Tidak Ada Data Filter", [{ text: "Hapus Filter", onPress: () => {
+                setIsFilter(false)
+                setFilterBy()
+                setFilteredList([])
+                        
+            }
+            }])
+        }
         setFilteredList(newList)
 
        
     }
 
-    useEffect(() => {
-        console.log('filter fungso')
-        console.log(filterBy)
-        if(filterBy != undefined) {
-            filterFunction()
-            console.log(filterBy)
-            console.log('tidak undefined')
+    // useEffect(() => {
+    //     console.log('filter fungso')
+    //     console.log(filterBy)
+    //     if(filterBy != undefined) {
+    //         filterFunction()
+    //         console.log(filterBy)
+    //         console.log('tidak undefined')
             
-        }
+    //     }
 
-    }, [filterBy])
+    // }, [filterBy])
 
 
     useEffect(() => {
@@ -588,6 +600,7 @@ export default function LaporanScreen() {
                         {isFilter? <TouchableOpacity onPress={() => {
                             setIsFilter(false)
                             setFilterBy()
+                            setFilteredList([])
                             }}>
                                         <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Hapus Filter</Text>
                                     </TouchableOpacity>:
@@ -600,9 +613,12 @@ export default function LaporanScreen() {
                     <ScrollView showsVerticalScrollIndicator={false}>
 
                     {/* hvhvh*/}
-                    { !isFilter?sortData.map((item, i) => {
+                    { !isFilter && filteredList.length == 0?sortData.map((item, i) => {
                             return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
-                    }).slice(0, slice):null} 
+                    }).slice(0, slice): filteredList.map((item, i) => {
+                        return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
+                    })} 
+                   
                     { !showMore && listExpense.length > 3? 
                     <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginTop: 5}} onPress={() => {
                         setShowMore(!showMore)
@@ -645,12 +661,14 @@ export default function LaporanScreen() {
                         
                     //     return new Date(item.tanggal).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString()
                     // }))
-                    
-               
+                    console.log(selectDate)
+                    console.log(filterBy)
                     console.log(filteredList)
+               
+                    console.log(!isFilter && filteredList.length == 0)
 
                 } }/>
-                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError}/>
+                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction}/>
             
                     
             

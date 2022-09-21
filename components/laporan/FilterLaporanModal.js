@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Alert,  StyleSheet, Text, ToastAndroid, View, Dimensions, TouchableOpacity } from 'react-native';
+import { Alert,  StyleSheet, Text, ToastAndroid, View, TouchableOpacity } from 'react-native';
 import Modal from "react-native-modal";
 import { CheckBox } from 'react-native-elements'
 import { MaterialIcons } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-export const windowWidth = Dimensions.get('window').width;
-export const windowHeigth = Dimensions.get('screen').height;
+import { windowHeigth, windowWidth } from '../../utils/DimensionSetup';
 
 
-const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList, filterBy, setFilterBy, selectDate, setSelectDate, checkingDate, isDateError, setIsDateError }) => {
+const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList, filterBy, setFilterBy, selectDate, setSelectDate, checkingDate, isDateError, setIsDateError, filterFunction }) => {
 
   //Pilih Tanggal checkbox
   const [ showTanggal, setShowTanggal ] = useState(false)
@@ -70,7 +68,6 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
   //function when selecting the checkboxes
 
   const checkboxHandler = (value, index) => {
-    setIsFilter(true)
     const newValue = filterList.map((checkbox, i) => {
      if (i !== index)
        return {
@@ -105,16 +102,15 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
     if (res !== 'Pilih Tanggal') {
       
       setShowTanggal(false)
-      setFilterVisible(!filterVisible)
-      console.log(filterTrue)
-      ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT) 
+      // setFilterVisible(!filterVisible)
+      
     } else {
       setShowTanggal(true)
       ToastAndroid.show('Pilih Rentang Tanggal', ToastAndroid.SHORT) 
     }
 
     setFilterBy(filterTrue)
-    console.log(filterTrue)
+    // console.log(filterTrue)
   }, 500)
   
   }    
@@ -207,21 +203,30 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                   </View>
                   <View>
                     <View style={styles.pilihWrapper}>
-                      <Text style={{color:'#474747'}}>Dari</Text>   
-                      <Text style={{color:'#474747'}}>Sampai</Text>  
+                      <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Dari</Text>   
+                      <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Sampai</Text>  
                     </View> 
-                   {isDateError? null:
-                    <TouchableOpacity style={styles.pilihWrapper} onPress={() => {
+                   {/* {isDateError? null:
+                    <TouchableOpacity style={styles.btnPilih} onPress={() => {
                       if(selectDate.fromDate !== '' && selectDate.toDate !== '') {
-                        console.log('Tanggal Ok Nih')
+                        setFilterVisible(!filterVisible)
                       } else {
                         Alert.alert( "Perhatian!", "Silakan Pilih Tanggal Dahulu")
                       }
                     }}>
-                      <Text>Terapkan</Text>
-                    </TouchableOpacity>}
+                      <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
+                    </TouchableOpacity>} */}
                   </View>
                 </View> : null}
+                <TouchableOpacity style={styles.btnPilih} onPress={() => {
+                     setIsFilter(true)
+                     setFilterVisible(!filterVisible)
+                     filterFunction()
+                     ToastAndroid.show(`Filter Berdasarkan ${filterBy[0]['sortBy']}`, ToastAndroid.SHORT)
+                    }}>
+                      <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
+                </TouchableOpacity>
+
               </View> 
           </View>
         </View>
@@ -317,5 +322,14 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-around',
       width: windowWidth *.8,
+    },
+    btnPilih: {
+      padding: 5,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: windowWidth *.8,
+      backgroundColor:'#ED9B83',
+      borderRadius:5,
+      elevation: 2
     }
   });
