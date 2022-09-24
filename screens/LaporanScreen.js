@@ -199,10 +199,7 @@ export default function LaporanScreen() {
         })
         if(newList.length == 0) {
             Alert.alert( "Perhatian!", "Tidak Ada Data Filter", [{ text: "Hapus Filter", onPress: () => {
-                setIsFilter(false)
-                setFilterBy()
-                setFilteredList([])
-                        
+                resetFilter()
             }
             }])
         }
@@ -211,17 +208,19 @@ export default function LaporanScreen() {
        
     }
 
-    // useEffect(() => {
-    //     console.log('filter fungso')
-    //     console.log(filterBy)
-    //     if(filterBy != undefined) {
-    //         filterFunction()
-    //         console.log(filterBy)
-    //         console.log('tidak undefined')
-            
-    //     }
-
-    // }, [filterBy])
+    //Reset Filter
+    const resetFilter = () => {
+        let startVal = filterList.map((val, i) => {
+            return {
+                ...val,
+                isChecked: false
+            }
+        })
+        setIsFilter(false)
+        setFilterBy()
+        setFilteredList([])
+        setFilterList(startVal)        
+    }
 
 
     useEffect(() => {
@@ -598,9 +597,7 @@ export default function LaporanScreen() {
                     
                     <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>
                         {isFilter? <TouchableOpacity onPress={() => {
-                            setIsFilter(false)
-                            setFilterBy()
-                            setFilteredList([])
+                            resetFilter()
                             }}>
                                         <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Hapus Filter</Text>
                                     </TouchableOpacity>:

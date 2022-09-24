@@ -217,12 +217,17 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                       <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
                     </TouchableOpacity>} */}
                   </View>
-                </View> : null}
+                </View> : null} 
                 <TouchableOpacity style={styles.btnPilih} onPress={() => {
                      setIsFilter(true)
                      setFilterVisible(!filterVisible)
-                     filterFunction()
-                     ToastAndroid.show(`Filter Berdasarkan ${filterBy[0]['sortBy']}`, ToastAndroid.SHORT)
+                     if(filterBy) {
+                      filterFunction()
+                      ToastAndroid.show(`Filter Berdasarkan ${filterBy[0]['sortBy']}`, ToastAndroid.SHORT)
+                     } else {
+
+                     }
+                     
                     }}>
                       <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
                 </TouchableOpacity>
