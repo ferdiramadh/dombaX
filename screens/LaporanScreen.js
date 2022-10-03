@@ -167,7 +167,7 @@ export default function LaporanScreen() {
     const filterFunction = (value, i) => {
         let res = filterBy[0]['sortBy']
         let today = new Date()
-        let thisMonth = today.getMonth()
+        let thisMonth = today.getMonth() 
         let thisYear = today.getFullYear()
       
 
@@ -185,7 +185,7 @@ export default function LaporanScreen() {
                
             } else if( res == 'Bulan Ini') {
                 let itemTanggal = new Date(item.tanggal)
-                let month = itemTanggal.getMonth() + 1
+                let month = itemTanggal.getMonth()
                 let year = itemTanggal.getFullYear()
                 
                 return month  == thisMonth && year == thisYear
@@ -197,15 +197,8 @@ export default function LaporanScreen() {
             }
             return []
         })
-        if(newList.length == 0) {
-            Alert.alert( "Perhatian!", "Tidak Ada Data Filter", [{ text: "Hapus Filter", onPress: () => {
-                resetFilter()
-            }
-            }])
-        }
         setFilteredList(newList)
-
-       
+        ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT)   
     }
 
     //Reset Filter
@@ -616,7 +609,7 @@ export default function LaporanScreen() {
                         return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
                     })} 
                    
-                    { !showMore && listExpense.length > 3? 
+                    { !showMore && listExpense.length > 3 && !isFilter? 
                     <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginTop: 5}} onPress={() => {
                         setShowMore(!showMore)
                         setSlice(listExpense.length)
@@ -636,35 +629,26 @@ export default function LaporanScreen() {
                     <Text style={[styles.textPengeluaran]}>Tidak Ada Pengeluaran</Text>
                 </View>}
 
+                {
+                    isFilter && filteredList < 1 ? 
+                        <View style={{flex: 1, height: '100%', width: windowWidth, justifyContent:'center', alignItems:'center', marginBottom: windowHeigth*.2, paddingHorizontal: 10}}>
+                            <Text style={[styles.textPengeluaran, {textAlign: 'center'}]}>Tidak Pengeluaran pada Periode Ini</Text>
+                        </View>
+                    : null
+                }
+
+            
+            
                 
-
-            
-            
-
-                <CustomButton onPress={() => {
-
-                //      const datax = [
-                //         {id: 1, tanggal: '2022-08-05'},
-                //         {id: 2, tanggal:  '2022-09-04'},
-                       
-                //     ]
-                //    var today = new Date();
-                //     let priorDate = new Date(new Date().setDate(today.getDate() - 30));
-
-                    // console.log(today.toISOString().split('T')[0])
-                    // console.log(priorDate.toISOString().split('T')[0]);
-      
-                    // console.log(datax.filter((item, i) => {
-                        
-                    //     return new Date(item.tanggal).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString()
-                    // }))
-                    console.log(selectDate)
-                    console.log(filterBy)
-                    console.log(filteredList)
-               
-                    console.log(!isFilter && filteredList.length == 0)
-
-                } }/>
+                {/* <CustomButton onPress={() => {
+                    let testDate = "2022-09-01"
+                    let today = new Date()
+                    let thisDate = new Date(testDate)
+                    let thisMonth = today.getMonth()
+                    let thisMonth2 = thisDate.getMonth()
+                    console.log(thisMonth)
+                    console.log(thisMonth2)
+                } }/> */}
                 <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction}/>
             
                     

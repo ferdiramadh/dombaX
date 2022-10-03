@@ -11,9 +11,7 @@ const ExpenseChart = ({item, totalExpense}) => {
             <Text>{item.namaTransaksi}</Text>
             <Text>{value}%</Text>
         </View>
-        <View style={[styles.progressWrapper, { width:`${value}%`}, value > 50? {backgroundColor: "red"}:{backgroundColor:"#43B88E"}]}>
-
-        </View>
+        <View style={[styles.progressWrapper, { width:`${value}%`}, value > 50? {backgroundColor: "red"}:{backgroundColor:"#43B88E"}]} />
     </View></View>
   )
 }
