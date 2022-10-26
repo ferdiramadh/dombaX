@@ -17,14 +17,14 @@ const LaporanComponent = (props) => {
                 {isLoading ? <ActivityIndicator size="small" color="orange" />:
                 <View>
                     <Text style={styles.upTitle}>{props.title1}</Text>
-                    <Text style={styles.saldoText}>{props.saldo}</Text>
+                    <Text style={[styles.saldoText, props.title2 ?{color:'#0EFA33'}:{color:'red'}]}>{props.saldo}</Text>
                 </View>     }
             </View>
             <View style={styles.sectionContainer}>
             {isLoading ? <ActivityIndicator size="small" color="orange" />:
                 <View>
-                    <Text style={styles.upTitle}>{props.title2 == false ?"Rugi":"Untung"}</Text>
-                    <Text style={[styles.saldoText,props.title2 == false ?{color:'red'}:{color:'#0EFA33'}]}>{props.profit}</Text>
+                    <Text style={styles.upTitle}>{ props.title2 ? "Untung" : "Rugi" }</Text>
+                    <Text style={[styles.saldoText, props.title2 ?{color:'#0EFA33'}:{color:'red'}]}>{props.profit}</Text>
                 </View>}
             </View>
         </View>
@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
         color:'#ED9B83'
     },
     saldoText:{
-        fontSize: 26,
+        fontSize: 24,
         fontWeight:'bold',
-        color:'#000'
     }
 })
