@@ -7,7 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup';
 
 
-const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList, filterBy, setFilterBy, selectDate, setSelectDate, checkingDate, isDateError, setIsDateError, filterFunction }) => {
+const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList, filterBy, setFilterBy, selectDate, setSelectDate, checkingDate, isDateError, setIsDateError, filterFunction, listExpense, listIncome, setFilteredList, setFilteredListIncome }) => {
 
   //Pilih Tanggal checkbox
   const [ showTanggal, setShowTanggal ] = useState(false)
@@ -221,7 +221,8 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                 <TouchableOpacity style={styles.btnPilih} onPress={() => {
                      setIsFilter(true)
                      setFilterVisible(!filterVisible)
-                     filterFunction()
+                     filterFunction(filterBy, listExpense, setFilteredList)
+                     filterFunction(filterBy, listIncome, setFilteredListIncome)
                     }}>
                       <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
                 </TouchableOpacity>

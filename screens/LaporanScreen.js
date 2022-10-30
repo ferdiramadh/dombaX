@@ -13,6 +13,7 @@ import ProfileHeader from '../components/laporan/ProfileHeader'
 import ExpenseChart from '../components/laporan/ExpenseChart'
 import { MaterialIcons } from '@expo/vector-icons';
 import FilterLaporanModal from '../components/laporan/FilterLaporanModal'
+import { formatToCurrencyWithoutStyle } from '../utils/FormatCurrency'
 
 
 export default function LaporanScreen() {
@@ -23,6 +24,19 @@ export default function LaporanScreen() {
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listExpense = transactionsData.listExpense
     const listIncome = transactionsData.listIncome
+
+    //List of Categories
+    const filterCategory = (val, cat) => {
+        return val.kategori == cat
+    }
+    const gajiPekerjaList = listExpense.filter((val) => filterCategory(val, "Gaji Pekerja"))
+    const pembayaranUtangList = listExpense.filter((val) => filterCategory(val, "Pembayaran Utang"))
+    const pemberianUtangList = listExpense.filter((val) => filterCategory(val, "Pemberian Utang"))
+    const tabunganInvestasiList = listExpense.filter((val) => filterCategory(val, "Tabungan atau Investasi"))
+    const pembelianAlatList = listExpense.filter((val) => filterCategory(val, "Pembelian Alat dan Mesin"))
+    const pengeluaranLainList = listExpense.filter((val) => filterCategory(val, "Pengeluaran Lain-Lain"))
+    const pembelianStokList = listExpense.filter((val) => filterCategory(val, "Pembelian Stok"))
+
 
     const [isProfit, setIsProfit] = useState(true)
     // const dombaCost = useSelector(state => state.stokReducer.listDomba)
@@ -39,8 +53,6 @@ export default function LaporanScreen() {
     // const varCostReduce = (s,a) => {
     //     return s + parseInt(a.jumlah)*parseInt(a.hargaBeli);
     // }
-
-    const formatToCurrency = (value) => <NumberFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'Rp. '} renderText={(value, props) => <Text {...props} style={{fontWeight:'bold'}}>{value}</Text>} />
 
 
     // const totalBiayaDomba = dombaCost.reduce((s,a) => varCostReduce(s,a),0)
@@ -59,8 +71,27 @@ export default function LaporanScreen() {
     // const totalBiayaOverall = totalBiayaDomba + totalBiayaPakan + totalBiayaObat + totalBiayaKandang + totalBiayaPegawai + totalBiayaLahan;
 
     // const screenWidth = Dimensions.get('window').width - 60;
+
+
+    //Total Cost
     const totalExpense = parseInt(getSum(listExpense, "jumlah"))
     const totalIncome = parseInt(getSum(listIncome, "jumlah"))
+
+    const totalCostGaji = parseInt(getSum(gajiPekerjaList, "jumlah"))
+    const totalPembayaranUtang = parseInt(getSum(pembayaranUtangList, "jumlah"))
+    const totalPemberianUtang = parseInt(getSum(pemberianUtangList, "jumlah"))
+    const totalPembelianStok = parseInt(getSum(pembelianStokList, "jumlah"))
+    const totalPembelianAlat = parseInt(getSum(pembelianAlatList, "jumlah"))
+    const totalPembelianLain = parseInt(getSum(pengeluaranLainList, "jumlah"))
+    const totalTabunganInvestasi = parseInt(getSum(tabunganInvestasiList, "jumlah"))
+
+
+    //Setting array category
+    const [ listCat, setListCat ] = useState([])
+    const [ objCategory , setObjCategory ] = useState({
+        category:'',
+        jumlah: ''
+    })
 
     //Total Selling Product
     const sellingProcutList = listIncome.filter(function (el) {
@@ -125,6 +156,7 @@ export default function LaporanScreen() {
     const [ filterBy, setFilterBy ] = useState();
 
     const [ filteredList, setFilteredList ] = useState([])
+    const [ filteredListIncome, setFilteredListIncome ] = useState([])
 
     const [ filterVisible, setFilterVisible ] = useState(false)
 
@@ -164,14 +196,14 @@ export default function LaporanScreen() {
 
 
     //Filter Functions
-    const filterFunction = (value, i) => {
+    const filterFunction = (filterBy, array, func) => {
         let res = filterBy[0]['sortBy']
         let today = new Date()
         let thisMonth = today.getMonth() 
         let thisYear = today.getFullYear()
       
 
-        let newList = sortData.filter((item, i) => {
+        let newList = array.filter((item, i) => {
             if( res == 'Hari Ini') {
                 return new Date(item.tanggal).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString()
                
@@ -197,10 +229,11 @@ export default function LaporanScreen() {
             }
             return []
         })
-        setFilteredList(newList)
+        func(newList)
         ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT)   
     }
 
+    
     //Reset Filter
     const resetFilter = () => {
         let startVal = filterList.map((val, i) => {
@@ -566,8 +599,8 @@ export default function LaporanScreen() {
           .padStart(6, '0');
         return `#${randomColor}`;
       };
+
       
-     
     return (
       
         <View style={styles.container}>
@@ -582,7 +615,7 @@ export default function LaporanScreen() {
                 </View>              
             </View>
             <View style={styles.componentContainer}>
-                <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrency(profit)} profit={formatToCurrency(arusKas)}/>
+                <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrencyWithoutStyle(profit)} profit={formatToCurrencyWithoutStyle(arusKas)}/>
             </View>
             
                 { listExpense.length > 0? 
@@ -603,20 +636,65 @@ export default function LaporanScreen() {
                     <ScrollView showsVerticalScrollIndicator={false}>
 
                     {/* hvhvh*/}
-                    { !isFilter && filteredList.length == 0?sortData.map((item, i) => {
+                    {/* { !isFilter && filteredList.length == 0?sortData.map((item, i) => {
                             return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
                     }).slice(0, slice): filteredList.map((item, i) => {
                         return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
-                    })} 
+                    })}  */}
+
+                    {/** Category List **/}
+                    {   
+                        
+                        !isFilter && filteredList.length == 0?
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembayaranUtang} category={'Pembayaran Utang'}/>
+                        :null
+                    }
+                    {   
+                        
+                        !isFilter && filteredList.length == 0?
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianLain} category={'Pengeluaran Lain - lain'}/>
+                        :null
+                    }
+                    {   
+                        
+                        !isFilter && filteredList.length == 0?
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianAlat} category={'Pembelian Alat dan Mesin'}/>
+                        :null
+                    }
+                    {   
+                        
+                        !isFilter && filteredList.length == 0?
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianStok} category={'Pembelian Stok'}/>
+                        :null
+                    }
+                    {   
+                        
+                        !isFilter && filteredList.length == 0?
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPemberianUtang} category={'Pemberian Utang'}/>
+                        :null
+                    }
+                    {   
+                        
+                        !isFilter && filteredList.length == 0?
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalCostGaji} category={'Gaji Pekerja'}/>
+                        :null
+                    }
+                    {   
+                        
+                        !isFilter && filteredList.length == 0?
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalTabunganInvestasi} category={'Tabungan dan Investasi'}/>
+                        :null
+                    }
+
                    
-                    { !showMore && listExpense.length > 3 && !isFilter? 
+                    {/* { !showMore && listExpense.length > 3 && !isFilter? 
                     <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginTop: 5}} onPress={() => {
                         setShowMore(!showMore)
                         setSlice(listExpense.length)
                         ToastAndroid.show("Scroll Untuk Melihat Item", ToastAndroid.SHORT)
                     }}>
                         <Text style={{fontSize: 18,color: '#000' }}>Lihat Lainnya</Text>
-                    </TouchableOpacity>: null}
+                    </TouchableOpacity>: null} */}
                     {listExpense.length > 3 && showMore?<TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginVertical: 10}} onPress={() => {
                         setShowMore(!showMore)
                         setSlice(3)
@@ -640,16 +718,36 @@ export default function LaporanScreen() {
             
             
                 
-                {/* <CustomButton onPress={() => {
-                    let testDate = "2022-09-01"
-                    let today = new Date()
-                    let thisDate = new Date(testDate)
-                    let thisMonth = today.getMonth()
-                    let thisMonth2 = thisDate.getMonth()
-                    console.log(thisMonth)
-                    console.log(thisMonth2)
-                } }/> */}
-                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction}/>
+                <CustomButton onPress={() => {
+                    // let testDate = "2022-09-01"
+                    // let today = new Date()
+                    // let thisDate = new Date(testDate)
+                    // let thisMonth = today.getMonth()
+                    // let thisMonth2 = thisDate.getMonth()
+                    // console.log(pembayaranUtangList)
+                    // console.log(totalPembayaranUtang)
+                    function groupByKey(array, key) {
+                        return array
+                          .reduce((hash, obj) => {
+                            if(obj[key] === undefined) return hash; 
+                            return Object.assign(hash, { [obj[key]]:( hash[obj[key]] || [] ).concat(obj)})
+                          }, {})
+                     }
+                     
+                     
+                     var cars = [{'make':'audi','model':'r8','year':'2012'},{'make':'audi','model':'rs5','year':'2013'},{'make':'ford','model':'mustang','year':'2012'},{'make':'ford','model':'fusion','year':'2015'},{'make':'kia','model':'optima','year':'2012'}];
+                     const obj = {
+                        sum: function (a, b) {
+                          return a + b;
+                        },
+                      };
+                      setFilteredListIncome([])
+                    //   filterFunctionIncome()
+                      console.log(filterBy); 
+                      console.log(filteredListIncome); 
+                     
+                } }/>
+                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction} listExpense={sortData} listIncome={listIncome} setFilteredList={setFilteredList} setFilteredListIncome={setFilteredListIncome}/>
             
                     
             

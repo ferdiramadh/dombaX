@@ -2,13 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 
-const ExpenseChart = ({item, totalExpense}) => {
-  const value = (parseInt(item.jumlah)/totalExpense*100).toFixed(2)
+const ExpenseChart = ({ totalExpense, totalCategory, category}) => {
+  const value = (parseInt(totalCategory)/totalExpense*100).toFixed(2)
   return (
     <View style={styles.c}>
     <View style={styles.container}>
         <View style={styles.upperWrapper}>
-            <Text>{item.namaTransaksi}</Text>
+            <Text>{category}</Text>
             <Text>{value}%</Text>
         </View>
         <View style={[styles.progressWrapper, { width:`${value}%`}, value > 50? {backgroundColor: "red"}:{backgroundColor:"#43B88E"}]} />
