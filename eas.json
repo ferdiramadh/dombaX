@@ -1,14 +1,18 @@
 {
-  "builds": {
-    "android": {
-      "release": {
-        "workflow": "managed"
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
       }
     },
-    "ios": {
-      "release": {
-        "workflow": "managed"
+    "preview2": {
+      "android": {
+        "gradleCommand": ":app:assembleRelease"
       }
-    }
+    },
+    "preview3": {
+      "developmentClient": true
+    },
+    "production": {}
   }
 }
