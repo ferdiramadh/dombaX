@@ -7,10 +7,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup';
 
 
-const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList, filterBy, setFilterBy, selectDate, setSelectDate, checkingDate, isDateError, setIsDateError, filterFunction, listExpense, listIncome, setFilteredList, setFilteredListIncome }) => {
+const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList, filterBy, setFilterBy, selectDate, setSelectDate, checkingDate, isDateError, setIsDateError, filterFunction, listExpense, listIncome, setFilteredList, setFilteredListIncome, resetFilter, showTanggal, setShowTanggal  }) => {
 
   //Pilih Tanggal checkbox
-  const [ showTanggal, setShowTanggal ] = useState(false)
+
   const [ isFromDate, setIsFromDate ] = useState(true)
 
   //datetimepicker
@@ -55,14 +55,14 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
   };
 
   //Checking Date
-  useEffect(() => {
-    console.log('Yok Cek')
-    if(selectDate.fromDate !== '' && selectDate.toDate !== '') {
-      console.log('Cek Tanggal Nih')
-      checkingDate(selectDate.fromDate, selectDate.toDate)
-    }
+  // useEffect(() => {
+  //   console.log('Yok Cek')
+  //   if(selectDate.fromDate !== '' || selectDate.toDate !== '') {
+  //     console.log('Cek Tanggal Nih')
+  //     checkingDate(selectDate.fromDate, selectDate.toDate)
+  //   }
 
-  }, [selectDate])
+  // }, [selectDate])
 
 
   //function when selecting the checkboxes
@@ -125,19 +125,8 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
         backdropOpacity={0.8}
         isVisible={filterVisible}
         onSwipeComplete={() => {
-          
-          let newList = filterList.map((checkbox, i) => {
-            return {
-              ...checkbox,
-              isChecked: false,
-            }
-             
-         })
-          setFilterList(newList)
+          resetFilter()
           setFilterVisible(!filterVisible)
-          setShowTanggal(false)
-          setSelectDate({fromDate:'', toDate:''})
-          setIsFilter(false)
           setIsDateError(false)
         }}
         swipeDirection="down"
@@ -218,15 +207,21 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                     </TouchableOpacity>} */}
                   </View>
                 </View> : null} 
+                { filterBy? 
                 <TouchableOpacity style={styles.btnPilih} onPress={() => {
-                     setIsFilter(true)
-                     setFilterVisible(!filterVisible)
-                     filterFunction(filterBy, listExpense, setFilteredList)
-                     filterFunction(filterBy, listIncome, setFilteredListIncome)
+                      if(filterBy[0]['sortBy'] == "Pilih Tanggal" && (selectDate.fromDate == "" || selectDate.toDate == "")){
+                        checkingDate(selectDate.fromDate, selectDate.toDate)
+                      } else {
+                        setIsFilter(true)
+                        setFilterVisible(!filterVisible)
+                        filterFunction(filterBy, listExpense, setFilteredList)
+                        filterFunction(filterBy, listIncome, setFilteredListIncome)
+                        ToastAndroid.show(`Filter Berdasarkan ${filterBy[0]['sortBy']}`, ToastAndroid.SHORT)  
+                      }
                     }}>
                       <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
-                </TouchableOpacity>
-
+                </TouchableOpacity> 
+                : null}
               </View> 
           </View>
         </View>

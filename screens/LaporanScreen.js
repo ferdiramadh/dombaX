@@ -25,136 +25,9 @@ export default function LaporanScreen() {
     const listExpense = transactionsData.listExpense
     const listIncome = transactionsData.listIncome
 
-    //List of Categories
-    const filterCategory = (val, cat) => {
-        return val.kategori == cat
-    }
-    const gajiPekerjaList = listExpense.filter((val) => filterCategory(val, "Gaji Pekerja"))
-    const pembayaranUtangList = listExpense.filter((val) => filterCategory(val, "Pembayaran Utang"))
-    const pemberianUtangList = listExpense.filter((val) => filterCategory(val, "Pemberian Utang"))
-    const tabunganInvestasiList = listExpense.filter((val) => filterCategory(val, "Tabungan atau Investasi"))
-    const pembelianAlatList = listExpense.filter((val) => filterCategory(val, "Pembelian Alat dan Mesin"))
-    const pengeluaranLainList = listExpense.filter((val) => filterCategory(val, "Pengeluaran Lain-Lain"))
-    const pembelianStokList = listExpense.filter((val) => filterCategory(val, "Pembelian Stok"))
-
-
-    const [isProfit, setIsProfit] = useState(true)
-    // const dombaCost = useSelector(state => state.stokReducer.listDomba)
-    // const pakanCost = useSelector(state => state.stokReducer.listPakan)
-    // const obatCost = useSelector(state => state.stokReducer.listObat)
-
-    // const kandangCost = useSelector(state => state.costReducer.listKandang)
-    // const pegawaiCost = useSelector(state => state.costReducer.listPegawai)
-    // const lahanCost = useSelector(state => state.costReducer.listLahan)
-
-    // const penjualan = useSelector(state => state.transactionsReducer.listSelling)
-    // const pembelian = useSelector(state => state.transactionsReducer.listPurchasing)
-
-    // const varCostReduce = (s,a) => {
-    //     return s + parseInt(a.jumlah)*parseInt(a.hargaBeli);
-    // }
-
-
-    // const totalBiayaDomba = dombaCost.reduce((s,a) => varCostReduce(s,a),0)
-    // const totalBiayaPakan = pakanCost.reduce((s,a) => varCostReduce(s,a),0)
-    // const totalBiayaObat = obatCost.reduce((s,a) => varCostReduce(s,a),0)
-
-    // const totalBiayaKandang = kandangCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.biayaBuat)},0)
-    // const totalBiayaPegawai = pegawaiCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.gaji)},0)
-    // const totalBiayaLahan = lahanCost.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.luas)},0)
-
-    // const totalPenjualan = penjualan.reduce((s,a) => {return s + parseInt(a.hargaJual)*parseInt(a.kuantitas)},0)
-    // const totalPembelian = pembelian.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.kuantitas)},0)
-
-
-
-    // const totalBiayaOverall = totalBiayaDomba + totalBiayaPakan + totalBiayaObat + totalBiayaKandang + totalBiayaPegawai + totalBiayaLahan;
-
-    // const screenWidth = Dimensions.get('window').width - 60;
-
-
-    //Total Cost
-    const totalExpense = parseInt(getSum(listExpense, "jumlah"))
-    const totalIncome = parseInt(getSum(listIncome, "jumlah"))
-
-    const totalCostGaji = parseInt(getSum(gajiPekerjaList, "jumlah"))
-    const totalPembayaranUtang = parseInt(getSum(pembayaranUtangList, "jumlah"))
-    const totalPemberianUtang = parseInt(getSum(pemberianUtangList, "jumlah"))
-    const totalPembelianStok = parseInt(getSum(pembelianStokList, "jumlah"))
-    const totalPembelianAlat = parseInt(getSum(pembelianAlatList, "jumlah"))
-    const totalPembelianLain = parseInt(getSum(pengeluaranLainList, "jumlah"))
-    const totalTabunganInvestasi = parseInt(getSum(tabunganInvestasiList, "jumlah"))
-
-
-    //Setting array category
-    const [ listCat, setListCat ] = useState([])
-    const [ objCategory , setObjCategory ] = useState({
-        category:'',
-        jumlah: ''
-    })
-
-    //Total Selling Product
-    const sellingProcutList = listIncome.filter(function (el) {
-       
-            return el.kategori == "Penjualan"
-        
-    })
-    const totalSellingProduct = parseInt(getSum(sellingProcutList, "jumlah"))
-
-    //Total Var Cost
-    const totalVarCost = listExpense.filter(function (val) {
-        return val.kategori == "Gaji Pekerja" || val.kategori == "Pembelian Stok"
-    })
-
-    const varCost = parseInt(getSum(totalVarCost, "jumlah"))
-
-    const arusKas = totalSellingProduct - varCost
-    const profit = totalIncome - (totalExpense);
-
-    const [ showMore, setShowMore ] = useState(false)
-    const [ slice, setSlice ] = useState(3)
-
-
-    const sortData = listExpense.sort((a, b) => {
-        let bd = b.jumlah;
-        let ad = a.jumlah;
-        return bd - ad;
-      });
-
-    const [isLoading,setIsLoading ] = useState(true)
-
-
-    //Setting Range Tanggal
-    const [ selectDate, setSelectDate ] = useState({
-        fromDate : '',
-        toDate: ''
-      })
-
-    //Check if ToDate > FromDate
-    const checkingDate = (fromDate, toDate ) => {
-        let a = new Date(fromDate)
-        let b = new Date(toDate)
-        if( a > b ) {
-            
-            setIsDateError(true)
-            Alert.alert( "Perhatian!", "Tanggal Dari Harus Lebih Dari Tanggal Sampai", [{ text: "Reset Tanggal", onPress: () => {
-                setIsDateError(false)
-                setSelectDate({
-                    fromDate : '',
-                    toDate: ''
-                  }) }
-            }])
-            console.log("Salah Tanggal")
-        } else {
-            setIsDateError(false)
-        }
-
-    }
-    const [ isDateError, setIsDateError ] = useState(false)
-
     //Filter Laporan
     const [ filterBy, setFilterBy ] = useState();
-
+   
     const [ filteredList, setFilteredList ] = useState([])
     const [ filteredListIncome, setFilteredListIncome ] = useState([])
 
@@ -195,13 +68,162 @@ export default function LaporanScreen() {
     ])
 
 
+    //List of Categories & Grouping
+    const groupByKey = (list, key, {omitKey=false}) => list.reduce((hash, {[key]:value, ...rest}) => ({...hash, [value]:( hash[value] || [] ).concat(omitKey ? {...rest} : {[key]:value, ...rest})} ), {})
+    
+    const listExpenseGroup = groupByKey(listExpense, 'kategori', {omitKey:true})
+    const listIncomeGroup = groupByKey(listIncome, 'kategori', {omitKey:true})
+    const listExpenseCategory = listExpense.map((e) => e["kategori"])
+    const listIncomeCategory = listIncome.map((e) => e["kategori"])
+    const filterCategory = (val, cat) => {
+        return val.kategori == cat
+    }
+    const gajiPekerjaList = isFilter?filteredList.filter((val) => filterCategory(val, "Gaji Pekerja")):listExpense.filter((val) => filterCategory(val, "Gaji Pekerja"))
+    const pembayaranUtangList = isFilter?filteredList.filter((val) => filterCategory(val, "Pembayaran Utang")):listExpense.filter((val) => filterCategory(val, "Pembayaran Utang"))
+    const pemberianUtangList = isFilter?filteredList.filter((val) => filterCategory(val, "Pemberian Utang")):listExpense.filter((val) => filterCategory(val, "Pemberian Utang"))
+    const tabunganInvestasiList = isFilter?filteredList.filter((val) => filterCategory(val, "Tabungan atau Investasi")):listExpense.filter((val) => filterCategory(val, "Tabungan atau Investasi"))
+    const pembelianAlatList = isFilter?filteredList.filter((val) => filterCategory(val, "Pembelian Alat dan Mesin")):listExpense.filter((val) => filterCategory(val, "Pembelian Alat dan Mesin"))
+    const pengeluaranLainList = isFilter?filteredList.filter((val) => filterCategory(val, "Pengeluaran Lain-Lain")):listExpense.filter((val) => filterCategory(val, "Pengeluaran Lain-Lain"))
+    const pembelianStokList = isFilter?filteredList.filter((val) => filterCategory(val, "Pembelian Stok")):listExpense.filter((val) => filterCategory(val, "Pembelian Stok"))
+
+
+    const [isProfit, setIsProfit] = useState(true)
+    // const dombaCost = useSelector(state => state.stokReducer.listDomba)
+    // const pakanCost = useSelector(state => state.stokReducer.listPakan)
+    // const obatCost = useSelector(state => state.stokReducer.listObat)
+
+    // const kandangCost = useSelector(state => state.costReducer.listKandang)
+    // const pegawaiCost = useSelector(state => state.costReducer.listPegawai)
+    // const lahanCost = useSelector(state => state.costReducer.listLahan)
+
+    // const penjualan = useSelector(state => state.transactionsReducer.listSelling)
+    // const pembelian = useSelector(state => state.transactionsReducer.listPurchasing)
+
+    // const varCostReduce = (s,a) => {
+    //     return s + parseInt(a.jumlah)*parseInt(a.hargaBeli);
+    // }
+
+
+    // const totalBiayaDomba = dombaCost.reduce((s,a) => varCostReduce(s,a),0)
+    // const totalBiayaPakan = pakanCost.reduce((s,a) => varCostReduce(s,a),0)
+    // const totalBiayaObat = obatCost.reduce((s,a) => varCostReduce(s,a),0)
+
+    // const totalBiayaKandang = kandangCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.biayaBuat)},0)
+    // const totalBiayaPegawai = pegawaiCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.gaji)},0)
+    // const totalBiayaLahan = lahanCost.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.luas)},0)
+
+    // const totalPenjualan = penjualan.reduce((s,a) => {return s + parseInt(a.hargaJual)*parseInt(a.kuantitas)},0)
+    // const totalPembelian = pembelian.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.kuantitas)},0)
+
+
+
+    // const totalBiayaOverall = totalBiayaDomba + totalBiayaPakan + totalBiayaObat + totalBiayaKandang + totalBiayaPegawai + totalBiayaLahan;
+
+    // const screenWidth = Dimensions.get('window').width - 60;
+
+
+    //Total Cost
+    const totalExpense = parseInt(getSum(isFilter?filteredList:listExpense, "jumlah"))
+    const totalIncome = parseInt(getSum(isFilter?filteredListIncome:listIncome, "jumlah"))
+
+    const totalCostGaji = parseInt(getSum(gajiPekerjaList, "jumlah"))
+    const totalPembayaranUtang = parseInt(getSum(pembayaranUtangList, "jumlah"))
+    const totalPemberianUtang = parseInt(getSum(pemberianUtangList, "jumlah"))
+    const totalPembelianStok = parseInt(getSum(pembelianStokList, "jumlah"))
+    const totalPembelianAlat = parseInt(getSum(pembelianAlatList, "jumlah"))
+    const totalPembelianLain = parseInt(getSum(pengeluaranLainList, "jumlah"))
+    const totalTabunganInvestasi = parseInt(getSum(tabunganInvestasiList, "jumlah"))
+
+
+    //Setting array category
+    const [ listCat, setListCat ] = useState([])
+    const [ objCategory , setObjCategory ] = useState({
+        category:'',
+        jumlah: ''
+    })
+
+    //Total Selling Product
+    const sellingProductList = isFilter?filteredListIncome.filter(function (el) {
+       
+        return el.kategori == "Penjualan"
+    
+    }):listIncome.filter(function (el) {
+       
+            return el.kategori == "Penjualan"
+        
+    })
+    const totalSellingProduct = parseInt(getSum(sellingProductList, "jumlah"))
+
+    //Total Var Cost
+    const totalVarCost = isFilter?filteredList.filter(function (val) {
+        return val.kategori == "Gaji Pekerja" || val.kategori == "Pembelian Stok"
+    }):listExpense.filter(function (val) {
+        return val.kategori == "Gaji Pekerja" || val.kategori == "Pembelian Stok"
+    })
+
+    const varCost = parseInt(getSum(totalVarCost, "jumlah"))
+
+    const arusKas = totalSellingProduct - varCost
+    const profit = totalIncome - (totalExpense);
+
+    const [ showMore, setShowMore ] = useState(false)
+    const [ slice, setSlice ] = useState(3)
+
+
+    const sortData = listExpense.sort((a, b) => {
+        let bd = b.jumlah;
+        let ad = a.jumlah;
+        return bd - ad;
+      });
+
+    const [isLoading,setIsLoading ] = useState(true)
+
+
+    //Setting Range Tanggal
+    const [ selectDate, setSelectDate ] = useState({
+        fromDate : '',
+        toDate: ''
+      })
+      
+    //Check if ToDate > FromDate
+    const [ showTanggal, setShowTanggal ] = useState(false)
+    const checkingDate = (fromDate, toDate ) => {
+        console.log({fromDate, toDate})
+        let a = new Date(fromDate)
+        let b = new Date(toDate)
+        if( a > b ) {
+            
+            setIsDateError(true)
+            Alert.alert( "Perhatian!", "Tanggal Dari Harus Lebih Dari Tanggal Sampai", [{ text: "Reset Tanggal", onPress: () => {
+                setIsDateError(false)
+                setSelectDate({
+                    fromDate : '',
+                    toDate: ''
+                  }) }
+            }])
+            console.log("Salah Tanggal")
+        } else if(fromDate == '' || toDate == '') {
+            console.log("wah")
+            Alert.alert( "Perhatian!", "Silakan Isi Tanggal Terlebih Dahulu.")
+        } else 
+        {
+            console.log("aman")
+            setIsDateError(false)
+        }
+
+    }
+    const [ isDateError, setIsDateError ] = useState(false)
+
+    
+
     //Filter Functions
     const filterFunction = (filterBy, array, func) => {
         let res = filterBy[0]['sortBy']
         let today = new Date()
         let thisMonth = today.getMonth() 
         let thisYear = today.getFullYear()
-      
+        console.log(thisMonth)
+        console.log(thisYear)
 
         let newList = array.filter((item, i) => {
             if( res == 'Hari Ini') {
@@ -219,7 +241,7 @@ export default function LaporanScreen() {
                 let itemTanggal = new Date(item.tanggal)
                 let month = itemTanggal.getMonth()
                 let year = itemTanggal.getFullYear()
-                
+                console.log(month)
                 return month  == thisMonth && year == thisYear
                 
                
@@ -230,7 +252,6 @@ export default function LaporanScreen() {
             return []
         })
         func(newList)
-        ToastAndroid.show(`Filter Berdasarkan ${res}`, ToastAndroid.SHORT)   
     }
 
     
@@ -245,7 +266,13 @@ export default function LaporanScreen() {
         setIsFilter(false)
         setFilterBy()
         setFilteredList([])
-        setFilterList(startVal)        
+        setFilteredListIncome([])
+        setFilterList(startVal)   
+        setSelectDate({
+            fromDate : '',
+            toDate: ''
+          })      
+        setShowTanggal(false)
     }
 
 
@@ -574,7 +601,7 @@ export default function LaporanScreen() {
     useEffect(() => {
         console.log('jalankan isprofit')
         checkProfit()
-    },[profit])
+    },[profit, arusKas])
 
     function objToDate (obj) {
         let result = new Date(0);
@@ -607,12 +634,28 @@ export default function LaporanScreen() {
             <StatusBar style='auto' />
             <ProfileHeader navigation={navigation}/>
             <View style={styles.upperWrapper}>
-                <View style={{justifyContent: 'center', alignItems: 'center', flexDirection:'row', marginRight: 18}}>
-                    <Text style={{fontSize: 18, }}>Pilih Periode</Text>
-                    <TouchableOpacity style={{marginLeft: 5}} onPress={() => setFilterVisible(!filterVisible)}>
-                        <MaterialIcons name="filter-list" size={30} color="black" />
-                    </TouchableOpacity>
-                </View>              
+                   
+         
+                    {
+                        isFilter? 
+                        <View style={{flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection:'row' }}>
+                            <Text style={{fontSize: 16, }}>Filter Berdasarkan {filterBy[0]['sortBy']} </Text>
+                            <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={() => {
+                                resetFilter()
+                                }}>
+                                <MaterialIcons name="clear" size={24} color="black" />
+                            </TouchableOpacity>
+                        </View>    : 
+                        <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection:'row' }}>
+                    
+                            <Text style={{fontSize: 16, }}>Pilih Periode</Text>
+                            <TouchableOpacity style={{marginLeft: 5}} onPress={() => setFilterVisible(!filterVisible)}>
+                                <MaterialIcons name="filter-list" size={24} color="black" />
+                            </TouchableOpacity>
+                        </View>    
+                        
+                    }
+                              
             </View>
             <View style={styles.componentContainer}>
                 <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrencyWithoutStyle(profit)} profit={formatToCurrencyWithoutStyle(arusKas)}/>
@@ -621,13 +664,8 @@ export default function LaporanScreen() {
                 { listExpense.length > 0? 
                 <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', position: 'relative', bottom: 0}}>
                     
-                    <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>
-                        {isFilter? <TouchableOpacity onPress={() => {
-                            resetFilter()
-                            }}>
-                                        <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Hapus Filter</Text>
-                                    </TouchableOpacity>:
-                        <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>}
+                    <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>         
+                        <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>
                     </View>
                     {isLoading ? 
                     <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', justifyContent:'center'}}>
@@ -643,48 +681,14 @@ export default function LaporanScreen() {
                     })}  */}
 
                     {/** Category List **/}
-                    {   
-                        
-                        !isFilter && filteredList.length == 0?
+                   
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembayaranUtang} category={'Pembayaran Utang'}/>
-                        :null
-                    }
-                    {   
-                        
-                        !isFilter && filteredList.length == 0?
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianLain} category={'Pengeluaran Lain - lain'}/>
-                        :null
-                    }
-                    {   
-                        
-                        !isFilter && filteredList.length == 0?
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianAlat} category={'Pembelian Alat dan Mesin'}/>
-                        :null
-                    }
-                    {   
-                        
-                        !isFilter && filteredList.length == 0?
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianStok} category={'Pembelian Stok'}/>
-                        :null
-                    }
-                    {   
-                        
-                        !isFilter && filteredList.length == 0?
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalPemberianUtang} category={'Pemberian Utang'}/>
-                        :null
-                    }
-                    {   
-                        
-                        !isFilter && filteredList.length == 0?
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalCostGaji} category={'Gaji Pekerja'}/>
-                        :null
-                    }
-                    {   
-                        
-                        !isFilter && filteredList.length == 0?
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalTabunganInvestasi} category={'Tabungan dan Investasi'}/>
-                        :null
-                    }
 
                    
                     {/* { !showMore && listExpense.length > 3 && !isFilter? 
@@ -707,47 +711,30 @@ export default function LaporanScreen() {
                     <Text style={[styles.textPengeluaran]}>Tidak Ada Pengeluaran</Text>
                 </View>}
 
-                {
+                {/* {
                     isFilter && filteredList < 1 ? 
                         <View style={{flex: 1, height: '100%', width: windowWidth, justifyContent:'center', alignItems:'center', marginBottom: windowHeigth*.2, paddingHorizontal: 10}}>
                             <Text style={[styles.textPengeluaran, {textAlign: 'center'}]}>Tidak Pengeluaran pada Periode Ini</Text>
                         </View>
                     : null
-                }
+                } */}
 
             
             
                 
                 <CustomButton onPress={() => {
-                    // let testDate = "2022-09-01"
-                    // let today = new Date()
-                    // let thisDate = new Date(testDate)
-                    // let thisMonth = today.getMonth()
-                    // let thisMonth2 = thisDate.getMonth()
-                    // console.log(pembayaranUtangList)
-                    // console.log(totalPembayaranUtang)
-                    function groupByKey(array, key) {
-                        return array
-                          .reduce((hash, obj) => {
-                            if(obj[key] === undefined) return hash; 
-                            return Object.assign(hash, { [obj[key]]:( hash[obj[key]] || [] ).concat(obj)})
-                          }, {})
-                     }
-                     
-                     
-                     var cars = [{'make':'audi','model':'r8','year':'2012'},{'make':'audi','model':'rs5','year':'2013'},{'make':'ford','model':'mustang','year':'2012'},{'make':'ford','model':'fusion','year':'2015'},{'make':'kia','model':'optima','year':'2012'}];
-                     const obj = {
-                        sum: function (a, b) {
-                          return a + b;
-                        },
-                      };
-                      setFilteredListIncome([])
-                    //   filterFunctionIncome()
-                      console.log(filterBy); 
-                      console.log(filteredListIncome); 
+                    // console.log(isFilter)
+                    // console.log(filteredList.filter((val) => filterCategory(val, "Pembayaran Utang")))
+                    // console.log({totalPembayaranUtang})
+                    console.log(totalIncome)
+                    console.log(totalExpense)
+                
+                    // console.log(listExpense.filter((val) => filterCategory(val, "Pembayaran Utang")))
+                    // console.log(filteredList.filter((val) => filterCategory(val, "Pembayaran Utang")))
+                    // console.log(isFilter?filteredList:listExpense.filter((val) => filterCategory(val, "Pembayaran Utang")))
                      
                 } }/>
-                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction} listExpense={sortData} listIncome={listIncome} setFilteredList={setFilteredList} setFilteredListIncome={setFilteredListIncome}/>
+                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction} listExpense={sortData} listIncome={listIncome} setFilteredList={setFilteredList} setFilteredListIncome={setFilteredListIncome} resetFilter={resetFilter} showTanggal={showTanggal} setShowTanggal={setShowTanggal} />
             
                     
             
@@ -785,6 +772,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop:windowHeigth*.13,
         marginHorizontal: 10,
-        
+        paddingHorizontal: 18
     }
 })

@@ -9,7 +9,7 @@ const ExpenseChart = ({ totalExpense, totalCategory, category}) => {
     <View style={styles.container}>
         <View style={styles.upperWrapper}>
             <Text>{category}</Text>
-            <Text>{value}%</Text>
+            <Text>{isNaN(value)? "0" : value+"%"}</Text>
         </View>
         <View style={[styles.progressWrapper, { width:`${value}%`}, value > 50? {backgroundColor: "red"}:{backgroundColor:"#43B88E"}]} />
     </View></View>
