@@ -722,18 +722,13 @@ export default function LaporanScreen() {
             
             
                 
-                <CustomButton onPress={() => {
-                    // console.log(isFilter)
-                    // console.log(filteredList.filter((val) => filterCategory(val, "Pembayaran Utang")))
-                    // console.log({totalPembayaranUtang})
+                {/* <CustomButton onPress={() => {
+
                     console.log(totalIncome)
                     console.log(totalExpense)
-                
-                    // console.log(listExpense.filter((val) => filterCategory(val, "Pembayaran Utang")))
-                    // console.log(filteredList.filter((val) => filterCategory(val, "Pembayaran Utang")))
-                    // console.log(isFilter?filteredList:listExpense.filter((val) => filterCategory(val, "Pembayaran Utang")))
+
                      
-                } }/>
+                } }/> */}
                 <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction} listExpense={sortData} listIncome={listIncome} setFilteredList={setFilteredList} setFilteredListIncome={setFilteredListIncome} resetFilter={resetFilter} showTanggal={showTanggal} setShowTanggal={setShowTanggal} />
             
                     
