@@ -102,11 +102,11 @@ const TransactionScreen = () => {
                     }}>
                       <MaterialIcons name="search" size={30} color="black" />
                     </TouchableOpacity>    
-                    <TouchableOpacity  onPress={() => {
+                    {/* <TouchableOpacity  onPress={() => {
                       setFilterVisible(!filterVisible)
                     }}>
                        <MaterialIcons name="filter-list" size={30} color="black" />
-                    </TouchableOpacity>    
+                    </TouchableOpacity>     */}
                    
                 </View>: null}
                 <TopTabTransaction isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isLoading={isLoading} setSearchItems={setSearchItems} setTransaction={setTransaction} setIsSearch={setIsSearch} setSearchKeyword={setSearchKeyword}/>
@@ -114,7 +114,7 @@ const TransactionScreen = () => {
             </View>    
             <ModalAddTransaction setModalTransaction={setModalTransaction}  modalTransaction={modalTransaction} topTabTransactionFocus={topTabTransactionFocus}/>
             <CustomButton onPress={() => setModalTransaction(!modalTransaction)}/>
-            <FilterIncomeModal />
+            <FilterIncomeModal filterVisible={filterVisible} setFilterVisible={setFilterVisible}/>
         </View>
     )
 }

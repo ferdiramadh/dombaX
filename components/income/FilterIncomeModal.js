@@ -5,9 +5,9 @@ import { PhotoContext } from '../../context/PhotoProfileContext';
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup';
 import { FilterTransactionContext } from '../../context/FilterTransactionContext';
 
-const FilterIncomeModal = () => {
+const FilterIncomeModal = ({filterVisible, setFilterVisible}) => {
   const { testStyle } = useContext(PhotoContext)
-  const {filterVisible, setFilterVisible, setIsFilter, setFilterBy, isFilter,filterList} = useContext(FilterTransactionContext)
+  const { setIsFilter, setFilterBy, isFilter,filterList} = useContext(FilterTransactionContext)
 
   return (
       <Modal
