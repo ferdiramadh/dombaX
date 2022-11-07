@@ -88,6 +88,7 @@ const RegisterProfileScreen = ({navigation}) => {
 
   const onSkip = () => {
       console.log("onskip yeuh")
+      navigation.navigate('Onboarding')
   }
 
     return (
