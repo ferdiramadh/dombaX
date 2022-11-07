@@ -4,8 +4,10 @@ import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 
 const ExpenseChart = ({ totalExpense, totalCategory, category}) => {
   const value = (parseInt(totalCategory)/totalExpense*100).toFixed(2)
+//   console.log("totalCat " + totalCategory)
+//   console.log("totalExp "+ totalExpense)
   return (
-    <View style={styles.c}>
+    <View style={[styles.c, isNaN(value)|| value == '0.00'?{display: 'none'}: null]}>
     <View style={styles.container}>
         <View style={styles.upperWrapper}>
             <Text>{category}</Text>

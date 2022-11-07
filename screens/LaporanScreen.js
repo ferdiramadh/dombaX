@@ -627,7 +627,7 @@ export default function LaporanScreen() {
         return `#${randomColor}`;
       };
 
-      
+    console.log(filteredList)
     return (
       
         <View style={styles.container}>
@@ -661,7 +661,7 @@ export default function LaporanScreen() {
                 <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrencyWithoutStyle(profit)} profit={formatToCurrencyWithoutStyle(arusKas)}/>
             </View>
             
-                { listExpense.length > 0? 
+                { (listExpense.length > 0  && !isFilter)|| (filteredList.length > 0 && isFilter) ? 
                 <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', position: 'relative', bottom: 0}}>
                     
                     <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>         
@@ -672,24 +672,15 @@ export default function LaporanScreen() {
                         <ActivityIndicator size="small" color="orange" />
                     </View>:
                     <ScrollView showsVerticalScrollIndicator={false}>
-
-                    {/* hvhvh*/}
-                    {/* { !isFilter && filteredList.length == 0?sortData.map((item, i) => {
-                            return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
-                    }).slice(0, slice): filteredList.map((item, i) => {
-                        return <ExpenseChart item={item} key={item.id} totalExpense={totalExpense}/>
-                    })}  */}
-
                     {/** Category List **/}
-                   
-                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembayaranUtang} category={'Pembayaran Utang'}/>
-                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianLain} category={'Pengeluaran Lain - lain'}/>
-                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianAlat} category={'Pembelian Alat dan Mesin'}/>
+          
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianStok} category={'Pembelian Stok'}/>
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianAlat} category={'Pembelian Alat dan Mesin'}/>
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembayaranUtang} category={'Pembayaran Utang'}/>
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalPemberianUtang} category={'Pemberian Utang'}/>
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalCostGaji} category={'Gaji Pekerja'}/>
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalTabunganInvestasi} category={'Tabungan dan Investasi'}/>
-
+                            <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianLain} category={'Pengeluaran Lain - lain'}/>
                    
                     {/* { !showMore && listExpense.length > 3 && !isFilter? 
                     <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginTop: 5}} onPress={() => {
@@ -699,12 +690,12 @@ export default function LaporanScreen() {
                     }}>
                         <Text style={{fontSize: 18,color: '#000' }}>Lihat Lainnya</Text>
                     </TouchableOpacity>: null} */}
-                    {listExpense.length > 3 && showMore?<TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginVertical: 10}} onPress={() => {
+                    {/* {listExpense.length > 3 && showMore?<TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginVertical: 10}} onPress={() => {
                         setShowMore(!showMore)
                         setSlice(3)
                     }}>
                         <Text style={{fontSize: 18,color: '#000' }}>Tutup</Text>
-                    </TouchableOpacity>:null}
+                    </TouchableOpacity>:null} */}
                     </ScrollView>}
                 </View>: 
                 <View style={{flex: 1, height: '30%', width: windowWidth, marginTop: 5, justifyContent:'center', alignItems:'center'}}>
