@@ -27,25 +27,19 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
   };
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    let day = currentDate.getDate()
-    let month = currentDate.getMonth() + 1
-    let year = currentDate.getFullYear()
-    let tanggal = day + '-' + month + '-' + year
-    // console.log(new Date(currentDate.toISOString().split('T')[0]))
     if(selectedDate && isFromDate){
 
       setShow(false);
       setSelectDate((prevState) => ({
         ...prevState,
-        fromDate: currentDate.toISOString().split('T')[0]
+        fromDate: selectedDate.toISOString().split('T')[0]
       }))
        
     } else if(selectedDate && !isFromDate){
       setShow(false);
       setSelectDate((prevState) => ({
         ...prevState,
-        toDate: currentDate.toISOString().split('T')[0]
+        toDate: selectedDate.toISOString().split('T')[0]
       }))
     } else {
         console.log("eweuh")
@@ -54,18 +48,6 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
     }
   };
 
-  //Checking Date
-  // useEffect(() => {
-  //   console.log('Yok Cek')
-  //   if(selectDate.fromDate !== '' || selectDate.toDate !== '') {
-  //     console.log('Cek Tanggal Nih')
-  //     checkingDate(selectDate.fromDate, selectDate.toDate)
-  //   }
-
-  // }, [selectDate])
-
-
-  //function when selecting the checkboxes
 
   const checkboxHandler = (value, index) => {
     const newValue = filterList.map((checkbox, i) => {
