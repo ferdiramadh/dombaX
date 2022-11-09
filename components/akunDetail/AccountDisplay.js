@@ -25,7 +25,7 @@ const AccountDisplay = ({navigation}) => {
      
         <View style={styles.upperContent}>
         {isLoading?<ActivityIndicator size="small" color="orange" />: <View>
-          {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={200} color="black" />}</View>
+          {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={100} color="black" />}</View>
         }
           <View style={styles.photoOptionsWrap}>
             {/* <TouchableOpacity  onPress={() => pickCamera("Profile", profileData.id, setIsLoading, "profile", setPercent)} style={styles.photoButton}>
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
    
   },
   photoProfileIcon:{
-      width:120,
-      height:120,
+      width:100,
+      height:100,
       borderRadius:60
   },
   btnEdit:{

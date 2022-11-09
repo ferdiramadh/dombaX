@@ -4,33 +4,41 @@ import { windowWidth } from '../../utils/DimensionSetup'
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
-
+    
     const [ isShowPass, setIsShowPass ] = useState(false)
   return (
     <View style={styles.container}>
     
       <View style={{width:'100%',alignItems:'center', }}>
+            {profileData.namaDepan? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.namaDepan}</Text>
-            </View>
+            </View> : null }
+            {profileData.namaBelakang ? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.namaBelakang}</Text>
-            </View>
+            </View> : null }
+            {profileData.whatsApp? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.whatsApp}</Text>
-            </View>
+            </View> : null }
+            {profileData.email? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.email}</Text>
-            </View>
+            </View> : null }
+            {profileData.jenisKelamin? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.jenisKelamin}</Text>
-            </View>
+            </View> : null }
+            {profileData.tanggalLahir? 
             <View style={styles.wrapper}>
-                <Text style={styles.text}>{profileData.tanggalLahir}</Text>
-            </View>
+                <Text style={styles.text}>{profileData.tanggalLahir.slice(4)}</Text>
+            </View> : null }
+            {profileData.domisili? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.domisili}</Text>
-            </View>
+            </View> : null}
+            {profileData.password? 
             <View style={[styles.wrapper, {position:'relative'}]}>
                 <TextInput 
                     style={{color:'#FFF'}}
@@ -42,7 +50,7 @@ export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
                     { isShowPass? <MaterialIcons name="cancel" size={24} color="#FFF" />:
                     <MaterialIcons name="remove-red-eye" size={24} color="#FFF" />}
                 </TouchableOpacity>
-            </View>
+            </View> : null}
             <TouchableOpacity style={styles.btnSave} onPress={() => setIsEdit(!isEdit)}>
                 <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'white'}}>Ubah</Text>                  
             </TouchableOpacity>
