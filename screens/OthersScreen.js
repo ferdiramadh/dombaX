@@ -18,6 +18,7 @@ const OthersScreen = () => {
     const signOut = () => {
         firebase.auth().signOut().then(() => {
             // Sign-out successful.
+            dispatch({type:'DELETE_PROFILE_DATA'})
             dispatch({type:'SIGN_OUT_CLEAR_DATA'})
             dispatch({type:'LOGOUT'})
             console.log('Sign Out nih')
