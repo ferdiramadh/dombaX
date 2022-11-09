@@ -3,8 +3,16 @@ import React from 'react';
 import ProfileHeader from '../components/laporan/ProfileHeader';
 import firebase from 'firebase'
 import { useDispatch } from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation, StackActions, CommonActions } from '@react-navigation/native';
 
-const OthersScreen = ({navigation}) => {
+
+
+const OthersScreen = () => {
+
+    const navigation = useNavigation();
+    console.log(navigation.getState())
+
     
     const dispatch = useDispatch();
     const signOut = () => {
@@ -18,6 +26,15 @@ const OthersScreen = ({navigation}) => {
             console.log(error)
           });
     }
+    const clearAll = async () => {
+        try {
+          await AsyncStorage.clear()
+        } catch(e) {
+          // clear error
+        }
+      
+        console.log('Done.')
+      }
   return (
     <View style={styles.container}>
         <ProfileHeader navigation={navigation}/>
@@ -28,10 +45,11 @@ const OthersScreen = ({navigation}) => {
             <TouchableOpacity style={styles.contentWrapper} onPress={() => navigation.navigate('BusinessProfile')}>
                 <Text style={styles.text}>Profil Bisnis</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.contentWrapper} onPress={() => null}>
+            {/* <TouchableOpacity style={styles.contentWrapper} onPress={() => null}>
                 <Text style={styles.text}>Bantuan</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.contentWrapper} onPress={() => {
+                clearAll()
                 signOut()
                 navigation.replace("Login")
             }}>
