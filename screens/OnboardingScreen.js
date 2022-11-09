@@ -57,7 +57,7 @@ const OnboardingScreen = ({navigation}) => {
                 backgroundColor: '#fff',
                 image: <Image source={require('../assets/images/onboard_1d.png')} style={{width:420,height:420}} />,
                 // image: <CustomImageContainer title='Smart Stok' img={require('../assets/images/onboard_1d.png')} styleImg={{width:400, height: 400}}/>,
-                title: 'Smart Stok',
+                title: 'Kelola Stok',
                 subtitle: 'Ketahui stok produk dan atur setiap unit peternakan domba Kamu sebanyak apapun dari satu tempat.',
                 titleStyles:{marginTop:-50}
                 },
