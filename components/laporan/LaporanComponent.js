@@ -16,14 +16,14 @@ const LaporanComponent = (props) => {
                 {isLoading ? <ActivityIndicator size="small" color="orange" />:
                 <View>
                     <Text style={styles.upTitle}>{props.title1}</Text>
-                    <Text style={[styles.saldoText, parseInt(props.saldo["props"].value) > 0 ?{color:'#0EFA33'}:{color:'red'}]}>{props.saldo}</Text>
+                    <Text style={[styles.saldoText, parseInt(props.saldo["props"].value) > 0 ?{color:'#43B88E'}:{color:'red'}]}>{props.saldo}</Text>
                 </View>     }
             </View>
             <View style={styles.sectionContainer}>
             {isLoading ? <ActivityIndicator size="small" color="orange" />:
                 <View>
                     <Text style={styles.upTitle}>{ props.title2 ? "Untung" : "Rugi" }</Text>
-                    <Text style={[styles.saldoText,  parseInt(props.profit["props"].value) > 0 ?{color:'#0EFA33'}:{color:'red'}]}>{props.profit}</Text>
+                    <Text style={[styles.saldoText,  parseInt(props.profit["props"].value) > 0 ?{color:'#43B88E'}:{color:'red'}]}>{props.profit}</Text>
                 </View>}
             </View>
         </View>
