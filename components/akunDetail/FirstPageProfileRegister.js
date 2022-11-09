@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity , TextInput,BackHandler,Alert, ActivityIndicator} from 'react-native'
 import React from 'react';
 
-const FirstPageProfileRegister = ({handleChange,handleBlur, values}) => {
+const FirstPageProfileRegister = ({handleChange,handleBlur, values, errors, isValid}) => {
   return (
     <View>
             <TextInput 
@@ -9,9 +9,9 @@ const FirstPageProfileRegister = ({handleChange,handleBlur, values}) => {
                 placeholder="Nama Depan"
                 onChangeText={handleChange('namaDepan')}
                 onBlur={handleBlur('namaDepan')}
-                value={values.namaDepan}          
-                
+                value={values.namaDepan}                        
             />
+            { errors.namaDepan && <Text style={{fontSize: 14, color: "red"}}>{errors.namaDepan}</Text>}
             <TextInput 
                 style={styles.input}
                 placeholder="Nama Belakang"
@@ -33,6 +33,7 @@ const FirstPageProfileRegister = ({handleChange,handleBlur, values}) => {
                 onBlur={handleBlur('domisili')}
                 value={values.domisili}     
             />
+            { errors.domisili && <Text style={{fontSize: 14, color: "red"}}>{errors.domisili}</Text>}
             <TextInput 
                 style={styles.input}
                 placeholder="Tanggal Lahir"

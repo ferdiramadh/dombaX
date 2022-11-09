@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import { Formik } from 'formik';
 import FirstPageProfileRegister from '../components/akunDetail/FirstPageProfileRegister';
 import SecondPageProfileRegister from '../components/akunDetail/SecondPageProfileRegister';
+import * as yup from 'yup'
 
 const RegisterProfileScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -49,6 +50,11 @@ const RegisterProfileScreen = ({navigation}) => {
         
     
   }
+
+    const formValidation = yup.object().shape({
+        namaDepan: yup.string().required("Harap Isi Tanggal Nama Anda"),
+        domisili: yup.string().required("Harap Isi Domisili Anda"),
+    });
 
 
    
@@ -94,25 +100,26 @@ const RegisterProfileScreen = ({navigation}) => {
     return (
         <Formik
         initialValues={profileData}
+        validationSchema={formValidation}
         onSubmit={(values, actions) => {  
             console.log(values)  
             addProfile(values)
             navigation.navigate('Onboarding')
         }}
       >
-           {({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => (
+           {({ handleChange, handleBlur, handleSubmit, values,setFieldValue, errors, isValid }) => (
             <View style={styles.container}>
                 <Image style={styles.imgIcon} source={require('../assets/images/Kiwi_Categories-Icon.png')}/>
                 { error? <Text style={{color:'red'}}>{error}</Text>:null}
                 {
-                    nextPage? <SecondPageProfileRegister handleBlur={handleBlur} handleChange={handleChange} values={values} />:<FirstPageProfileRegister handleBlur={handleBlur} handleChange={handleChange} values={values} />
+                    nextPage? <SecondPageProfileRegister handleBlur={handleBlur} handleChange={handleChange} values={values} errors={errors} isValid={isValid}/>:<FirstPageProfileRegister handleBlur={handleBlur} handleChange={handleChange} values={values} errors={errors} isValid={isValid}/>
                 }
                 
 
                 <TouchableOpacity onPress={() => setNextPage(!nextPage)} style={styles.btn}>
                     <Text>{nextPage?"Sebelumnya":"Selanjutnya"}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={nextPage?handleSubmit:onSkip} style={styles.btn} >
+                <TouchableOpacity onPress={nextPage?handleSubmit:onSkip} style={[styles.btn, nextPage?{}:{display: 'none'}]} >
                     <Text>{nextPage?"Selesai":"Skip"}</Text>
                 </TouchableOpacity>
                 
