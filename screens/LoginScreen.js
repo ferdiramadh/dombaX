@@ -2,6 +2,7 @@ import firebase from '../Firebaseconfig'
 import React, {useState} from 'react'
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity,ActivityIndicator} from 'react-native'
 import {useDispatch} from 'react-redux'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({navigation}) => {
     const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const LoginScreen = ({navigation}) => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState('')
+    const [ testUser, setTestUser ] = useState("")
     
 
     const signIn = async() => {
@@ -18,6 +20,7 @@ const LoginScreen = ({navigation}) => {
             const respons = await firebase.auth().signInWithEmailAndPassword(email,password);
             const userObj = respons.user
             console.log(userObj)
+            storeData(userObj.uid)
             dispatch({type:'LOGIN',results:userObj})
             setEmail('')
             setPassword('')
@@ -30,6 +33,13 @@ const LoginScreen = ({navigation}) => {
             setIsLoading(false)
         },1000)
     }
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('@storage_Key', value)
+        } catch (e) {
+          // saving error
+        }
+      }
     if(isLoading){
         return(
           <View style={styles.container}>
@@ -53,10 +63,7 @@ const LoginScreen = ({navigation}) => {
                 onChangeText={setPassword}
                 secureTextEntry
             />
-            <TouchableOpacity onPress={
-                signIn
-                
-            } style={styles.btn}>
+            <TouchableOpacity onPress={signIn} style={styles.btn}>
                 <Text>Masuk</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Register')} >
