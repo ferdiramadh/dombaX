@@ -5,7 +5,6 @@ import { PieChart } from 'react-native-chart-kit'
 import LaporanComponent from '../components/laporan/LaporanComponent'
 import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../Firebaseconfig'
-import NumberFormat from 'react-number-format';
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native';
 import { windowHeigth, windowWidth } from '../utils/DimensionSetup'
@@ -14,13 +13,34 @@ import ExpenseChart from '../components/laporan/ExpenseChart'
 import { MaterialIcons } from '@expo/vector-icons';
 import FilterLaporanModal from '../components/laporan/FilterLaporanModal'
 import { formatToCurrencyWithoutStyle } from '../utils/FormatCurrency'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function LaporanScreen() {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const uid = useSelector(state => state.userReducer.uid)
 
+    //Get Uid From AsyncStorage
+    const uid = useSelector(state => state.userReducer.uid)
+    // const [ uid, setUid ] = useState()
+    // const uid = "moD0YtFRBxOv8Igw6ALSslh6RoA2"
+
+    const getData = async () => {
+        try {
+        const value = await AsyncStorage.getItem('@storage_Key')
+        if(value !== null) {
+            // setUid(value)
+            // populateAll()
+            console.log(value)         
+            console.log('ada data nih')
+            // setUid(value)
+            
+        } 
+        } catch(e) {
+        // error reading value
+        }
+    }
+    // console.log(uid)
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listExpense = transactionsData.listExpense
     const listIncome = transactionsData.listIncome
@@ -589,14 +609,23 @@ export default function LaporanScreen() {
     }
 
     useEffect(() => {
-        if(uid !== 'undefined'){  
+        getData()
+        if(uid){  
             console.log('Yeuh Useeffect')
-            populateAll()
+            // populateAll()
         } else {
             console.log('Eweuh UID')
         }
         
     },[])
+
+    useEffect(() => {
+        if(uid) {
+            populateAll()
+        }
+       
+      }, [uid])
+
 
     useEffect(() => {
         console.log('jalankan isprofit')
@@ -627,7 +656,9 @@ export default function LaporanScreen() {
         return `#${randomColor}`;
       };
 
-    console.log(filteredList)
+      function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
     return (
       
         <View style={styles.container}>
@@ -658,14 +689,16 @@ export default function LaporanScreen() {
                               
             </View>
             <View style={styles.componentContainer}>
-                <LaporanComponent title1='Saldo Akhir' title2={isProfit} saldo={formatToCurrencyWithoutStyle(profit)} profit={formatToCurrencyWithoutStyle(arusKas)}/>
+                <LaporanComponent title1='Saldo' title2={isProfit} saldo={formatToCurrencyWithoutStyle(profit)} profit={formatToCurrencyWithoutStyle(arusKas)}/>
             </View>
             
                 { (listExpense.length > 0  && !isFilter)|| (filteredList.length > 0 && isFilter) ? 
-                <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', position: 'relative', bottom: 0}}>
+                <View style={{flex:1,backgroundColor:'#FFFFFF', alignItems:'center', position: 'relative', bottom: 0}}>
                     
-                    <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, marginLeft: 50}}>         
-                        <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>
+                    <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, paddingHorizontal: '5%' }}>      
+                        <View style={{paddingHorizontal: 20,  width: windowWidth*.9}}> 
+                            <Text style={[styles.textPengeluaran,{textAlign:'left'}]}>Pengeluaran</Text>
+                        </View>                  
                     </View>
                     {isLoading ? 
                     <View style={{flex:1,backgroundColor:'#FFFFFF',  alignItems:'center', justifyContent:'center'}}>
@@ -714,11 +747,7 @@ export default function LaporanScreen() {
             
                 
                 {/* <CustomButton onPress={() => {
-
-                    console.log(totalIncome)
-                    console.log(totalExpense)
-
-                     
+                   console.log(uid)                    
                 } }/> */}
                 <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction} listExpense={sortData} listIncome={listIncome} setFilteredList={setFilteredList} setFilteredListIncome={setFilteredListIncome} resetFilter={resetFilter} showTanggal={showTanggal} setShowTanggal={setShowTanggal} />
             
