@@ -63,25 +63,25 @@ const OnboardingScreen = ({navigation}) => {
                 },
                 {
                 backgroundColor: '#fff',
-                image: <Image source={require('../assets/images/Wallet.png')} style={{width:420,height:420}} resizeMode='contain'/>,
+                image: <Image source={require('../assets/images/Wallet.png')} style={{width:280,height:280}} resizeMode='contain'/>,
                 // image: <CustomImageContainer title='Smart Finance' img={require('../assets/images/Wallet2.png')} styleImg={{width:300, height:300}}/>,
-                title: 'Smart Finance',
+                title: 'Atur Transaksi',
                 subtitle: 'Keuangan lebih rapi dan profesional tidak ada yang tercecer lagi.',
-                titleStyles:{marginTop:-50}
+                titleStyles:{fontSize:38, marginTop:-50}
                 },
                 {
                 backgroundColor: '#fff',
                 image: <Image source={require('../assets/images/Printer123.png')} />,
-                title: 'Invoice Generator',
+                title: 'Tagihan Otomatis',
                 subtitle: 'Buat, download, kirim atau cetak invoice sesuka Kamu, cegah penipuan di internal.',
                 titleStyles:{fontSize:40, marginTop:-50}
                 },
                 {
-                backgroundColor: '#fff',
-                image: <Image source={require('../assets/images/LapKeuangan.png')} />,
-                title: 'Laporan Interaktif',
-                subtitle: 'Lihat laporan arus kas, untung/rugi, dan informasi finansial lainnya dalam satu dashboard interaktif. ',
-                titleStyles:{fontSize:38, marginTop:-50}
+                    backgroundColor: '#fff',
+                    image: <Image source={require('../assets/images/LaporanInteraktif.png')} />,
+                    title: 'Laporan Interaktif',
+                    subtitle: 'Lihat laporan arus kas, untung/rugi, dan informasi finansial lainnya dalam satu dashboard interaktif. ',
+                    titleStyles:{fontSize:38, marginTop:-50}
                 },
                 {
                 backgroundColor: '#fff',
@@ -89,8 +89,7 @@ const OnboardingScreen = ({navigation}) => {
                 title: 'Aman dan Nyaman',
                 subtitle: 'Atur dan kembangkan bisnis Kamu lebih aman dalam satu aplikasi manajemen finansial khusus untuk peternak domba skala kecil dan menengah.',
                 titleStyles:{fontSize:38, marginTop:0}
-                },
-                
+                },              
             ]}
             containerStyles={{backgroundColor:'#fff',paddingHorizontal:20}}
             subTitleStyles={{fontSize:20, marginTop:300, fontWeight:'bold'}}
