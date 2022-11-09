@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff',
         position:'absolute',
         top:20,
-        // elevation:2
+        marginTop: 10,
     },
     wrapper:{
         flexDirection: 'row',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         borderRadius:30
     },
     wrapperProfileText: {
-        marginLeft: 5
+        marginLeft: 10
     },
     textCoorporateName:{
     fontSize: 16,
