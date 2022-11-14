@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 26,
         fontWeight:'700',
         fontFamily:'Inter',
-        color: '#43B88E'
+        color: '#EB3223'
     }, 
     loaderContainer:{
       flex:1,

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         flex:1,
         // justifyContent:'center',
         // alignItems:'center',
-        // backgroundColor:'purple',
+        backgroundColor:'#FFFFFF',
         width:'100%',
         // height: windowHeigth
        
@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
+        padding:10,
+        // backgroundColor:'cyan',
         width:'100%',     
     },
     text:{
