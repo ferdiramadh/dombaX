@@ -8,18 +8,22 @@ export default function DisplayBusinessProfile({ profileData, isEdit, setIsEdit 
     <View style={styles.container}>
     
       <View style={{width:'100%',alignItems:'center', }}>
+            {profileData.namaBisnis? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.namaBisnis}</Text>
-            </View>
+            </View> : null }
+            {profileData.posisi? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.posisi}</Text>
-            </View>
+            </View> : null }
+            {profileData.noHpBisnis? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.noHpBisnis}</Text>
-            </View>
+            </View> : null }
+            {profileData.alamatBisnis? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.alamatBisnis}</Text>
-            </View>
+            </View> : null }
         </View>
      
     </View>
