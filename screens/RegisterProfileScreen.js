@@ -117,12 +117,12 @@ const RegisterProfileScreen = ({navigation}) => {
                 
 
                 <TouchableOpacity onPress={() => setNextPage(!nextPage)} style={styles.btn}>
-                    <Text>{nextPage?"Sebelumnya":"Selanjutnya"}</Text>
+                    <Text style={{fontFamily:'Baloo', color: '#FFF'}}>{nextPage?"Sebelumnya":"Selanjutnya"}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={nextPage?handleSubmit:onSkip} style={[styles.btn, nextPage?{}:{display: 'none'}]} >
-                    <Text>{nextPage?"Selesai":"Skip"}</Text>
+                    <Text style={{fontFamily:'Baloo', color: '#FFF'}}>{nextPage?"Selesai":"Skip"}</Text>
                 </TouchableOpacity>
-                
+                {/* { errors && nextPage && <Text style={{fontSize: 14, color: "red", textAlign: 'center'}}>Cek Kembali Form Anda</Text>} */}
             </View>
         )}
         </Formik>
@@ -145,12 +145,10 @@ const styles = StyleSheet.create({
     btn:{
         width: 181,
         height: 40,
-        borderColor:'black',
         backgroundColor:'#ED9B83',
         borderRadius:10,
         justifyContent:'center',
         alignItems:'center',
-        borderWidth:2,
         marginBottom:10
     }
 })

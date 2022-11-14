@@ -41,8 +41,8 @@ const OnboardingScreen = ({navigation}) => {
             <TouchableOpacity onPress={() => {
                 navigation.navigate('Home')
                 
-            }} style={{width: 100, height: 40, backgroundColor:'#ED9B83', justifyContent:'center', alignItems:'center', borderRadius:10, marginHorizontal:5, borderWidth:2}}>
-                <Text style={{fontSize:18, fontWeight:'bold'}}>Masuk</Text>
+            }} style={{width: 100, height: 40, backgroundColor:'#ED9B83', justifyContent:'center', alignItems:'center', borderRadius:10, marginHorizontal:5}}>
+                <Text style={{fontSize:18, fontWeight:'bold', color: '#FFF', fontFamily:'Baloo'}}>Masuk</Text>
             </TouchableOpacity>
         )
     }

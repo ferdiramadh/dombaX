@@ -11,7 +11,7 @@ const FirstPageProfileRegister = ({handleChange,handleBlur, values, errors, isVa
                 onBlur={handleBlur('namaDepan')}
                 value={values.namaDepan}                        
             />
-            { errors.namaDepan && <Text style={{fontSize: 14, color: "red"}}>{errors.namaDepan}</Text>}
+            { errors.namaDepan && <Text style={{fontSize: 14, color: "red", textAlign: 'center'}}>{errors.namaDepan}</Text>}
             <TextInput 
                 style={styles.input}
                 placeholder="Nama Belakang"
@@ -33,7 +33,7 @@ const FirstPageProfileRegister = ({handleChange,handleBlur, values, errors, isVa
                 onBlur={handleBlur('domisili')}
                 value={values.domisili}     
             />
-            { errors.domisili && <Text style={{fontSize: 14, color: "red"}}>{errors.domisili}</Text>}
+            { errors.domisili && <Text style={{fontSize: 14, color: "red", textAlign: 'center'}}>{errors.domisili}</Text>}
             <TextInput 
                 style={styles.input}
                 placeholder="Tanggal Lahir"
