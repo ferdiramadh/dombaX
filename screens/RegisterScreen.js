@@ -71,10 +71,11 @@ const RegisterScreen = ({navigation}) => {
                 secureTextEntry
             />
             <TouchableOpacity onPress={signUp} style={styles.btn}>
-                <Text>Daftar</Text>
+                <Text style={{fontFamily:'Baloo', color: '#FFF'}}>Daftar</Text>
             </TouchableOpacity>
+            <Text style={{marginVertical: 5, fontFamily:'Inter'}}>Sudah Punya Akun?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')} >
-                <Text>Masuk</Text>
+                <Text style={{ fontFamily:'Inter', fontWeight: '700', color: '#ED9B83'}}>Masuk</Text>
             </TouchableOpacity>
             
         </View>
@@ -106,12 +107,10 @@ const styles = StyleSheet.create({
     btn:{
         width: 181,
         height: 40,
-        borderColor:'black',
         backgroundColor:'#ED9B83',
         borderRadius:10,
         justifyContent:'center',
         alignItems:'center',
-        borderWidth:2,
         marginBottom:10
     }
 })
