@@ -79,12 +79,12 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
                             {item.tipe == 'domba' && item.kategoriHewanTernak != ''?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>:null}
-                            <Text style={styles.infoData}>Harga Beli: {formatToCurrencyLight(parseInt(item.hargaBeli))}</Text>
-                            {item.tipe == 'domba'?<Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>:null}
-                            {item.tipe == 'tambahproduk'?<Text style={styles.infoData}>Kategori: {item.kategori}</Text>:null}
-                            {item.tipe == 'pakan' || item.tipe == 'obat'?<Text style={styles.infoData}>Produsen: {item.merk}</Text>:null}
-                            {item.tipe == 'domba'?<Text style={styles.infoData}>Usia : {item.usia} Bulan</Text>:null}
-                            {item.tipe == 'pakan' || item.tipe == 'obat'?<Text style={styles.infoData}>Kadaluarsa : {item.kadaluarsa}</Text>:null}
+                            {item.hargaBeli?<Text style={styles.infoData}>Harga Beli: {formatToCurrencyLight(parseInt(item.hargaBeli))}</Text>: null}
+                            {item.tipe == 'domba' && item.berat?<Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>:null}
+                            {item.tipe == 'tambahproduk' && item.kategori?<Text style={styles.infoData}>Kategori: {item.kategori}</Text>:null}
+                            {(item.tipe == 'pakan' || item.tipe == 'obat') && item.merk?<Text style={styles.infoData}>Produsen: {item.merk}</Text>:null}
+                            {item.tipe == 'domba' && item.usia?<Text style={styles.infoData}>Usia : {item.usia} Bulan</Text>:null}
+                            {(item.tipe == 'pakan' || item.tipe == 'obat' )&& item.kadaluarsa?<Text style={styles.infoData}>Kadaluarsa : {item.kadaluarsa}</Text>:null}
                         </View>
                         <View style={styles.rightDombaInfo}>
                             <Text style={styles.infoData}></Text>
