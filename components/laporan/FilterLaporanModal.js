@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
       width: windowWidth *.8,
     },
     btnPilih: {
-      padding: 5,
+      padding: 10,
       flexDirection: 'row',
       justifyContent: 'space-around',
       width: windowWidth *.8,
