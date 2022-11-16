@@ -23,24 +23,28 @@ const DombaStokSection = () => {
 
     const [ isFilter, setIsFilter ] = useState(false)
     const [ filterItems, setFilterItems ] = useState([])
-    const filterList = [
+    const [filterList, setFilterList ] = useState([
       {
         id: 1,
         sortBy: 'Stok Terendah',
+        isChecked: false,
       },
       {
         id: 2,
         sortBy: 'Stok Tertinggi',
+        isChecked: false,
       },
       {
         id: 3,
         sortBy: 'Harga Beli Terendah',
+        isChecked: false,
       },
       {
         id: 4,
         sortBy: 'Harga Beli Tertinggi',
+        isChecked: false,
       }
-    ]
+    ])
     const [ filterBy, setFilterBy ] = useState();
 
     const dbRef = firebase.firestore();
@@ -121,7 +125,7 @@ const DombaStokSection = () => {
                     <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems}/>
                 </ScrollView> }         
             
-              <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} />
+              <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
         </View>
     )
 }

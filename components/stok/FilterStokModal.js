@@ -1,14 +1,56 @@
 import React, { useContext } from 'react';
-import { Alert,  StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import { Alert,  StyleSheet, Text, TouchableOpacity, View, Dimensions, ToastAndroid } from 'react-native';
 import Modal from "react-native-modal";
 import { PhotoContext } from '../../context/PhotoProfileContext';
+import { CheckBox } from 'react-native-elements'
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeigth = Dimensions.get('screen').height;
 
 
-const FilterStokModal = ({filterVisible, setFilterVisible, setIsFilter, setFilterBy, filterList}) => {
+const FilterStokModal = ({filterVisible, setFilterVisible, setIsFilter, setFilterBy, filterList, setFilterList}) => {
   const { testStyle } = useContext(PhotoContext)
+
+  const checkboxHandler = (value, index) => {
+    const newValue = filterList.map((checkbox, i) => {
+     if (i !== index)
+       return {
+         ...checkbox,
+         isChecked: false,
+       }
+     if (i === index) {
+       const item = {
+         ...checkbox,
+         isChecked: !checkbox.isChecked,
+       }
+       return item
+     }
+     if (value.isChecked && i === index) {
+      const item = {
+        ...checkbox,
+        isChecked: !checkbox.isChecked,
+      }
+      return item
+     }
+    return checkbox
+  })
+  setFilterList(newValue)
+ 
+  
+  setTimeout(() => {
+    let filterTrue = newValue.filter((item, i) => {
+        return item.isChecked == true
+       })
+    let res = filterTrue[0]['sortBy']
+    
+    setFilterBy(res)
+    setIsFilter(true)
+    setFilterVisible(!filterVisible)
+    ToastAndroid.show(`Filter dengan ${res}`, ToastAndroid.SHORT)
+
+  }, 500)
+  
+  }    
 
   return (
    
@@ -49,15 +91,34 @@ const FilterStokModal = ({filterVisible, setFilterVisible, setIsFilter, setFilte
                 </TouchableOpacity> */}
 
                 { filterList.map((item, i) => {
-                  return (
-                    <TouchableOpacity style={styles.filterSelection} key={item.id} onPress={() => {
-                      setFilterBy(item.sortBy)
-                      setIsFilter(true)
-                      setFilterVisible(!filterVisible)
-                    }}>
-                      <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
-                    </TouchableOpacity>
-                  )
+                                    return (
+                                      <View style={styles.filterSelection} key={item.id}>
+                                        <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
+                                        <CheckBox
+                                        center
+                                        checked={item.isChecked}
+                                        checkedIcon='dot-circle-o'
+                                        uncheckedIcon='circle-o'
+                                        onPress={() => {
+                                          if(item.isChecked) {
+                                            console.log('do nothing')
+                                          } else {
+                                            checkboxHandler(item, i)
+                                          }
+                                        }}
+                                      />
+                  
+                                      </View>
+                                    )
+                  // return (
+                  //   <TouchableOpacity style={styles.filterSelection} key={item.id} onPress={() => {
+                  //     setFilterBy(item.sortBy)
+                  //     setIsFilter(true)
+                  //     setFilterVisible(!filterVisible)
+                  //   }}>
+                  //     <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
+                  //   </TouchableOpacity>
+                  // )
                 })}
                 {/* <TouchableOpacity style={styles.filterSelection} onPress={() => {
                   setIsFilter(false)
@@ -91,7 +152,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
       width:windowWidth,
-      height:windowHeigth * .35,
+      height:windowHeigth * .45,
       margin: 20,
       backgroundColor: 'white',
       borderTopRightRadius: 20,
@@ -131,15 +192,17 @@ const styles = StyleSheet.create({
       marginBottom: windowHeigth * .05
     },
     filterSelection:{
-      marginVertical: windowHeigth * .005
+      flexDirection:'row',
+      justifyContent:'space-between',
+      alignItems:'center',
+      paddingHorizontal: 5,
 
     },
     textFilter: {
       fontSize: 18,
     },
     filterWrap:{
-      // backgroundColor:'red',
       width:'80%',
-      height: windowHeigth * .25
+      height: windowHeigth * .35
     }
   });
