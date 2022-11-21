@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
       width:50,
       height:50,
       top:-20,
-      right:5,
+      right:-20,
       // borderWidth:1
     },
     textStyle: {
