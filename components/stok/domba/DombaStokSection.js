@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         // paddingBottom: 60,
         // marginBottom: 60,
-        paddingHorizontal: 5
         
     },
     sectionTitle:{
