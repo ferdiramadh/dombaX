@@ -18,7 +18,7 @@ const FormStok = ({setModalVisible,modalVisible}) => {
     const uid = useSelector(state => state.userReducer.uid)
     const userProducts = useSelector(state => state.userProductReducer);
     const dataUserProduct = userProducts.dataUserProduct
-    const [selectedProduct, setSelectedProduct] = useState();
+    const [selectedProduct, setSelectedProduct] = useState("jenisHewanTernak");
     
     const [ firebaseSetup, setFirebaseSetup ] = useState({
       collection:'',
@@ -165,24 +165,20 @@ const newValue = Object.assign(values,addedProperties)
 
 const testPicker = [
   {
-    id:1,
-    label:"Jenis Produk",
-    value: "jenisProduk"
-  },{
-  id:2,
+  id:1,
   label:"Hewan Ternak",
   value: "jenisHewanTernak"
   }, {
-    id:3,
+    id:2,
     label:"Pakan",
     value: "jenisPakan"
   }, {
-    id:4,
+    id:3,
     label:"Obat dan Vitamin",
     value: "obatSuplemen"
   }
   , {
-    id:5,
+    id:4,
     label:"Tambah Produk",
     value: "tambahProduk"
   }
@@ -240,9 +236,7 @@ const testPicker = [
                         >
                     
                         { testPicker.map((item, i) => {
-                          return(
-                            <Picker.Item label={item.label} value={item.value} key={item.id} />
-                          )
+                          return <Picker.Item label={item.label} value={item.value} key={item.id} />
                         })}
                     </Picker>
                 </View>

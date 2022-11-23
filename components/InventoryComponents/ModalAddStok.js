@@ -18,7 +18,7 @@ const ModalAddStok = ({modalVisible, setModalVisible}) => {
             Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible)
           }}>
-          <View style={styles.centeredView}>
+          <View style={[styles.centeredView, {backgroundColor: 'rgba(0,0,0,0.8)'} ]}>
             <View style={styles.modalView}>
               {/* <View style={styles.pickerContainer}>
                     <Picker
@@ -88,9 +88,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         height: '100%',
-        width:'100%',
-        
-      
+        width:'100%',     
     },
     modalView: {
         width:'90%',

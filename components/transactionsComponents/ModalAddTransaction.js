@@ -17,7 +17,7 @@ const ModalAddTransaction = ({modalTransaction, setModalTransaction, topTabTrans
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
           }}>
-          <View style={styles.centeredView}>
+          <View style={[styles.centeredView, {backgroundColor: 'rgba(0,0,0,0.8)'} ]}>
             <View style={styles.modalView}>
                 <TouchableOpacity
                     style={{ ...styles.closeButton }}
