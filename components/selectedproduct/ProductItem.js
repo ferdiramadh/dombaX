@@ -5,6 +5,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { formatToCurrencyWithoutStyle } from '../../utils/FormatCurrency'
 
+
+const imageDefault = {
+    "domba": require('../../assets/images/Kiwi_Categories-Icon.png'),
+    "tambahproduk": require('../../assets/images/Kiwi_Categories-Icon.png'),
+    "pakan": require('../../assets/images/kategori/Pakan.png'),
+    "obat": require('../../assets/images/kategori/ObatSuplemen.png')
+} 
+
 const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible}) => {
     const navigation = useNavigation();
     const dombaState = useSelector(state => state.stokReducer)
@@ -51,7 +59,7 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                     delayLongPress={1000}
                     >
                 <View style={styles.leftIcon}>
-                    {item.image? <Image source={{ uri: item.image }} style={styles.imgIcon}/>:<Image source={require('../../assets/images/Kiwi_Categories-Icon.png')} style={styles.imgIcon}/>}
+                <Image source={imageDefault[`${item.tipe}`]} style={styles.imgIcon}/>
                 </View>
                 <View style={styles.rightSection}>
                     <View style={styles.upperSection}>
@@ -74,8 +82,8 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                         <View style={styles.leftDombaInfo}>
                             {item.tipe == 'domba' && item.kategoriHewanTernak != ''?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>:null}
                             {item.hargaBeli?<Text style={styles.infoData}>Harga Beli: {formatToCurrencyWithoutStyle(parseInt(item.hargaBeli))}</Text>: null}
-                            {item.tipe == 'domba' && item.berat?<Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>:null}
-                            {/* {item.tipe == 'tambahproduk' && item.kategori?<Text style={styles.infoData}>Kategori: {item.kategori}</Text>:null}
+                            {/* {item.tipe == 'domba' && item.berat?<Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>:null}
+                            {item.tipe == 'tambahproduk' && item.kategori?<Text style={styles.infoData}>Kategori: {item.kategori}</Text>:null}
                             {(item.tipe == 'pakan' || item.tipe == 'obat') && item.merk?<Text style={styles.infoData}>Produsen: {item.merk}</Text>:null}
                             {item.tipe == 'domba' && item.usia?<Text style={styles.infoData}>Usia : {item.usia} Bulan</Text>:null}
                             {(item.tipe == 'pakan' || item.tipe == 'obat' )&& item.kadaluarsa?<Text style={styles.infoData}>Kadaluarsa : {item.kadaluarsa}</Text>:null} */}
