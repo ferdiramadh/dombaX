@@ -5,7 +5,7 @@ import InventoryScreen from '../screens/InventoryScreen';
 import TransactionScreen from '../screens/TransactionScreen';
 import OthersScreen from '../screens/OthersScreen';
 import PrintPdfScreen from '../screens/PrintPdfScreen';
-import { MaterialCommunityIcons,MaterialIcons,FontAwesome5,AntDesign, Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons,MaterialIcons,Foundation, Entypo } from '@expo/vector-icons';
 import PDFTemplate from '../components/PDFTemplate';
 import UserProductScreen from '../screens/UserProductScreen';
 import TopTabTransaction from './transactiontoptab/TopTabTransaction';
@@ -37,7 +37,7 @@ function MyTabs() {
           options={{
             tabBarLabel: 'Beranda',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={size} />
+              <Foundation name="home" color={color} size={size} />
             ),
           }}
         />
