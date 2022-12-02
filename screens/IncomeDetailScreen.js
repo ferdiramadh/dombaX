@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     padding: 10,
-    position: 'relative'    
+    position: 'relative',
+    backgroundColor: '#FFF'    
   },
   iconContainer: {
     width: windowWidth,
