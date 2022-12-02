@@ -18,7 +18,7 @@ const ModalAddStok = ({modalVisible, setModalVisible}) => {
             Alert.alert('Modal has been closed.');
             setModalVisible(!modalVisible)
           }}>
-          <View style={[styles.centeredView, {backgroundColor: 'rgba(0,0,0,0.8)'} ]}>
+          <View style={[styles.centeredView, {backgroundColor: 'rgba(0,0,0,0.3)'} ]}>
             <View style={styles.modalView}>
               {/* <View style={styles.pickerContainer}>
                     <Picker
