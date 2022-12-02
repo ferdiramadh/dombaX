@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
         // backgroundColor:'red', 
         marginBottom: 5,
         flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: 'lightgrey',
+        // borderBottomWidth: 1,
+        // borderBottomColor: 'lightgrey',
         paddingHorizontal: 5
     },
     iconWrapper: {

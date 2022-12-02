@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         marginBottom: 5,
         paddingBottom: 5,
-        borderBottomWidth: 1,
-        borderBottomColor:'lightgrey'
+        // borderBottomWidth: 1,
+        // borderBottomColor:'lightgrey'
         
     },
     leftIcon:{
