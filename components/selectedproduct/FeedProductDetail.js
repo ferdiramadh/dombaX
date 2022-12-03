@@ -107,7 +107,7 @@ const FeedProductDetail = ({ editData, navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.nama || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Jenis Pakan</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('nama')}
@@ -115,10 +115,10 @@ const FeedProductDetail = ({ editData, navigation }) => {
                 value={values.nama}
                 style={styles.textInput}
                 placeholder='Jenis Pakan'
-              /> : <Text style={styles.itemText}>{data.nama}</Text>}
+              /> : data.nama && <Text style={styles.itemText}>{data.nama}</Text>}
 
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.merk || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Produsen</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('merk')}
@@ -126,12 +126,12 @@ const FeedProductDetail = ({ editData, navigation }) => {
                 value={values.merk}
                 style={styles.textInput}
                 placeholder='Produsen'
-              /> : <Text style={styles.itemText}>{data.merk}</Text>}
+              /> : data.merk && <Text style={styles.itemText}>{data.merk}</Text>}
 
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.kadaluarsa || isUpdate ? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Kadaluarsa</Text>
-              {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values}/> : <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
+              {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values}/> : data.kadaluarsa && <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Harga Beli</Text>
