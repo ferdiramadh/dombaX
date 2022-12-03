@@ -107,7 +107,7 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.nama || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Nama Obat dan Vitamin</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('nama')}
@@ -118,7 +118,7 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
               /> : <Text style={styles.itemText}>{data.nama}</Text>}
 
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.merk || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Produsen</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('merk')}
@@ -129,7 +129,7 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
               /> : <Text style={styles.itemText}>{data.merk}</Text>}
 
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.kadaluarsa || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Kadaluarsa</Text>
               {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values}/> : <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
             </View>

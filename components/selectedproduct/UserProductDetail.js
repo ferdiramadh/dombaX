@@ -68,7 +68,7 @@ const UserProductDetail = ({ editData, navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.nama || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Nama Produk</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('nama')}
@@ -79,7 +79,7 @@ const UserProductDetail = ({ editData, navigation }) => {
               /> : <Text style={styles.itemText}>{data.nama}</Text>}
 
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.hargaBeli || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Harga Beli</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('hargaBeli')}
@@ -90,7 +90,7 @@ const UserProductDetail = ({ editData, navigation }) => {
                 keyboardType='numeric'
               /> : <Text style={styles.itemText}>{formatToCurrencyLight(data.hargaBeli)}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.deskripsi || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Deskripsi</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('deskripsi')}
@@ -100,7 +100,7 @@ const UserProductDetail = ({ editData, navigation }) => {
                 placeholder='Deskripsi'
               /> : <Text style={styles.itemText}>{data.deskripsi}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.kategori || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Kategori</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('kategori')}

@@ -68,7 +68,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.nama || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Jenis Hewan Ternak</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('nama')}
@@ -79,7 +79,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
               /> : <Text style={styles.itemText}>{data.nama}</Text>}
 
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.jenisSpesifik || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Jenis Spesifik</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('jenisSpesifik')}
@@ -90,7 +90,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
               /> : <Text style={styles.itemText}>{data.jenisSpesifik}</Text>}
 
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.hargaBeli || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Harga Beli</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('hargaBeli')}
@@ -100,7 +100,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
                 placeholder='Harga Beli'
               /> : <Text style={styles.itemText}>{formatToCurrencyLight(data.hargaBeli)}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.deskripsi || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Deskripsi</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('deskripsi')}
@@ -110,7 +110,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
                 placeholder='Deskripsi'
               /> : <Text style={styles.itemText}>{data.deskripsi}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.usia || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Usia</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('usia')}
@@ -120,7 +120,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
                 placeholder='Usia'
               /> : <Text style={styles.itemText}>{data.usia}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.berat || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Berat Rata - Rata</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('berat')}
