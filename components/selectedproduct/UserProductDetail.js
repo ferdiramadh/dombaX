@@ -121,6 +121,16 @@ const UserProductDetail = ({ editData, navigation }) => {
                 keyboardType='numeric'
               /> : <Text style={styles.itemText}>{data.jumlah} {data.satuan}</Text>}
             </View>
+            <View style={[styles.itemWrap, data.satuan || isUpdate? {} : {display: 'none'}]}>
+              <Text style={styles.subTitle}>Satuan</Text>
+              {isUpdate ? <TextInput
+                onChangeText={handleChange('satuan')}
+                onBlur={handleBlur('satuan')}
+                value={values.satuan}
+                style={styles.textInput}
+                placeholder='Satuan'
+              /> : <Text style={styles.itemText}>{data.satuan}</Text>}
+            </View>
             <Text style={styles.subTitle}>Total</Text>
             <Text style={styles.itemText}>{formatToCurrency(parseInt(data.jumlah) * parseInt(data.hargaBeli))}</Text>
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
