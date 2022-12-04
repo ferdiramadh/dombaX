@@ -17,6 +17,7 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
     const navigation = useNavigation();
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
+    const [ deleteMode, setDeleteMode ] = useState(false)
     const DATA = userProducts.listUserProduct
     // const item = props.item
     // const DATA = dombaState.listDomba;
@@ -55,7 +56,7 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                         
                         
                    }}
-                    onLongPress={() => console.log("ni lama beut")}
+                    onLongPress={() => setDeleteMode(true)}
                     delayLongPress={1000}
                     >
                 <View style={styles.leftIcon}>
@@ -63,24 +64,37 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                 </View>
                 <View style={styles.rightSection}>
                     <View style={styles.upperSection}>
+                        <View style={styles.upperLeft}>
                         {item.tipe == 'domba'?<Text style={styles.subStokTitle}>{item.nama} {item.jenisSpesifik}</Text>:null}
                         {item.tipe == 'pakan'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
                         {item.tipe == 'obat'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
                         {item.tipe == 'tambahproduk'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
-                        {isTransaction? null :
-                        <View style={styles.buttonSection}>
-                            <TouchableOpacity style={{marginLeft:10}} onPress={() => deleteItem(item)}>
-                                <MaterialIcons name="delete" size={24} color="black" />
-                            </TouchableOpacity>
-                            {/* <TouchableOpacity style={{marginLeft:10}} onPress={() => editItem(item)}>
-                                <Feather name="edit" size={24} color="black" />
-                            </TouchableOpacity>   */}
-                        </View>}
+                        {item.tipe == 'domba' && item.kategoriHewanTernak != ''?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>:null}
+                        </View>
+                        <View style={styles.upperRight}>
+                            {item.tipe == 'domba'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Ekor"} </Text>:null}
+                            {item.tipe == 'pakan'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Kg"} </Text>:null}
+                            {item.tipe == 'obat'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Buah"} </Text>:null}
+                            {item.tipe == 'tambahproduk'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>: item.jumlah + " " + item.satuan}</Text>:null}
+                            {isTransaction || !deleteMode? null :
+                            <View style={styles.buttonSection}>
+                                <TouchableOpacity style={{marginLeft:10}} onPress={() => setDeleteMode(false)}>
+                                    <MaterialIcons name="cancel" size={24} color="black" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{marginLeft:10}} onPress={() => {
+                                    deleteItem(item)
+                                    setDeleteMode(false)
+                                }}>
+                                    <MaterialIcons name="delete" size={24} color="black" />
+                                </TouchableOpacity>
+                            </View>}
+                        </View>
+
                     </View>
                     
                     <View style={styles.dombaInfo}>
                         <View style={styles.leftDombaInfo}>
-                            {item.tipe == 'domba' && item.kategoriHewanTernak != ''?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>:null}
+                           
                             {item.hargaBeli?<Text style={styles.infoData}>Harga Beli: {formatToCurrencyWithoutStyle(parseInt(item.hargaBeli))}</Text>: null}
                             {/* {item.tipe == 'domba' && item.berat?<Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>:null}
                             {item.tipe == 'tambahproduk' && item.kategori?<Text style={styles.infoData}>Kategori: {item.kategori}</Text>:null}
@@ -89,12 +103,6 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                             {(item.tipe == 'pakan' || item.tipe == 'obat' )&& item.kadaluarsa?<Text style={styles.infoData}>Kadaluarsa : {item.kadaluarsa}</Text>:null} */}
                         </View>
                         <View style={styles.rightDombaInfo}>
-                            <Text style={styles.infoData}></Text>
-                            <Text style={styles.infoData}></Text>
-                            {item.tipe == 'domba'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Ekor"} </Text>:null}
-                            {item.tipe == 'pakan'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Kg"} </Text>:null}
-                            {item.tipe == 'obat'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Buah"} </Text>:null}
-                            {item.tipe == 'tambahproduk'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>: item.jumlah + " " + item.satuan}</Text>:null}
                             <Text style={[styles.totalHarga]}>{ formatToCurrencyWithoutStyle(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
                         </View>
                     </View>
@@ -129,15 +137,11 @@ const styles = StyleSheet.create({
         aspectRatio: 1
     },
     rightSection:{
-        // backgroundColor:'orange',
         width:'80%',
         flexDirection:'column',
     },
     dombaInfo:{
         flexDirection:'row',
-        // backgroundColor:'cyan',
-        width:'100%',
-        
     },
     subStokTitle:{
         fontSize: 20,
@@ -145,19 +149,13 @@ const styles = StyleSheet.create({
     },
     leftDombaInfo:{
         width:'60%',
-        // backgroundColor:'skyblue',
-        flexDirection:'column',
-        // justifyContent:'center',
-        alignItems:'flex-start',
-        padding: 5
+        padding: 5,
+        justifyContent: 'center'
     },
     rightDombaInfo:{
         width:'40%',
-        // backgroundColor:'skyblue',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems:'flex-start',
-        paddingLeft: 5
+        paddingLeft: 5,
+        justifyContent: 'center'
     },
     infoData:{
         fontSize: 14,
@@ -172,18 +170,26 @@ const styles = StyleSheet.create({
         
     },
     buttonSection:{
-        // backgroundColor:'red',
         flexDirection:'row',  
         width:'50%',
         justifyContent:'flex-end',
-        position:'absolute',
-        right: 10
        
     },
     totalHarga: {
         color: '#43B88E',
         fontWeight:'bold',
         fontSize: 16
+    },
+    upperLeft: {
+        width: '50%',
+        justifyContent: 'flex-end'
+    },
+    upperRight: {
+        width: '50%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        paddingRight: 20
     }
     
 })
