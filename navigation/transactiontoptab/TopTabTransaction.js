@@ -11,8 +11,7 @@ function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, is
   const { setTopTabTransactionFocus} = useContext(PhotoContext)
   return (
     <Tab.Navigator screenOptions={{
-        tabBarLabelStyle: { fontSize: 14, fontWeight: '700', fontFamily: 'Inter' },
-       
+        tabBarLabelStyle: { fontSize: 16, fontWeight: '700', fontFamily: 'Inter', textTransform: 'capitalize' }, 
       }}>
       <Tab.Screen name="Pemasukan" listeners={{
         tabPress: () => {
@@ -36,10 +35,14 @@ function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, is
           setTransaction('expense')
           setTopTabTransactionFocus('Expense')
         },
+    
       }} options={{
         tabBarActiveTintColor: '#43B88E', tabBarInactiveTintColor: '#000', tabBarIndicatorStyle: {
           backgroundColor: '#43B88E', 
         }
+      }}
+      tabBarOptions={{
+        tit: { textTransform: 'none' }
       }}
       children={() => <Income isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isLoading={isLoading} setSearchItems={setSearchItems}/>}
       />
