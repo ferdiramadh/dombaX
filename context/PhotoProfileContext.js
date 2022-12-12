@@ -12,6 +12,8 @@ const PhotoProfileProvider = (props) => {
     'Baloo': require('../assets/font/baloo/Baloo.ttf'),
     'Inter-Light': Inter_300Light,
     'Inter': Inter_400Regular,
+    'Poppins': require('../assets/font/poppins/Poppins-Medium.ttf'),
+    'PoppinsBold': require('../assets/font/poppins/Poppins-Bold.ttf'),
   };
 
   const [image, setImage] = useState(null);
