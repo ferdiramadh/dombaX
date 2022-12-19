@@ -17,13 +17,12 @@ const initialProfileState = {
     whatsApp:'',
     domisili:'',
     tanggalLahir:'',
-    jumlahDomba:'',
+    jumlahHewanTernak:'',
     omzet:'',
     dapatInfo:'',
     jenisKelamin: '',
-    noHpBisnis: '',
-    emailBisnis: '',
-    alamatBisnis: ''
+    lokasiBisnis:'',
+    image: ''
 
 }
 
