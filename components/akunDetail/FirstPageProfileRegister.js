@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity , TextInput,BackHandler,Alert, ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, View, TextInput} from 'react-native'
 import React from 'react';
+import { windowWidth } from '../../utils/DimensionSetup'
 
 const FirstPageProfileRegister = ({handleChange,handleBlur, values, errors, isValid}) => {
   return (
@@ -9,7 +10,8 @@ const FirstPageProfileRegister = ({handleChange,handleBlur, values, errors, isVa
                 placeholder="Nama Depan"
                 onChangeText={handleChange('namaDepan')}
                 onBlur={handleBlur('namaDepan')}
-                value={values.namaDepan}                        
+                value={values.namaDepan}    
+                placeholderTextColor="#CBCBCB"                    
             />
             { errors.namaDepan && <Text style={{fontSize: 14, color: "red", textAlign: 'center'}}>{errors.namaDepan}</Text>}
             <TextInput 
@@ -18,13 +20,32 @@ const FirstPageProfileRegister = ({handleChange,handleBlur, values, errors, isVa
                 onChangeText={handleChange('namaBelakang')}
                 onBlur={handleBlur('namaBelakang')}
                 value={values.namaBelakang}    
+                placeholderTextColor="#CBCBCB"  
             />
             <TextInput 
                 style={styles.input}
-                placeholder="WhatsApp"
+                placeholder="No. HP"
                 onChangeText={handleChange('whatsApp')}
                 onBlur={handleBlur('whatsApp')}
                 value={values.whatsApp}      
+                keyboardType="numeric"
+                placeholderTextColor="#CBCBCB"  
+            />
+            <TextInput 
+                style={styles.input}
+                placeholder="Jenis Kelamin"
+                onChangeText={handleChange('jenisKelamin')}
+                onBlur={handleBlur('jenisKelamin')}
+                value={values.jenisKelamin}   
+                placeholderTextColor="#CBCBCB"     
+            />
+            <TextInput 
+                style={styles.input}
+                placeholder="Tanggal Lahir"
+                onChangeText={handleChange('tanggalLahir')}
+                onBlur={handleBlur('tanggalLahir')}
+                value={values.tanggalLahir}                  
+                placeholderTextColor="#CBCBCB"  
             />
             <TextInput 
                 style={styles.input}
@@ -32,16 +53,9 @@ const FirstPageProfileRegister = ({handleChange,handleBlur, values, errors, isVa
                 onChangeText={handleChange('domisili')}
                 onBlur={handleBlur('domisili')}
                 value={values.domisili}     
+                placeholderTextColor="#CBCBCB"  
             />
             { errors.domisili && <Text style={{fontSize: 14, color: "red", textAlign: 'center'}}>{errors.domisili}</Text>}
-            <TextInput 
-                style={styles.input}
-                placeholder="Tanggal Lahir"
-                onChangeText={handleChange('tanggalLahir')}
-                onBlur={handleBlur('tanggalLahir')}
-                value={values.tanggalLahir}                  
-                
-            />
         </View>
   );
 };
@@ -50,13 +64,12 @@ export default FirstPageProfileRegister;
 
 const styles = StyleSheet.create({
     input:{
-        width: 181,
-        height: 40,
-        borderColor:'black',
-        borderWidth:2,
-        borderRadius:10,
-        padding:10,
-        backgroundColor:'white',
-        marginVertical:10
+        width: windowWidth * .9,
+        height: 60,
+        borderRadius:12,
+        paddingLeft: 60,
+        backgroundColor:'#F5F5F5',
+        marginVertical:10,
+        fontFamily: "Poppins"
     },
 });

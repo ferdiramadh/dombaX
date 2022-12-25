@@ -21,7 +21,7 @@ const RegisterScreen = ({navigation}) => {
             const respons = await firebase.auth().createUserWithEmailAndPassword(email,password);
             const userObj = respons.user
             await AsyncStorage.setItem('@storage_Key', value)
-            console.log(userObj)
+            console.log({userObj})
             dispatch({type:'REGISTER',results:userObj})
             navigation.navigate('RegisterProfile')
         }catch(err){

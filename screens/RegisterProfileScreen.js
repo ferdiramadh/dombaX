@@ -1,21 +1,20 @@
-import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity , TextInput,BackHandler,Alert, ActivityIndicator} from 'react-native'
+import React, {useState } from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import firebase from '../Firebaseconfig'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { windowWidth } from '../utils/DimensionSetup'
 import {useSelector, useDispatch} from 'react-redux'
 import { Formik } from 'formik';
 import FirstPageProfileRegister from '../components/akunDetail/FirstPageProfileRegister';
 import SecondPageProfileRegister from '../components/akunDetail/SecondPageProfileRegister';
 import * as yup from 'yup'
+import { uploadImageProduk } from '../utils/ImageUpload';
+import PhotoSectionOnboarding from '../components/akunDetail/PhotoSectionOnboarding'
 
 const RegisterProfileScreen = ({navigation}) => {
     const dispatch = useDispatch();
     const uid = useSelector(state => state.userReducer.uid)
-    const [ email, setEmail ] = useState('');
-    const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState('')
     const [nextPage, setNextPage] = useState(false)
-
     const [ profileData, setDombaData ] = useState({
         namaDepan:'',
         namaBelakang:'',
@@ -26,13 +25,16 @@ const RegisterProfileScreen = ({navigation}) => {
         whatsApp:'',
         domisili:'',
         tanggalLahir:'',
-        jumlahDomba:'',
+        jumlahHewanTernak:'',
+        jenisHewanTernak: '',
         omzet:'',
         dapatInfo:'',
+        jenisKelamin: '',
+        lokasiBisnis:'',
+        image: '',
+        imageBisnis: ''
 
     })
-
-
     const addProfile = (values) => {
      
         const datas = {
@@ -47,6 +49,14 @@ const RegisterProfileScreen = ({navigation}) => {
           .doc(datas.id)
           .set(newValue)
           dispatch({type:'STORE_PROFILE_DATA',results:newValue})
+          if(values.image) {
+            console.log("upload img profil nih")
+            uploadImageProduk(values.image, "Profile", datas.id, "profile", "image")
+          }
+          if(values.imageBisnis) {
+            console.log("upload img bisnis nih")
+            uploadImageProduk(values.imageBisnis, "Profile", datas.id, "profile", "imageBisnis")
+          }
         
     
   }
@@ -96,7 +106,7 @@ const RegisterProfileScreen = ({navigation}) => {
       console.log("onskip yeuh")
       navigation.navigate('Onboarding')
   }
-
+  
     return (
         <Formik
         initialValues={profileData}
@@ -109,18 +119,17 @@ const RegisterProfileScreen = ({navigation}) => {
       >
            {({ handleChange, handleBlur, handleSubmit, values,setFieldValue, errors, isValid }) => (
             <View style={styles.container}>
-                <Image style={styles.imgIcon} source={require('../assets/images/Kiwi_Categories-Icon.png')}/>
+              <PhotoSectionOnboarding title={nextPage? "Profil Bisnis" : "Profil"} value={nextPage?values.imageBisnis : values.image} field={nextPage? "imageBisnis" : "image"} setFieldValue={setFieldValue}/>
                 { error? <Text style={{color:'red'}}>{error}</Text>:null}
                 {
                     nextPage? <SecondPageProfileRegister handleBlur={handleBlur} handleChange={handleChange} values={values} errors={errors} isValid={isValid}/>:<FirstPageProfileRegister handleBlur={handleBlur} handleChange={handleChange} values={values} errors={errors} isValid={isValid}/>
                 }
                 
-
-                <TouchableOpacity onPress={() => setNextPage(!nextPage)} style={styles.btn}>
-                    <Text style={{fontFamily:'Baloo', color: '#FFF'}}>{nextPage?"Sebelumnya":"Selanjutnya"}</Text>
+                <TouchableOpacity onPress={() => setNextPage(!nextPage)} style={[styles.btn, {   backgroundColor:'#ED9B83'}]}>
+                    <Text style={styles.textBtn}>{nextPage?"Sebelumnya":"Selanjutnya"}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={nextPage?handleSubmit:onSkip} style={[styles.btn, nextPage?{}:{display: 'none'}]} >
-                    <Text style={{fontFamily:'Baloo', color: '#FFF'}}>{nextPage?"Selesai":"Skip"}</Text>
+                <TouchableOpacity onPress={nextPage?handleSubmit:onSkip} style={[styles.btn, nextPage?{}:{display: 'none'}, { backgroundColor: '#C4C4C4'}]} >
+                    <Text style={styles.textBtn}>{nextPage?"Selesai":"Skip"}</Text>
                 </TouchableOpacity>
                 {/* { errors && nextPage && <Text style={{fontSize: 14, color: "red", textAlign: 'center'}}>Cek Kembali Form Anda</Text>} */}
             </View>
@@ -134,21 +143,26 @@ export default RegisterProfileScreen
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        justifyContent:'center',
-        alignItems:'center'
+        justifyContent:'flex-start',
+        alignItems:'center',
+        backgroundColor: '#FFF',
+        paddingTop: 20
     },
     imgIcon:{
         width:150,
         height:150
     },
-
     btn:{
-        width: 181,
-        height: 40,
-        backgroundColor:'#ED9B83',
+        width: windowWidth * .9,
+        height: 60,
         borderRadius:10,
         justifyContent:'center',
         alignItems:'center',
         marginBottom:10
+    },
+    textBtn: {
+      fontFamily:'Baloo', 
+      color: '#FFF', 
+      fontSize:  24
     }
 })
