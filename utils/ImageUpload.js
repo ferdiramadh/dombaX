@@ -131,7 +131,7 @@ export const storeImgData = async (image) => {
     }
   };
 
-  export const pickImageOnly = async (isUpdate, setFunc) => {
+  export const pickImageOnly = async (isUpdate, setFunc, field) => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -145,7 +145,7 @@ export const storeImgData = async (image) => {
     // console.log(result);
 
     if (!result.canceled && isUpdate) {
-      setFunc('image', result.assets[0].uri);
+      setFunc(field, result.assets[0].uri);
       // console.log(result.assets[0].uri);
     }
 
@@ -154,14 +154,14 @@ export const storeImgData = async (image) => {
     }
   };
 
-  export const updateImageDoc = (collection, itemId, downloadUrl) => {
+  export const updateImageDoc = (collection, itemId, downloadUrl, field) => {
     if(downloadUrl){
       return firebase
       .firestore()
       .collection(collection)
       .doc(itemId)
       .update({
-        "image": downloadUrl
+        field : downloadUrl
       }).then(() => {
         console.log('Item Updated')
       }).catch((error) => console.log(error))
@@ -223,7 +223,7 @@ export const storeImgData = async (image) => {
     )
   }
 
-  export const uploadImageProduk = async (image, storageFolder, id, collection) => {
+  export const uploadImageProduk = async (image, storageFolder, id, collection, field) => {
     
 
     if(image) {
@@ -268,7 +268,7 @@ export const storeImgData = async (image) => {
       snapshot.snapshot.ref.getDownloadURL()
       .then((downloadUrl) => {
         console.log("File available at" + downloadUrl)
-        updateImageDoc(collection, id, downloadUrl)
+        updateImageDoc(collection, id, downloadUrl, field)
         // setFunc(downloadUrl)
         
         blob.close()

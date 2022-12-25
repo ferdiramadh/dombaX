@@ -20,7 +20,7 @@ const UpdateUserProductForm = ({values, modalVisible, setModalVisible}) => {
       .collection("userproduk")
       .doc(item.id)
       .update(item).then(() => {
-        uploadImageProduk(item.image, "UserProduk", item.id, "userproduk")
+        uploadImageProduk(item.image, "UserProduk", item.id, "userproduk", "image")
       }).catch((error) => console.log(error))
       
     }
@@ -123,7 +123,7 @@ const UpdateUserProductForm = ({values, modalVisible, setModalVisible}) => {
                       </TouchableOpacity>
                     </View>:<TouchableOpacity style={styles.textInput} onPress={() => {
                       let isUpdate = true
-                        pickImageOnly(isUpdate, setFieldValue)
+                        pickImageOnly(isUpdate, setFieldValue, 'image')
                         
                       }}>
                   <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>

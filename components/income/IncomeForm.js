@@ -131,7 +131,7 @@ const IncomeForm = ({modalTransaction, setModalTransaction}) => {
   let addedProperties = {id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp(),userId:uid}
 
   if(values.image) {
-    uploadImageProduk(values.image, "Income", datas.id, "income")
+    uploadImageProduk(values.image, "Income", datas.id, "income", "image")
   }
   const newValue = Object.assign(values,addedProperties)
       const db = firebase.firestore();

@@ -56,7 +56,7 @@ const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
     .collection("expense")
     .doc(item.id)
     .update(item).then(() => {
-      uploadImageProduk(item.image, "Expense", item.id, "expense")
+      uploadImageProduk(item.image, "Expense", item.id, "expense", "image")
     }).catch((error) => console.log(error))
     
   }
@@ -157,7 +157,7 @@ const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                   let isTrue = true
-                  pickImageOnly(isTrue, setFieldValue)
+                  pickImageOnly(isTrue, setFieldValue, 'image')
                   
                 }} style={styles.photoButton}>
                   <FontAwesome name="file-image-o" size={24} color="lightgrey" /><Text style={{ color: "grey" }}>Select A Photo</Text>

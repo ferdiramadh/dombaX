@@ -158,7 +158,7 @@ const newValue = Object.assign(values,addedProperties)
     .doc(datas.id)
     .set(newValue)
     dispatch({type:'STORE_DATA_USERPRODUK',results:newValue})
-    uploadImageProduk(values.image, "UserProduk", newValue.id, "userproduk")
+    uploadImageProduk(values.image, "UserProduk", newValue.id, "userproduk", "image")
   
 
 }

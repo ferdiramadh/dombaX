@@ -10,7 +10,7 @@ const BusinessProfileScreen = () => {
    
     const profileData = useSelector(state => state.profileReducer)
     const [ isLoading, setIsLoading ] = useState(false)
-
+    console.log({profileData})
     const [isEdit, setIsEdit ] = useState(false)
 
     const updateItem = (item) => {
@@ -44,7 +44,7 @@ const BusinessProfileScreen = () => {
         {({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => (
             <View style={styles.container}>
               {isLoading?<ActivityIndicator size="small" color="orange" />: <View>
-                {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={200} color="black" />}</View>
+                {profileData.imageBisnis ? <Image source={{ uri: profileData.imageBisnis }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={200} color="black" />}</View>
               }
                   { isEdit? 
                     <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>

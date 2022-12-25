@@ -162,7 +162,7 @@ useEffect(() => {
   let addedProperties = {id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp(),userId:uid}
 
   if(values.image) {
-    uploadImageProduk(values.image, "Expense", datas.id, "expense")
+    uploadImageProduk(values.image, "Expense", datas.id, "expense", "image")
   }
   const newValue = Object.assign(values,addedProperties)
       const db = firebase.firestore();
