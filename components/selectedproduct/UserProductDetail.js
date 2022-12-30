@@ -134,9 +134,9 @@ const UserProductDetail = ({ editData, navigation }) => {
             <Text style={styles.subTitle}>Total</Text>
             <Text style={styles.itemText}>{formatToCurrency(parseInt(data.jumlah) * parseInt(data.hargaBeli))}</Text>
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
-              {values.image ?
-                <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
-
+              { isUpdate | values.image.length > 5?<Text style={[styles.subTitle, { alignSelf: 'flex-start', marginBottom: 10}]}>Gambar</Text> : null }
+              {values.image.length > 5 ?
+              <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
                 : null}
               {isUpdate? <View style={styles.photoOptionsWrap}>
               <TouchableOpacity onPress={() => {

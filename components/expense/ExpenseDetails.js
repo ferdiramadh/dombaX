@@ -143,6 +143,7 @@ const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
             {data.kategori == 'Pembelian Stok'?<StockPurchasingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             {data.kategori == 'Tabungan atau Investasi'?<SavingOrInvestingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue}/> : null  }  
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
+            {isUpdate && <Text style={[styles.subTitle, { alignSelf: 'flex-start', marginBottom: 10}]}>Gambar</Text> }
               {values.image && isUpdate ?
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
 
@@ -188,8 +189,12 @@ const ExpenseDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
             <View style={styles.statusBayarSection}>
             <Text style={[styles.statusText, data.statusBayar == 'Lunas'?{color:'#43B88E'}:{color:'#EB3223'}]}>{data.statusBayar == 'Lunas'?'Lunas': 'Belum Lunas'}</Text>
             </View>: null}
-                        
-            { data.image && data.image !== '' && !isUpdate ?<Image source={{ uri: values.image }} resizeMode="cover" style={{ width: windowWidth*.7, height: windowHeigth*.2, }} />:null}
+            { data.image && data.image !== '' && !isUpdate ?
+            <View>
+               <Text style={[styles.subTitle, { alignSelf: 'flex-start', marginBottom: 10}]}>Gambar</Text> 
+              <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: windowWidth*.7, height: windowHeigth*.2, }} />
+            </View>
+            :null}
           </View>)}
           
       </Formik>
