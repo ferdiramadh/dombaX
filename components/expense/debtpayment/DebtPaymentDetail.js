@@ -6,7 +6,7 @@ import {Picker} from '@react-native-picker/picker'
 const DebtPaymentDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue }) => {
   return (
     <View>
-            <View style={styles.itemWrap}>
+           <View style={[styles.itemWrap, data.namaTransaksi || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Nama Transaksi</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('namaTransaksi')}
@@ -14,20 +14,20 @@ const DebtPaymentDetail = ({data, isUpdate, showDatepicker, values, handleBlur, 
                 value={values.namaTransaksi}
                 style={styles.textInput}
                 placeholder='Nama Transaksi'
-              /> : <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
+              /> : data.namaTransaksi && <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.jumlah || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Jumlah</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('jumlah')}
                 onBlur={handleBlur('jumlah')}
                 value={values.jumlah}
                 style={styles.textInput}
-                placeholder='Jumlah'
+                placeholder='Jumlah Piutang'
                 keyboardType='numeric'
-              /> : <Text style={styles.itemText}>{data.jumlah}</Text>}
+              /> : data.jumlah && <Text style={styles.itemText}>{data.jumlah}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.pinjamDari || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Pinjam Dari</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('pinjamDari')}
@@ -35,51 +35,56 @@ const DebtPaymentDetail = ({data, isUpdate, showDatepicker, values, handleBlur, 
                 value={values.pinjamDari}
                 style={styles.textInput}
                 placeholder='Diberikan Dari'
-              /> : <Text style={styles.itemText}>{data.pinjamDari}</Text>}
+              /> : data.pinjamDari && <Text style={styles.itemText}>{data.pinjamDari}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.bunga || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Bunga</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('bunga')}
                 onBlur={handleBlur('bunga')}
                 value={values.bunga}
                 style={styles.textInput}
-                placeholder='bunga'
+                placeholder='Bunga'
                 keyboardType='numeric'
-              /> : <Text style={styles.itemText}>{data.bunga}</Text>}
+              /> : data.bunga && <Text style={styles.itemText}>{data.bunga}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.tanggal || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Tanggal Bayar</Text>
               {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                     <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Bayar"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
-            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggal}</Text>}
+            </TouchableOpacity> : data.tanggal && <Text style={styles.itemText}>{data.tanggal}</Text>}
             </View>
-            <View style={styles.itemWrap}>
-            <Text style={styles.subTitle}>Status Bayar</Text>
-            {isUpdate ? <View style={styles.pickerContainer}>
-            <Picker
-                selectedValue={values.statusBayar}
-                onValueChange={(itemValue, itemIndex) =>
-                {
-                    setFieldValue('statusBayar',itemValue)
-                }
-                }
-                style={{
-                    fontSize: 22,
-                    fontWeight:'bold',
-                    color: 'black',
-                }}
-                prompt="Status Bayar"
-                >
-                <Picker.Item label="Lunas" value="Lunas" />
-                <Picker.Item label="Belum Lunas" value="Belum Lunas" />
-            </Picker>
-            </View> : <Text style={styles.itemText}>{data.statusBayar}</Text> }
-             </View>
-            <View style={styles.itemWrap}>
+            {isUpdate ?<View style={[styles.itemWrap, data.statusBayar || isUpdate? {} : {display: 'none'}]}>
+              <Text style={styles.subTitle}>Status Bayar</Text>
+               <View style={styles.pickerContainer}>
+                <Picker
+                    selectedValue={values.statusBayar}
+                    onValueChange={(itemValue, itemIndex) =>
+                    {
+                      setFieldValue('statusBayar',itemValue)
+                    }
+                    }
+                    style={{
+                      fontSize: 22,
+                      fontWeight:'bold',
+                      color: 'black',
+                    }}
+                    prompt="Status Bayar"
+                    >
+                    <Picker.Item label="Lunas" value="Lunas" />
+                    <Picker.Item label="Belum Lunas" value="Belum Lunas" />
+                </Picker>
+            </View> 
+            </View> : data.statusBayar && (
+               <View style={styles.itemWrap}>
+                <Text style={styles.subTitle}>Status Bayar</Text>
+                <Text style={styles.itemText}>{data.statusBayar}</Text> 
+              </View>
+            )}
+            <View style={[styles.itemWrap, data.deskripsi || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Deskripsi</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('deskripsi')}
@@ -87,7 +92,7 @@ const DebtPaymentDetail = ({data, isUpdate, showDatepicker, values, handleBlur, 
                 value={values.deskripsi}
                 style={styles.textInput}
                 placeholder='Deskripsi'
-              /> : <Text style={styles.itemText}>{data.deskripsi}</Text>}
+              /> : data.deskripsi && <Text style={styles.itemText}>{data.deskripsi}</Text>}
             </View> 
     </View>
   )

@@ -6,7 +6,7 @@ import {Picker} from '@react-native-picker/picker'
 const OtherExpenseDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue }) => {
   return (
     <View>
-            <View style={styles.itemWrap}>
+           <View style={[styles.itemWrap, data.namaTransaksi || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Nama Transaksi</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('namaTransaksi')}
@@ -14,29 +14,29 @@ const OtherExpenseDetail = ({data, isUpdate, showDatepicker, values, handleBlur,
                 value={values.namaTransaksi}
                 style={styles.textInput}
                 placeholder='Nama Transaksi'
-              /> : <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
+              /> : data.namaTransaksi && <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.jumlah || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Jumlah</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('jumlah')}
                 onBlur={handleBlur('jumlah')}
                 value={values.jumlah}
                 style={styles.textInput}
-                placeholder='Jumlah'
+                placeholder='Jumlah Piutang'
                 keyboardType='numeric'
-              /> : <Text style={styles.itemText}>{data.jumlah}</Text>}
+              /> : data.jumlah && <Text style={styles.itemText}>{data.jumlah}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.tanggal || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Tanggal Pengeluaran</Text>
               {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                     <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Pengeluaran"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
-            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggal}</Text>}
+            </TouchableOpacity> : data.tanggal && <Text style={styles.itemText}>{data.tanggal}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.deskripsi || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Deskripsi</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('deskripsi')}
@@ -44,7 +44,7 @@ const OtherExpenseDetail = ({data, isUpdate, showDatepicker, values, handleBlur,
                 value={values.deskripsi}
                 style={styles.textInput}
                 placeholder='Deskripsi'
-              /> : <Text style={styles.itemText}>{data.deskripsi}</Text>}
+              /> : data.deskripsi && <Text style={styles.itemText}>{data.deskripsi}</Text>}
             </View> 
     </View>
   )

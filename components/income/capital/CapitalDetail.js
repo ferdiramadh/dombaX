@@ -7,17 +7,17 @@ import {Picker} from '@react-native-picker/picker'
 const CapitalDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue }) => {
   return (
     <View>
-            <View style={styles.itemWrap}>
-              <Text style={styles.subTitle}>Nama Transaksi</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('namaTransaksi')}
-                onBlur={handleBlur('namaTransaksi')}
-                value={values.namaTransaksi}
-                style={styles.textInput}
-                placeholder='Nama Transaksi'
-              /> : <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
-            </View>
-        <View style={styles.itemWrap}>
+        <View style={[styles.itemWrap, data.namaTransaksi || isUpdate? {} : {display: 'none'}]}>
+          <Text style={styles.subTitle}>Nama Transaksi</Text>
+          {isUpdate ? <TextInput
+            onChangeText={handleChange('namaTransaksi')}
+            onBlur={handleBlur('namaTransaksi')}
+            value={values.namaTransaksi}
+            style={styles.textInput}
+            placeholder='Nama Transaksi'
+          /> : data.namaTransaksi && <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
+        </View>
+        <View style={[styles.itemWrap, data.bentukModal || isUpdate? {} : {display: 'none'}]}>
             <Text style={styles.subTitle}>Bentuk Modal</Text>
             {isUpdate ? <View style={styles.pickerContainer}>
             <Picker
@@ -37,9 +37,9 @@ const CapitalDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                 <Picker.Item label="Uang" value="Uang" />
                 <Picker.Item label="Barang" value="Barang" />
             </Picker>
-        </View> : <Text style={styles.itemText}>{data.bentukModal}</Text> }
+        </View> : data.bentukModal && <Text style={styles.itemText}>{data.bentukModal}</Text> }
         </View>
-            <View style={styles.itemWrap}>
+        <View style={[styles.itemWrap, data.jumlah || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Jumlah</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('jumlah')}
@@ -48,9 +48,9 @@ const CapitalDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                 style={styles.textInput}
                 placeholder='Jumlah'
                 keyboardType='numeric'
-              /> : <Text style={styles.itemText}>{data.jumlah}</Text>}
+              /> : data.jumlah && <Text style={styles.itemText}>{data.jumlah}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.diberikanDari || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Diberikan Dari</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('diberikanDari')}
@@ -58,9 +58,9 @@ const CapitalDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                 value={values.diberikanDari}
                 style={styles.textInput}
                 placeholder='Diberikan Dari'
-              /> : <Text style={styles.itemText}>{data.diberikanDari}</Text>}
+              /> : data.diberikanDari && <Text style={styles.itemText}>{data.diberikanDari}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.kepemilikanModal || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Kepemilikan Modal</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('kepemilikanModal')}
@@ -68,18 +68,18 @@ const CapitalDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                 value={values.kepemilikanModal}
                 style={styles.textInput}
                 placeholder='Kepemilikan Modal'
-              /> : <Text style={styles.itemText}>{data.kepemilikanModal}</Text>}
+              /> : data.kepemilikanModal && <Text style={styles.itemText}>{data.kepemilikanModal}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.tanggal || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Tanggal Modal Masuk</Text>
               {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
                 <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
                     <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Modal Masuk"}</Text>   
                     <MaterialIcons name="date-range" size={24} color="black" />    
                 </View>                
-            </TouchableOpacity> : <Text style={styles.itemText}>{data.tanggal}</Text>}
+            </TouchableOpacity> : data.tanggal && <Text style={styles.itemText}>{data.tanggal}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.pajak || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Pajak</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('pajak')}
@@ -88,9 +88,9 @@ const CapitalDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                 style={styles.textInput}
                 placeholder='Pajak'
                 keyboardType='numeric'
-              /> : <Text style={styles.itemText}>{data.pajak}</Text>}
+              /> : data.pajak && <Text style={styles.itemText}>{data.pajak}</Text>}
             </View>
-            <View style={styles.itemWrap}>
+            <View style={[styles.itemWrap, data.deskripsi || isUpdate? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Deskripsi</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('deskripsi')}
@@ -98,7 +98,7 @@ const CapitalDetail = ({data, isUpdate, showDatepicker, values, handleBlur, hand
                 value={values.deskripsi}
                 style={styles.textInput}
                 placeholder='Deskripsi'
-              /> : <Text style={styles.itemText}>{data.deskripsi}</Text>}
+              /> : data.deskripsi && <Text style={styles.itemText}>{data.deskripsi}</Text>}
             </View> 
     </View>
   )
