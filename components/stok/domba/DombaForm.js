@@ -118,7 +118,10 @@ const DombaForm = ({setFieldValue,handleChange,handleBlur, values,handleSubmit,s
               <TouchableOpacity style={styles.btnSave} onPress={() => setModalVisible(!modalVisible)}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center'}}>Batal</Text>                  
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={handleSubmit}>
+              <TouchableOpacity style={[styles.btnSave,{backgroundColor:'#ED9B83'}]} onPress={() => {
+                 setFieldValue("tipe", "domba")
+                 handleSubmit()
+              }}>
                   <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Simpan</Text>                  
               </TouchableOpacity>
             </View>
