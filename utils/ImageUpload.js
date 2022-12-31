@@ -69,51 +69,7 @@ export const storeImgData = async (image) => {
     }     
 }
 
-
-
-  export const pickCamera = async (storageFolder, id, setLoad, collection, setPercent) => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      maxWidth: 500,
-      maxHeight: 500,
-    });
-
-    console.log(result);
-
-    
-
-    if (!result.canceled) {
-      // setImage(result.assets[0].uri);
-      uploadImage(result.assets[0].uri, storageFolder, id, setLoad, collection, setPercent);
-      
-      
-    }
-  };
-  
-  
-
-  // export const pickImage = async (setFunc) => {
-  //   // No permissions request is necessary for launching the image library
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //     maxWidth: 500,
-  //     maxHeight: 500,
-  //   });
-
-  //   console.log(result);
-
-  //   if (!result.canceled) {
-  //       setFunc(result.assets[0].uri);
-  //   }
-  // };
-
-  export const pickImage = async (storageFolder, id, setLoad, collection, setPercent) => {
+  export const pickImage = async (storageFolder, id, setLoad, collection, setPercent, field) => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -127,7 +83,7 @@ export const storeImgData = async (image) => {
     console.log(result);
 
     if (!result.canceled) {
-      uploadImage(result.assets[0].uri, storageFolder, id, setLoad, collection, setPercent);
+      uploadImage(result.assets[0].uri, storageFolder, id, setLoad, collection, setPercent, field);
     }
   };
 
@@ -155,14 +111,13 @@ export const storeImgData = async (image) => {
   };
 
   export const updateImageDoc = (collection, itemId, downloadUrl, field) => {
+    const item =  { [field] : downloadUrl}
     if(downloadUrl){
       return firebase
       .firestore()
       .collection(collection)
       .doc(itemId)
-      .update({
-        field : downloadUrl
-      }).then(() => {
+      .update(item).then(() => {
         console.log('Item Updated')
       }).catch((error) => console.log(error))
     } else {
@@ -171,7 +126,7 @@ export const storeImgData = async (image) => {
   }
 
   
-  export const uploadImage = async (image, storageFolder, id, setLoad, collection, setPercent) => {
+  export const uploadImage = async (image, storageFolder, id, setLoad, collection, setPercent, field) => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function() {
@@ -213,7 +168,7 @@ export const storeImgData = async (image) => {
       snapshot.snapshot.ref.getDownloadURL()
       .then((downloadUrl) => {
         console.log("File available at" + downloadUrl)
-        updateImageDoc(collection, id, downloadUrl)
+        updateImageDoc(collection, id, downloadUrl, field)
         // setFunc(downloadUrl)
         setLoad(false)
         blob.close()

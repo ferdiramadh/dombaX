@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View,Image, TouchableOpacity, Button, ActivityIndicator, ScrollView } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, View,Image, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
+import React, { useContext, useState } from 'react';
 import {useSelector} from 'react-redux'
-import { MaterialIcons, Feather,AntDesign,FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { PhotoContext } from '../../context/PhotoProfileContext';
-import { pickImage, pickCamera, removeImage} from '../../utils/ImageUpload';
+import { pickImage } from '../../utils/ImageUpload';
 import { windowWidth, windowHeigth } from '../../utils/DimensionSetup'
 import EditAccount from './EditAccount';
 import DisplayProfile from './DisplayProfile';
@@ -28,16 +28,9 @@ const AccountDisplay = ({navigation}) => {
           {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={100} color="black" />}</View>
         }
           <View style={styles.photoOptionsWrap}>
-            {/* <TouchableOpacity  onPress={() => pickCamera("Profile", profileData.id, setIsLoading, "profile", setPercent)} style={styles.photoButton}>
-              <Feather name="camera" size={24} color="lightgrey" /><Text style={{color:"grey"}}>Take A Photo</Text>
-            </TouchableOpacity>
-            <TouchableOpacity  onPress={() => removeImage("profile", profileData.id)} style={styles.photoButton}>
-              <AntDesign name="delete" size={24} color="lightgrey" /><Text style={{color:"grey"}}>Remove Photo</Text>
-            </TouchableOpacity> */}
              {isLoading?null:
-            <TouchableOpacity  onPress={() => pickImage("Profile", profileData.id, setIsLoading, "profile", setPercent)} style={styles.photoButton}>
+            <TouchableOpacity  onPress={() => pickImage("Profile", profileData.id, setIsLoading, "profile", setPercent, "image")} style={styles.photoButton}>
               <FontAwesome name="camera" size={24} color="#ED9B83"/>
-              {/* <Text style={{color:"grey"}}>Select A Photo</Text> */}
             </TouchableOpacity>}
           </View>
 
@@ -67,13 +60,11 @@ const styles = StyleSheet.create({
     alignItems:'center',  
   },
   upperContent:{
-  
     width:'100%',
     height:windowHeigth*.2,
     justifyContent:'center',
     alignItems:'center',
     position: 'relative'
-   
   },
   textName:{
     fontSize: 28,
@@ -106,7 +97,6 @@ const styles = StyleSheet.create({
   photoOptionsWrap: {
     flexDirection:'row',
     justifyContent:'space-around',
-   
     marginVertical: 10,
     position: 'absolute',
     bottom: 30,
@@ -114,7 +104,6 @@ const styles = StyleSheet.create({
   },
   photoButton:{
     justifyContent:'center',
-    
     alignItems:'center'
   },
   progressBar: {

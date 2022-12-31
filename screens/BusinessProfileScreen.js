@@ -1,10 +1,12 @@
 import { StyleSheet, View,Image, ActivityIndicator, Alert, TextInput, TouchableOpacity, Text} from 'react-native';
 import React, { useState} from 'react'
 import {useSelector} from 'react-redux'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import firebase from '../Firebaseconfig'
 import DisplayBusinessProfile from '../components/akunDetail/DisplayBusinessProfile';
+import { pickImage } from '../utils/ImageUpload';
+import { windowWidth, windowHeigth } from '../utils/DimensionSetup';
 
 const BusinessProfileScreen = () => {
    
@@ -12,7 +14,7 @@ const BusinessProfileScreen = () => {
     const [ isLoading, setIsLoading ] = useState(false)
     console.log({profileData})
     const [isEdit, setIsEdit ] = useState(false)
-
+    const [ percent, setPercent ] = useState("0%")
     const updateItem = (item) => {
         return firebase
         .firestore()
@@ -43,9 +45,17 @@ const BusinessProfileScreen = () => {
       >
         {({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => (
             <View style={styles.container}>
-              {isLoading?<ActivityIndicator size="small" color="orange" />: <View>
-                {profileData.imageBisnis ? <Image source={{ uri: profileData.imageBisnis }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={200} color="black" />}</View>
-              }
+              <View style={styles.upperContent}>
+                {isLoading?<ActivityIndicator size="small" color="orange" />: <View>
+                  {profileData.imageBisnis ? <Image source={{ uri: profileData.imageBisnis }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={100} color="black" />}</View>
+                }
+                <View style={styles.photoOptionsWrap}>
+                  {isLoading?null:
+                  <TouchableOpacity  onPress={() => pickImage("Profile", profileData.id, setIsLoading, "profile", setPercent, "imageBisnis")} style={styles.photoButton}>
+                    <FontAwesome name="camera" size={24} color="#ED9B83"/>
+                  </TouchableOpacity>}
+                </View>
+              </View>
                   { isEdit? 
                     <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
                       <TextInput
@@ -104,13 +114,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-       
     },
     photoProfileIcon:{
-        width:120,
-        height:120,
-        borderRadius:60,
-        marginVertical: 10
+      width:100,
+      height:100,
+      borderRadius:60
     }, 
     textInput:{
         justifyContent:'center',
@@ -134,4 +142,23 @@ const styles = StyleSheet.create({
         marginTop: 10,  
         marginBottom: 20
       },
+      photoOptionsWrap: {
+        flexDirection:'row',
+        justifyContent:'space-around',
+        marginVertical: 10,
+        position: 'absolute',
+        bottom: 30,
+        right: windowWidth/2 - 60
+    },
+    photoButton:{
+      justifyContent:'center',
+      alignItems:'center'
+    },
+    upperContent:{
+      width:'100%',
+      height:windowHeigth*.2,
+      justifyContent:'center',
+      alignItems:'center',
+      position: 'relative'
+    },
 })

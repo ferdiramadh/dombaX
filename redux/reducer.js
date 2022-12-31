@@ -22,7 +22,8 @@ const initialProfileState = {
     dapatInfo:'',
     jenisKelamin: '',
     lokasiBisnis:'',
-    image: ''
+    image: '',
+    imageBisnis: ''
 
 }
 
