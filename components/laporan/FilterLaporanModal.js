@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Alert,  StyleSheet, Text, ToastAndroid, View, TouchableOpacity } from 'react-native';
 import Modal from "react-native-modal";
 import { CheckBox } from 'react-native-elements'
@@ -6,6 +6,32 @@ import { MaterialIcons } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup';
 
+const SelectDateComponent = ({selectDate, isDateError, pickDate}) => {
+  return(
+    <View>
+        <View style={styles.txtInputWrapper}>
+          <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => pickDate(true) }>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={{color:'#474747'}}>{selectDate.fromDate !== ''?selectDate.fromDate: 'Pilih Tanggal'}</Text>   
+                  <MaterialIcons name="date-range" size={24} color="black" />    
+              </View>                
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => pickDate(false) }>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={{color:'#474747'}}>{selectDate.toDate !== ''?selectDate.toDate: 'Pilih Tanggal'}</Text>   
+                  <MaterialIcons name="date-range" size={24} color="black" />    
+              </View>                
+          </TouchableOpacity>
+        </View>
+        <View>
+          <View style={styles.pilihWrapper}>
+            <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Dari</Text>   
+            <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Sampai</Text>  
+          </View> 
+        </View>
+    </View>
+  )
+}
 
 const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filterList, setFilterList, filterBy, setFilterBy, selectDate, setSelectDate, checkingDate, isDateError, setIsDateError, filterFunction, listExpense, listIncome, setFilteredList, setFilteredListIncome, resetFilter, showTanggal, setShowTanggal  }) => {
 
@@ -97,6 +123,10 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
   
   }    
 
+  const pickDate = (val) => {
+    setIsFromDate(val)
+    showDatepicker()
+  }
 
   return (
    
@@ -131,54 +161,28 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                   filterList.map((item, i) => {
                   
                   return (
-                    <View style={styles.filterSelection} key={item.id}>
-                      <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
-                      <CheckBox
-                      center
-                      checked={item.isChecked}
-                      checkedIcon='dot-circle-o'
-                      uncheckedIcon='circle-o'
-                      onPress={() => {
-                        if(item.isChecked) {
-                          console.log('do nothing')
-                        } else {
-                          checkboxHandler(item, i)
-                        }
-                      }}
-                    />
-
+                    <View>
+                      <View style={styles.filterSelection} key={item.id}>
+                        <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
+                        <CheckBox
+                        center
+                        checked={item.isChecked}
+                        checkedIcon='dot-circle-o'
+                        uncheckedIcon='circle-o'
+                        onPress={() => {
+                          if(item.isChecked) {
+                            console.log('do nothing')
+                          } else {
+                            checkboxHandler(item, i)
+                          }
+                        }}
+                      />
+                      </View>
+                      {(item.sortBy == "Pilih Tanggal" || item.sortBy == 'Nominal Transaksi') && showTanggal && <SelectDateComponent selectDate={selectDate} isDateError={isDateError} pickDate={pickDate}/>} 
                     </View>
                   )
                 })}
-                {showTanggal && (
-                <View>
-                  <View style={styles.txtInputWrapper}>
-                    <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => {
-                      setIsFromDate(true)
-                      showDatepicker()
-                    }}>
-                        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                            <Text style={{color:'#474747'}}>{selectDate.fromDate !== ''?selectDate.fromDate: 'Pilih Tanggal'}</Text>   
-                            <MaterialIcons name="date-range" size={24} color="black" />    
-                        </View>                
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => {
-                      setIsFromDate(false)
-                      showDatepicker()
-                    }}>
-                        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                            <Text style={{color:'#474747'}}>{selectDate.toDate !== ''?selectDate.toDate: 'Pilih Tanggal'}</Text>   
-                            <MaterialIcons name="date-range" size={24} color="black" />    
-                        </View>                
-                    </TouchableOpacity>
-                  </View>
-                  <View>
-                    <View style={styles.pilihWrapper}>
-                      <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Dari</Text>   
-                      <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Sampai</Text>  
-                    </View> 
-                  </View>
-                </View> )} 
+               
                 { filterBy && (
                 <TouchableOpacity style={styles.btnPilih} onPress={() => {
                       if(filterBy[0]['sortBy'] == "Pilih Tanggal" && (selectDate.fromDate == "" || selectDate.toDate == "")){
