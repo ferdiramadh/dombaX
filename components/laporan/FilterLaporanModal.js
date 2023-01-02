@@ -150,7 +150,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                     </View>
                   )
                 })}
-                {showTanggal? 
+                {showTanggal && (
                 <View>
                   <View style={styles.txtInputWrapper}>
                     <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => {
@@ -178,7 +178,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                       <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Sampai</Text>  
                     </View> 
                   </View>
-                </View> : null} 
+                </View> )} 
                 { filterBy && (
                 <TouchableOpacity style={styles.btnPilih} onPress={() => {
                       if(filterBy[0]['sortBy'] == "Pilih Tanggal" && (selectDate.fromDate == "" || selectDate.toDate == "")){
@@ -259,16 +259,14 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'space-between',
       alignItems:'center',
-      paddingHorizontal: 5,
-
     },
     textFilter: {
       fontSize: 18,
     },
     filterWrap:{
-     
-      width:'80%',
-      height: windowHeigth * .1
+      width:'90%',
+      height: windowHeigth * .1,
+      paddingHorizontal: 10
     },
     txtInputWrapper:{
       flexDirection: 'row',
