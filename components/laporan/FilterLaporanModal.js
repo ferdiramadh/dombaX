@@ -177,19 +177,9 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                       <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Dari</Text>   
                       <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Sampai</Text>  
                     </View> 
-                   {/* {isDateError? null:
-                    <TouchableOpacity style={styles.btnPilih} onPress={() => {
-                      if(selectDate.fromDate !== '' && selectDate.toDate !== '') {
-                        setFilterVisible(!filterVisible)
-                      } else {
-                        Alert.alert( "Perhatian!", "Silakan Pilih Tanggal Dahulu")
-                      }
-                    }}>
-                      <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
-                    </TouchableOpacity>} */}
                   </View>
                 </View> : null} 
-                { filterBy? 
+                { filterBy && (
                 <TouchableOpacity style={styles.btnPilih} onPress={() => {
                       if(filterBy[0]['sortBy'] == "Pilih Tanggal" && (selectDate.fromDate == "" || selectDate.toDate == "")){
                         checkingDate(selectDate.fromDate, selectDate.toDate)
@@ -203,7 +193,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                     }}>
                       <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
                 </TouchableOpacity> 
-                : null}
+                )}
               </View> 
           </View>
         </View>
