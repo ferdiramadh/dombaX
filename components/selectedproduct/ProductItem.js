@@ -155,7 +155,8 @@ const styles = StyleSheet.create({
     rightDombaInfo:{
         width:'40%',
         paddingLeft: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingRight: 20
     },
     infoData:{
         fontSize: 14,
@@ -178,7 +179,8 @@ const styles = StyleSheet.create({
     totalHarga: {
         color: '#43B88E',
         fontWeight:'bold',
-        fontSize: 16
+        fontSize: 16,
+        textAlign: 'right'
     },
     upperLeft: {
         width: '50%',
