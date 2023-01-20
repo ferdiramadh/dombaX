@@ -165,17 +165,17 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                       <View style={styles.filterSelection} key={item.id}>
                         <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
                         <CheckBox
-                        center
-                        checked={item.isChecked}
-                        checkedIcon='dot-circle-o'
-                        uncheckedIcon='circle-o'
-                        onPress={() => {
-                          if(item.isChecked) {
-                            console.log('do nothing')
-                          } else {
-                            checkboxHandler(item, i)
-                          }
-                        }}
+                          center
+                          checked={item.isChecked}
+                          checkedIcon='dot-circle-o'
+                          uncheckedIcon='circle-o'
+                          onPress={() => {
+                            if(item.isChecked) {
+                              console.log('do nothing')
+                            } else {
+                              checkboxHandler(item, i)
+                            }
+                          }}
                       />
                       </View>
                       {(item.sortBy == "Pilih Tanggal" || item.sortBy == 'Nominal Transaksi') && showTanggal && <SelectDateComponent selectDate={selectDate} isDateError={isDateError} pickDate={pickDate}/>} 
@@ -185,15 +185,13 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                
                 { filterBy && (
                 <TouchableOpacity style={styles.btnPilih} onPress={() => {
-                      if(filterBy[0]['sortBy'] == "Pilih Tanggal" && (selectDate.fromDate == "" || selectDate.toDate == "")){
-                        checkingDate(selectDate.fromDate, selectDate.toDate)
-                      } else {
-                        setIsFilter(true)
-                        setFilterVisible(!filterVisible)
-                        filterFunction(filterBy, listExpense, setFilteredList)
-                        filterFunction(filterBy, listIncome, setFilteredListIncome)
-                        ToastAndroid.show(`Filter Berdasarkan ${filterBy[0]['sortBy']}`, ToastAndroid.SHORT)  
-                      }
+                    let check = checkingDate(selectDate.fromDate, selectDate.toDate)
+                    if(check) {
+                      setIsFilter(true)
+                      setFilterVisible(!filterVisible)
+                      filterFunction(filterBy, listIncome, setFilteredList, selectDate)
+                      ToastAndroid.show(`Filter Berdasarkan ${filterBy[0]['sortBy']}`, ToastAndroid.SHORT)  
+                  }
                     }}>
                       <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Pilih</Text>
                 </TouchableOpacity> 

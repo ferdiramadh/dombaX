@@ -1,91 +1,254 @@
-import React, { useContext } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, ToastAndroid, Alert } from 'react-native';
 import Modal from "react-native-modal";
-import { PhotoContext } from '../../context/PhotoProfileContext';
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup';
 import { FilterTransactionContext } from '../../context/FilterTransactionContext';
+import { CheckBox } from 'react-native-elements'
+import { MaterialIcons } from '@expo/vector-icons'
+import {Picker} from '@react-native-picker/picker'
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useSelector} from 'react-redux'
+import { count } from 'rxjs';
 
-const FilterIncomeModal = ({filterVisible, setFilterVisible}) => {
-  const { testStyle } = useContext(PhotoContext)
-  const { setIsFilter, setFilterBy, isFilter,filterList} = useContext(FilterTransactionContext)
+const SelectDateComponent = ({selectDate, isDateError, pickDate}) => {
+  return(
+    <View>
+        <View style={styles.txtInputWrapper}>
+          <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => pickDate(true) }>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={{color:'#474747'}}>{selectDate.fromDate !== ''?selectDate.fromDate: 'Pilih Tanggal'}</Text>   
+                  <MaterialIcons name="date-range" size={24} color="black" />    
+              </View>                
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => pickDate(false) }>
+              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                  <Text style={{color:'#474747'}}>{selectDate.toDate !== ''?selectDate.toDate: 'Pilih Tanggal'}</Text>   
+                  <MaterialIcons name="date-range" size={24} color="black" />    
+              </View>                
+          </TouchableOpacity>
+        </View>
+        <View>
+          <View style={styles.pilihWrapper}>
+            <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Dari</Text>   
+            <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Sampai</Text>  
+          </View> 
+        </View>
+    </View>
+  )
+}
 
+const NominalComponent = ({data, setCount, count}) => {
+
+  return(
+    <View>
+      <View style={styles.txtInputWrapper}>
+        <TextInput style={[styles.textInput,{borderColor:'black'}]} 
+          placeholder='Rp.'
+          keyboardType='numeric'
+          onChangeText={(value) => setCount((prev) => ({ ...prev, from: value}))}
+          value={count.from}
+        />
+        <TextInput style={[styles.textInput,{borderColor:'black'}]} 
+          placeholder='Rp.'
+          keyboardType='numeric'
+          onChangeText={(value) => setCount((prev) => ({ ...prev, to: value}))}
+          value={count.to}
+        />
+      </View>
+      <View>
+        <View style={styles.pilihWrapper}>
+          <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Dari</Text>   
+          <Text style={{color:'#474747',fontSize:14, fontWeight:'700', }}>Sampai</Text>  
+        </View> 
+      </View>
+      <View style={styles.txtInputWrapper}>
+        <View style={styles.pickerContainer}>
+            <Picker
+                selectedValue={count.category}
+                onValueChange={(itemValue, itemIndex, prev) =>
+                  setCount({...prev, category: itemValue})
+                }
+                style={{
+                  fontSize: 22,
+                  fontFamily: 'Inter-Bold',
+                  color: "#474747",
+                }} 
+                prompt="Kategori"
+                >
+                {data.map((item, index) => <Picker.Item label={item.title} value={item.title} key={index}/>)}
+            </Picker>
+          </View>
+        </View>
+    </View>
+  )
+}
+const FilterIncomeModal = ({filterVisible, setFilterVisible, isIncome}) => {
+  const { filterBy, setIsFilter, filterList, checkboxHandler, resetFilter, transactionCategories, showTanggal, filterFunction, setFilteredList} = useContext(FilterTransactionContext)
+  
+ 
+  const incomeCategories = transactionCategories.purchaseCategories
+  const expenseCategories = transactionCategories.sellingCategories
+
+  const transactionsData = useSelector(state => state.transactionsReducer)
+  const listIncome = transactionsData.listIncome
+  const listExpense = transactionsData.listExpense
+  //Setting Nominal
+  const [ count, setCount ] = useState({
+    from : 0,
+    to : 0,
+    category: incomeCategories[0].title
+  })
+
+
+  //Setting Range Tanggal
+  const [ selectDate, setSelectDate ] = useState({
+    fromDate : '',
+    toDate: ''
+  })
+  
+  //Check if ToDate > FromDate
+ 
+  const checkingDate = (fromDate, toDate ) => {
+      let a = new Date(fromDate)
+      let b = new Date(toDate)
+
+      if (filterBy[0]['sortBy'] !== "Pilih Tanggal") 
+      return true
+      if( a > b ) {
+          
+          setIsDateError(true)
+          Alert.alert( "Perhatian!", "Tanggal Dari Harus Lebih Dari Tanggal Sampai", [{ text: "Reset Tanggal", onPress: () => {
+              setIsDateError(false)
+              setSelectDate({
+                  fromDate : '',
+                  toDate: ''
+                }) }
+          }])
+          return false
+      } else if(fromDate == '' || toDate == '') {
+          console.log("wah")
+          Alert.alert( "Perhatian!", "Silakan Isi Tanggal Terlebih Dahulu.")
+      } else 
+      {
+          console.log("aman")
+          setIsDateError(false)
+      }
+      return true
+  }
+
+
+  const [ isDateError, setIsDateError ] = useState(false)
+  //Pilih Tanggal checkbox
+
+  const [ isFromDate, setIsFromDate ] = useState(true)
+
+  //datetimepicker
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const onChange = (event, selectedDate) => {
+    if(selectedDate && isFromDate){
+
+      setShow(false);
+      setSelectDate((prevState) => ({
+        ...prevState,
+        fromDate: selectedDate.toISOString().split('T')[0]
+      }))
+       
+    } else if(selectedDate && !isFromDate){
+      setShow(false);
+      setSelectDate((prevState) => ({
+        ...prevState,
+        toDate: selectedDate.toISOString().split('T')[0]
+      }))
+    } else {
+        console.log("eweuh")
+        setShow(false);
+        // setFieldValue('tanggal', '')
+    }
+  };
+  const pickDate = (val) => {
+    setIsFromDate(val)
+    showDatepicker()
+  }
   return (
       <Modal
-      backdropColor='white'
-      deviceWidth={windowWidth}
-      deviceHeight={windowHeigth}
-      backdropOpacity={0.8}
-        // animationType="slide"
-        // transparent={true}
+        backdropColor='white'
+        deviceWidth={windowWidth}
+        deviceHeight={windowHeigth}
+        backdropOpacity={0.8}
         isVisible={filterVisible}
-        // onRequestClose={() => {
-        //   Alert.alert('Modal has been closed.');
-        //   setFilterVisible(!filterVisible);
-        // }}
-        onSwipeComplete={() => setFilterVisible(!filterVisible)}
+        onSwipeComplete={() => {
+          resetFilter()
+          setFilterVisible(!filterVisible)
+        }}
+        onBackdropPress={() => {
+          resetFilter()
+          setFilterVisible(!filterVisible)
+        }}
         swipeDirection="down"
         >
         <View style={styles.centeredView}>
+        {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date}
+                mode={mode}
+                is24Hour={true}
+                onChange={onChange}
+              />
+            )}
           <View style={styles.modalView}>
             <View style={styles.handleModal}></View>
-              <View style={styles.filterDates}>
-                {/* <TouchableOpacity style={styles.filterSelection} onPress={() => {
-                  // loadUserProduct()
-                  setIsFilter(true)
-                  setFilterVisible(!filterVisible)
-                }}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Stok Terendah</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterSelection}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Stok Tertinggi</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterSelection}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Harga Beli Terendah</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.filterSelection}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Harga Beli Tertinggi</Text>
-                </TouchableOpacity> */}
-
+              <View style={styles.filterWrap}>
                 { filterList.map((item, i) => {
                   return (
-                    <TouchableOpacity style={styles.filterSelection} key={item.id} onPress={() => {
-                      console.log('filterList')
-                      setFilterBy(item.sortBy)
-                      setIsFilter(!isFilter)
-                      setFilterVisible(!filterVisible)
-                    }}>
-                      <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
-                    </TouchableOpacity>
+                    <View>
+                      <View style={styles.filterSelection} key={item.id}>
+                          <Text style={[styles.textFilter,{fontFamily: 'Inter-SemiBold'}]}>{item.sortBy}</Text>
+                          <CheckBox
+                          center
+                          checked={item.isChecked}
+                          checkedIcon='dot-circle-o'
+                          uncheckedIcon='circle-o'
+                          onPress={() => {
+                            if(item.isChecked) {
+                              console.log('do nothing')
+                            } else {
+                              checkboxHandler(item, i)
+                            }
+                          }}
+                          />
+                      </View>
+                      {item.sortBy == "Pilih Tanggal" && showTanggal && <SelectDateComponent selectDate={selectDate} isDateError={isDateError} pickDate={pickDate}/>}
+                      {item.sortBy == "Nominal Transaksi" && filterBy?.[0]['sortBy'] == "Nominal Transaksi" && <NominalComponent data={isIncome == 'income'? incomeCategories : expenseCategories} setCount={setCount} count={count}/>}
+                    </View>
                   )
-                })}
-                {/* <TouchableOpacity style={styles.filterSelection} onPress={() => {
-                  setIsFilter(false)
-                  setFilterVisible(!filterVisible)
-                  setFilterBy()
-                }}>
-                  <Text style={[styles.textFilter,{fontFamily: 'Inter'}]}>Reset</Text>
-                </TouchableOpacity> */}
-                <View style={{ flexDirection: 'row'}}>
-                  <Text style={{ marginRight: windowWidth*.4}}>Dari</Text>
-                  <Text>Ke</Text>
-                </View>
-                <View style={styles.textInputWrapper}>
-                  <TextInput style={styles.textInput} />
-                  <TextInput style={styles.textInput} />
-                </View>
-                
+                })}           
+                <TouchableOpacity style={styles.btnPilih} onPress={() => {
+                        let check = checkingDate(selectDate.fromDate, selectDate.toDate)
+                        let obj = filterBy[0]['sortBy'] == "Pilih Tanggal" ? selectDate : count
+                        let array = isIncome == 'income' ? listIncome : listExpense
+                        if(check) {
+                          setIsFilter(true)
+                          setFilterVisible(!filterVisible)
+                          filterFunction(filterBy, array, setFilteredList, obj)
+                          ToastAndroid.show(`Filter Berdasarkan ${filterBy[0]['sortBy']}`, ToastAndroid.SHORT)  
+                        }
+                        console.log({array})
+                    }}>
+                      <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Lakukan Penyaringan</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.filterTotalAmount}>
-                <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>Nilai Transaksi</Text>
-                <View style={{ flexDirection: 'row'}}>
-                  <Text style={{ marginRight: windowWidth*.4}}>Dari</Text>
-                  <Text>Ke</Text>
-                </View>
-                <View style={styles.textInputWrapper}>
-                  <TextInput style={styles.textInput} />
-                  <TextInput style={styles.textInput} />
-                </View>
-                </View>
           </View>
         </View>
       </Modal>
@@ -96,16 +259,14 @@ export default FilterIncomeModal
 
 const styles = StyleSheet.create({
     centeredView: {
-      
         justifyContent:'center',
         alignItems:'center',
         flex: 1,
         position:'relative',
-       
     },
     modalView: {
       width:windowWidth,
-      height:windowHeigth * .7,
+      height:windowHeigth * .8,
       margin: 20,
       backgroundColor: 'white',
       borderTopRightRadius: 20,
@@ -122,12 +283,6 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       padding: 10,
       elevation: 2,
-    },
-    buttonOpen: {
-      backgroundColor: 'red',
-    },
-    buttonClose: {
-      backgroundColor: '#2196F3',
     },
     textStyle: {
       color: 'white',
@@ -146,36 +301,54 @@ const styles = StyleSheet.create({
       marginBottom: windowHeigth * .05
     },
     filterSelection:{
-      marginVertical: windowHeigth * .005
-
+      flexDirection:'row',
+      justifyContent:'space-between',
+      alignItems:'center',
     },
     textFilter: {
       fontSize: 18,
     },
-    filterDates:{
-      // backgroundColor:'red',
-      width:'80%',
-      height: '40%',
-      marginBottom: 10
-    },
-    filterTotalAmount:{
-      // backgroundColor:'green',
-      width:'80%',
-      height: '20%',
-      marginVertical: 10
-    },
-    textInputWrapper:{
-      flexDirection: 'row',
-      justifyContent:'space-between'
+    filterWrap:{
+      width:'90%',
+      height: windowHeigth * .1,
+      paddingHorizontal: 10
     },
     textInput:{
       backgroundColor:'#E7E7E7',
       width:'45%',
-      height:40,                                    
+      height: 50,                                    
       justifyContent:'center', 
-      paddingLeft:20,
+      paddingHorizontal: 10,
       marginVertical:10,
       borderRadius: 10
-      
     },
+    txtInputWrapper:{
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: windowWidth *.8,
+    },
+    pilihWrapper :{
+      padding: 5,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: windowWidth *.8,
+    },
+    btnPilih: {
+      padding: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: windowWidth *.8,
+      backgroundColor:'#ED9B83',
+      borderRadius:5,
+      elevation: 2
+    },
+    pickerContainer:{
+     backgroundColor:'#DFE1E0',
+     width:'95%',
+     height: 50,                      
+     borderRadius:10,
+     justifyContent:'center', 
+     alignSelf: 'center',
+     marginVertical:10
+   },
   });

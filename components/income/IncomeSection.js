@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native'
-import React, { useState, useEffect} from 'react'
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import IncomeItem from './IncomeItem'
 import { formatTotalToCurrency } from '../../utils/FormatCurrency'
 import firebase from '../../Firebaseconfig'
 import { useNavigation } from '@react-navigation/native';
+import { FilterTransactionContext } from '../../context/FilterTransactionContext';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const IncomeSection = ({listIncome,searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems}) => {
+const IncomeSection = ({listIncome,searchItems, isSearch, searchKeyword, isLoading, setSearchItems}) => {
+  const { isFilter, filteredList, filterBy, setIsFilter } = useContext(FilterTransactionContext)
 
   const [editData, setEditData] = useState({});
   const navigation = useNavigation();
@@ -64,22 +67,35 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-      {!isSearch? <View style={styles.totalIncomeWrapper}>
+      {!isSearch && !isFilter && <View style={styles.totalIncomeWrapper}>
+        <View>
           <Text style={styles.totalIncomeTitle}>Total Pemasukan</Text>   
-        <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listIncome, "jumlah"))}</Text>
-      </View> : null }
+          <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listIncome, "jumlah"))}</Text>
+        </View> 
+      </View> }
       {isLoading? <View style={styles.loaderContainer}>
               <ActivityIndicator size="large" color="orange" />
                 </View>:
       <ScrollView >
-          {/* {sortData.map((item, i) => {
-            return <IncomeItem item={item} key={item.id} editItem={editItem}/>
-        })}  */}
-         {isSearch? <View style={{paddingTop: 10}}>
+            {isSearch? <View style={{paddingTop: 10}}> 
                   
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
                 {
                   searchItems.map((item, i) => {
+                    return <IncomeItem item={item} key={item.id} editItem={editItem}/>
+                  }) 
+                }
+              </View>: null}
+              {isFilter? <View style={{paddingTop: 10}}> 
+                  
+              <View style={{width: '100%', flexDirection:'row', justifyContent: 'space-around', marginBottom: 10}}>
+                <Text>Filter Berdasarkan {filterBy[0]['sortBy']}</Text><TouchableOpacity style={{flexDirection:'row'}} onPress={() => setIsFilter(false)}>
+                    <Text> Ulang Penyaringan.</Text>
+                    <MaterialIcons name="refresh" size={20} color="black" />
+                </TouchableOpacity>
+              </View>
+                {
+                  filteredList.map((item, i) => {
                     return <IncomeItem item={item} key={item.id} editItem={editItem}/>
                   }) 
                 }
