@@ -208,9 +208,11 @@ export default function LaporanScreen() {
     //Check if ToDate > FromDate
     const [ showTanggal, setShowTanggal ] = useState(false)
     const checkingDate = (fromDate, toDate ) => {
-        console.log({fromDate, toDate})
         let a = new Date(fromDate)
         let b = new Date(toDate)
+  
+        if (filterBy[0]['sortBy'] !== "Pilih Tanggal") 
+        return true
         if( a > b ) {
             
             setIsDateError(true)
@@ -221,7 +223,7 @@ export default function LaporanScreen() {
                     toDate: ''
                   }) }
             }])
-            console.log("Salah Tanggal")
+            return false
         } else if(fromDate == '' || toDate == '') {
             console.log("wah")
             Alert.alert( "Perhatian!", "Silakan Isi Tanggal Terlebih Dahulu.")
@@ -230,7 +232,7 @@ export default function LaporanScreen() {
             console.log("aman")
             setIsDateError(false)
         }
-
+        return true
     }
     const [ isDateError, setIsDateError ] = useState(false)
 
@@ -242,12 +244,10 @@ export default function LaporanScreen() {
         let today = new Date()
         let thisMonth = today.getMonth() 
         let thisYear = today.getFullYear()
-        console.log(thisMonth)
-        console.log(thisYear)
 
         let newList = array.filter((item, i) => {
             if( res == 'Hari Ini') {
-                return new Date(item.tanggal).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString()
+                return new Date(new Date(item.tanggal).toISOString().split('T')[0]).toDateString()  == new Date(today.toISOString().split('T')[0]).toDateString()
                
             } else if( res == '7 Hari Terakhir') {
                 let priorDate = new Date(new Date().setDate(today.getDate() - 7));
