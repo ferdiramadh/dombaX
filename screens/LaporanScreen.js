@@ -22,23 +22,38 @@ export default function LaporanScreen() {
 
     //Get Uid From AsyncStorage
     const uid = useSelector(state => state.userReducer.uid)
+    // console.log({uid})
     // const [ uid, setUid ] = useState()
     // const uid = "moD0YtFRBxOv8Igw6ALSslh6RoA2"
-
+    const [userObj, setUserObj ] = useState()
+    console.log(typeof userObj)
     const getData = async () => {
         try {
         const value = await AsyncStorage.getItem('@storage_Key')
         if(value !== null) {
             // setUid(value)
             // populateAll()
-            console.log(value)         
+             
             console.log('ada data nih')
-            // setUid(value)
-            
+            setUserObj(JSON.parse(value))
+              
         } 
         } catch(e) {
         // error reading value
         }
+    }
+    const getAuth = async() => {
+        try{
+            const respons = await firebase.auth().signInWithEmailAndPassword(userObj["email"],userObj["password"]);
+            const userObj2 = respons.user
+            // setUid(userObj.uid)
+            dispatch({type:'LOGIN',results:userObj2})
+
+        }catch(e){
+            alert( e.message)
+
+        }
+
     }
     // console.log(uid)
     const transactionsData = useSelector(state => state.transactionsReducer)
@@ -615,10 +630,16 @@ export default function LaporanScreen() {
             // populateAll()
         } else {
             console.log('Eweuh UID')
+           
         }
         
     },[])
-
+    useEffect(() => {
+        if(userObj) {
+            getAuth()
+        }
+       
+    },[userObj])
     useEffect(() => {
         if(uid) {
             populateAll()

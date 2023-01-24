@@ -16,12 +16,10 @@ const RegisterScreen = ({navigation}) => {
     const [ secureText, setSecureText ] = useState(true)
     const signUp = async() => {
         setIsLoading(true)
-        let value = 'absba'
         try{
             const respons = await firebase.auth().createUserWithEmailAndPassword(email,password);
             const userObj = respons.user
-            await AsyncStorage.setItem('@storage_Key', value)
-            console.log({userObj})
+            storeData({email, password})
             dispatch({type:'REGISTER',results:userObj})
             navigation.navigate('RegisterProfile')
         }catch(err){
@@ -30,6 +28,13 @@ const RegisterScreen = ({navigation}) => {
         }
         setIsLoading(false)
     }
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('@storage_Key', JSON.stringify(value))
+        } catch (e) {
+          alert("error", e.message)
+        }
+      }
 
     useEffect(() => {
     const backAction = () => {
@@ -62,7 +67,7 @@ const RegisterScreen = ({navigation}) => {
             
             <Image style={styles.imgIcon} source={require('../assets/images/Kiwi_Categories-Icon.png')}/>
             <Text style={{ fontFamily: 'Baloo', fontSize: 42}}>Daftar</Text>
-            <View style={styles.wrapperFbGoogle}>
+            {/* <View style={styles.wrapperFbGoogle}>
                 <TouchableOpacity style={{ width: '40%', height: '100%', borderRadius: 12,  elevation: 2,  shadowColor: '#000', backgroundColor: 'white', justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>
                     <Image style={{ width: 20, height: 20, marginRight: 10}} source={require('../assets/images/logos/Google_Icon.png')}/>
                     <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>Google</Text>
@@ -72,7 +77,7 @@ const RegisterScreen = ({navigation}) => {
                     <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>Facebook</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>ATAU</Text>
+            <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>ATAU</Text> */}
             { error? <Text style={{color:'red'}}>{error}</Text>:null}
             <View style={{width: '100%', justifyContent:'center', alignItems: 'center'}}>
                 <Image style={{ width: 30, height: 25, marginRight: 10, position: 'absolute', left: 30,zIndex: 2}} source={emailIcon}/>

@@ -15,11 +15,11 @@ import BusinessProfileScreen from '../screens/BusinessProfileScreen';
 
 const Stack = createStackNavigator();
 
-const AuthStack = ({isSignUp}) => {
+const AuthStack = ({isSignIn}) => {
     
 
     return (
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName={isSignIn? "Home" : "Login"}>
         <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{
           headerShown:false
         }}/>

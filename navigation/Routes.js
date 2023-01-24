@@ -14,184 +14,28 @@ const Routes = () => {
     const [ isLoading, setIsLoading ] = useState(true)
    
     const [ isSignIn, setIsSignIn ] = useState(false)
-    const [ isSignUp, setIsSignUp ] = useState('Onboarding')
     
     const getData = async () => {
         try {
         const value = await AsyncStorage.getItem('@storage_Key')
-        if(value == 'absba') {
-            console.log(value)
-            
-            setIsSignUp('Register')
-            console.log('ada data nih')
-            
-        } else if (value == 'absba' && uid != "undefined"){
+        if(value) {
             setIsSignIn(true)
-            console.log('NO data nih')
         }
         } catch(e) {
-        // error reading value
+            alert("error", e.message)
         }
     }
   
 
-    const populate = () => {
+    useEffect(() => {
+        console.log('nih route')
+        getData()
+        setTimeout(() => {
+            setIsLoading(false)
+        },1000)
       
-      return firebase
-      .firestore()
-      .collection("dombastok").where("userId","==",uid)
-      .get()
-      .then((querySnapshot) => {querySnapshot.forEach( function(doc){
-          let newValue = doc.data()
-          dispatch({type:'STORE_DATA',results:newValue})
-
-      });
-      
-      }).catch((error) => {
-          console.log("Error getting document:", error);
-      });
-      
-  }
-
-  const getPakan = () => {
-      
-    return firebase
-    .firestore()
-    .collection("pakanstok").where("userId","==",uid)
-    .get()
-    .then((querySnapshot) => {querySnapshot.forEach( function(doc){
-        let newValue = doc.data()
-        dispatch({type:'STORE_DATA_PAKAN',results:newValue})
         
-    });
-    
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    
-}
-
-const getObat = () => {
-      
-    return firebase
-    .firestore()
-    .collection("obatstok").where("userId","==",uid)
-    .get()
-    .then((querySnapshot) => {querySnapshot.forEach( function(doc){
-        let newValue = doc.data()
-        dispatch({type:'STORE_DATA_OBAT',results:newValue})
-        
-    });
-    
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    
-}
-
-
-const getKandang = () => {
-      
-    return firebase
-    .firestore()
-    .collection("kandangcost").where("userId","==",uid)
-    .get()
-    .then((querySnapshot) => {querySnapshot.forEach( function(doc){
-        let newValue = doc.data()
-        dispatch({type:'STORE_KANDANG_COST',results:newValue})
-        
-    });
-    
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    
-}
-
-const getPegawai = () => {
-      
-    return firebase
-    .firestore()
-    .collection("pegawaicost").where("userId","==",uid)
-    .get()
-    .then((querySnapshot) => {querySnapshot.forEach( function(doc){
-        let newValue = doc.data()
-        dispatch({type:'STORE_DATA_PEGAWAI',results:newValue})
-        
-    });
-    
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    
-}
-
-const getLahan = () => {
-      
-    return firebase
-    .firestore()
-    .collection("lahancost").where("userId","==",uid)
-    .get()
-    .then((querySnapshot) => {querySnapshot.forEach( function(doc){
-        let newValue = doc.data()
-        dispatch({type:'STORE_DATA_LAHAN',results:newValue})
-        
-    });
-    
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    
-}
-
-const getPurchasing = () => {
-      
-    return firebase
-    .firestore()
-    .collection("purchasing").where("userId","==",uid)
-    .get()
-    .then((querySnapshot) => {querySnapshot.forEach( function(doc){
-        let newValue = doc.data()
-        dispatch({type:'STORE_PURCHASING',results:newValue})
-        
-    });
-    
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    
-}
-const getSelling = () => {
-      
-    return firebase
-    .firestore()
-    .collection("selling").where("userId","==",uid)
-    .get()
-    .then((querySnapshot) => {querySnapshot.forEach( function(doc){
-        let newValue = doc.data()
-        dispatch({type:'STORE_SELLING',results:newValue})
-        
-    });
-    
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-    
-}
-
-    const onAuthStateChanged = (user) => {
-        setUser(user)
-        if(initializing) setInitializing(false)
-    }
-
-  useEffect(() => {
-
-    setTimeout(() => {
-        setIsLoading(false)
-    },1000)
-    getData()
-    
-  },[])
+    },[])
 
   if(isLoading){
       return(
@@ -203,7 +47,7 @@ const getSelling = () => {
 
     return (
         <NavigationContainer >
-            {isSignIn? <MyTabs />:<AuthStack isSignUp={isSignUp} />}
+            <AuthStack isSignIn={isSignIn}/>
         </NavigationContainer>
     )
 }

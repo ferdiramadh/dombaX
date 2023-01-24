@@ -11,7 +11,7 @@ import { useNavigation, StackActions, CommonActions } from '@react-navigation/na
 const OthersScreen = () => {
 
     const navigation = useNavigation();
-    console.log(navigation.getState())
+    // console.log(navigation.getState())
 
     
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const OthersScreen = () => {
             console.log('Sign Out nih')
           }).catch((error) => {
             // An error happened.
-            console.log(error)
+            alert("Error.", error.message)
           });
     }
     const clearAll = async () => {

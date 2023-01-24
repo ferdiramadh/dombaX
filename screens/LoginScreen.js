@@ -16,20 +16,28 @@ const LoginScreen = ({navigation}) => {
     const [ error, setError ] = useState('')
     const [ secureText, setSecureText ] = useState(true)
     
-
+    const getData = async () => {
+        try {
+        const value = await AsyncStorage.getItem('@storage_Key')
+        console.log(value)
+        if(value == uid) {
+            setIsSignIn(true)
+        }
+        } catch(e) {
+            alert("error", e.message)
+        }
+    }
     const signIn = async() => {
         setIsLoading(true)
         try{
             const respons = await firebase.auth().signInWithEmailAndPassword(email,password);
             const userObj = respons.user
-            console.log(userObj)
-            storeData(userObj.uid)
+            storeData({email, password})
             dispatch({type:'LOGIN',results:userObj})
             setEmail('')
             setPassword('')
             navigation.navigate('Home')
         }catch(e){
-            console.log(e)
             setError(e.toString())
         }
         setTimeout(() => {
@@ -38,9 +46,9 @@ const LoginScreen = ({navigation}) => {
     }
     const storeData = async (value) => {
         try {
-          await AsyncStorage.setItem('@storage_Key', value)
+          await AsyncStorage.setItem('@storage_Key', JSON.stringify(value))
         } catch (e) {
-          // saving error
+          alert("error", e.message)
         }
       }
     if(isLoading){
@@ -55,7 +63,7 @@ const LoginScreen = ({navigation}) => {
         <View style={styles.container}>
             <Image style={styles.imgIcon} source={require('../assets/images/Kiwi_Categories-Icon.png')}/>
             <Text style={{ fontFamily: 'Baloo', fontSize: 42}}>Masuk</Text>
-            <View style={styles.wrapperFbGoogle}>
+            {/* <View style={styles.wrapperFbGoogle}>
                 <TouchableOpacity style={{ width: '40%', height: '100%', borderRadius: 12,  elevation: 2,  shadowColor: '#000', backgroundColor: 'white', justifyContent: 'center', flexDirection: 'row', alignItems: 'center'}}>
                     <Image style={{ width: 20, height: 20, marginRight: 10}} source={require('../assets/images/logos/Google_Icon.png')}/>
                     <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>Google</Text>
@@ -65,7 +73,7 @@ const LoginScreen = ({navigation}) => {
                     <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>Facebook</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>ATAU</Text>
+            <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>ATAU</Text> */}
             <Text style={{color:'red'}}>{error}</Text>
             <View style={{width: '100%', justifyContent:'center', alignItems: 'center'}}>
                 <Image style={{ width: 30, height: 25, marginRight: 10, position: 'absolute', left: 30,zIndex: 2}} source={emailIcon}/>
