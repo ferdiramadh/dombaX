@@ -44,10 +44,10 @@ const ExpenseItem = ({item, editItem}) => {
         </View>
         <View style={styles.mainWrapper}>
         <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}} numberOfLines={2} ellipsizeMode='tail'>{item.namaTransaksi}</Text>
-            <Text style={{color: '#B3B3B3'}}>Tanggal Transaksi: {item.tanggal}</Text>
+            <Text style={{color: '#B3B3B3'}}>{item.tanggal}</Text>
         </View>
         <View style={styles.rightWrapper}>
-            <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
+            <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}} lineBreakMode="tail" numberOfLines={1}>{formatToCurrencyLight(item.jumlah)}</Text>
             <Text style={{color: '#000'}} ellipsizeMode='tail' numberOfLines={1}>{item.kategori}</Text>
             {(item.kategori !== 'Tabungan atau Investasi' || item.kategori !== 'Pengeluaran Lain-Lain' ) && (item.statusBayar)?
             <View style={[styles.status, item.statusBayar == 'Lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>

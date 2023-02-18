@@ -103,7 +103,7 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                             {(item.tipe == 'pakan' || item.tipe == 'obat' )&& item.kadaluarsa?<Text style={styles.infoData}>Kadaluarsa : {item.kadaluarsa}</Text>:null} */}
                         </View>
                         <View style={styles.rightDombaInfo}>
-                            <Text style={[styles.totalHarga]}>{ formatToCurrencyWithoutStyle(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
+                            <Text style={[styles.totalHarga]} lineBreakMode="tail" numberOfLines={1}>{ formatToCurrencyWithoutStyle(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
                         </View>
                     </View>
                 </View> 
@@ -156,7 +156,8 @@ const styles = StyleSheet.create({
         width:'40%',
         paddingLeft: 5,
         justifyContent: 'center',
-        paddingRight: 20
+        paddingRight: 20,
+        // flexWrap: 'wrap'
     },
     infoData:{
         fontSize: 14,
@@ -164,7 +165,6 @@ const styles = StyleSheet.create({
         marginVertical:5
     },
     upperSection:{
-        // backgroundColor:'green',
         flexDirection:'row',
         justifyContent:'space-between',
         paddingLeft: 5
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         color: '#43B88E',
         fontWeight:'bold',
         fontSize: 16,
-        textAlign: 'right'
+ 
     },
     upperLeft: {
         width: '50%',
