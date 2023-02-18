@@ -43,9 +43,9 @@ const OthersScreen = () => {
             <TouchableOpacity style={styles.contentWrapper} onPress={() => navigation.navigate('Account')}>
                 <Text style={styles.text}>Profil</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.contentWrapper} onPress={() => navigation.navigate('BusinessProfile')}>
+            {/* <TouchableOpacity style={styles.contentWrapper} onPress={() => navigation.navigate('BusinessProfile')}>
                 <Text style={styles.text}>Profil Bisnis</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {/* <TouchableOpacity style={styles.contentWrapper} onPress={() => null}>
                 <Text style={styles.text}>Bantuan</Text>
             </TouchableOpacity> */}
