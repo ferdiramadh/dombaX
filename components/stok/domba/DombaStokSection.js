@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
       borderBottomColor:'lightgrey',
       width:windowWidth,
-      marginBottom: 5
+      marginBottom: 15
      
     },
     textInput:{
