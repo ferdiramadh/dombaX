@@ -1,5 +1,5 @@
 import React , { useState, useContext } from 'react'
-import { StyleSheet, TouchableOpacity, View, TextInput } from 'react-native'
+import { StyleSheet, TouchableOpacity, View, TextInput, Alert } from 'react-native'
 import CustomHeder from '../components/CustomHeder'
 import CustomButton from '../components/CustomButton'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -21,7 +21,7 @@ const TransactionScreen = () => {
 
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listIncome = transactionsData.listIncome
-
+    const listExpense = transactionsData.listExpense
     const [ transaction, setTransaction ] = useState('income')
 
     const [ isSearch, setIsSearch ] = useState(false)
@@ -73,7 +73,7 @@ const TransactionScreen = () => {
                 <View style={{flex: 1, width: windowWidth}}>
 
                 
-            { listIncome.length > 0?<View style={styles.searchWrap}>
+            { listIncome.length > 0 || listExpense.length > 0 ?<View style={styles.searchWrap}>
                     <TextInput
                       style={styles.textInput}
                       placeholder='Cari Transaksi'
@@ -89,14 +89,17 @@ const TransactionScreen = () => {
                       <MaterialIcons name="clear" size={24} color="black" />
                     </TouchableOpacity>   : null } 
                     <TouchableOpacity style={styles.searchBtn} onPress={() => {
-                      setIsFilter(false)
-                      loadingWait()
+                   
                       if(searchKeyword.length != 0) {
-                        
+                        setIsFilter(false)
+                        loadingWait()
                         setIsSearch(true)
                         searchProduct()
                       } else {
-                        console.log("keyword kosong")
+                       Alert.alert(
+                        "Keyword Kosong",
+                        `Harap masukkan keyword terlebih dahulu.`,
+                        )
                       }
                    
                     }}>
