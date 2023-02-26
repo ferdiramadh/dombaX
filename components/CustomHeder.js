@@ -31,7 +31,7 @@ const CustomHeder = (props) => {
                         }} disabled={true}><Text style={[styles.subMenuTitle,props.styleFont]} >{props.leftSubMenu || props.descProfile}</Text></TouchableOpacity>
                     </View>
                     <View style={[{width:'10%', flexDirection:'column', justifyContent:'center',alignItems:'center'},props.home?{display:'none'}:null]}>
-                        <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Transaksi' || props.leftSubMenu == 'Laporan' || props.leftSubMenu == 'Stok' || props.descProfile?'':'|'}</Text>
+                        <Text style={styles.pipeSeparator}>{props.leftSubMenu == 'Transaksi' || props.leftSubMenu == 'Laporan' || props.leftSubMenu == 'Stok' || props.descProfile || props.leftSubMenu == 'Profil'? '' :'|'}</Text>
                     </View>
 
                     <View style={[styles.leftSideSubMenus]}>

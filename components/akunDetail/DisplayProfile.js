@@ -63,23 +63,17 @@ export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
 const styles = StyleSheet.create({
     container: {
         width:windowWidth, 
-       
     },   
     wrapper:{
         justifyContent:'center',
-        backgroundColor:'#ED9B83',
         width:'90%',
-        height:60,
-        padding:8,
-        color: "#FFF",
-        borderRadius:10,
-        marginVertical: 8,
-        fontSize:14,
-        elevation: 2
+        height: 40,
+        padding: 8,
+        marginBottom: 10
     },
     text: {
         fontSize:14,
-        color: "#FFF",
+        color: "#000",
     },
     btnSave:{
       backgroundColor:'#ED9B83',

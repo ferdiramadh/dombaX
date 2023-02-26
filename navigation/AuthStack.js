@@ -37,12 +37,7 @@ const AuthStack = ({isSignIn}) => {
           headerShown:false
         }}/>
         <Stack.Screen name="Account" component={AccountScreen} options={{
-          title: "Profil",
-          headerTitleStyle:{
-            fontFamily:'Baloo',
-            fontSize: 26,
-         
-          }
+          headerShown:false
         }}/>
         <Stack.Screen name="BusinessProfile" component={BusinessProfileScreen} options={{
           title: "Profil Bisnis",

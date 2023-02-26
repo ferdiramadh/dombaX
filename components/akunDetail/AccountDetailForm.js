@@ -60,7 +60,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         <TextInput
           style={styles.textInput}
           placeholder='Nama Depan...'
-          placeholderTextColor="#fff" 
+          placeholderTextColor="#000" 
           onChangeText={handleChange('namaDepan')}
           onBlur={handleBlur('namaDepan')}
           value={values.namaDepan}
@@ -68,7 +68,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         <TextInput
           style={styles.textInput}
           placeholder='Nama Belakang...'
-          placeholderTextColor="#fff" 
+          placeholderTextColor="#000" 
           onChangeText={handleChange('namaBelakang')}
           onBlur={handleBlur('namaBelakang')}
           value={values.namaBelakang}
@@ -76,7 +76,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         <TextInput
           style={styles.textInput}
           placeholder='No. HP'
-          placeholderTextColor="#fff" 
+          placeholderTextColor="#000" 
           onChangeText={handleChange('whatsApp')}
           onBlur={handleBlur('whatsApp')}
           value={values.whatsApp}
@@ -85,7 +85,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         <TextInput
           style={styles.textInput}
           placeholder='Email...'
-          placeholderTextColor="#fff" 
+          placeholderTextColor="#000" 
           onChangeText={handleChange('email')}
           onBlur={handleBlur('email')}
           value={values.email}
@@ -99,9 +99,9 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
               }
               }
               style={{
-                fontSize: 22,
+                fontSize: 18,
                 fontWeight:'bold',
-                color: "#FFF",
+                color: "#000",
               }} 
               >
               <Picker.Item label="Jenis Kelamin" value="jenisKelamin" style={{color:"#ED9B83"}}/>
@@ -111,14 +111,14 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         </View>
         <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
             <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                <Text style={{color:'#FFF'}}>{values.tanggalLahir?values.tanggalLahir:"Tanggal Lahir"}</Text>   
+                <Text style={{color:'#000'}}>{values.tanggalLahir?values.tanggalLahir:"Tanggal Lahir"}</Text>   
                 <MaterialIcons name="date-range" size={24} color="#000" />    
             </View>                
         </TouchableOpacity>
         <TextInput
           style={styles.textInput}
           placeholder='Domisili'
-          placeholderTextColor="#fff" 
+          placeholderTextColor="#000" 
           onChangeText={handleChange('domisili')}
           onBlur={handleBlur('domisili')}
           value={values.domisili}
@@ -126,7 +126,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         <TextInput
           style={styles.textInput}
           placeholder='Kata Sandi'
-          placeholderTextColor="#fff" 
+          placeholderTextColor="#000" 
           onChangeText={handleChange('password')}
           onBlur={handleBlur('password')}
           value={values.password}
@@ -154,46 +154,42 @@ export default AccountDetailForm;
 
 const styles = StyleSheet.create({
     textInput:{
-          justifyContent:'center',
-          backgroundColor:'#ED9B83',
-          width:'90%',
-          height:60,
-          padding:8,
-          color: "#FFF",
-          borderRadius:10,
-          marginVertical: 8,
-          fontSize:14,
-          elevation: 2
-      },
-      pickerContainer:{
-       backgroundColor:'#ED9B83',
-       width:'90%',
-       height:60,                      
-       borderRadius:10,
-       justifyContent:'center', 
-       marginVertical:10
-     },
-      btnSave:{
-        backgroundColor:'#ED9B83',
-        width:'60%',
-        height:40,                       
+      justifyContent:'center',
+      width:'90%',
+      height: 40,
+      padding: 8,
+      marginBottom: 10,
+      borderBottomWidth: 1
+    },
+    pickerContainer:{
+      justifyContent:'center',
+      width:'90%',
+      height: 40,
+      padding: 8,
+      marginBottom: 10,
+      borderBottomWidth: 1
+    },
+    btnSave:{
+      backgroundColor:'#ED9B83',
+      width:'60%',
+      height:40,                       
+      justifyContent:'center',
+      elevation: 2,
+      borderRadius:10,
+      marginTop: 10,  
+      marginBottom: 20
+    },
+    btnEdit:{
+        height: 40,
+        width: '15%',
+        backgroundColor:'white',
         justifyContent:'center',
-        elevation: 2,
-        borderRadius:10,
-        marginTop: 10,  
-        marginBottom: 20
-      },
-      btnEdit:{
-          height: 40,
-          width: '15%',
-          backgroundColor:'white',
-          justifyContent:'center',
-          alignItems:'center',
-          borderRadius:5,
-          borderWidth:2,
-          left: 20,
-          position:'absolute',
-          top:0
-          
-      }
+        alignItems:'center',
+        borderRadius:5,
+        borderWidth:2,
+        left: 20,
+        position:'absolute',
+        top:0
+        
+    }
 });
