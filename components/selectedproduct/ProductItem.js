@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-native'
 import { useSelector} from 'react-redux'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { formatToCurrencyWithoutStyle } from '../../utils/FormatCurrency'
 
@@ -13,7 +13,7 @@ const imageDefault = {
     "obat": require('../../assets/images/kategori/ObatSuplemen.png')
 } 
 
-const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible}) => {
+const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible, deleteAll}) => {
     const navigation = useNavigation();
     const dombaState = useSelector(state => state.stokReducer)
     const userProducts = useSelector(state => state.userProductReducer);
@@ -76,17 +76,9 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                             {item.tipe == 'pakan'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Kg"} </Text>:null}
                             {item.tipe == 'obat'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Buah"} </Text>:null}
                             {item.tipe == 'tambahproduk'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>: item.jumlah + " " + item.satuan}</Text>:null}
-                            {isTransaction || !deleteMode? null :
+                            {isTransaction || !deleteAll? null :
                             <View style={styles.buttonSection}>
-                                <TouchableOpacity style={{marginLeft:10}} onPress={() => setDeleteMode(false)}>
-                                    <MaterialIcons name="cancel" size={24} color="black" />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{marginLeft:10}} onPress={() => {
-                                    deleteItem(item)
-                                    setDeleteMode(false)
-                                }}>
-                                    <MaterialIcons name="delete" size={24} color="black" />
-                                </TouchableOpacity>
+                                {deleteAll?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
                             </View>}
                         </View>
 
@@ -172,9 +164,8 @@ const styles = StyleSheet.create({
     },
     buttonSection:{
         flexDirection:'row',  
-        width:'50%',
-        justifyContent:'flex-end',
-       
+        padding: 5,
+        justifyContent:'flex-end',  
     },
     totalHarga: {
         color: '#43B88E',

@@ -134,7 +134,7 @@ const DombaStokSection = () => {
                             {all? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
                           </TouchableOpacity>
                         </View>
-                        <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems}/>
+                        <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems} deleteAll={all}/>
                     </ScrollView> }         
                   <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
         </View>
