@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { StyleSheet, Text, View , ActivityIndicator, Alert, TouchableOpacity, TextInput, ScrollView, Dimensions} from 'react-native'
 import DombaStok from './DombaStok'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import firebase from '../../../Firebaseconfig'
 import { useSelector } from 'react-redux'
 import { FireSQL } from 'firesql'
@@ -46,7 +46,7 @@ const DombaStokSection = () => {
       }
     ])
     const [ filterBy, setFilterBy ] = useState();
-
+    const [ all, setAll ] = useState(false)
     const dbRef = firebase.firestore();
     const fireSQL = new FireSQL(dbRef);
 
@@ -118,14 +118,25 @@ const DombaStokSection = () => {
                     </TouchableOpacity>    
                    
                 </View>
-            
-            {isLoading? <View style={styles.loaderContainer}>
-              <ActivityIndicator size="large" color="orange" />
-                </View>:<ScrollView>
-                    <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems}/>
-                </ScrollView> }         
-            
-              <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
+                {isLoading? <View style={styles.loaderContainer}>
+                  <ActivityIndicator size="large" color="orange" />
+                    </View>:
+                    <ScrollView style={{ paddingTop: 10}}>
+                        <View style={styles.deleteOption}>
+                        <TouchableOpacity style={styles.btnDelete}>
+                            <Text>Batal</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity style={styles.btnDelete}>
+                            <Text>Hapus</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity style={[styles.btnDelete, { flexDirection: 'row', justifyContent: 'space-between', width: 80}]} onPress={() => setAll(!all)}>
+                            <Text>Semua</Text>
+                            {all? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                          </TouchableOpacity>
+                        </View>
+                        <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems}/>
+                    </ScrollView> }         
+                  <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
         </View>
     )
 }
@@ -151,11 +162,10 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'center',
       alignItems:'center',
-      // backgroundColor: 'green',
       borderBottomWidth: 1,
       borderBottomColor:'lightgrey',
       width:windowWidth,
-      marginBottom: 15
+
      
     },
     textInput:{
@@ -198,5 +208,15 @@ const styles = StyleSheet.create({
       justifyContent:'center',
       alignItems:'center',
     //   backgroundColor: 'red',
+    },
+    deleteOption: {
+      paddingRight: 20,
+      flexDirection: 'row',
+      justifyContent: 'flex-end'
+    },
+    btnDelete:{
+      marginLeft: 10,
+      padding: 5,
+      alignItems: 'center'
     }
 })
