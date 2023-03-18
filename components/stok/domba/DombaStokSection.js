@@ -6,6 +6,7 @@ import firebase from '../../../Firebaseconfig'
 import { useSelector } from 'react-redux'
 import { FireSQL } from 'firesql'
 import FilterStokModal from '../FilterStokModal';
+import { deleteCollection, deleteFile } from '../../../utils/ImageUpload';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeigth = Dimensions.get('screen').height;
@@ -13,7 +14,8 @@ export const windowHeigth = Dimensions.get('screen').height;
 const DombaStokSection = () => {
 
     const uid = useSelector(state => state.userReducer.uid)
-
+    const userProducts = useSelector(state => state.userProductReducer);
+    const DATA = userProducts.listUserProduct
     const [ filterVisible, setFilterVisible ] = useState(false)
 
     const [ isSearch, setIsSearch ] = useState(false)
@@ -22,7 +24,6 @@ const DombaStokSection = () => {
     const [ isLoading, setIsLoading ] = useState(false)
 
     const [ isFilter, setIsFilter ] = useState(false)
-    const [ filterItems, setFilterItems ] = useState([])
     const [filterList, setFilterList ] = useState([
       {
         id: 1,
@@ -46,7 +47,59 @@ const DombaStokSection = () => {
       }
     ])
     const [ filterBy, setFilterBy ] = useState();
-    const [ all, setAll ] = useState(false)
+    const [ deleteOpt, setDeleteOpt ] = useState({
+      allDelete: false,
+      isDeleted: false,
+      deletedList: [],
+      selectDelete: false
+    })
+    function deleteAllList() {
+      if(!deleteOpt.allDelete || (deleteOpt.allDelete && deleteOpt.deletedList.length <= 0))
+      setDeleteOpt(prev =>   
+        ( {
+          ...prev, 
+          deletedList: DATA, 
+          allDelete: true
+        })
+      )
+      if(deleteOpt.allDelete)
+      setDeleteOpt(prev =>   
+        ( {
+          ...prev, 
+          deletedList: [], 
+          allDelete: false
+        })
+      )
+    }
+    function cancelDelete () {
+      console.log(deleteOpt.deletedList.length)
+      setDeleteOpt({
+        allDelete: false,
+        isDeleted: false,
+        deletedList: [],
+        selectDelete: false
+      })
+    }
+    const deleteCollectionAndFile = (item) => {
+      deleteCollection("userproduk", item)
+      deleteFile("UserProduk", item)
+  }
+
+    function selectOrDeleteItems() {
+      console.log(deleteOpt.deletedList.length)
+      if(deleteOpt.selectDelete) {
+        for(let i=0; i < deleteOpt.deletedList.length; i++) {
+          let item = deleteOpt.deletedList[i]
+          deleteCollectionAndFile(item)
+          let filterDeletedItem = deleteOpt.deletedList.filter(x => x.id != item.id)
+          setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem}))
+
+        }
+        setDeleteOpt(prev => ({...prev, selectDelete: false}))
+      } else {
+        setDeleteOpt(prev => ({...prev, selectDelete: true}))
+      }
+    }
     const dbRef = firebase.firestore();
     const fireSQL = new FireSQL(dbRef);
 
@@ -81,7 +134,6 @@ const DombaStokSection = () => {
 
     return (
         <View style={styles.container}>
-            {/* <Text style={styles.sectionTitle}>Daftar Items</Text> */}
             <View style={styles.searchWrap}>
                     <TextInput
                       style={styles.textInput}
@@ -106,7 +158,7 @@ const DombaStokSection = () => {
                         setIsSearch(true)
                         searchProduct()
                       } else {
-                        console.log("keyword kosong")
+                       alert("keyword kosong")
                       }
                     }}>
                       <MaterialIcons name="search" size={30} color="black" />
@@ -115,26 +167,25 @@ const DombaStokSection = () => {
                       setFilterVisible(!filterVisible)
                     }}>
                        <MaterialIcons name="filter-list" size={30} color="black" />
-                    </TouchableOpacity>    
-                   
+                    </TouchableOpacity>        
                 </View>
                 {isLoading? <View style={styles.loaderContainer}>
                   <ActivityIndicator size="large" color="orange" />
                     </View>:
                     <ScrollView style={{ paddingTop: 10}}>
                         <View style={styles.deleteOption}>
-                        <TouchableOpacity style={styles.btnDelete}>
+                          <TouchableOpacity style={styles.btnDelete} onPress={cancelDelete}>
                             <Text>Batal</Text>
                           </TouchableOpacity>
-                          <TouchableOpacity style={styles.btnDelete}>
-                            <Text>Hapus</Text>
+                          <TouchableOpacity style={styles.btnDelete} onPress={selectOrDeleteItems}>
+                            <Text>{deleteOpt.selectDelete ? 'Hapus' : 'Pilih'}</Text>
                           </TouchableOpacity>
-                          <TouchableOpacity style={[styles.btnDelete, { flexDirection: 'row', justifyContent: 'space-between', width: 80}]} onPress={() => setAll(!all)}>
+                          <TouchableOpacity style={[styles.btnDelete, { flexDirection: 'row', justifyContent: 'space-between', width: 80}]} onPress={deleteAllList}>
                             <Text>Semua</Text>
-                            {all? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                            {deleteOpt.allDelete && deleteOpt.deletedList.length > 0? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
                           </TouchableOpacity>
                         </View>
-                        <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems} deleteAll={all}/>
+                        <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems} deleteOpt={deleteOpt} setDeleteOpt={setDeleteOpt} />
                     </ScrollView> }         
                   <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
         </View>
@@ -146,12 +197,8 @@ export default DombaStokSection
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        // backgroundColor:'red',
         width:windowWidth,
-        flexDirection:'column',
-        // paddingBottom: 60,
-        // marginBottom: 60,
-        
+        flexDirection:'column',     
     },
     sectionTitle:{
         fontSize: 26,
@@ -165,11 +212,8 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
       borderBottomColor:'lightgrey',
       width:windowWidth,
-
-     
     },
     textInput:{
-      // backgroundColor:'#DFE1E0',
       width:'70%',
       height:50,                       
       borderColor:'black',
@@ -182,7 +226,6 @@ const styles = StyleSheet.create({
     },
     searchBtn:{
       width: '10%',
-      // backgroundColor: 'orange',
       height:50,   
       justifyContent:'center',
       alignItems:'center',
@@ -197,7 +240,6 @@ const styles = StyleSheet.create({
     clearBtn: {
       width: '10%',
       right: '25%',
-      // backgroundColor: 'orange',
       height:50,   
       justifyContent:'center',
       alignItems:'center',
@@ -207,12 +249,12 @@ const styles = StyleSheet.create({
       flex:1,
       justifyContent:'center',
       alignItems:'center',
-    //   backgroundColor: 'red',
     },
     deleteOption: {
       paddingRight: 20,
       flexDirection: 'row',
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
+      marginBottom: 10
     },
     btnDelete:{
       marginLeft: 10,

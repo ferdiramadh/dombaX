@@ -10,7 +10,7 @@ import { deleteCollection, deleteFile } from '../../../utils/ImageUpload';
 import { useNavigation } from '@react-navigation/native';
 
 
-const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible, setIsSearch, setSearchItems, deleteAll}) => {
+const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible, setIsSearch, setSearchItems, deleteOpt, setDeleteOpt}) => {
 
     const navigation = useNavigation();
     
@@ -28,6 +28,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
 
     const [ itemId , setItemId ] = useState()
 
+    const deleteProp = {deleteOpt, setDeleteOpt}
 
     function objToDate (obj) {
         let result = new Date(0);
@@ -74,8 +75,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
     }
 
 
-    const editItem = (item) => {
-        
+    const editItem = (item) => {    
         return firebase
         .firestore()
         .collection("userproduk")
@@ -84,19 +84,12 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
         .then((i) => {
             setEditData(i.data());
         })
-        
-        
     }
 
     useEffect(() => {
-        console.log("Cek Data")
         if(Object.keys(editData).length !== 0) {
-            // setGlobalModalVisible(!modalGlobalVisible)
-            console.log("ada nih edit data"+editData)
             navigation.navigate("DetailProduct",{editData, navigation})
         } if (editData !== undefined) {
-            console.log("MANA nih edit data")
-            // navigation.navigate("DetailProduct",{editData, setEditData})
         }
 
     },[editData])
@@ -105,10 +98,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
         if(isSearch) {
            let tempList = searchItems.filter(({id}) => id !== itemId)
            setSearchItems(tempList)
-        } else {
-            console.log("coba set items")
-        }
-
+        } 
     },[DATA])
 
     
@@ -120,13 +110,13 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
                 {
                   searchItems.map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} isSearch={isSearch} setIsSearch={setIsSearch} deleteAll={deleteAll}/> 
+                    return <ProductItem item={item} key={item.id} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} isSearch={isSearch} setIsSearch={setIsSearch} deleteProp={deleteProp}/> 
                   }) 
                 }
               </View>: null}
 
             {DATA.length > 0 && !isSearch && !isFilter? sortData.map((item, i) => {
-                return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} deleteAll={deleteAll}/> 
+                return <ProductItem item={item} key={item.id} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} deleteProp={deleteProp}/> 
                 })
              : null}
 
@@ -148,7 +138,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                     }
                     return bd - ad;
                 }).map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} deleteAll={deleteAll}/> 
+                    return <ProductItem item={item} key={item.id} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} deleteProp={deleteProp}/> 
                   }) : DATA.sort((a, b) => {
                     let bd = parseInt(b.jumlah);
                     let ad = parseInt(a.jumlah);
@@ -157,7 +147,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
                     }
                     return bd - ad;
                 }).map((item, i) => {
-                    return <ProductItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} deleteAll={deleteAll}/> 
+                    return <ProductItem item={item} key={item.id} editItem={editItem} isTransaction={isTransaction} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} deleteProp={deleteProp}/> 
                   })
                 }
               </View>: null}
@@ -171,13 +161,9 @@ export default DombaStok
 
 const styles = StyleSheet.create({
     container:{
-        // backgroundColor:'green',
-        // flexDirection:'row',
-        // marginBottom: 10,
         position:'relative'
     },
     leftIcon:{
-        // backgroundColor:'yellow',
         width:'20%',
         justifyContent:'center',
         alignItems:'center'
@@ -187,15 +173,12 @@ const styles = StyleSheet.create({
         height: 100
     },
     rightSection:{
-        // backgroundColor:'orange',
         width:'80%',
         flexDirection:'column',
     },
     dombaInfo:{
         flexDirection:'row',
-        // backgroundColor:'cyan',
-        width:'100%',
-        
+        width:'100%',    
     },
     subStokTitle:{
         fontSize: 20,
@@ -203,7 +186,6 @@ const styles = StyleSheet.create({
     },
     leftDombaInfo:{
         width:'60%',
-        // backgroundColor:'skyblue',
         flexDirection:'column',
         justifyContent:'center',
         alignItems:'flex-start',
@@ -211,7 +193,6 @@ const styles = StyleSheet.create({
     },
     rightDombaInfo:{
         width:'40%',
-        // backgroundColor:'skyblue',
         flexDirection:'column',
         justifyContent:'center',
         alignItems:'flex-start',
@@ -223,24 +204,20 @@ const styles = StyleSheet.create({
         marginVertical:5
     },
     upperSection:{
-        // backgroundColor:'green',
         flexDirection:'row',
         paddingLeft: 5
         
     },
     buttonSection:{
-        // backgroundColor:'red',
         flexDirection:'row',  
         width:'50%',
         justifyContent:'flex-end',
         position:'absolute',
-        right: 10
-       
+        right: 10  
     },
     totalHarga: {
         color: '#43B88E',
         fontWeight:'bold',
         fontSize: 16
-    }
-    
+    }   
 })

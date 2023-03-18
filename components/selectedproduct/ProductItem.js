@@ -1,10 +1,7 @@
-import React, {useState, useEffect} from 'react'
-import { StyleSheet, Text, View , Image, Alert, TouchableOpacity} from 'react-native'
-import { useSelector} from 'react-redux'
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import React from 'react'
+import { StyleSheet, Text, View , Image, TouchableOpacity} from 'react-native'
 import { formatToCurrencyWithoutStyle } from '../../utils/FormatCurrency'
-
+import { FontAwesome } from '@expo/vector-icons';
 
 const imageDefault = {
     "domba": require('../../assets/images/Kiwi_Categories-Icon.png'),
@@ -13,35 +10,25 @@ const imageDefault = {
     "obat": require('../../assets/images/kategori/ObatSuplemen.png')
 } 
 
-const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible, deleteAll}) => {
-    const navigation = useNavigation();
-    const dombaState = useSelector(state => state.stokReducer)
-    const userProducts = useSelector(state => state.userProductReducer);
-    const [ deleteMode, setDeleteMode ] = useState(false)
-    const DATA = userProducts.listUserProduct
-    // const item = props.item
-    // const DATA = dombaState.listDomba;
-    const sortData = DATA.sort((a, b) => {
-        let bd = objToDate(b.createdAt);
-        let ad = objToDate(a.createdAt);
-        return ad - bd;
-    });
-    const [modalVisible, setModalVisible] = useState(false);
-    // const [editData, setEditData] = useState({});
-
-
-
-    function objToDate (obj) {
-        let result = new Date(0);
-        if( obj !== null) {
-            result.setSeconds(obj.seconds);
-            result.setMilliseconds(obj.nanoseconds/1000000);
-            return result;
-        }
-        
+const ProductItem = ({item, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible, deleteProp}) => {
+    const { deleteOpt, setDeleteOpt } = deleteProp
+    function CheckIfInList (val) {
+        let ID = val.id    
+        let result = deleteOpt.deletedList.find(x => x.id === ID)  
+        if(result)
+        return true
+        return false 
     }
 
-
+    function AddOrRemoveList (val) {
+        let isInList = CheckIfInList(val)
+        if(!isInList) {
+            setDeleteOpt(prev => ({...prev, deletedList: [...prev.deletedList, val]}))
+        } else if(isInList) {
+            let filterDeletedItem = deleteOpt.deletedList.filter(x => x.id != val.id)
+            setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem}))
+        }
+    }
 
     return (
             <TouchableOpacity style={styles.container} key={item.id} 
@@ -50,14 +37,9 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                             setSelectedProduct(item)
                             setModalProductVisible(!modalProductVisible)
                         } else {
-                            console.log(item)
                             editItem(item)
-                        }
-                        
-                        
+                        }            
                    }}
-                    onLongPress={() => setDeleteMode(true)}
-                    delayLongPress={1000}
                     >
                 <View style={styles.leftIcon}>
                 <Image source={imageDefault[`${item.tipe}`]} style={styles.imgIcon}/>
@@ -76,23 +58,25 @@ const ProductItem = ({item, deleteItem, editItem, isTransaction, setSelectedProd
                             {item.tipe == 'pakan'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Kg"} </Text>:null}
                             {item.tipe == 'obat'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Buah"} </Text>:null}
                             {item.tipe == 'tambahproduk'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>: item.jumlah + " " + item.satuan}</Text>:null}
-                            {isTransaction || !deleteAll? null :
+                            {isTransaction || !deleteOpt.allDelete? null :
                             <View style={styles.buttonSection}>
-                                {deleteAll?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                                <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
+                                     {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                                </TouchableOpacity>
                             </View>}
+                            { deleteOpt.selectDelete && !deleteOpt.allDelete? 
+                            <View style={styles.buttonSection}>
+                                <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
+                                     {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                                </TouchableOpacity> 
+                            </View> : null}
                         </View>
 
                     </View>
                     
                     <View style={styles.dombaInfo}>
-                        <View style={styles.leftDombaInfo}>
-                           
+                        <View style={styles.leftDombaInfo}>         
                             {item.hargaBeli?<Text style={styles.infoData}>Harga Beli: {formatToCurrencyWithoutStyle(parseInt(item.hargaBeli))}</Text>: null}
-                            {/* {item.tipe == 'domba' && item.berat?<Text style={styles.infoData}>Berat Rata - Rata: {item.berat + ' '}kg</Text>:null}
-                            {item.tipe == 'tambahproduk' && item.kategori?<Text style={styles.infoData}>Kategori: {item.kategori}</Text>:null}
-                            {(item.tipe == 'pakan' || item.tipe == 'obat') && item.merk?<Text style={styles.infoData}>Produsen: {item.merk}</Text>:null}
-                            {item.tipe == 'domba' && item.usia?<Text style={styles.infoData}>Usia : {item.usia} Bulan</Text>:null}
-                            {(item.tipe == 'pakan' || item.tipe == 'obat' )&& item.kadaluarsa?<Text style={styles.infoData}>Kadaluarsa : {item.kadaluarsa}</Text>:null} */}
                         </View>
                         <View style={styles.rightDombaInfo}>
                             <Text style={[styles.totalHarga]} lineBreakMode="tail" numberOfLines={1}>{ formatToCurrencyWithoutStyle(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
@@ -108,20 +92,14 @@ export default ProductItem
 
 const styles = StyleSheet.create({
     container:{
-        // backgroundColor:'green',
         flexDirection:'row',
         marginBottom: 5,
-        paddingBottom: 5,
-        // borderBottomWidth: 1,
-        // borderBottomColor:'lightgrey'
-        
+        paddingBottom: 5,  
     },
     leftIcon:{
-        // backgroundColor:'yellow',
         width:'20%',
         justifyContent:'center',
         alignItems:'center',
-        // marginRight: 5
     },
     imgIcon:{
         width: '100%',
@@ -149,7 +127,6 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         justifyContent: 'center',
         paddingRight: 20,
-        // flexWrap: 'wrap'
     },
     infoData:{
         fontSize: 14,
@@ -183,6 +160,5 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         paddingRight: 20
-    }
-    
+    } 
 })
