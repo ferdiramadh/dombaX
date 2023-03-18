@@ -6,7 +6,6 @@ import firebase from '../../../Firebaseconfig'
 import GlobalModalEdit from '../../InventoryComponents/GlobalEditScreen/GlobalModalEdit';
 import ProductItem from '../../selectedproduct/ProductItem'
 import { MaterialIcons } from '@expo/vector-icons';
-import { deleteCollection, deleteFile } from '../../../utils/ImageUpload';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -39,40 +38,7 @@ const DombaStok = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, se
         }
         
     }
-
-    
-
-    const deleteItem = (item) => {
-        Alert.alert(
-            "Perhatian!",
-            `Hapus item?`,
-            [
-                {
-                    text:"Batal",
-                    onPress: () => Alert.alert("Dibatalkan."),
-                    style:'cancel'
-                },
-                {
-                    text: "OK",
-                    onPress: () => {
-                        setItemId(item.id)
-                        deleteCollectionAndFile(item)
-                    }
-                }
-            ],
-            {
-                cancelable: true,
-                
-            }
-        )
-        
-        
-    }
-
-    const deleteCollectionAndFile = (item) => {
-        deleteCollection("userproduk", item)
-        deleteFile("UserProduk", item)
-    }
+  
 
 
     const editItem = (item) => {    
