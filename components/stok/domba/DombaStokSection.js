@@ -86,8 +86,7 @@ const DombaStokSection = () => {
   }
 
     function selectOrDeleteItems() {
-      console.log(deleteOpt.deletedList.length)
-      if(deleteOpt.selectDelete) {
+      if(deleteOpt.deletedList.length > 0) {
         for(let i=0; i < deleteOpt.deletedList.length; i++) {
           let item = deleteOpt.deletedList[i]
           deleteCollectionAndFile(item)
@@ -174,11 +173,15 @@ const DombaStokSection = () => {
                     </View>:
                     <ScrollView style={{ paddingTop: 10}}>
                         <View style={styles.deleteOption}>
+                          {
+                          deleteOpt.allDelete || deleteOpt.selectDelete ? 
                           <TouchableOpacity style={styles.btnDelete} onPress={cancelDelete}>
                             <Text>Batal</Text>
-                          </TouchableOpacity>
+                          </TouchableOpacity> :
+                          null
+                          }
                           <TouchableOpacity style={styles.btnDelete} onPress={selectOrDeleteItems}>
-                            <Text>{deleteOpt.selectDelete ? 'Hapus' : 'Pilih'}</Text>
+                            <Text>{deleteOpt.allDelete || deleteOpt.selectDelete ? 'Hapus' : 'Pilih'}</Text>
                           </TouchableOpacity>
                           <TouchableOpacity style={[styles.btnDelete, { flexDirection: 'row', justifyContent: 'space-between', width: 80}]} onPress={deleteAllList}>
                             <Text>Semua</Text>
