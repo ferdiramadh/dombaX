@@ -87,14 +87,36 @@ const DombaStokSection = () => {
 
     function selectOrDeleteItems() {
       if(deleteOpt.deletedList.length > 0) {
-        for(let i=0; i < deleteOpt.deletedList.length; i++) {
-          let item = deleteOpt.deletedList[i]
-          deleteCollectionAndFile(item)
-          let filterDeletedItem = deleteOpt.deletedList.filter(x => x.id != item.id)
-          setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem}))
+        Alert.alert(
+          "Perhatian!",
+          `Anda Yakin Hapus Item?`,
+            [
+    
+                {
+                    text: "YA",
+                    onPress: () => {   
+                        for(let i=0; i < deleteOpt.deletedList.length; i++) {
+                        let item = deleteOpt.deletedList[i]
+                        deleteCollectionAndFile(item)
+                        let filterDeletedItem = deleteOpt.deletedList.filter(x => x.id != item.id)
+                        setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem}))
+                        setDeleteOpt(prev => ({...prev, selectDelete: false}))
+                        Alert.alert("Perhatian!", `${deleteOpt.deletedList.length} Item Telah Dihapus.`)
+                      }
+                    }
+                },
+                {
+                  text: "TIDAK",
+                  onPress: () => {   
+                     cancelDelete()
+                     Alert.alert("Perhatian!", "Hapus Item Dibatalkan.")
+                    }
+                  }
+              
+            ],
+        )
+     
 
-        }
-        setDeleteOpt(prev => ({...prev, selectDelete: false}))
       } else {
         setDeleteOpt(prev => ({...prev, selectDelete: true}))
       }
