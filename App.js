@@ -5,14 +5,16 @@ import { Provider } from 'react-redux'
 import {store} from './redux';
 import PhotoProfileProvider from './context/PhotoProfileContext';
 import FilterTransactionProvider from './context/FilterTransactionContext';
-
+import DeleteOptionProvider from './context/DeleteOptionContext';
 
 export default function App() {
   return (
     <Provider store ={store}>
       <PhotoProfileProvider>
         <FilterTransactionProvider>
-          <Routes />
+          <DeleteOptionProvider>
+            <Routes />
+          </DeleteOptionProvider>
         </FilterTransactionProvider>
       </PhotoProfileProvider>
     </Provider>
