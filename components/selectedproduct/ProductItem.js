@@ -61,13 +61,13 @@ const ProductItem = ({item, editItem, isTransaction, setSelectedProduct, modalPr
                             {isTransaction || !deleteOpt.allDelete? null :
                             <View style={styles.buttonSection}>
                                 <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
-                                     {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                                     {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
                                 </TouchableOpacity>
                             </View>}
                             { deleteOpt.selectDelete && !deleteOpt.allDelete? 
                             <View style={styles.buttonSection}>
                                 <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
-                                     {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                                     {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
                                 </TouchableOpacity> 
                             </View> : null}
                         </View>
@@ -160,5 +160,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         paddingRight: 20
-    } 
+    }, 
+    square: {
+        width: 18, 
+        height: 18, 
+        borderWidth: 1
+    }
 })
