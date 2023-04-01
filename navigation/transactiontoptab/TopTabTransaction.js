@@ -3,12 +3,14 @@ import Income from '../../components/income/Income'
 import { useContext } from 'react';
 import { PhotoContext } from '../../context/PhotoProfileContext';
 import Expense from '../../components/expense/Expense';
+import { DeleteOptionContext } from '../../context/DeleteOptionContext';
 
 const Tab = createMaterialTopTabNavigator();
 
 
 function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, isLoading, setSearchItems, setTransaction, setSearchKeyword}) {
   const { setTopTabTransactionFocus} = useContext(PhotoContext)
+  const { cancelDelete } = useContext(DeleteOptionContext)
   return (
     <Tab.Navigator screenOptions={{
         tabBarLabelStyle: { fontSize: 16, fontWeight: '700', fontFamily: 'Inter', textTransform: 'capitalize' }, 
@@ -27,6 +29,7 @@ function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, is
           setIsSearch(false)
           setTransaction('income')
           setTopTabTransactionFocus('Income')
+          cancelDelete()
         },
         swipeStart: () => {
           setSearchKeyword('')
@@ -34,6 +37,7 @@ function TopTabTransaction({setIsSearch,searchItems, isSearch, searchKeyword, is
           setIsSearch(false)
           setTransaction('expense')
           setTopTabTransactionFocus('Expense')
+          cancelDelete()
         },
     
       }} options={{
