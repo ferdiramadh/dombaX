@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import { formatToCurrencyLight } from '../../utils/FormatCurrency'
+import { FontAwesome } from '@expo/vector-icons'
+import { DeleteOptionContext } from '../../context/DeleteOptionContext'
 
 const IncomeItem = ({item, editItem}) => {
 
@@ -16,7 +18,7 @@ const IncomeItem = ({item, editItem}) => {
         }
 
         const [ itemDate, setItemDate ] = useState('')
-
+        const { deleteOpt, CheckIfInList, AddOrRemoveList } = useContext(DeleteOptionContext)
         useEffect(() => {
             if(item.tanggal) {
                   let date = item.tanggal
@@ -52,7 +54,25 @@ const IncomeItem = ({item, editItem}) => {
             <Text style={{color: '#B3B3B3'}}>{item.tanggal}</Text>
         </View>
         <View style={styles.rightWrapper}>
-            <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
+            <View style={styles.upperRight}>
+                <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
+                {
+                !deleteOpt.allDelete? null :
+                <View style={styles.buttonSection}>
+                    <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
+                            {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
+                    </TouchableOpacity>
+                </View>
+                }
+                { 
+                deleteOpt.selectDelete && !deleteOpt.allDelete? 
+                <View style={styles.buttonSection}>
+                    <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
+                            {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
+                    </TouchableOpacity> 
+                </View> : null
+                }
+            </View>
             <Text style={{color: '#000'}} ellipsizeMode='tail' numberOfLines={1}>{item.kategori}</Text>
             {(item.kategori == 'Penjualan' || item.kategori == 'Pinjaman' || item.kategori == 'Piutang') && item.statusBayar !== 'status'?
             <View style={[styles.status, item.statusBayar == 'Lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>
@@ -118,5 +138,20 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontFamily: 'Inter',
         fontWeight: 'bold'
+    }, 
+    upperRight: {
+        flexDirection:'row',  
+        padding: 5,
+        alignItems: 'center'
+    },
+    buttonSection:{
+        flexDirection:'row',  
+        padding: 5,
+        justifyContent:'flex-end',  
+    },
+    square: {
+        width: 18, 
+        height: 18, 
+        borderWidth: 1
     }
 })

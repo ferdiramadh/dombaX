@@ -7,10 +7,11 @@ import firebase from '../../Firebaseconfig'
 import { useNavigation } from '@react-navigation/native';
 import { FilterTransactionContext } from '../../context/FilterTransactionContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import { DeleteOptionContext } from '../../context/DeleteOptionContext'
 
 const IncomeSection = ({listIncome,searchItems, isSearch, searchKeyword, isLoading, setSearchItems}) => {
   const { isFilter, filteredList, filterBy, setIsFilter } = useContext(FilterTransactionContext)
-
+  const { DeleteOptionSection } = useContext(DeleteOptionContext)
   const [editData, setEditData] = useState({});
   const navigation = useNavigation();
 
@@ -67,16 +68,18 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-      {!isSearch && !isFilter && <View style={styles.totalIncomeWrapper}>
+      
+      {isLoading? <View style={styles.loaderContainer}>
+              <ActivityIndicator size="large" color="orange" />
+                </View>:
+      <ScrollView >
+        {!isSearch && !isFilter && <View style={styles.totalIncomeWrapper}>
         <View>
           <Text style={styles.totalIncomeTitle}>Total Pemasukan</Text>   
           <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listIncome, "jumlah"))}</Text>
         </View> 
       </View> }
-      {isLoading? <View style={styles.loaderContainer}>
-              <ActivityIndicator size="large" color="orange" />
-                </View>:
-      <ScrollView >
+            <DeleteOptionSection dataProps={{dataList:sortData, collection:'income', storageCollection: 'Income' }}/>
             {isSearch? <View style={{paddingTop: 10}}> 
                   
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>

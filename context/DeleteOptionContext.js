@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { StyleSheet, Text, View , ActivityIndicator, Alert, TouchableOpacity, TextInput, ScrollView, Dimensions} from 'react-native'
 import { deleteCollection, deleteFile } from '../utils/ImageUpload';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
 export const DeleteOptionContext = createContext()
 
@@ -11,12 +12,12 @@ const DeleteOptionProvider = (props) => {
         deletedList: [],
         selectDelete: false
       })
-      function deleteAllList() {
+      function deleteAllList(dataList) {
         if(!deleteOpt.allDelete || (deleteOpt.allDelete && deleteOpt.deletedList.length <= 0))
         setDeleteOpt(prev =>   
           ( {
             ...prev, 
-            deletedList: DATA, 
+            deletedList: dataList, 
             allDelete: true
           })
         )
@@ -38,12 +39,12 @@ const DeleteOptionProvider = (props) => {
           selectDelete: false
         })
       }
-      const deleteCollectionAndFile = (item) => {
-        deleteCollection("userproduk", item)
-        deleteFile("UserProduk", item)
+      const deleteCollectionAndFile = (item, collection, storageCollection) => {
+        deleteCollection(collection, item)
+        deleteFile(storageCollection, item)
     }
   
-      function selectOrDeleteItems() {
+      function selectOrDeleteItems(collection, storageCollection) {
         if(deleteOpt.deletedList.length > 0) {
           Alert.alert(
             "Perhatian!",
@@ -55,12 +56,13 @@ const DeleteOptionProvider = (props) => {
                       onPress: () => {   
                           for(let i=0; i < deleteOpt.deletedList.length; i++) {
                           let item = deleteOpt.deletedList[i]
-                          deleteCollectionAndFile(item)
+                          deleteCollectionAndFile(item, collection, storageCollection)
                           let filterDeletedItem = deleteOpt.deletedList.filter(x => x.id != item.id)
                           setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem}))
-                          setDeleteOpt(prev => ({...prev, selectDelete: false}))
+                          // setDeleteOpt(prev => ({...prev, selectDelete: false, allDelete: false}))
                           Alert.alert("Perhatian!", `${deleteOpt.deletedList.length} Item Telah Dihapus.`)
                         }
+                        cancelDelete()
                       }
                   },
                   {
@@ -79,28 +81,47 @@ const DeleteOptionProvider = (props) => {
           setDeleteOpt(prev => ({...prev, selectDelete: true}))
         }
       }
-    const deleteOptionSection = () => {
+      function CheckIfInList (val) {
+        let ID = val.id    
+        let result = deleteOpt.deletedList.find(x => x.id === ID)  
+        if(result)
+        return true
+        return false 
+    }
+
+    function AddOrRemoveList (val) {
+        let isInList = CheckIfInList(val)
+        if(!isInList) {
+            setDeleteOpt(prev => ({...prev, deletedList: [...prev.deletedList, val]}))
+        } else if(isInList) {
+            let filterDeletedItem = deleteOpt.deletedList.filter(x => x.id != val.id)
+            setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem}))
+        }
+    }
+    const DeleteOptionSection = (dataProps) => {
+       
         return(
             <View style={styles.deleteOption}>
                 {
                 deleteOpt.allDelete || deleteOpt.selectDelete ? 
                 <TouchableOpacity style={styles.btnDelete} onPress={cancelDelete}>
-                <Text>Batal</Text>
+                  <Text>Batal</Text>
                 </TouchableOpacity> :
                 null
                 }
-                <TouchableOpacity style={styles.btnDelete} onPress={selectOrDeleteItems}>
-                <Text>{deleteOpt.allDelete || deleteOpt.selectDelete ? 'Hapus' : 'Pilih'}</Text>
+                <TouchableOpacity style={styles.btnDelete} onPress={() => selectOrDeleteItems(dataProps.dataProps.collection, dataProps.dataProps.storageCollection)}>
+                  <Text>{deleteOpt.allDelete || deleteOpt.selectDelete ? 'Hapus' : 'Pilih'}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.btnDelete, { flexDirection: 'row', justifyContent: 'space-between', width: 80}]} onPress={deleteAllList}>
-                <Text>Semua</Text>
-                {deleteOpt.allDelete && deleteOpt.deletedList.length > 0? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                <TouchableOpacity style={[styles.btnDelete, { flexDirection: 'row', justifyContent: 'space-between', width: 80}]} onPress={() => deleteAllList(dataProps.dataProps.dataList)}>
+                  <Text>Semua</Text>
+                {deleteOpt.allDelete && deleteOpt.deletedList.length > 0? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
                 </TouchableOpacity>
             </View>
         )
     }
+
     return(
-        <DeleteOptionContext.Provider value={{deleteOpt, setDeleteOpt, deleteAllList, cancelDelete, deleteCollectionAndFile, deleteOptionSection}}>
+        <DeleteOptionContext.Provider value={{deleteOpt, setDeleteOpt, deleteAllList, cancelDelete, deleteCollectionAndFile, DeleteOptionSection, CheckIfInList, AddOrRemoveList}}>
             {props.children}
         </DeleteOptionContext.Provider>
     )
@@ -119,5 +140,10 @@ const styles = StyleSheet.create({
       marginLeft: 10,
       padding: 5,
       alignItems: 'center'
+    },
+    square: {
+        width: 18, 
+        height: 18, 
+        borderWidth: 1
     }
 })
