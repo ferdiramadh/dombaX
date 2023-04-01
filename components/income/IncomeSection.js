@@ -79,7 +79,7 @@ useEffect(() => {
           <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listIncome, "jumlah"))}</Text>
         </View> 
       </View> }
-            <DeleteOptionSection dataProps={{dataList:sortData, collection:'income', storageCollection: 'Income' }}/>
+            <DeleteOptionSection dataProps={{ dataList: sortData, collection:'income', storageCollection: 'Income' }}/>
             {isSearch? <View style={{paddingTop: 10}}> 
                   
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>

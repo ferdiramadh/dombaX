@@ -67,14 +67,14 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-     {!isSearch && !isFilter && <View style={styles.totalIncomeWrapper}>
-          <Text style={styles.totalIncomeTitle}>Total Pengeluaran</Text>   
-        <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listExpense, "jumlah"))}</Text>
-      </View>  }
       {isLoading? <View style={styles.loaderContainer}>
               <ActivityIndicator size="large" color="orange" />
                 </View>:
       <ScrollView >
+              {!isSearch && !isFilter && <View style={styles.totalIncomeWrapper}>
+                  <Text style={styles.totalIncomeTitle}>Total Pengeluaran</Text>   
+                <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listExpense, "jumlah"))}</Text>
+              </View>  }
              {isSearch? <View style={{paddingTop: 10}}>
                   
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
