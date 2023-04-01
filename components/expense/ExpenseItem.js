@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import { formatToCurrencyLight } from '../../utils/FormatCurrency'
+import { FontAwesome } from '@expo/vector-icons'
+import { DeleteOptionContext } from '../../context/DeleteOptionContext'
 
 const ExpenseItem = ({item, editItem}) => {
 
@@ -16,20 +18,7 @@ const ExpenseItem = ({item, editItem}) => {
             others: require('../../assets/images/expensecategory/OtherPaycments.png'),
             
         }
-
-        // const [ itemDate, setItemDate ] = useState('')
-
-        // useEffect(() => {
-        //     if(item.tanggal) {
-        //           let date = item.tanggal
-        //           setItemDate(date.substring(4))
-        //     } else {
-        //         console.log("Kagak ada tanggal")
-        //         setItemDate('')
-        //     }
-            
-        // }, [item])
-
+    const { deleteOpt, CheckIfInList, AddOrRemoveList } = useContext(DeleteOptionContext)
     
   return (
     <TouchableOpacity key={item.id} style={styles.container} onPress={() => editItem(item)}>
@@ -47,7 +36,25 @@ const ExpenseItem = ({item, editItem}) => {
             <Text style={{color: '#B3B3B3'}}>{item.tanggal}</Text>
         </View>
         <View style={styles.rightWrapper}>
-            <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}} lineBreakMode="tail" numberOfLines={1}>{formatToCurrencyLight(item.jumlah)}</Text>
+            <View style={styles.upperRight}>
+                    <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
+                    {
+                    !deleteOpt.allDelete? null :
+                    <View style={styles.buttonSection}>
+                        <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
+                                {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
+                        </TouchableOpacity>
+                    </View>
+                    }
+                    { 
+                    deleteOpt.selectDelete && !deleteOpt.allDelete? 
+                    <View style={styles.buttonSection}>
+                        <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
+                                {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
+                        </TouchableOpacity> 
+                    </View> : null
+                    }
+                </View>
             <Text style={{color: '#000'}} ellipsizeMode='tail' numberOfLines={1}>{item.kategori}</Text>
             {(item.kategori !== 'Tabungan atau Investasi' || item.kategori !== 'Pengeluaran Lain-Lain' ) && (item.statusBayar)?
             <View style={[styles.status, item.statusBayar == 'Lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>
@@ -112,5 +119,20 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontFamily: 'Inter',
         fontWeight: 'bold'
+    },
+    upperRight: {
+        flexDirection:'row',  
+        padding: 5,
+        alignItems: 'center'
+    },
+    buttonSection:{
+        flexDirection:'row',  
+        padding: 5,
+        justifyContent:'flex-end',  
+    },
+    square: {
+        width: 18, 
+        height: 18, 
+        borderWidth: 1
     }
 })

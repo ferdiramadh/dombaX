@@ -7,9 +7,11 @@ import { useNavigation } from '@react-navigation/native';
 import ExpenseItem from './ExpenseItem'
 import { FilterTransactionContext } from '../../context/FilterTransactionContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import { DeleteOptionContext } from '../../context/DeleteOptionContext'
 
 const ExpenseSection = ({listExpense, searchItems, isSearch, searchKeyword, isLoading, setSearchItems}) => {
   const { isFilter, filteredList, filterBy, setIsFilter } = useContext(FilterTransactionContext)
+  const { DeleteOptionSection } = useContext(DeleteOptionContext)
   const [editData, setEditData] = useState({});
   const navigation = useNavigation();
 
@@ -75,6 +77,7 @@ useEffect(() => {
                   <Text style={styles.totalIncomeTitle}>Total Pengeluaran</Text>   
                 <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listExpense, "jumlah"))}</Text>
               </View>  }
+              <DeleteOptionSection dataProps={{ dataList: sortData, collection:'expense', storageCollection: 'Expense' }}/>
              {isSearch? <View style={{paddingTop: 10}}>
                   
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
