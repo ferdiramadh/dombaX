@@ -120,13 +120,16 @@ const styles = StyleSheet.create({
     leftDombaInfo:{
         width:'60%',
         padding: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'yellow'
     },
     rightDombaInfo:{
         width:'40%',
         paddingLeft: 5,
-        justifyContent: 'center',
         paddingRight: 20,
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: 'red'
     },
     infoData:{
         fontSize: 14,
@@ -148,7 +151,7 @@ const styles = StyleSheet.create({
         color: '#43B88E',
         fontWeight:'bold',
         fontSize: 16,
- 
+        
     },
     upperLeft: {
         width: '50%',
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        paddingRight: 20
+        paddingRight: 20,
     }, 
     square: {
         width: 18, 
