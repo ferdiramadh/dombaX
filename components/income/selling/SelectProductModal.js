@@ -1,5 +1,5 @@
 import { Alert, Modal, StyleSheet, Text, ScrollView, View, TouchableOpacity, TextInput, Button, ActivityIndicator } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux'
 import firebase from '../../../Firebaseconfig'
@@ -8,11 +8,12 @@ import { windowHeigth, windowWidth } from '../../../utils/DimensionSetup';
 import ModalAddStok from '../../InventoryComponents/ModalAddStok';
 import FilterStokModal from '../../stok/FilterStokModal'
 import DombaStok from '../../stok/domba/DombaStok';
+import { DeleteOptionContext } from '../../../context/DeleteOptionContext'
 
 const SelectProductModal = ({modalProductVisible, setModalProductVisible, setSelectedProduct}) => {
 
     const [modalVisible, setModalVisible] = useState(false);
-    
+    const { deleteOpt, setDeleteOpt } = useContext(DeleteOptionContext)
     const [ filterVisible, setFilterVisible ] = useState(false)
     const [ isFilter, setIsFilter ] = useState(false)
     const [ filterBy, setFilterBy ] = useState();
@@ -149,7 +150,7 @@ const SelectProductModal = ({modalProductVisible, setModalProductVisible, setSel
                             setIsSearch(true)
                             searchProduct()
                           } else {
-                            console.log("keyword kosong")
+                            alert("Keyword Kosong!")
                           }
                         }}>
                           <MaterialIcons name="search" size={30} color="black" />
@@ -167,10 +168,10 @@ const SelectProductModal = ({modalProductVisible, setModalProductVisible, setSel
                     </View>:
                   <ScrollView>
                     <View style={styles.listItemWrapper}>
-                      <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isTransaction={true} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible}/>
+                      <DombaStok isSearch={isSearch} searchItems={searchItems} setSearchItems={setSearchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isTransaction={true} setSelectedProduct={setSelectedProduct} modalProductVisible={modalProductVisible} setModalProductVisible={setModalProductVisible} deleteOpt={deleteOpt} setDeleteOpt={setDeleteOpt}/>
                     </View>
                   </ScrollView>}      
-            <ModalAddStok setModalVisible={setModalVisible}  modalVisible={modalVisible}/>
+            <ModalAddStok setModalVisible={setModalVisible} modalVisible={modalVisible}/>
             <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} />
         </View>
       </Modal>

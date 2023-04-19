@@ -121,7 +121,7 @@ const DeleteOptionProvider = (props) => {
     }
 
     return(
-        <DeleteOptionContext.Provider value={{deleteOpt, cancelDelete, DeleteOptionSection, CheckIfInList, AddOrRemoveList}}>
+        <DeleteOptionContext.Provider value={{deleteOpt, setDeleteOpt, cancelDelete, DeleteOptionSection, CheckIfInList, AddOrRemoveList}}>
             {props.children}
         </DeleteOptionContext.Provider>
     )
