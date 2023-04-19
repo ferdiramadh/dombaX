@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
         width:'60%',
         padding: 5,
         justifyContent: 'center',
-        backgroundColor: 'yellow'
     },
     rightDombaInfo:{
         width:'40%',
@@ -129,7 +128,6 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         alignItems: 'center',
         flexDirection: 'row',
-        backgroundColor: 'red'
     },
     infoData:{
         fontSize: 14,
