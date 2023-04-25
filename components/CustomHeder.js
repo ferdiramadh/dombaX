@@ -64,11 +64,12 @@ export default CustomHeder
 const styles = StyleSheet.create({
     container:{
         width:'100%',
-        height:windowHeigth*.09,
+        height:windowHeigth*.085,
         backgroundColor:'#fff',
         position:'absolute',
-        top:20,
-        elevation:2
+        top: 28,
+        borderBottomColor: 'lightgrey',
+        borderBottomWidth: 1
     },
     headerContent:{
         width:'100%',
