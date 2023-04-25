@@ -18,7 +18,7 @@ const IncomeItem = ({item, editItem}) => {
         }
 
         const [ itemDate, setItemDate ] = useState('')
-        const { deleteOpt, CheckIfInList, AddOrRemoveList } = useContext(DeleteOptionContext)
+        const { deleteOpt, CheckIfInList, AddOrRemoveList, setDeleteOpt } = useContext(DeleteOptionContext)
         useEffect(() => {
             if(item.tanggal) {
                   let date = item.tanggal
@@ -41,7 +41,12 @@ const IncomeItem = ({item, editItem}) => {
 
     
   return (
-    <TouchableOpacity key={item.id} style={styles.container} onPress={() => editItem(item)}>
+    <TouchableOpacity 
+        key={item.id} 
+        style={styles.container} 
+        onPress={() => editItem(item)}
+        onLongPress={() => setDeleteOpt(prev => ({...prev, selectDelete: !deleteOpt.selectDelete}))}
+    >
         <View style={styles.iconWrapper}>
             {item.kategori == 'Penjualan'?<Image source={purchaseCategoryIcon.penjualan} style={styles.img} resizeMode='contain'/>: null  }
             {item.kategori == 'Penambahan Modal'?<Image source={purchaseCategoryIcon.modal} style={styles.img} resizeMode='contain'/>: null  }

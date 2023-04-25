@@ -11,7 +11,7 @@ import { DeleteOptionContext } from '../../context/DeleteOptionContext'
 
 const IncomeSection = ({listIncome,searchItems, isSearch, searchKeyword, isLoading, setSearchItems}) => {
   const { isFilter, filteredList, filterBy, setIsFilter } = useContext(FilterTransactionContext)
-  const { DeleteOptionSection } = useContext(DeleteOptionContext)
+  const { DeleteOptionSection, deleteOpt } = useContext(DeleteOptionContext)
   const [editData, setEditData] = useState({});
   const navigation = useNavigation();
 
@@ -79,7 +79,9 @@ useEffect(() => {
           <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(getSum(listIncome, "jumlah"))}</Text>
         </View> 
       </View> }
-            <DeleteOptionSection dataProps={{ dataList: sortData, collection:'income', storageCollection: 'Income' }}/>
+            {
+            deleteOpt.selectDelete && <DeleteOptionSection dataProps={{ dataList: sortData, collection:'income', storageCollection: 'Income' }}/>
+            }
             {isSearch? <View style={{paddingTop: 10}}> 
                   
                   <Text style={{marginLeft: 20, marginBottom: 15}}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>

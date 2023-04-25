@@ -18,10 +18,15 @@ const ExpenseItem = ({item, editItem}) => {
             others: require('../../assets/images/expensecategory/OtherPaycments.png'),
             
         }
-    const { deleteOpt, CheckIfInList, AddOrRemoveList } = useContext(DeleteOptionContext)
+    const { deleteOpt, CheckIfInList, AddOrRemoveList, setDeleteOpt } = useContext(DeleteOptionContext)
     
   return (
-    <TouchableOpacity key={item.id} style={styles.container} onPress={() => editItem(item)}>
+    <TouchableOpacity 
+        key={item.id} 
+        style={styles.container} 
+        onPress={() => editItem(item)}
+        onLongPress={() => setDeleteOpt(prev => ({...prev, selectDelete: !deleteOpt.selectDelete}))}
+    >
         <View style={styles.iconWrapper}>
             {item.kategori == 'Pembelian Stok'?<Image source={sellingCategoryIcone.pembelianStok} style={styles.img} resizeMode='contain'/>: null  }
             {item.kategori == 'Pembelian Alat dan Mesin'?<Image source={sellingCategoryIcone.pembelianAlat} style={styles.img} resizeMode='contain'/>: null  }
