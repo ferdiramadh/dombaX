@@ -7,7 +7,7 @@ import { pickImage } from '../../utils/ImageUpload';
 import { windowWidth, windowHeigth } from '../../utils/DimensionSetup'
 import EditAccount from './EditAccount';
 import DisplayProfile from './DisplayProfile';
-import CustomHeder from '../CustomHeder';
+import CustomHeader from '../CustomHeader';
 
 const AccountDisplay = ({navigation}) => {
 
@@ -22,7 +22,7 @@ const AccountDisplay = ({navigation}) => {
   return (
       <ScrollView>
       <View style={styles.main}>
-      <CustomHeder leftSubMenu='Profil' styleFont={{fontSize:48}}/>
+      <CustomHeader leftSubMenu='Profil' styleFont={{fontSize:48}}/>
         <View style={styles.upperContent}>
         {isLoading?<ActivityIndicator size="small" color="orange" />: <View>
           {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={100} color="black" />}</View>

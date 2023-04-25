@@ -12,7 +12,7 @@ if(PixelRatio.get() <= 2) {
     FONT_NORMAL = 18
 }
 
-const CustomHeder = (props) => {
+const CustomHeader = (props) => {
     const image = useSelector(state => state.profileReducer.image)
     
     const [ leftOn, setLeftOn ] = useState(true);
@@ -59,7 +59,7 @@ const CustomHeder = (props) => {
     )
 }
 
-export default CustomHeder
+export default CustomHeader
 
 const styles = StyleSheet.create({
     container:{

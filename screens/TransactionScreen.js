@@ -1,6 +1,6 @@
 import React , { useState, useContext } from 'react'
 import { StyleSheet, TouchableOpacity, View, TextInput, Alert } from 'react-native'
-import CustomHeder from '../components/CustomHeder'
+import CustomHeader from '../components/CustomHeader'
 import CustomButton from '../components/CustomButton'
 import { MaterialIcons } from '@expo/vector-icons';
 import ModalAddTransaction from '../components/transactionsComponents/ModalAddTransaction'
@@ -68,7 +68,7 @@ const TransactionScreen = () => {
 
     return (
         <View style={styles.container}>
-            <CustomHeder leftSubMenu='Transaksi' styleFont={{fontSize:48}} state={purchasing} setState={setPurchasing}/>     
+            <CustomHeader leftSubMenu='Transaksi' styleFont={{fontSize:48}} state={purchasing} setState={setPurchasing}/>     
             <View style={{marginTop:100, width:windowWidth, height:windowHeigth * .8 }}>
                 <View style={{flex: 1, width: windowWidth}}>
 

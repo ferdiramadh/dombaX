@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { StyleSheet, Text, View, ActivityIndicator ,StatusBar} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import CustomButton from '../components/CustomButton'
-import CustomHeder from '../components/CustomHeder'
+import CustomHeader from '../components/CustomHeader'
 
 export default function HomeScreen({navigation}) {
     const [selectedLanguage, setSelectedLanguage] = useState({
@@ -12,7 +12,7 @@ export default function HomeScreen({navigation}) {
     
     return (
         <View style={styles.container}>
-            <CustomHeder home={true}/>
+            <CustomHeader home={true}/>
             <StatusBar
         animated={true}
         

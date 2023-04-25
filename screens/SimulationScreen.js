@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
-import CustomHeder from '../components/CustomHeder'
+import CustomHeader from '../components/CustomHeader'
 import Profit from '../components/simulasiprofit/Profit'
 import TitikImpas from '../components/simulasi_titik_impas/TitikImpas'
 
@@ -8,7 +8,7 @@ const SimulationScreen = () => {
     const [ profit, setProfit ] = useState(true);
     return (
         <View style={styles.container}>
-            <CustomHeder leftSubMenu='Simulasi'/>
+            <CustomHeader leftSubMenu='Simulasi'/>
             <View style={styles.subTitleChoices}>
                 <TouchableOpacity style={styles.subTitleOptions} onPress={() => setProfit(true)}>
                     <Text style={[styles.textOptions, profit?{borderBottomColor:'#000'}:null]}>Profit</Text>
