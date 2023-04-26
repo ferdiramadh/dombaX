@@ -10,7 +10,7 @@ const imageDefault = {
     "obat": require('../../assets/images/kategori/ObatSuplemen.png')
 } 
 
-const ProductItem = ({item, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible, deleteProp}) => {
+const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalProductVisible, setModalProductVisible, deleteProp }) => {
     const { deleteOpt, setDeleteOpt } = deleteProp
     function CheckIfInList (val) {
         let ID = val.id    
@@ -31,16 +31,19 @@ const ProductItem = ({item, editItem, isTransaction, setSelectedProduct, modalPr
     }
 
     return (
-            <TouchableOpacity style={styles.container} key={item.id} 
-                    onPress={() =>{
-                        if(isTransaction) {
-                            setSelectedProduct(item)
-                            setModalProductVisible(!modalProductVisible)
-                        } else {
-                            editItem(item)
-                        }            
-                   }}
-                    >
+            <TouchableOpacity 
+                style={styles.container} 
+                key={item.id} 
+                onPress={() =>{
+                    if(isTransaction) {
+                        setSelectedProduct(item)
+                        setModalProductVisible(!modalProductVisible)
+                    } else {
+                        editItem(item)
+                    }            
+                }}
+                onLongPress={() => setDeleteOpt(prev => ({...prev, selectDelete: !deleteOpt.selectDelete}))}
+            >
                 <View style={styles.leftIcon}>
                 <Image source={imageDefault[`${item.tipe}`]} style={styles.imgIcon}/>
                 </View>

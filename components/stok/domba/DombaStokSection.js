@@ -194,6 +194,8 @@ const DombaStokSection = () => {
                   <ActivityIndicator size="large" color="orange" />
                     </View>:
                     <ScrollView style={{ paddingTop: 10}}>
+                      {
+                        deleteOpt.selectDelete &&
                         <View style={styles.deleteOption}>
                           {
                           deleteOpt.allDelete || deleteOpt.selectDelete ? 
@@ -210,6 +212,7 @@ const DombaStokSection = () => {
                             {deleteOpt.allDelete && deleteOpt.deletedList.length > 0? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
                           </TouchableOpacity>
                         </View>
+                      }
                         <DombaStok isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} setIsSearch={setIsSearch} setSearchItems={setSearchItems} deleteOpt={deleteOpt} setDeleteOpt={setDeleteOpt} />
                     </ScrollView> }         
                   <FilterStokModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} setFilterBy={setFilterBy} filterList={filterList} setFilterList={setFilterList}/>
