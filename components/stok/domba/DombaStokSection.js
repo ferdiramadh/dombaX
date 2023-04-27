@@ -62,7 +62,7 @@ const DombaStokSection = () => {
           allDelete: true
         })
       )
-      if(deleteOpt.allDelete)
+      if(deleteOpt.allDelete || (DATA.length == deleteOpt.deletedList.length))
       setDeleteOpt(prev =>   
         ( {
           ...prev, 
@@ -209,7 +209,7 @@ const DombaStokSection = () => {
                           </TouchableOpacity>
                           <TouchableOpacity style={[styles.btnDelete, { flexDirection: 'row', justifyContent: 'space-between', width: 80}]} onPress={deleteAllList}>
                             <Text>Semua</Text>
-                            {deleteOpt.allDelete && deleteOpt.deletedList.length > 0? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
+                            {DATA.length == deleteOpt.deletedList.length ? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={{width: 18, height: 18, borderWidth: 1}} />}
                           </TouchableOpacity>
                         </View>
                       }

@@ -23,10 +23,10 @@ const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalP
     function AddOrRemoveList (val) {
         let isInList = CheckIfInList(val)
         if(!isInList) {
-            setDeleteOpt(prev => ({...prev, deletedList: [...prev.deletedList, val]}))
+            setDeleteOpt(prev => ({...prev, deletedList: [...prev.deletedList, val], allDelete: false}))
         } else if(isInList) {
             let filterDeletedItem = deleteOpt.deletedList.filter(x => x.id != val.id)
-            setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem}))
+            setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem, allDelete: false}))
         }
     }
 

@@ -21,7 +21,7 @@ const DeleteOptionProvider = (props) => {
             allDelete: true
           })
         )
-        if(deleteOpt.allDelete)
+        if(deleteOpt.allDelete || (dataList.length == deleteOpt.deletedList.length))
         setDeleteOpt(prev =>   
           ( {
             ...prev, 
@@ -92,10 +92,10 @@ const DeleteOptionProvider = (props) => {
     function AddOrRemoveList (val) {
         let isInList = CheckIfInList(val)
         if(!isInList) {
-            setDeleteOpt(prev => ({...prev, deletedList: [...prev.deletedList, val]}))
+            setDeleteOpt(prev => ({...prev, deletedList: [...prev.deletedList, val], allDelete: false}))
         } else if(isInList) {
             let filterDeletedItem = deleteOpt.deletedList.filter(x => x.id != val.id)
-            setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem}))
+            setDeleteOpt(prev => ({...prev, deletedList: filterDeletedItem, allDelete: false}))
         }
     }
     const DeleteOptionSection = (dataProps) => {
@@ -114,7 +114,7 @@ const DeleteOptionProvider = (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.btnDelete, { flexDirection: 'row', justifyContent: 'space-between', width: 80}]} onPress={() => deleteAllList(dataProps.dataProps.dataList)}>
                   <Text>Semua</Text>
-                {deleteOpt.allDelete && deleteOpt.deletedList.length > 0? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
+                {dataProps.dataProps.dataList.length == deleteOpt.deletedList.length ? <FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
                 </TouchableOpacity>
             </View>
         )
