@@ -78,6 +78,7 @@ const DeleteOptionProvider = (props) => {
        
   
         } else {
+          Alert.alert('Perhatian!','Tidak Ada Item Untuk Dihapus.')
           setDeleteOpt(prev => ({...prev, selectDelete: true}))
         }
       }
