@@ -76,7 +76,7 @@ const LoginScreen = ({navigation}) => {
             <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>ATAU</Text> */}
             <Text style={{color:'red'}}>{error}</Text>
             <View style={{width: '100%', justifyContent:'center', alignItems: 'center'}}>
-                <Image style={{ width: 30, height: 25, marginRight: 10, position: 'absolute', left: 30,zIndex: 2}} source={emailIcon}/>
+                <Image style={{ width: 24, height: 18, marginRight: 10, position: 'absolute', left: 30,zIndex: 2}} source={emailIcon}/>
                 <TextInput style={styles.input}
                     placeholder="EMAIL"
                     value={email}
@@ -85,7 +85,7 @@ const LoginScreen = ({navigation}) => {
                 />
             </View>
             <View style={{width: '100%', justifyContent:'center', alignItems: 'center'}}>
-                <Image style={{ width: 30, height: 40, marginRight: 10, position: 'absolute', left: 30,zIndex: 2}} source={lockIcon}/>
+                <Image style={{ width: 20, height: 26, marginRight: 10, position: 'absolute', left: 30,zIndex: 2}} source={lockIcon}/>
                 <TextInput style={styles.input}
                 placeholder="PASSWORD"
                 value={password}
