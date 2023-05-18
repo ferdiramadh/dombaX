@@ -54,7 +54,7 @@ const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalP
                         {item.tipe == 'pakan'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
                         {item.tipe == 'obat'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
                         {item.tipe == 'tambahproduk'?<Text style={styles.subStokTitle}>{item.nama}</Text>:null}
-                        {item.tipe == 'domba' && item.kategoriHewanTernak != ''?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>:null}
+                        {/* {item.tipe == 'domba' && item.kategoriHewanTernak != ''?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>:null} */}
                         </View>
                         <View style={styles.upperRight}>
                             {item.tipe == 'domba'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah + " Ekor"} </Text>:null}
@@ -77,13 +77,13 @@ const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalP
 
                     </View>
                     
-                    <View style={styles.dombaInfo}>
-                        <View style={styles.leftDombaInfo}>         
+                    <View style={styles.lowerSection}>
+                        {/* <View style={styles.leftDombaInfo}>         
                             {item.hargaBeli?<Text style={styles.infoData}>Harga Beli: {formatToCurrencyWithoutStyle(parseInt(item.hargaBeli))}</Text>: null}
-                        </View>
-                        <View style={styles.rightDombaInfo}>
+                        </View> */}
+                        {/* <View style={styles.rightDombaInfo}> */}
                             <Text style={[styles.totalHarga]} lineBreakMode="tail" numberOfLines={1}>{ formatToCurrencyWithoutStyle(parseInt(item.hargaBeli)*parseInt(item.jumlah))}</Text>
-                        </View>
+                        {/* </View> */}
                     </View>
                 </View> 
             </TouchableOpacity>
@@ -96,8 +96,8 @@ export default ProductItem
 const styles = StyleSheet.create({
     container:{
         flexDirection:'row',
-        marginBottom: 5,
-        paddingBottom: 5,  
+        marginBottom: 5, 
+        height: 80,
     },
     leftIcon:{
         width:'20%',
@@ -112,9 +112,13 @@ const styles = StyleSheet.create({
     rightSection:{
         width:'80%',
         flexDirection:'column',
+        height: '100%',
     },
-    dombaInfo:{
-        flexDirection:'row',
+    lowerSection:{
+        flexDirection: 'row-reverse',
+        height: '50%',
+        paddingLeft: 20,
+        paddingVertical: 5
     },
     subStokTitle:{
         fontSize: 20,
@@ -124,13 +128,10 @@ const styles = StyleSheet.create({
         width:'60%',
         padding: 5,
         justifyContent: 'center',
-
     },
     rightDombaInfo:{
-        width:'40%',
-        paddingLeft: 20,
-        paddingRight: 5,
-        alignItems: 'center',
+        width:'100%',
+        paddingHorizontal: 5,
         flexDirection: 'row-reverse',
     },
     infoData:{
@@ -141,8 +142,8 @@ const styles = StyleSheet.create({
     upperSection:{
         flexDirection:'row',
         justifyContent:'space-between',
-        paddingLeft: 5
-        
+        paddingLeft: 5,
+        height: '50%'
     },
     buttonSection:{
         flexDirection:'row',  
@@ -153,10 +154,11 @@ const styles = StyleSheet.create({
         color: '#43B88E',
         fontWeight:'bold',
         fontSize: 16, 
+        textAlign: 'right'
     },
     upperLeft: {
         width: '50%',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
     },
     upperRight: {
         width: '50%',
