@@ -31,8 +31,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     width: windowWidth * .88,
     marginVertical: 5,
-    borderWidth: .5,
-    borderRadius: 8
   },
   leftSection :{
     justifyContent: 'center',
@@ -53,7 +51,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign:'center',
     fontFamily:'Inter',
-    fontWeight:'600'
+    fontWeight:'700'
   }
   ,text: {
     textAlign:'left',
