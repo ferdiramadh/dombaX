@@ -59,7 +59,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         )}
         <TextInput
           style={styles.textInput}
-          placeholder='Nama Depan...'
+          placeholder='Nama Depan'
           placeholderTextColor="#000" 
           onChangeText={handleChange('namaDepan')}
           onBlur={handleBlur('namaDepan')}
@@ -67,7 +67,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         />
         <TextInput
           style={styles.textInput}
-          placeholder='Nama Belakang...'
+          placeholder='Nama Belakang'
           placeholderTextColor="#000" 
           onChangeText={handleChange('namaBelakang')}
           onBlur={handleBlur('namaBelakang')}
@@ -84,7 +84,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         />
         <TextInput
           style={styles.textInput}
-          placeholder='Email...'
+          placeholder='Email'
           placeholderTextColor="#000" 
           onChangeText={handleChange('email')}
           onBlur={handleBlur('email')}
@@ -133,7 +133,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         />
         {/* <TextInput
           style={styles.textInput}
-          placeholder='Nama Bisnis...'
+          placeholder='Nama Bisnis'
           placeholderTextColor="#fff" 
           onChangeText={handleChange('namaBisnis')}
           onBlur={handleBlur('namaBisnis')}
