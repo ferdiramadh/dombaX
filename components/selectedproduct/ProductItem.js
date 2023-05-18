@@ -72,10 +72,10 @@ const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalP
                         {/* {item.tipe == 'domba' && item.kategoriHewanTernak != ''?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.kategoriHewanTernak}</Text>:null} */}
                         </View>
                         <View style={styles.upperRight}>
-                            {item.tipe == 'domba'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah} {checkSatuan(item)}</Text>:null}
-                            {item.tipe == 'pakan'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah} {checkSatuan(item)}</Text>:null}
-                            {item.tipe == 'obat'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:item.jumlah} {checkSatuan(item)}</Text>:null}
-                            {item.tipe == 'tambahproduk'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>: item.jumlah } {item.satuan?  item.satuan : parseInt(item.jumlah)> 1? 'Items' : 'Item'}</Text>:null}
+                            {item.tipe == 'domba'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:`${item.jumlah} ${checkSatuan(item)}`}</Text>:null}
+                            {item.tipe == 'pakan'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:`${item.jumlah} ${checkSatuan(item)}`}</Text>:null}
+                            {item.tipe == 'obat'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>:`${item.jumlah} ${checkSatuan(item)}`}</Text>:null}
+                            {item.tipe == 'tambahproduk'?<Text style={[styles.infoData,{fontWeight:'bold'}]}>{item.jumlah == "0"? <Text style={{color:'red'}}>Stok Habis</Text>: item.jumlah } {item.jumlah !== '0' ? item.satuan ?  item.satuan : parseInt(item.jumlah)> 1? 'Items' : 'Item' : null}</Text>:null}
                             {isTransaction || !deleteOpt.allDelete? null :
                             <View style={styles.buttonSection}>
                                 <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
