@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     textCoorporateName:{
-    fontSize: 16,
-    fontWeight:'bold'
+      fontSize: 16,
+      fontFamily:'Baloo',
   },
     textName: {
-    fontSize: 14,
-    fontWeight:'500'
+      fontSize: 14,
+      fontWeight:'500'
   }
 })
