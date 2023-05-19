@@ -183,86 +183,72 @@ export default SelectProductModal
 
 const styles = StyleSheet.create({
     centeredView: {
-      height:windowHeigth,
-      backgroundColor:'#FFF',
-      position:'relative'
+      height: windowHeigth,
+      backgroundColor: '#FFF',
+      position: 'relative'
     },
     upperWrap:{
         width: '100%',
-        // backgroundColor:'red',
         height: 60,
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         padding: 10,
-        flexDirection:'row',
-        alignItems:'center'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     lowerWrap: {
       justifyContent:'center',
       alignItems:'center',
-      // backgroundColor:'red',
-      // position:'relative',
-      
-     
     },
     title:{
         fontFamily:'Baloo',
         fontSize:24
     },
     titleWrap:{
-        // backgroundColor:'blue',
         width:'90%'
     },
     backBtn:{
         width:'10%',
-        // backgroundColor:'green',
     },
     searchAndAddWrapper: {
-      width:windowWidth,
+      width: windowWidth,
       height: windowHeigth*.1,
       flexDirection: 'row',
       justifyContent:'space-around',
       alignItems:'center',
-      // backgroundColor: 'blue'
       borderBottomWidth: 1,
-      borderBottomColor:'lightgrey',
-      paddingHorizontal: 10
+      borderBottomColor: 'lightgrey',
+      paddingHorizontal: 20
     },
     filterWrapper:{
-      width:windowWidth*.1,
-      
-      // backgroundColor: 'blue',
+      width: windowWidth*.1,
       justifyContent:'center',
       alignItems:'flex-end',
       paddingHorizontal: 5
     },
     searchWrap:{
-      flexDirection:'row',
-      justifyContent:'center',
-      alignItems:'center',
-      // backgroundColor: 'green',
-
-      width:windowWidth*.5,
-      marginBottom: 5
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 50,
+      width: windowWidth*.5,
     },
     textInput:{
-      // backgroundColor:'#DFE1E0',
       width:'70%',
-      height:50,                       
+      height: 50,                       
       borderColor:'black',
-      borderWidth:1,                
+      borderWidth: 1,                
       justifyContent:'center', 
-      paddingLeft:20,
-      marginVertical:10,
+      paddingLeft: 20,
+      marginVertical: 10,
       borderTopLeftRadius: 5,
       borderBottomLeftRadius: 5,
     },
     searchBtn:{
       width: '20%',
-      // backgroundColor: 'orange',
-      height:50,   
-      justifyContent:'center',
-      alignItems:'center',
-      borderColor:'black',
+      height: 50,   
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderColor: 'black',
       borderTopWidth: 1,
       borderRightWidth: 1,
       borderBottomWidth: 1,
@@ -273,37 +259,34 @@ const styles = StyleSheet.create({
     clearBtn: {
       width: '10%',
       right: '30%',
-      // backgroundColor: 'orange',
-      height:50,   
+      height: 50,   
       justifyContent:'center',
       alignItems:'center',
       position:'absolute'
     }, 
     addProductBtn:{
       width: .8 * (windowWidth * .4),
-      height:50, 
+      height: 50, 
       backgroundColor:'#ED9B83',
       borderRadius: 5,
       justifyContent:'center',
       alignItems: 'center'
     },
     listItemWrapper: {
-      width:windowWidth,
+      width: windowWidth,
       marginBottom: windowHeigth*.15,
-      // backgroundColor:'orange',
       justifyContent:'center',
       alignItems: 'center',
       position: 'relative',
       paddingHorizontal: 5
     }, 
     loaderContainer:{
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
       position: 'absolute',
       marginTop: windowHeigth*.5,
-      // backgroundColor:'red',
-      paddingHorizontal:windowWidth*.5
+      paddingHorizontal: windowWidth*.5
     }
   });
   
