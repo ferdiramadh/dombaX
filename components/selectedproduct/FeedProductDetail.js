@@ -134,7 +134,7 @@ const FeedProductDetail = ({ editData, navigation }) => {
               {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values}/> : data.kadaluarsa && <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
             </View>
             <View style={styles.itemWrap}>
-              <Text style={styles.subTitle}>Harga Beli</Text>
+              <Text style={styles.subTitle}>Harga Beli/Produk</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('hargaBeli')}
                 onBlur={handleBlur('hargaBeli')}
