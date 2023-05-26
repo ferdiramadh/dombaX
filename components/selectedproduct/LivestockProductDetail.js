@@ -91,7 +91,7 @@ const LivestockProductDetail = ({ editData, navigation }) => {
 
             </View>
             <View style={[styles.itemWrap, data.hargaBeli || isUpdate? {} : {display: 'none'}]}>
-              <Text style={styles.subTitle}>Harga Beli</Text>
+              <Text style={styles.subTitle}>Harga Beli/Produk</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('hargaBeli')}
                 onBlur={handleBlur('hargaBeli')}
