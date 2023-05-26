@@ -97,7 +97,7 @@ const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalP
                             {item.hargaBeli?<Text style={styles.infoData}>Harga Beli: {formatToCurrencyWithoutStyle(parseInt(item.hargaBeli))}</Text>: null}
                         </View> */}
                         {/* <View style={styles.rightDombaInfo}> */}
-                            <Text style={[styles.totalHarga]} lineBreakMode="tail" numberOfLines={1}>{ formatToCurrencyWithoutStyle(parseInt(item.hargaBeli)*parseInt(item.jumlah))}{`/${checkSatuan(item)}`}</Text>
+                            <Text style={[styles.hargaBeli]} lineBreakMode="tail" numberOfLines={1}>{ formatToCurrencyWithoutStyle(parseInt(item.hargaBeli))}</Text>
                         {/* </View> */}
                     </View>
                 </View> 
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
         padding: 5,
         justifyContent:'flex-end',  
     },
-    totalHarga: {
+    hargaBeli: {
         color: '#43B88E',
         fontWeight:'bold',
         fontSize: 16, 
