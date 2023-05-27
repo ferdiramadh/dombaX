@@ -37,27 +37,30 @@ const styles = StyleSheet.create({
        
     },
     insideContainer:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-        padding:10,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
         // backgroundColor:'cyan',
-        width:'100%',     
+        width: '100%',     
     },
     text:{
-        fontSize: 20,
-        fontWeight:'500',
-        textAlign:'center',
-        fontFamily:'Inter'
+        fontSize: 15,
+        fontWeight: '500',
+        textAlign: 'center',
+        fontFamily: 'Inter',
+        marginTop: 10
     },
     emptyPurchaseNotif:{
-        justifyContent:'center',
-        alignItems:'center',
-        marginVertical:'50%',
+        width: '70%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: '50%',
     },
     img: {
         height: 100,
-        width: 100
+        width: 100,
+        transform: [{rotate: '180deg'}],
     }
 
 })
