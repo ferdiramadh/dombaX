@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View,TouchableOpacity , ScrollView} from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity , Image} from 'react-native'
 import { useSelector} from 'react-redux'
 import ExpenseSection from './ExpenseSection'
 
@@ -7,12 +7,14 @@ import ExpenseSection from './ExpenseSection'
 const Expense = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems}) => {
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listExpense = transactionsData.listExpense
-    
+    const imgEmptyState = require('../../assets/images/transactions/InitiateMoneyTransfer.png')
+
     return (
         <View style={styles.container}>
             <View style={styles.insideContainer}>
             { listExpense.length > 0? <ExpenseSection listExpense={listExpense} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/> :
                  <View style={styles.emptyPurchaseNotif}>
+                    <Image source={imgEmptyState} style={styles.img}/>
                     <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{fontWeight:'bold'}}>tombol tambah</Text> untuk menambahkan <Text style={{fontWeight:'bold'}}>Pengeluaran</Text></Text>
                  </View>
                 }
@@ -51,6 +53,11 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         marginVertical:'50%'
+    },
+    img: {
+        height: 100,
+        width: 100,
+        transform: [{rotate: '180deg'}],
     }
 
 })
