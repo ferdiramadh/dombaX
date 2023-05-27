@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View,TouchableOpacity , ScrollView, Image} from 'react-native'
+import React from 'react'
+import { StyleSheet, Text, View, Image} from 'react-native'
 import { useSelector} from 'react-redux'
 import IncomeSection from './IncomeSection'
-import { windowHeigth } from '../../utils/DimensionSetup'
 
 const Income = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems}) => {
     const transactionsData = useSelector(state => state.transactionsReducer)
@@ -29,19 +28,14 @@ export default Income
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        // justifyContent:'center',
-        // alignItems:'center',
         backgroundColor:'#FFFFFF',
-        width:'100%',
-        // height: windowHeigth
-       
+        width:'100%',   
     },
     insideContainer:{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        // backgroundColor:'cyan',
         width: '100%',     
     },
     text:{

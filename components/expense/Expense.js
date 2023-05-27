@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View,TouchableOpacity , Image} from 'react-native'
+import React from 'react'
+import { StyleSheet, Text, View, Image} from 'react-native'
 import { useSelector} from 'react-redux'
 import ExpenseSection from './ExpenseSection'
 
@@ -30,16 +30,13 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         backgroundColor: '#FFFFFF',
-        // alignItems:'center',
-        width: '100%',
-        // height: windowHeigth       
+        width: '100%',   
     },
     insideContainer:{
         flex:1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        // backgroundColor:'cyan',
         width: '100%',
     },
     text:{
