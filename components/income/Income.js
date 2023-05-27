@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View,TouchableOpacity , ScrollView} from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity , ScrollView, Image} from 'react-native'
 import { useSelector} from 'react-redux'
 import IncomeSection from './IncomeSection'
 import { windowHeigth } from '../../utils/DimensionSetup'
@@ -7,13 +7,14 @@ import { windowHeigth } from '../../utils/DimensionSetup'
 const Income = ({searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems}) => {
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listIncome = transactionsData.listIncome
-
+    const imgEmptyState = require('../../assets/images/transactions/InitiateMoneyTransfer.png')
 
     return (
         <View style={styles.container}>
             <View style={styles.insideContainer}>
                 { listIncome.length > 0? <IncomeSection listIncome={listIncome} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems}/> :
                 <View style={styles.emptyPurchaseNotif}>
+                    <Image source={imgEmptyState} style={styles.img}/>
                     <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{fontWeight:'bold'}}>tombol tambah</Text> untuk menambahkan <Text style={{fontWeight:'bold'}}>Pemasukan</Text></Text>
                     
                 </View>
@@ -52,7 +53,11 @@ const styles = StyleSheet.create({
     emptyPurchaseNotif:{
         justifyContent:'center',
         alignItems:'center',
-        marginVertical:'50%'
+        marginVertical:'50%',
+    },
+    img: {
+        height: 100,
+        width: 100
     }
 
 })
