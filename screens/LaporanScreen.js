@@ -1,5 +1,5 @@
 import React , { useEffect, useState } from 'react'
-import { StyleSheet, Text, View , Dimensions, BackHandler, Alert, ScrollView, ToastAndroid, TouchableOpacity, ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, View , Dimensions, BackHandler, Alert, ScrollView, Image, TouchableOpacity, ActivityIndicator} from 'react-native'
 import CustomButton from '../components/CustomButton'
 import { PieChart } from 'react-native-chart-kit'
 import LaporanComponent from '../components/laporan/LaporanComponent'
@@ -16,17 +16,28 @@ import { formatToCurrencyWithoutStyle } from '../utils/FormatCurrency'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
+const InitialEmpty = ({navigation}) => {
+    const imgEmptyHome = require('../assets/images/home/empty_home.png')
+    return(
+        <View style={styles.initialEmptyWrapper}>
+            <View style={styles.imageAndText}>
+                <Image source={imgEmptyHome} />
+                <Text style={styles.textInitialEmpty}>Stok dan transaksi Kamu masih kosong nih</Text>
+            </View>
+            <TouchableOpacity style={styles.btnCatat} onPress={() => navigation.navigate('Inventory')}>
+                <Text style={{fontSize: 24, fontFamily: 'Baloo', color: '#FFF'}}>Catat Sekarang</Text>
+            </TouchableOpacity>
+        </View>
+    )
+}
 export default function LaporanScreen() {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-
+    const [ haveStockTransaction, setHaveStockTransaction ] = useState(false)
     //Get Uid From AsyncStorage
     const uid = useSelector(state => state.userReducer.uid)
-    // console.log({uid})
-    // const [ uid, setUid ] = useState()
-    // const uid = "moD0YtFRBxOv8Igw6ALSslh6RoA2"
     const [userObj, setUserObj ] = useState()
-    console.log(typeof userObj)
+
     const getData = async () => {
         try {
         const value = await AsyncStorage.getItem('@storage_Key')
@@ -43,6 +54,7 @@ export default function LaporanScreen() {
         }
     }
     const getAuth = async() => {
+        console.log('get auth nih')
         try{
             const respons = await firebase.auth().signInWithEmailAndPassword(userObj["email"],userObj["password"]);
             const userObj2 = respons.user
@@ -680,14 +692,17 @@ export default function LaporanScreen() {
       function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
     return (
       
         <View style={styles.container}>
             <StatusBar style='auto' />
             <ProfileHeader navigation={navigation}/>
-            <View style={styles.upperWrapper}>
-                   
-         
+            { haveStockTransaction ? 
+            <View style={{flex: 1}}>
+                <View style={styles.upperWrapper}>
+                    
+            
                     {
                         isFilter? 
                         <View style={{flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection:'row' }}>
@@ -707,14 +722,13 @@ export default function LaporanScreen() {
                         </View>    
                         
                     }
-                              
-            </View>
-            <View style={styles.componentContainer}>
-                <LaporanComponent title1='Saldo' title2={isProfit} saldo={formatToCurrencyWithoutStyle(profit)} profit={formatToCurrencyWithoutStyle(arusKas)}/>
-            </View>
-            
+                                
+                </View>
+                <View style={styles.componentContainer}>
+                    <LaporanComponent title1='Saldo' title2={isProfit} saldo={formatToCurrencyWithoutStyle(profit)} profit={formatToCurrencyWithoutStyle(arusKas)}/>
+                </View>
                 { (listExpense.length > 0  && !isFilter)|| (filteredList.length > 0 && isFilter) ? 
-                <View style={{flex:1,backgroundColor:'#FFFFFF', alignItems:'center', position: 'relative', bottom: 0}}>
+                <View style={{flex: 1, backgroundColor:'#FFFFFF', alignItems:'center', position: 'relative', bottom: 0}}>
                     
                     <View style={{justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, paddingHorizontal: '5%' }}>      
                         <View style={{paddingHorizontal: 20,  width: windowWidth*.9}}> 
@@ -735,45 +749,17 @@ export default function LaporanScreen() {
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalCostGaji} category={'Gaji Pekerja'}/>
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalTabunganInvestasi} category={'Tabungan dan Investasi'}/>
                             <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianLain} category={'Pengeluaran Lain - lain'}/>
-                   
-                    {/* { !showMore && listExpense.length > 3 && !isFilter? 
-                    <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginTop: 5}} onPress={() => {
-                        setShowMore(!showMore)
-                        setSlice(listExpense.length)
-                        ToastAndroid.show("Scroll Untuk Melihat Item", ToastAndroid.SHORT)
-                    }}>
-                        <Text style={{fontSize: 18,color: '#000' }}>Lihat Lainnya</Text>
-                    </TouchableOpacity>: null} */}
-                    {/* {listExpense.length > 3 && showMore?<TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', width:  windowWidth, marginVertical: 10}} onPress={() => {
-                        setShowMore(!showMore)
-                        setSlice(3)
-                    }}>
-                        <Text style={{fontSize: 18,color: '#000' }}>Tutup</Text>
-                    </TouchableOpacity>:null} */}
-                    </ScrollView>}
-                </View>: 
-                <View style={{flex: 1, height: '30%', width: windowWidth, marginTop: 5, justifyContent:'center', alignItems:'center'}}>
-                    <Text style={[styles.textPengeluaran]}>Tidak Ada Pengeluaran</Text>
-                </View>}
-
-                {/* {
-                    isFilter && filteredList < 1 ? 
-                        <View style={{flex: 1, height: '100%', width: windowWidth, justifyContent:'center', alignItems:'center', marginBottom: windowHeigth*.2, paddingHorizontal: 10}}>
-                            <Text style={[styles.textPengeluaran, {textAlign: 'center'}]}>Tidak Pengeluaran pada Periode Ini</Text>
-                        </View>
-                    : null
-                } */}
-
-            
-            
-                
-                {/* <CustomButton onPress={() => {
-                   console.log(uid)                    
-                } }/> */}
-                <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction} listExpense={sortData} listIncome={listIncome} setFilteredList={setFilteredList} setFilteredListIncome={setFilteredListIncome} resetFilter={resetFilter} showTanggal={showTanggal} setShowTanggal={setShowTanggal} />
-            
+                            </ScrollView>}
+                    </View>: 
+                    <View style={{flex: 1, height: '30%', width: windowWidth, marginTop: 5, justifyContent:'center', alignItems:'center'}}>
+                        <Text style={[styles.textPengeluaran]}>Tidak Ada Pengeluaran</Text>
+                    </View>}
                     
-            
+            </View>
+            :
+            <InitialEmpty navigation={navigation}/>
+            }
+            <FilterLaporanModal filterVisible={filterVisible} setFilterVisible={setFilterVisible} setIsFilter={setIsFilter} filterList={filterList} setFilterList={setFilterList} filterBy={filterBy} setFilterBy={setFilterBy} selectDate={selectDate} setSelectDate={setSelectDate} checkingDate={checkingDate} isDateError={isDateError} setIsDateError={setIsDateError} filterFunction={filterFunction} listExpense={sortData} listIncome={listIncome} setFilteredList={setFilteredList} setFilteredListIncome={setFilteredListIncome} resetFilter={resetFilter} showTanggal={showTanggal} setShowTanggal={setShowTanggal} />
         </View>
     )
 }
@@ -783,31 +769,54 @@ const styles = StyleSheet.create({
         flex: 1,
         // justifyContent:'center',
         // alignItems:'center',
-        backgroundColor:'white',
+        backgroundColor: 'white',
         // position:'relative',
         
     },
     textPengeluaran:{
         fontSize: 26,
-        color:'#ED9B83',
-        fontWeight:'600', 
+        color: '#ED9B83',
+        fontWeight: '600', 
     },
     componentContainer:{
-        width:'100%',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems:'center',
-        height:windowHeigth*.3,
+        width: '100%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: windowHeigth*.3,
         // backgroundColor:'red',
        
     },
-
     upperWrapper: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         textAlign: 'center',
-        marginTop:windowHeigth*.13,
+        marginTop: windowHeigth*.13,
         marginHorizontal: 10,
         paddingHorizontal: 18
+    },
+    initialEmptyWrapper: {
+        flex: 1, 
+        marginTop: windowHeigth*.13, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        paddingBottom: 20
+    },
+    imageAndText: {
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+    textInitialEmpty: {
+        fontSize: 14, 
+        fontFamily: 'Inter-SemiBold', 
+        marginTop: 30
+    },
+    btnCatat: {
+        width: '90%', 
+        backgroundColor: '#ED9B83', 
+        padding: 20, 
+        borderRadius: 14, 
+        alignItems: 'center'
     }
 })
