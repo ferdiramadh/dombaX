@@ -1,7 +1,5 @@
 import React , { useEffect, useState } from 'react'
-import { StyleSheet, Text, View , Dimensions, BackHandler, Alert, ScrollView, Image, TouchableOpacity, ActivityIndicator} from 'react-native'
-import CustomButton from '../components/CustomButton'
-import { PieChart } from 'react-native-chart-kit'
+import { StyleSheet, Text, View , Alert, ScrollView, Image, TouchableOpacity, ActivityIndicator} from 'react-native'
 import LaporanComponent from '../components/laporan/LaporanComponent'
 import {useSelector, useDispatch} from 'react-redux'
 import firebase from '../Firebaseconfig'
@@ -42,23 +40,16 @@ export default function LaporanScreen() {
         try {
         const value = await AsyncStorage.getItem('@storage_Key')
         if(value !== null) {
-            // setUid(value)
-            // populateAll()
-             
-            console.log('ada data nih')
-            setUserObj(JSON.parse(value))
-              
+            setUserObj(JSON.parse(value))  
         } 
         } catch(e) {
-        // error reading value
+            alert(e.message)
         }
     }
     const getAuth = async() => {
-        console.log('get auth nih')
         try{
             const respons = await firebase.auth().signInWithEmailAndPassword(userObj["email"],userObj["password"]);
             const userObj2 = respons.user
-            // setUid(userObj.uid)
             dispatch({type:'LOGIN',results:userObj2})
 
         }catch(e){
@@ -137,10 +128,7 @@ export default function LaporanScreen() {
     //List of Categories & Grouping
     const groupByKey = (list, key, {omitKey=false}) => list.reduce((hash, {[key]:value, ...rest}) => ({...hash, [value]:( hash[value] || [] ).concat(omitKey ? {...rest} : {[key]:value, ...rest})} ), {})
     
-    const listExpenseGroup = groupByKey(listExpense, 'kategori', {omitKey:true})
-    const listIncomeGroup = groupByKey(listIncome, 'kategori', {omitKey:true})
-    const listExpenseCategory = listExpense.map((e) => e["kategori"])
-    const listIncomeCategory = listIncome.map((e) => e["kategori"])
+
     const filterCategory = (val, cat) => {
         return val.kategori == cat
     }
@@ -154,38 +142,7 @@ export default function LaporanScreen() {
 
 
     const [isProfit, setIsProfit] = useState(true)
-    // const dombaCost = useSelector(state => state.stokReducer.listDomba)
-    // const pakanCost = useSelector(state => state.stokReducer.listPakan)
-    // const obatCost = useSelector(state => state.stokReducer.listObat)
 
-    // const kandangCost = useSelector(state => state.costReducer.listKandang)
-    // const pegawaiCost = useSelector(state => state.costReducer.listPegawai)
-    // const lahanCost = useSelector(state => state.costReducer.listLahan)
-
-    // const penjualan = useSelector(state => state.transactionsReducer.listSelling)
-    // const pembelian = useSelector(state => state.transactionsReducer.listPurchasing)
-
-    // const varCostReduce = (s,a) => {
-    //     return s + parseInt(a.jumlah)*parseInt(a.hargaBeli);
-    // }
-
-
-    // const totalBiayaDomba = dombaCost.reduce((s,a) => varCostReduce(s,a),0)
-    // const totalBiayaPakan = pakanCost.reduce((s,a) => varCostReduce(s,a),0)
-    // const totalBiayaObat = obatCost.reduce((s,a) => varCostReduce(s,a),0)
-
-    // const totalBiayaKandang = kandangCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.biayaBuat)},0)
-    // const totalBiayaPegawai = pegawaiCost.reduce((s,a) => {return s + parseInt(a.jumlah)*parseInt(a.gaji)},0)
-    // const totalBiayaLahan = lahanCost.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.luas)},0)
-
-    // const totalPenjualan = penjualan.reduce((s,a) => {return s + parseInt(a.hargaJual)*parseInt(a.kuantitas)},0)
-    // const totalPembelian = pembelian.reduce((s,a) => {return s + parseInt(a.hargaBeli)*parseInt(a.kuantitas)},0)
-
-
-
-    // const totalBiayaOverall = totalBiayaDomba + totalBiayaPakan + totalBiayaObat + totalBiayaKandang + totalBiayaPegawai + totalBiayaLahan;
-
-    // const screenWidth = Dimensions.get('window').width - 60;
 
 
     //Total Cost
@@ -231,10 +188,6 @@ export default function LaporanScreen() {
 
     const arusKas = totalSellingProduct - varCost
     const profit = totalIncome - (totalExpense);
-
-    const [ showMore, setShowMore ] = useState(false)
-    const [ slice, setSlice ] = useState(3)
-
 
     const sortData = listExpense.sort((a, b) => {
         let bd = b.jumlah;
@@ -348,159 +301,6 @@ export default function LaporanScreen() {
         },1000)
     },[])
 
-    const testLoadSnapshot = () => {
-        return firebase
-        .firestore()
-        .collection("dombastok").where("userId","==",uid)
-        .onSnapshot((querySnapshot) => {
-            // console.log(querySnapshot)
-            const items = []
-            querySnapshot.forEach( function(doc){
-                let newValue = doc.data()
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-               
-            });
-            dispatch({type:'LOAD_DOMBA_DATA',results:items})
-            // console.log(items)
-            
-        })
-    }
-
-    const testLoadSnapshotDataPakan = () => {
-        return firebase
-        .firestore()
-        .collection("pakanstok").where("userId","==",uid)
-        .onSnapshot((querySnapshot) => {
-            const items = []
-            querySnapshot.forEach( function(doc){
-                let newValue = doc.data()
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-                
-            });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
-            dispatch({type:'LOAD_PAKAN_DATA',results:items})
-        })
-    }
-
-
-    const loadDataObat = () => {
-        return firebase
-        .firestore()
-        .collection("obatstok").where("userId","==",uid)
-        .onSnapshot((querySnapshot) => {
-            const items = []
-            querySnapshot.forEach( function(doc){
-                let newValue = doc.data()
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-                
-            });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
-            dispatch({type:'LOAD_OBAT_DATA',results:items})
-        })
-    }
-
-    const loadKandang = () => {
-        return firebase
-        .firestore()
-        .collection("kandangcost").where("userId","==",uid)
-        .onSnapshot((querySnapshot) => {
-            const items = []
-            querySnapshot.forEach( function(doc){
-                let newValue = doc.data()
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-                
-            });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
-            dispatch({type:'LOAD_KANDANG_COST',results:items})
-        })
-    }
-
-    const loadPegawai = () => {
-        return firebase
-        .firestore()
-        .collection("pegawaicost").where("userId","==",uid)
-        .onSnapshot((querySnapshot) => {
-            const items = []
-            querySnapshot.forEach( function(doc){
-                let newValue = doc.data()
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-                
-            });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
-            dispatch({type:'LOAD_PEGAWAI_COST',results:items})
-        })
-    }
-
-    const loadLahan = () => {
-        return firebase
-        .firestore()
-        .collection("lahancost").where("userId","==",uid)
-        .onSnapshot((querySnapshot) => {
-            const items = []
-            querySnapshot.forEach( function(doc){
-                let newValue = doc.data()
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-                
-            });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
-            dispatch({type:'LOAD_LAHAN_COST',results:items})
-        })
-    }
-    
-    const loadPurchasing = () => {
-        return firebase
-        .firestore()
-        .collection("purchasing").where("userId","==",uid)
-        .onSnapshot((querySnapshot) => {
-            const items = []
-            querySnapshot.forEach( function(doc){
-                let newValue = doc.data()
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-                
-            });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
-            dispatch({type:'LOAD_PURCHASING',results:items})
-        })
-    }
-
-    const loadSelling = () => {
-        return firebase
-        .firestore()
-        .collection("selling").where("userId","==",uid)
-        .onSnapshot((querySnapshot) => {
-            const items = []
-            querySnapshot.forEach( function(doc){
-                let newValue = doc.data()
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-                
-            });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
-            dispatch({type:'LOAD_SELLING',results:items})
-        })
-    }
 
     const loadIncome = () => {
         return firebase
@@ -511,12 +311,9 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
                 
             });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
+
             dispatch({type:'LOAD_INCOME',results:items})
         })
     }
@@ -530,12 +327,9 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
                 
             });
-            // console.log(items)
-            // console.log('Itu items dari snapshot')
+
             dispatch({type:'LOAD_EXPENSE',results:items})
         })
     }
@@ -546,7 +340,6 @@ export default function LaporanScreen() {
         .firestore()
         .collection("profile").where("userId","==",uid)
         .onSnapshot((querySnapshot) => {
-            // const items = []
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 dispatch({type:'LOAD_PROFILE_DATA',results:newValue})
@@ -566,15 +359,8 @@ export default function LaporanScreen() {
             const items = []
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
-                // let sortNewValue = newValue.sort(sortTipe())
-                // console.log("nih userprod" + newValue)
-                items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
-                
-            });
-            // const itemsSort = items.sort(sortTipe('tipe'))
-            // console.log("nih itemsSort" + itemsSort)
+                items.push(newValue)          
+            })
             
             dispatch({type:'LOAD_USERPRODUK',results:items})
         })
@@ -590,11 +376,8 @@ export default function LaporanScreen() {
             querySnapshot.forEach( function(doc){
                 let newValue = doc.data()
                 items.push(newValue)
-                // console.log(newValue)
-                // console.log('Itu newValue dari snapshot dalem')
                 
-            });
-            
+            })
             
             dispatch({type:'LOAD_USER_KATEGORI',results:items})
         })
@@ -611,42 +394,9 @@ export default function LaporanScreen() {
 
     }
 
-    // useEffect(() => {
-       
-    //         const backAction = () => {
-    //             Alert.alert('Perhatian!', 'Anda yakin ingin keluar aplikasi?', [
-    //               {
-    //                 text: 'Batal',
-    //                 onPress: () => null,
-    //                 style: 'batal',
-    //               },
-    //               { text: 'YA', onPress: () => BackHandler.exitApp() },
-    //             ]);
-    //             return true;
-    //           };
-          
-                
-                
-    //                 const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-    //                 return () => backHandler.remove();
-                
-              
- 
-    //   }, []);
-
 
 
     const populateAll = () => {
-            testLoadSnapshot()
-            testLoadSnapshotDataPakan()
-            // loadDataDomba()
-            // loadDataPakan()
-            // loadDataObat()
-            // loadKandang()
-            // loadPegawai()
-            // loadLahan()
-            // loadPurchasing()
-            // loadSelling()
             loadExpense()
             loadIncome()
             loadProfile()
@@ -656,15 +406,8 @@ export default function LaporanScreen() {
 
     useEffect(() => {
         getData()
-        if(uid){  
-            console.log('Yeuh Useeffect')
-            // populateAll()
-        } else {
-            console.log('Eweuh UID')
-           
-        }
-        
     },[])
+    
     useEffect(() => {
         if(userObj) {
             getAuth()
@@ -680,36 +423,17 @@ export default function LaporanScreen() {
 
 
     useEffect(() => {
-        console.log('jalankan isprofit')
         checkProfit()
     },[profit, arusKas])
 
-    function objToDate (obj) {
-        let result = new Date(0);
-        if( obj !== null) {
-            result.setSeconds(obj.seconds);
-            result.setMilliseconds(obj.nanoseconds/1000000);
-            return result;
-        }
-        
-      }
-      function getSum(arr, jumlah) {
-        return arr.reduce((total, obj) => {
-          if (typeof obj[jumlah] === 'string') {
-            return total +  parseInt(obj.jumlah);;
-          }
-          return total +  parseInt(obj.jumlah);;
-        }, 0);
-      }
-      const generateColor = () => {
-        const randomColor = Math.floor(Math.random() * 16777215)
-          .toString(16)
-          .padStart(6, '0');
-        return `#${randomColor}`;
-      };
 
-      function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    function getSum(arr, jumlah) {
+    return arr.reduce((total, obj) => {
+        if (typeof obj[jumlah] === 'string') {
+        return total +  parseInt(obj.jumlah);;
+        }
+        return total +  parseInt(obj.jumlah);;
+    }, 0);
     }
 
     return (
@@ -786,11 +510,7 @@ export default function LaporanScreen() {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        // justifyContent:'center',
-        // alignItems:'center',
-        backgroundColor: 'white',
-        // position:'relative',
-        
+        backgroundColor: 'white',  
     },
     textPengeluaran:{
         fontSize: 26,
@@ -802,9 +522,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: windowHeigth*.3,
-        // backgroundColor:'red',
-       
+        height: windowHeigth*.3,   
     },
     upperWrapper: {
         flexDirection: 'row',
