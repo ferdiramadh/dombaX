@@ -33,7 +33,7 @@ const InitialEmpty = ({navigation}) => {
 export default function LaporanScreen() {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const [ haveStockTransaction, setHaveStockTransaction ] = useState(false)
+    
     //Get Uid From AsyncStorage
     const uid = useSelector(state => state.userReducer.uid)
     const [userObj, setUserObj ] = useState()
@@ -67,10 +67,29 @@ export default function LaporanScreen() {
         }
 
     }
-    // console.log(uid)
+    // DATA - DATA
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listExpense = transactionsData.listExpense
     const listIncome = transactionsData.listIncome
+    const userProducts = useSelector(state => state.userProductReducer);
+    const listUserProduct = userProducts.listUserProduct
+
+    //Check If Stok and Transactions are empty
+    const listExpenseLength = listExpense.length
+    const listIncomeLength = listIncome.length
+    const listUserProductLength = listUserProduct.length
+    
+    const [ haveStockTransaction, setHaveStockTransaction ] = useState(false)
+    function checkInitialEmpty(){
+        if((listExpenseLength == 0 && listIncomeLength == 0 ) && listUserProductLength == 0) {
+            setHaveStockTransaction(false)
+        } else {
+            setHaveStockTransaction(true)
+        }
+    }
+    useEffect(() => {
+        checkInitialEmpty()
+    }, [listExpenseLength, listIncomeLength, listUserProductLength])
 
     //Filter Laporan
     const [ filterBy, setFilterBy ] = useState();
