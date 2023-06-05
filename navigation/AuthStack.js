@@ -37,14 +37,20 @@ const AuthStack = ({isSignIn}) => {
           headerShown:false
         }}/>
         <Stack.Screen name="Account" component={AccountScreen} options={{
-          headerShown:false
+          title: "Profil",
+          headerTitleStyle:{
+            fontFamily:'Baloo',
+            fontSize: 26,
+          },
+          headerStyle: {
+            borderBottomWidth: 1
+          }
         }}/>
         <Stack.Screen name="BusinessProfile" component={BusinessProfileScreen} options={{
           title: "Profil Bisnis",
           headerTitleStyle:{
             fontFamily:'Baloo',
             fontSize: 26,
-         
           }
         }} />
         <Stack.Screen name="RegisterProfile" component={RegisterProfileScreen} options={{
@@ -58,7 +64,6 @@ const AuthStack = ({isSignIn}) => {
           headerTitleStyle:{
             fontFamily:'Baloo',
             fontSize: 26,
-         
           }
         }}/>
         <Stack.Screen name="IncomeDetail" component={IncomeDetailScreen} options={{
@@ -66,7 +71,6 @@ const AuthStack = ({isSignIn}) => {
           headerTitleStyle:{
             fontFamily:'Baloo',
             fontSize: 26,
-         
           }
         }}/>
       </Stack.Navigator>
