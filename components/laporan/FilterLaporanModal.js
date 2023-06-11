@@ -290,11 +290,12 @@ const styles = StyleSheet.create({
       width: windowWidth *.8,
     },
     btnPilih: {
-      padding: 10,
+      padding: 15,
       flexDirection: 'row',
       justifyContent: 'space-around',
       backgroundColor:'#ED9B83',
       borderRadius: 5,
-      elevation: 2
+      elevation: 2,
+      marginTop: 10
     }
   });
