@@ -128,6 +128,12 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
     showDatepicker()
   }
 
+  function reset() {
+    resetFilter()
+    setFilterVisible(!filterVisible)
+    setIsDateError(false)
+  }
+
   return (
    
       <Modal
@@ -136,12 +142,10 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
         deviceHeight={windowHeigth}
         backdropOpacity={0.8}
         isVisible={filterVisible}
-        onSwipeComplete={() => {
-          resetFilter()
-          setFilterVisible(!filterVisible)
-          setIsDateError(false)
-        }}
+        onSwipeComplete={reset}
         swipeDirection="down"
+        onBackButtonPress={reset}
+        onBackdropPress={reset}
         >
         <View style={styles.centeredView}>
         {show && (
