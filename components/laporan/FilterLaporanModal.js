@@ -10,13 +10,13 @@ const SelectDateComponent = ({selectDate, isDateError, pickDate}) => {
   return(
     <View>
         <View style={styles.txtInputWrapper}>
-          <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => pickDate(true) }>
+          <TouchableOpacity style={[styles.textInput,{borderColor: isDateError?'red':'black'}]} onPress={() => pickDate(true) }>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={{color:'#474747'}}>{selectDate.fromDate !== ''?selectDate.fromDate: 'Pilih Tanggal'}</Text>   
                   <MaterialIcons name="date-range" size={24} color="black" />    
               </View>                
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.textInput,{borderColor:isDateError?'red':'black'}]} onPress={() => pickDate(false) }>
+          <TouchableOpacity style={[styles.textInput,{borderColor: isDateError?'red':'black'}]} onPress={() => pickDate(false) }>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={{color:'#474747'}}>{selectDate.toDate !== ''?selectDate.toDate: 'Pilih Tanggal'}</Text>   
                   <MaterialIcons name="date-range" size={24} color="black" />    
@@ -154,7 +154,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
               />
             )}
           <View style={styles.modalView}>
-            <View style={styles.handleModal}></View>
+            <View style={styles.handleModal} />
               <View style={styles.filterWrap}>
 
                 { 
@@ -163,7 +163,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                   return (
                     <View>
                       <View style={styles.filterSelection} key={item.id}>
-                        <Text style={[styles.textFilter,{fontFamily: 'Inter', fontWeight:'bold'}]}>{item.sortBy}</Text>
+                        <Text style={styles.textFilter}>{item.sortBy}</Text>
                         <CheckBox
                           center
                           checked={item.isChecked}
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
       width: windowWidth,
       height: windowHeigth * .6,
       margin: 20,
-      backgroundColor: 'red',
+      backgroundColor: '#FFF',
       borderTopRightRadius: 20,
       paddingTop: 5,
       alignItems: 'center',
@@ -259,9 +259,12 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      width: windowWidth - 40
     },
     textFilter: {
       fontSize: 18,
+      fontFamily: 'Inter', 
+      fontWeight:'bold'
     },
     filterWrap:{
       width: '90%',
@@ -270,8 +273,7 @@ const styles = StyleSheet.create({
     },
     txtInputWrapper:{
       flexDirection: 'row',
-      justifyContent: 'space-around',
-      width: windowWidth *.8,
+      justifyContent: 'space-between',
     },
     textInput:{
       padding: 5,
@@ -291,7 +293,6 @@ const styles = StyleSheet.create({
       padding: 10,
       flexDirection: 'row',
       justifyContent: 'space-around',
-      width: windowWidth *.8,
       backgroundColor:'#ED9B83',
       borderRadius: 5,
       elevation: 2
