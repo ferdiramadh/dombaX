@@ -209,26 +209,24 @@ export default FilterLaporanModal
 
 const styles = StyleSheet.create({
     centeredView: {
-      
-        justifyContent:'center',
-        alignItems:'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         flex: 1,
-        position:'relative',
-       
+        position: 'relative',
     },
     modalView: {
-      width:windowWidth,
-      height:windowHeigth * .6,
+      width: windowWidth,
+      height: windowHeigth * .6,
       margin: 20,
-      backgroundColor: 'white',
+      backgroundColor: 'red',
       borderTopRightRadius: 20,
       paddingTop: 5,
       alignItems: 'center',
       borderTopLeftRadius: 20,
-      borderWidth:1,
-      borderColor:'#DFE1E0',
-      position:'absolute',
-      bottom:-60,
+      borderWidth: 1,
+      borderColor: '#DFE1E0',
+      position: 'absolute',
+      bottom: -60,
     },
     button: {
       borderRadius: 20,
@@ -254,19 +252,19 @@ const styles = StyleSheet.create({
       width: 50,
       height: 8,
       borderRadius: 4,
-      backgroundColor:'#DFE1E0',
+      backgroundColor: '#DFE1E0',
       marginBottom: windowHeigth * .05
     },
     filterSelection:{
-      flexDirection:'row',
-      justifyContent:'space-between',
-      alignItems:'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     textFilter: {
       fontSize: 18,
     },
     filterWrap:{
-      width:'90%',
+      width: '90%',
       height: windowHeigth * .1,
       paddingHorizontal: 10
     },
@@ -277,12 +275,11 @@ const styles = StyleSheet.create({
     },
     textInput:{
       padding: 5,
-      width:'45%',
-      height:50,                       
+      width: '45%',
+      height: 50,                       
       borderWidth: .8,                
-      borderRadius:8,
+      borderRadius: 8,
       justifyContent:'center', 
-      
     },
     pilihWrapper :{
       padding: 5,
@@ -296,7 +293,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-around',
       width: windowWidth *.8,
       backgroundColor:'#ED9B83',
-      borderRadius:5,
+      borderRadius: 5,
       elevation: 2
     }
   });
