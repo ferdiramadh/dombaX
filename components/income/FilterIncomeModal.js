@@ -246,7 +246,7 @@ const FilterIncomeModal = ({filterVisible, setFilterVisible, isIncome}) => {
                         }
                         console.log({array})
                     }}>
-                      <Text style={{fontSize:14, fontWeight:'700', textAlign:'center',color:'#FFF'}}>Lakukan Penyaringan</Text>
+                      <Text style={styles.btnTxt}>Lakukan Penyaringan</Text>
                 </TouchableOpacity>
               </View>
           </View>
@@ -259,24 +259,24 @@ export default FilterIncomeModal
 
 const styles = StyleSheet.create({
     centeredView: {
-        justifyContent:'center',
-        alignItems:'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         flex: 1,
-        position:'relative',
+        position: 'relative',
     },
     modalView: {
-      width:windowWidth,
-      height:windowHeigth * .8,
+      width: windowWidth,
+      height: windowHeigth * .8,
       margin: 20,
-      backgroundColor: 'white',
+      backgroundColor: '#FFF',
       borderTopRightRadius: 20,
       paddingTop: 5,
       alignItems: 'center',
       borderTopLeftRadius: 20,
-      borderWidth:1,
+      borderWidth: 1,
       borderColor:'#DFE1E0',
-      position:'absolute',
-      bottom:-windowHeigth*.06,
+      position: 'absolute',
+      bottom: -windowHeigth*.06,
       justifyContent: 'flex-start'
     },
     button: {
@@ -297,58 +297,62 @@ const styles = StyleSheet.create({
       width: 50,
       height: 8,
       borderRadius: 4,
-      backgroundColor:'#DFE1E0',
+      backgroundColor: '#DFE1E0',
       marginBottom: windowHeigth * .05
     },
     filterSelection:{
-      flexDirection:'row',
-      justifyContent:'space-between',
-      alignItems:'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: windowWidth - 40
     },
     textFilter: {
       fontSize: 18,
     },
     filterWrap:{
-      width:'90%',
+      width: '90%',
       height: windowHeigth * .1,
       paddingHorizontal: 10
     },
     textInput:{
-      backgroundColor:'#E7E7E7',
-      width:'45%',
+      backgroundColor: '#E7E7E7',
+      width: '45%',
       height: 50,                                    
-      justifyContent:'center', 
+      justifyContent: 'center', 
       paddingHorizontal: 10,
-      marginVertical:10,
+      marginVertical: 10,
       borderRadius: 10
     },
     txtInputWrapper:{
       flexDirection: 'row',
-      justifyContent: 'space-around',
-      width: windowWidth *.8,
+      justifyContent: 'space-between',
     },
     pilihWrapper :{
       padding: 5,
       flexDirection: 'row',
       justifyContent: 'space-around',
-      width: windowWidth *.8,
     },
     btnPilih: {
-      padding: 10,
+      padding: 15,
       flexDirection: 'row',
       justifyContent: 'space-around',
-      width: windowWidth *.8,
       backgroundColor:'#ED9B83',
       borderRadius:5,
-      elevation: 2
+      elevation: 2,
+      marginTop: 10
     },
     pickerContainer:{
-     backgroundColor:'#DFE1E0',
-     width:'95%',
+     backgroundColor: '#DFE1E0',
+     flex: 1,
      height: 50,                      
-     borderRadius:10,
-     justifyContent:'center', 
+     borderRadius: 10,
+     justifyContent: 'center', 
      alignSelf: 'center',
-     marginVertical:10
+     marginVertical: 10
    },
+   btnTxt: {
+    fontSize: 16, 
+    fontWeight: '700', 
+    textAlign: 'center',
+    color: '#FFF'}
   });
