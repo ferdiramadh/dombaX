@@ -180,6 +180,11 @@ const FilterIncomeModal = ({filterVisible, setFilterVisible, isIncome}) => {
     setIsFromDate(val)
     showDatepicker()
   }
+  function reset() {
+    resetFilter()
+    setFilterVisible(!filterVisible)
+  }
+
   return (
       <Modal
         backdropColor='white'
@@ -187,14 +192,9 @@ const FilterIncomeModal = ({filterVisible, setFilterVisible, isIncome}) => {
         deviceHeight={windowHeigth}
         backdropOpacity={0.8}
         isVisible={filterVisible}
-        onSwipeComplete={() => {
-          resetFilter()
-          setFilterVisible(!filterVisible)
-        }}
-        onBackdropPress={() => {
-          resetFilter()
-          setFilterVisible(!filterVisible)
-        }}
+        onSwipeComplete={reset}
+        onBackdropPress={reset}
+        onBackButtonPress={reset}
         swipeDirection="down"
         >
         <View style={styles.centeredView}>
