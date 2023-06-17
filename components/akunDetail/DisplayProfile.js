@@ -1,15 +1,14 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native'
-import React, { useState} from 'react'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import { windowWidth } from '../../utils/DimensionSetup'
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'
 
 export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
     
-    const [ isShowPass, setIsShowPass ] = useState(false)
-  return (
-    <View style={styles.container}>
-    
-      <View style={{width:'100%',alignItems:'center', }}>
+  const [ isShowPass, setIsShowPass ] = useState(false)
+
+  return (    
+        <View style={styles.container}>
             {profileData.namaDepan? 
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.namaDepan}</Text>
@@ -52,41 +51,47 @@ export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
                 </TouchableOpacity>
             </View> : null}
             <TouchableOpacity style={styles.btnSave} onPress={() => setIsEdit(!isEdit)}>
-                <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'white'}}>Ubah</Text>                  
+                <Text style={styles.txtUbah}>Ubah</Text>                  
             </TouchableOpacity>
         </View>
-     
-    </View>
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-        width:windowWidth, 
+        width: windowWidth, 
+        alignItems: 'center',
+        height: '80%',
     },   
-    wrapper:{
-        justifyContent:'center',
-        width:'90%',
+    wrapper: {
+        justifyContent: 'center',
+        width: '90%',
         height: 40,
         padding: 8,
         marginBottom: 10
     },
     text: {
-        fontSize:14,
+        fontSize: 14,
         color: "#000",
     },
-    btnSave:{
-      backgroundColor:'#ED9B83',
-      width:'60%',
-      height:40,                       
-      justifyContent:'center',
+    btnSave: {
+      backgroundColor: '#ED9B83',
+      width: '60%',
+      height: 40,                       
+      justifyContent: 'center',
       elevation: 2,
-      borderRadius:10, 
-      marginTop: 10,  
-      marginBottom: 20
+      borderRadius: 10, 
+      position: 'absolute',
+      bottom: 0
     },
     eyePass: {
-        position:'absolute',
+        position: 'absolute',
         right: 10
+    },
+    txtUbah: {
+        fontSize: 18, 
+        fontWeight: '700', 
+        textAlign: 'center',
+        color: 'white'
     }
 })
