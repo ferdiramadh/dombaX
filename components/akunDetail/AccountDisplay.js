@@ -1,31 +1,27 @@
-import { StyleSheet, View,Image, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
-import React, { useContext, useState } from 'react';
+import { StyleSheet, View,Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import React, { useState } from 'react'
 import {useSelector} from 'react-redux'
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import { PhotoContext } from '../../context/PhotoProfileContext';
-import { pickImage } from '../../utils/ImageUpload';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
+import { pickImage } from '../../utils/ImageUpload'
 import { windowWidth, windowHeigth } from '../../utils/DimensionSetup'
-import EditAccount from './EditAccount';
-import DisplayProfile from './DisplayProfile';
-import CustomHeader from '../CustomHeader';
+import EditAccount from './EditAccount'
+import DisplayProfile from './DisplayProfile'
+import CustomHeader from '../CustomHeader'
 
 const AccountDisplay = ({navigation}) => {
 
   const [isEdit, setIsEdit ] = useState(false)
 
   const profileData = useSelector(state => state.profileReducer)
-  const [ dwnldUrl, setDwnldUrl ] = useState()
   const [ isLoading, setIsLoading ] = useState(false)
-  const { image, setImage , testStyle} = useContext(PhotoContext)
-  const [ percent, setPercent ] = useState("0%")
 
   return (
       <View style={{ flex: 1 }}>
         <View style={styles.main}>
         <CustomHeader leftSubMenu='Profil' styleFont={{fontSize:48}}/>
         <View style={styles.upperContent}>
-            {isLoading?<ActivityIndicator size="small" color="orange" />: <View>
-              {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} />:<MaterialIcons name="account-circle" size={100} color="black" />}</View>
+            {isLoading?<ActivityIndicator size="small" color="orange" /> : <View>
+              {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} /> : <MaterialIcons name="account-circle" size={100} color="black" />}</View>
             }
             <View style={styles.photoOptionsWrap}>
               {isLoading? null :
@@ -35,7 +31,7 @@ const AccountDisplay = ({navigation}) => {
             </View>
           </View>
           <View style={styles.lowerContent}>
-            { isEdit? <EditAccount navigation={navigation} profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/> : <DisplayProfile profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/>}
+            { isEdit? <EditAccount navigation={navigation} profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/> : <DisplayProfile profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/> }
           </View>
         </View>
       </View>
@@ -63,32 +59,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative'
   },
-  textName:{
-    fontSize: 28,
-    fontWeight: '500'
-  },
-  textCoorporateName:{
-    fontSize: 30,
-    fontWeight:'bold'
-  },
-  text:{
-    fontSize: 20,
-  },
   photoProfileIcon:{
       width: 100,
       height: 100,
       borderRadius: 60,
       marginTop: 160
-  },
-  btnEdit:{
-      height: 40,
-      width: '15%',
-      backgroundColor: 'white',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 5,
-      borderWidth: 2,
-      marginTop: 5
   },
   photoOptionsWrap: {
     flexDirection: 'row',
@@ -102,15 +77,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  progressBar: {
-    width: 200,
-    height: 50,
-    backgroundColor: 'red',
-    marginTop: 10
-  },
-  progressPercentage:{
-    height: '100%',
-    // width: '50%',
-    backgroundColor: 'yellow'
-  }
 });
