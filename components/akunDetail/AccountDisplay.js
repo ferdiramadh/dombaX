@@ -11,7 +11,7 @@ import CustomHeader from '../CustomHeader'
 const AccountDisplay = ({navigation}) => {
 
   const [isEdit, setIsEdit ] = useState(false)
-
+  const [ percent, setPercent ] = useState("0%")
   const profileData = useSelector(state => state.profileReducer)
   const [ isLoading, setIsLoading ] = useState(false)
 
