@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     container: {
         width: windowWidth, 
         alignItems: 'center',
-        height: '80%',
+        height: '100%',
     },   
     wrapper: {
         justifyContent: 'center',
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
       elevation: 2,
       borderRadius: 10, 
       position: 'absolute',
-      bottom: 0
+      bottom: 200
     },
     eyePass: {
         position: 'absolute',

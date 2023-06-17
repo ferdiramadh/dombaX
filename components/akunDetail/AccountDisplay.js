@@ -6,7 +6,6 @@ import { pickImage } from '../../utils/ImageUpload'
 import { windowWidth, windowHeigth } from '../../utils/DimensionSetup'
 import EditAccount from './EditAccount'
 import DisplayProfile from './DisplayProfile'
-import CustomHeader from '../CustomHeader'
 
 const AccountDisplay = ({navigation}) => {
 
@@ -18,7 +17,6 @@ const AccountDisplay = ({navigation}) => {
   return (
       <View style={{ flex: 1 }}>
         <View style={styles.main}>
-        <CustomHeader leftSubMenu='Profil' styleFont={{fontSize:48}}/>
         <View style={styles.upperContent}>
             {isLoading?<ActivityIndicator size="small" color="orange" /> : <View>
               {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} /> : <MaterialIcons name="account-circle" size={100} color="black" />}</View>
@@ -50,7 +48,6 @@ const styles = StyleSheet.create({
     width: '100%',  
     justifyContent: 'center',
     alignItems: 'center',  
-    marginTop: 80,
   },
   upperContent:{
     width: '100%',
@@ -63,18 +60,18 @@ const styles = StyleSheet.create({
       width: 100,
       height: 100,
       borderRadius: 60,
-      marginTop: 160
+      marginTop: 20
   },
   photoOptionsWrap: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginVertical: 10,
     position: 'absolute',
-    bottom: -20,
+    bottom: 60,
     right: windowWidth/2 - 60
   },
   photoButton:{
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent:'center',
+    alignItems:'center'
   },
 });
