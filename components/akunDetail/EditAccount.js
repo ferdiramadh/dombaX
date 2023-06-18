@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import AccountDetailForm from './AccountDetailForm';
 import firebase from '../../Firebaseconfig'
 
-const EditAccount = ({ profileData, isEdit, setIsEdit}) => {
+const EditAccount = ({ profileData, isEdit, setIsEdit, setEnableShift}) => {
     
     
     const updateItem = (item) => {
@@ -43,7 +43,7 @@ const EditAccount = ({ profileData, isEdit, setIsEdit}) => {
         {({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => (
      
         <View style={styles.container}>
-          <AccountDetailForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} />
+          <AccountDetailForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setEnableShift={setEnableShift}/>
         </View>
       
     )}

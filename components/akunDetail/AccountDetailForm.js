@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { windowWidth } from '../../utils/DimensionSetup'
 
-const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => {
+const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values, setFieldValue, setEnableShift }) => {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
@@ -60,6 +60,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         )}
         <TextInput
           style={styles.textInput}
+          onFocus={() => setEnableShift(false)}
           placeholder='Nama Depan'
           placeholderTextColor="#000" 
           onChangeText={handleChange('namaDepan')}
@@ -68,6 +69,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         />
         <TextInput
           style={styles.textInput}
+          onFocus={() => setEnableShift(false)}
           placeholder='Nama Belakang'
           placeholderTextColor="#000" 
           onChangeText={handleChange('namaBelakang')}
@@ -76,6 +78,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         />
         <TextInput
           style={styles.textInput}
+          onFocus={() => setEnableShift(false)}
           placeholder='No. HP'
           placeholderTextColor="#000" 
           onChangeText={handleChange('whatsApp')}
@@ -85,6 +88,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         />
         <TextInput
           style={styles.textInput}
+          onFocus={() => setEnableShift(false)}
           placeholder='Email'
           placeholderTextColor="#000" 
           onChangeText={handleChange('email')}
@@ -118,6 +122,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         </TouchableOpacity>
         <TextInput
           style={styles.textInput}
+          onFocus={() => setEnableShift(true)}
           placeholder='Domisili'
           placeholderTextColor="#000" 
           onChangeText={handleChange('domisili')}
@@ -126,6 +131,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         />
         <TextInput
           style={styles.textInput}
+          onFocus={() => setEnableShift(true)}
           placeholder='Kata Sandi'
           placeholderTextColor="#000" 
           onChangeText={handleChange('password')}
@@ -182,8 +188,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       elevation: 2,
       borderRadius: 10, 
-      position: 'absolute',
-      bottom: 30
+      marginTop: 60
     },
     btnEdit:{
       height: 40,
@@ -195,7 +200,7 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       left: 20,
       position: 'absolute',
-      top:0
+      top: 0
     },
     txtSimpan: {
       fontSize: 18, 

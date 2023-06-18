@@ -1,4 +1,4 @@
-import { StyleSheet, View,Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, View,Image, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView} from 'react-native'
 import React, { useState } from 'react'
 import {useSelector} from 'react-redux'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
@@ -13,8 +13,14 @@ const AccountDisplay = ({navigation}) => {
   const [ percent, setPercent ] = useState("0%")
   const profileData = useSelector(state => state.profileReducer)
   const [ isLoading, setIsLoading ] = useState(false)
+  const [ enableShift, setEnableShift ] = useState(true)
 
   return (
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={50}
+      enabled={enableShift}
+      behavior="position"
+      style={styles.keyboardAvodingWrapper}>
       <View style={{ flex: 1 }}>
         <View style={styles.main}>
         <View style={styles.upperContent}>
@@ -29,20 +35,24 @@ const AccountDisplay = ({navigation}) => {
             </View>
           </View>
           <View style={styles.lowerContent}>
-            { isEdit? <EditAccount navigation={navigation} profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/> : <DisplayProfile profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/> }
+            { isEdit? <EditAccount navigation={navigation} profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit} setEnableShift={setEnableShift}/> : <DisplayProfile profileData={profileData} isEdit={isEdit} setIsEdit={setIsEdit}/> }
           </View>
         </View>
       </View>
+      </KeyboardAvoidingView>
   );
 };
 
 export default AccountDisplay;
 
 const styles = StyleSheet.create({
+  keyboardAvodingWrapper: {
+    flex: 1,
+    backgroundColor: '#FFF'
+  },
   main: {
     flex: 1,
     width: '100%',
-    backgroundColor: '#FFF'
   },
   lowerContent:{
     flex: 1,

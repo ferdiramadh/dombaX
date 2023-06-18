@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       elevation: 2,
       borderRadius: 10, 
-      position: 'absolute',
-      bottom: 30,
+      marginTop: 160
+    
     },
     eyePass: {
         position: 'absolute',
