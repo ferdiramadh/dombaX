@@ -37,19 +37,6 @@ export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
             <View style={styles.wrapper}>
                 <Text style={styles.text}>{profileData.domisili}</Text>
             </View> : null}
-            {profileData.password? 
-            <View style={[styles.wrapper, {position:'relative'}]}>
-                <TextInput 
-                    style={{color:'#FFF'}}
-                    secureTextEntry={!isShowPass}
-                    value={profileData.password}
-                    editable={false}
-                />
-                <TouchableOpacity style={styles.eyePass} onPress={() => setIsShowPass(!isShowPass)}>
-                    { isShowPass? <MaterialIcons name="cancel" size={24} color="#FFF" />:
-                    <MaterialIcons name="remove-red-eye" size={24} color="#FFF" />}
-                </TouchableOpacity>
-            </View> : null}
             <TouchableOpacity style={styles.btnSave} onPress={() => setIsEdit(!isEdit)}>
                 <Text style={styles.txtUbah}>UBAH</Text>                  
             </TouchableOpacity>
