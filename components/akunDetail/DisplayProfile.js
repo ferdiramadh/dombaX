@@ -51,7 +51,7 @@ export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
                 </TouchableOpacity>
             </View> : null}
             <TouchableOpacity style={styles.btnSave} onPress={() => setIsEdit(!isEdit)}>
-                <Text style={styles.txtUbah}>Ubah</Text>                  
+                <Text style={styles.txtUbah}>UBAH</Text>                  
             </TouchableOpacity>
         </View>
   )
@@ -76,13 +76,13 @@ const styles = StyleSheet.create({
     },
     btnSave: {
       backgroundColor: '#ED9B83',
-      width: '60%',
-      height: 40,                       
+      width: windowWidth * .9,
+      height: 60,                     
       justifyContent: 'center',
       elevation: 2,
       borderRadius: 10, 
       position: 'absolute',
-      bottom: 200
+      bottom: 160,
     },
     eyePass: {
         position: 'absolute',
@@ -92,6 +92,6 @@ const styles = StyleSheet.create({
         fontSize: 18, 
         fontWeight: '700', 
         textAlign: 'center',
-        color: 'white'
+        color: '#FFF'
     }
 })
