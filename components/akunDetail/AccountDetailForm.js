@@ -1,52 +1,53 @@
-import { StyleSheet, TextInput, View, TouchableOpacity, Text } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import { StyleSheet, TextInput, View, TouchableOpacity, Text } from 'react-native'
+import React, { useState } from 'react'
 import {Picker} from '@react-native-picker/picker'
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { MaterialIcons, AntDesign } from '@expo/vector-icons'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import { MaterialIcons } from '@expo/vector-icons'
 import { windowWidth } from '../../utils/DimensionSetup'
 
 const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values, setFieldValue, setEnableShift }) => {
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
 
   const [ isBatasBayar, setIsBatasBayar ] = useState(false)
 
   const onChange = (event, selectedDate) => {
     if(selectedDate){
-        const currentDate = selectedDate;
-        setShow(false);
+        const currentDate = selectedDate
+        setShow(false)
         setFieldValue('tanggalLahir', selectedDate.toDateString())
     } else {
         console.log("eweuh")
-        setShow(false);
+        setShow(false)
         setFieldValue('tanggalLahir', '')
     }
     
-  };
+  }
 
   const onChangeBatasBayar = (event, selectedDate) => {
     if(selectedDate){
-        const currentDate = selectedDate;
-        setShow(false);
+        const currentDate = selectedDate
+        setShow(false)
         setFieldValue('batasBayar', selectedDate.toDateString())
         setIsBatasBayar(false)
     } else {
         console.log("eweuh")
-        setShow(false);
+        setShow(false)
         setFieldValue('batasBayar', '')
         setIsBatasBayar(false)
     }
     
-  };
+  }
 
   const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
+    setShow(true)
+    setMode(currentMode)
+  }
 
   const showDatepicker = () => {
-    showMode('date');
-  };
+    showMode('date')
+  }
+
   return (
     <View style={styles.container}>
         {show && (
@@ -138,26 +139,15 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values, set
           onBlur={handleBlur('password')}
           value={values.password}
         />
-        {/* <TextInput
-          style={styles.textInput}
-          placeholder='Nama Bisnis'
-          placeholderTextColor="#fff" 
-          onChangeText={handleChange('namaBisnis')}
-          onBlur={handleBlur('namaBisnis')}
-          value={values.namaBisnis}
-          maxLength={23}
-        /> */}
-        
-      
-         <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
+        <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
             <Text style={styles.txtSimpan}>SIMPAN</Text>                  
         </TouchableOpacity>
 
     </View>
-  );
-};
+  )
+}
 
-export default AccountDetailForm;
+export default AccountDetailForm
 
 const styles = StyleSheet.create({
     container: {
@@ -190,22 +180,10 @@ const styles = StyleSheet.create({
       borderRadius: 10, 
       marginTop: 60
     },
-    btnEdit:{
-      height: 40,
-      width: '15%',
-      backgroundColor: 'white',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 5,
-      borderWidth: 2,
-      left: 20,
-      position: 'absolute',
-      top: 0
-    },
     txtSimpan: {
       fontSize: 18, 
       fontWeight: '700', 
       textAlign: 'center',
       color: '#FFF'
   }
-});
+})

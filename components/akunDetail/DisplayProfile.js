@@ -1,11 +1,8 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React from 'react'
 import { windowWidth } from '../../utils/DimensionSetup'
-import { MaterialIcons } from '@expo/vector-icons'
 
 export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
-    
-  const [ isShowPass, setIsShowPass ] = useState(false)
 
   return (    
         <View style={styles.container}>
@@ -70,10 +67,6 @@ const styles = StyleSheet.create({
       borderRadius: 10, 
       marginTop: 160
     
-    },
-    eyePass: {
-        position: 'absolute',
-        right: 10
     },
     txtUbah: {
         fontSize: 18, 

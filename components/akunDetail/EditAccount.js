@@ -1,7 +1,7 @@
-import { StyleSheet, View, Alert } from 'react-native';
-import React from 'react';
-import { Formik } from 'formik';
-import AccountDetailForm from './AccountDetailForm';
+import { StyleSheet, View, Alert } from 'react-native'
+import React from 'react'
+import { Formik } from 'formik'
+import AccountDetailForm from './AccountDetailForm'
 import firebase from '../../Firebaseconfig'
 
 const EditAccount = ({ profileData, isEdit, setIsEdit, setEnableShift}) => {
@@ -27,14 +27,11 @@ const EditAccount = ({ profileData, isEdit, setIsEdit, setEnableShift}) => {
       
   }
 
-
-    
   return (
     <Formik
         initialValues={profileData}
         onSubmit={(values, actions) => {  
-          
-          updateItem(values);
+          updateItem(values)
           updateNotification()
           setIsEdit(!isEdit)
       
@@ -48,10 +45,10 @@ const EditAccount = ({ profileData, isEdit, setIsEdit, setEnableShift}) => {
       
     )}
     </Formik>
-  );
-};
+  )
+}
 
-export default EditAccount;
+export default EditAccount
 
 const styles = StyleSheet.create({
   container: {
@@ -60,4 +57,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-});
+})

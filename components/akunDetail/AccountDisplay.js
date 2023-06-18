@@ -40,10 +40,10 @@ const AccountDisplay = ({navigation}) => {
         </View>
       </View>
       </KeyboardAvoidingView>
-  );
-};
+  )
+}
 
-export default AccountDisplay;
+export default AccountDisplay
 
 const styles = StyleSheet.create({
   keyboardAvodingWrapper: {
@@ -83,5 +83,5 @@ const styles = StyleSheet.create({
   photoButton:{
     justifyContent:'center',
     alignItems:'center'
-  },
-});
+  }
+})
