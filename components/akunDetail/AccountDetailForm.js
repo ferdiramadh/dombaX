@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {Picker} from '@react-native-picker/picker'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
+import { windowWidth } from '../../utils/DimensionSetup'
 
 const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setFieldValue }) => {
   const [mode, setMode] = useState('date');
@@ -47,7 +48,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
     showMode('date');
   };
   return (
-    <View style={{width:'100%', justifyContent:'center',alignItems:'center'}}>
+    <View style={styles.container}>
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -143,7 +144,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
         
       
          <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
-            <Text style={{fontSize:18, fontWeight:'700', textAlign:'center',color:'white'}}>Simpan</Text>                  
+            <Text style={styles.txtSimpan}>SIMPAN</Text>                  
         </TouchableOpacity>
 
     </View>
@@ -153,43 +154,53 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values,setF
 export default AccountDetailForm;
 
 const styles = StyleSheet.create({
+    container: {
+      width: windowWidth, 
+      alignItems: 'center',
+      height: '100%',
+  },   
     textInput:{
-      justifyContent:'center',
-      width:'90%',
+      justifyContent: 'center',
+      width: '90%',
       height: 40,
       padding: 8,
       marginBottom: 10,
-      borderBottomWidth: 1
+      borderBottomWidth: 1,
     },
     pickerContainer:{
-      justifyContent:'center',
-      width:'90%',
+      justifyContent: 'center',
+      width: '90%',
       height: 40,
       padding: 8,
       marginBottom: 10,
       borderBottomWidth: 1
     },
     btnSave:{
-      backgroundColor:'#ED9B83',
-      width:'60%',
-      height:40,                       
-      justifyContent:'center',
+      backgroundColor: '#ED9B83',
+      width: windowWidth * .9,
+      height: 60,                     
+      justifyContent: 'center',
       elevation: 2,
-      borderRadius:10,
-      marginTop: 10,  
-      marginBottom: 20
+      borderRadius: 10, 
+      position: 'absolute',
+      bottom: 30
     },
     btnEdit:{
-        height: 40,
-        width: '15%',
-        backgroundColor:'white',
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius:5,
-        borderWidth:2,
-        left: 20,
-        position:'absolute',
-        top:0
-        
-    }
+      height: 40,
+      width: '15%',
+      backgroundColor: 'white',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 5,
+      borderWidth: 2,
+      left: 20,
+      position: 'absolute',
+      top:0
+    },
+    txtSimpan: {
+      fontSize: 18, 
+      fontWeight: '700', 
+      textAlign: 'center',
+      color: '#FFF'
+  }
 });

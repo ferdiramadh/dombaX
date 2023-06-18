@@ -55,7 +55,9 @@ export default EditAccount;
 
 const styles = StyleSheet.create({
   container: {
-    width:'100%', justifyContent:'center',alignItems:'center'
+    flex: 1,
+    width: '100%', 
+    justifyContent: 'center',
+    alignItems: 'center',
   }
-
 });

@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
       elevation: 2,
       borderRadius: 10, 
       position: 'absolute',
-      bottom: 160,
+      bottom: 30,
     },
     eyePass: {
         position: 'absolute',
