@@ -51,16 +51,15 @@ const styles = StyleSheet.create({
   },
   upperContent:{
     width: '100%',
-    height: windowHeigth*.2,
+    height: windowHeigth * .16,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
   },
   photoProfileIcon:{
       width: 100,
       height: 100,
       borderRadius: 60,
-      marginTop: 20
   },
   photoOptionsWrap: {
     flexDirection: 'row',
