@@ -42,24 +42,24 @@ const ExpenseItem = ({item, editItem}) => {
         </View>
         <View style={styles.rightWrapper}>
             <View style={styles.upperRight}>
-                    <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
-                    {
-                    !deleteOpt.allDelete? null :
-                    <View style={styles.buttonSection}>
-                        <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
-                                {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
-                        </TouchableOpacity>
-                    </View>
-                    }
-                    { 
-                    deleteOpt.selectDelete && !deleteOpt.allDelete? 
-                    <View style={styles.buttonSection}>
-                        <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
-                                {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
-                        </TouchableOpacity> 
-                    </View> : null
-                    }
+                <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
+                {
+                !deleteOpt.allDelete? null :
+                <View style={styles.buttonSection}>
+                    <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
+                            {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
+                    </TouchableOpacity>
                 </View>
+                }
+                { 
+                deleteOpt.selectDelete && !deleteOpt.allDelete? 
+                <View style={styles.buttonSection}>
+                    <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
+                            {CheckIfInList(item)?<FontAwesome name="check-square" size={19} color="#ED9B83" /> : <View style={styles.square} />}
+                    </TouchableOpacity> 
+                </View> : null
+                }
+            </View>
             <Text style={{color: '#000'}} ellipsizeMode='tail' numberOfLines={1}>{item.kategori}</Text>
             {(item.kategori !== 'Tabungan atau Investasi' || item.kategori !== 'Pengeluaran Lain-Lain' ) && (item.statusBayar)?
             <View style={[styles.status, item.statusBayar == 'Lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>
@@ -76,27 +76,21 @@ const styles = StyleSheet.create({
     container:{
         width: windowWidth, 
         height: windowHeigth*.1, 
-        // backgroundColor:'red', 
         marginBottom: 5,
         flexDirection: 'row',
-        // borderBottomWidth: 1,
-        // borderBottomColor: 'lightgrey',
         paddingHorizontal: 5
     },
     iconWrapper: {
         height: '100%',
         width: '20%',
-        // backgroundColor: 'blue',
         justifyContent: 'center',
         alignItems: 'center',
     },
     mainWrapper: {
         height: '100%',
         width: '40%',
-        // backgroundColor:'grey',
         paddingTop: 5,
         paddingLeft: 5
-        
     },
     rightWrapper: {
         height: '100%',
@@ -109,7 +103,6 @@ const styles = StyleSheet.create({
         width: '60%',
         height: undefined,
         aspectRatio: 1
-    //   backgroundColor: 'maroon'
     },
     status: {
         padding: 2,
