@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     },
     upperRight: {
         flexDirection:'row',  
-        padding: 5,
+        paddingVertical: 5,
         alignItems: 'center'
     },
     buttonSection:{
