@@ -300,7 +300,8 @@ const styles = StyleSheet.create({
         // borderRadius:20,
         justifyContent:'center', 
         paddingLeft:20,
-        marginVertical:10
+        marginVertical:10,
+        borderRadius: 5
       },
       textInput:{
         backgroundColor:'white',
