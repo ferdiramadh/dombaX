@@ -15,9 +15,8 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
 
   const dispatch = useDispatch();
   const uid = useSelector(state => state.userReducer.uid)
-  const [selectedProduct, setSelectedProduct] = useState("jenisHewanTernak");
-
-  const [ternakData, setTernakData] = useState({
+  const [ selectedProduct, setSelectedProduct ] = useState("jenisHewanTernak");
+  const ternakData = {
     id: '',
     nama: '',
     jenisSpesifik: '',
@@ -29,10 +28,8 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     jumlah: '',
     tipe: 'domba',
     image: ''
-
-  })
-
-  const [pakanData, setPakanData] = useState({
+  }
+  const pakanData = {
     id: '',
     nama: '',
     merk: '',
@@ -43,9 +40,9 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     tipe: 'pakan',
     image: ''
 
-  })
+  }
 
-  const [obatData, setObatData] = useState({
+  const obatData = {
     id: '',
     nama: '',
     merk: '',
@@ -56,10 +53,9 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     tipe: 'obat',
     image: ''
 
-  })
+  }
 
-  const [addProduct, setAddProduct] = useState(
-    {
+  const addProduct = {
       id: '',
       nama: '',
       merk: '',
@@ -71,29 +67,28 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
       tipe: 'tambahproduk',
       image: ''
     }
-  )
+  
+  const [ initiateData, setInitiateData ] = useState({})
 
-  const [test, setTest] = useState({})
-
-  const xfunc = () => {
+  const initiateValue = () => {
 
     if (selectedProduct == 'jenisHewanTernak') {
-      let z = Object.assign(test, ternakData)
-      setTest(z)
+      let dataValues = Object.assign(initiateData, ternakData)
+      setInitiateData(dataValues)
     } else if (selectedProduct == 'jenisPakan') {
-      let z = Object.assign(test, pakanData)
-      setTest(z)
+      let dataValues = Object.assign(initiateData, pakanData)
+      setInitiateData(dataValues)
     } else if (selectedProduct == 'obatSuplemen') {
-      let z = Object.assign(test, obatData)
-      setTest(z)
+      let dataValues = Object.assign(initiateData, obatData)
+      setInitiateData(dataValues)
     } else if (selectedProduct == 'tambahProduk') {
-      let z = Object.assign(test, addProduct)
-      setTest(z)
+      let dataValues = Object.assign(initiateData, addProduct)
+      setInitiateData(dataValues)
     }
   }
 
   useEffect(() => {
-    xfunc()
+    initiateValue()
   }, [selectedProduct])
 
 
@@ -115,7 +110,7 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
 
   }
 
-  const testPicker = [
+  const jenisProdukPicker = [
     {
       id: 1,
       label: "Hewan Ternak",
@@ -138,7 +133,7 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
 
   return (
     <Formik
-      initialValues={test}
+      initialValues={initiateData}
       onSubmit={(values, actions) => {
         addUserProduct(values)
         setModalVisible(!modalVisible)
@@ -162,7 +157,7 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
 
               >
 
-                {testPicker.map((item, i) => {
+                {jenisProdukPicker.map((item, i) => {
                   return <Picker.Item label={item.label} value={item.value} key={item.id} />
                 })}
               </Picker>
