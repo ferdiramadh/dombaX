@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
       justifyContent:'center', 
       paddingLeft:20,
       marginVertical:10,
+      borderRadius: 5
     },
     btnSave:{
       backgroundColor:'white',
