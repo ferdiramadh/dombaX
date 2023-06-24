@@ -180,7 +180,7 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     >
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
         <ScrollView style={styles.container} contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={styles.formContainer}>
             <View style={styles.pickerContainer}>
               <Picker
                 selectedValue={selectedProduct}
@@ -205,9 +205,7 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
             {selectedProduct == 'jenisPakan' ? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
             {selectedProduct == 'obatSuplemen' ? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
             {selectedProduct == 'tambahProduk' ? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
-
           </View>
-
         </ScrollView>
       )}
     </Formik>
@@ -266,5 +264,10 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginVertical: 10
   },
+  formContainer: { 
+    width: '100%', 
+    justifyContent: 'center', 
+    alignItems: 'center' 
+  }
 })
 
