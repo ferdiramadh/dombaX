@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import { formatToCurrencyLight } from '../../utils/FormatCurrency'
 import { FontAwesome } from '@expo/vector-icons'
@@ -17,27 +17,7 @@ const IncomeItem = ({item, editItem}) => {
             
         }
 
-        const [ itemDate, setItemDate ] = useState('')
-        const { deleteOpt, CheckIfInList, AddOrRemoveList, setDeleteOpt } = useContext(DeleteOptionContext)
-        useEffect(() => {
-            if(item.tanggal) {
-                  let date = item.tanggal
-                  setItemDate(date.substring(4))
-            } else {
-                console.log("Kagak ada tanggal")
-                setItemDate('')
-            }
-            // if(item.createdAt) {
-            //     const fireBaseTime = new Date(
-            //         item.createdAt.seconds * 1000 + item.createdAt.nanoseconds / 1000000,
-            //       );
-            //       const date = fireBaseTime.toDateString();
-            //       setItemDate(date.substring(4))
-            // } else {
-            //     console.log("Kagak ada createdAt")
-            // }
-            
-        }, [item])
+    const { deleteOpt, CheckIfInList, AddOrRemoveList, setDeleteOpt } = useContext(DeleteOptionContext)
 
     
   return (
@@ -94,32 +74,25 @@ const styles = StyleSheet.create({
     container:{
         width: windowWidth, 
         height: windowHeigth*.1, 
-        // backgroundColor:'red', 
         marginBottom: 5,
         flexDirection: 'row',
-        // borderBottomWidth: 1,
-        // borderBottomColor: 'lightgrey',
         paddingHorizontal: 5
     },
     iconWrapper: {
         height: '100%',
         width: '20%',
-        // backgroundColor: 'blue',
         justifyContent: 'center',
         alignItems: 'center',
     },
     mainWrapper: {
         height: '100%',
         width: '40%',
-        // backgroundColor:'grey',
         paddingTop: 5,
-        paddingLeft: 5
-        
+        paddingLeft: 5  
     },
     rightWrapper: {
         height: '100%',
         width: '40%',
-        // backgroundColor: 'cyan',
         paddingTop: 5,
         paddingRight: 10,
         alignItems: 'flex-end',
@@ -128,7 +101,6 @@ const styles = StyleSheet.create({
         width: '60%',
         height: undefined,
         aspectRatio: 1
-    //   backgroundColor: 'maroon'
     },
     status: {
         padding: 2,
