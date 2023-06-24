@@ -16,10 +16,7 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
   const dispatch = useDispatch();
   const uid = useSelector(state => state.userReducer.uid)
   const [selectedProduct, setSelectedProduct] = useState("jenisHewanTernak");
-  const [firebaseSetup, setFirebaseSetup] = useState({
-    collection: '',
-    typeReducer: ''
-  })
+
   const [ternakData, setTernakData] = useState({
     id: '',
     nama: '',
@@ -83,24 +80,12 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     if (selectedProduct == 'jenisHewanTernak') {
       let z = Object.assign(test, ternakData)
       setTest(z)
-      setFirebaseSetup({
-        collection: 'dombastok',
-        typeReducer: 'STORE_DATA'
-      })
     } else if (selectedProduct == 'jenisPakan') {
       let z = Object.assign(test, pakanData)
       setTest(z)
-      setFirebaseSetup({
-        collection: 'pakanstok',
-        typeReducer: 'STORE_DATA_PAKAN'
-      })
     } else if (selectedProduct == 'obatSuplemen') {
       let z = Object.assign(test, obatData)
       setTest(z)
-      setFirebaseSetup({
-        collection: 'obatstok',
-        typeReducer: 'STORE_DATA_OBAT'
-      })
     } else if (selectedProduct == 'tambahProduk') {
       let z = Object.assign(test, addProduct)
       setTest(z)
@@ -110,24 +95,6 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
   useEffect(() => {
     xfunc()
   }, [selectedProduct])
-
-
-  const addDombaStok = (values) => {
-
-    const datas = {
-      id: firebase.firestore()
-        .collection(firebaseSetup.collection)
-        .doc().id
-    }
-    let addedProperties = { id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp(), userId: uid }
-    const newValue = Object.assign(values, addedProperties)
-    const db = firebase.firestore();
-    db.collection(firebaseSetup.collection)
-      .doc(datas.id)
-      .set(newValue)
-    dispatch({ type: firebaseSetup.typeReducer, results: newValue })
-
-  }
 
 
   const addUserProduct = (values) => {
@@ -173,7 +140,6 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     <Formik
       initialValues={test}
       onSubmit={(values, actions) => {
-        console.log(values)
         addUserProduct(values)
         setModalVisible(!modalVisible)
       }}
