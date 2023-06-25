@@ -184,14 +184,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginVertical: '10%',
   },
-  pickerContainer: {
-    backgroundColor: '#DFE1E0',
-    width: '90%',
-    height: 50,
-    justifyContent: 'center',
-    paddingLeft: 20,
-    marginVertical: 10
-  },
   textInput: {
     backgroundColor: '#DFE1E0',
     width: '90%',
