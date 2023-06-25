@@ -165,7 +165,7 @@ const FilterLaporanModal = ({filterVisible, setFilterVisible, setIsFilter, filte
                   filterList.map((item, i) => {
                   
                   return (
-                    <View>
+                    <View key={i}>
                       <View style={styles.filterSelection} key={item.id}>
                         <Text style={styles.textFilter}>{item.sortBy}</Text>
                         <CheckBox
