@@ -1,7 +1,7 @@
-import { Alert, Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import IncomeCategory from './IncomeCategory';
+import { Alert, Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { MaterialIcons } from '@expo/vector-icons'
+import IncomeCategory from './IncomeCategory'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 
 const SelectCategoryIncome = ({ modalCategoryVisible, setModalCategoryVisible, setCategory }) => {
@@ -122,4 +122,4 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         textAlign: 'center'
     }
-});
+})
