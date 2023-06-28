@@ -1,12 +1,12 @@
-import { Alert, Modal, StyleSheet, Text, View, TouchableOpacity, ScrollView} from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import ExpenseCategory from './ExpenseCategory';
+import { Alert, Modal, StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useState } from 'react'
+import { MaterialIcons } from '@expo/vector-icons'
+import ExpenseCategory from './ExpenseCategory'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 
-const SelectCategoryExpense = ({modalCategoryVisible, setModalCategoryVisible, setCategory}) => {
+const SelectCategoryExpense = ({ modalCategoryVisible, setModalCategoryVisible, setCategory }) => {
 
-    const [ sellingCategory, setSellingCategory ] = useState([
+    const sellingCategory = [
         {
             id: 1,
             image: require('../../assets/images/expensecategory/PurchasingStock.png'),
@@ -50,101 +50,90 @@ const SelectCategoryExpense = ({modalCategoryVisible, setModalCategoryVisible, s
             text: 'Pengeluaran biaya operasional atau lainnya. Contoh: biaya sewa lahan, listrik, air, internet, dll.'
         },
 
-    ])
+    ]
 
 
-  return (
+    return (
 
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalCategoryVisible}
-        onRequestClose={() => {
-          
-            setModalCategoryVisible(!modalCategoryVisible)
-        }}>
-        <View style={styles.centeredView}>
-            <View style={styles.upperWrap}>
-                <TouchableOpacity style={styles.backBtn} onPress={() => {
-                  setModalCategoryVisible(!modalCategoryVisible)
+        <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalCategoryVisible}
+            onRequestClose={() => {
 
-                }}>
-                    <MaterialIcons name="arrow-back" size={24} color="black" />
-                </TouchableOpacity>
-                <View style={styles.titleWrap}>
-                    <Text style={styles.title}>Kategori Pengeluaran</Text>
-                </View>      
+                setModalCategoryVisible(!modalCategoryVisible)
+            }}>
+            <View style={styles.centeredView}>
+                <View style={styles.upperWrap}>
+                    <TouchableOpacity style={styles.backBtn} onPress={() => {
+                        setModalCategoryVisible(!modalCategoryVisible)
+
+                    }}>
+                        <MaterialIcons name="arrow-back" size={24} color="black" />
+                    </TouchableOpacity>
+                    <View style={styles.titleWrap}>
+                        <Text style={styles.title}>Kategori Pengeluaran</Text>
+                    </View>
+                </View>
+                <ScrollView style={styles.lowerWrap}>
+
+
+
+                    {sellingCategory.map((item, i) => {
+                        return (
+                            <ExpenseCategory item={item} key={item.id} setCategory={setCategory} modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} />
+                        )
+                    })}
+
+                </ScrollView>
             </View>
-            <ScrollView style={styles.lowerWrap}>
-                
+        </Modal>
 
-               
-                { sellingCategory.map((item, i) => {
-                    return(
-                    <ExpenseCategory item={item} key={item.id} setCategory={setCategory} modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible}/>
-                    )
-                })}
-                 
-            </ScrollView>  
-        </View>
-      </Modal>
-
-  )
+    )
 }
 
 export default SelectCategoryExpense
 
 const styles = StyleSheet.create({
     centeredView: {
-      height:'100%',
-      backgroundColor:'#FFF',
-      width: windowWidth ,
-      
+        height: '100%',
+        backgroundColor: '#FFF',
+        width: windowWidth,
     },
     textStyle: {
-      color: 'white',
-      fontWeight: 'bold',
-      textAlign: 'center',
-      fontFamily: 'Baloo',
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontFamily: 'Baloo',
     },
     modalText: {
-      marginBottom: 15,
-      textAlign: 'center',
+        marginBottom: 15,
+        textAlign: 'center',
     },
-    upperWrap:{
-        // backgroundColor:'yellow',
+    upperWrap: {
         height: 60,
         paddingHorizontal: 10,
-        flexDirection:'row',
-        alignItems:'center',
-        width:'100%'
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%'
     },
-    lowerWrap:{
-        // height:windowHeigth,
-        // width: windowWidth,
-        // backgroundColor:'red',
-        // alignItems: 'center',
+    lowerWrap: {
         marginTop: 10,
         paddingHorizontal: 20,
-
     },
-    title:{
-        fontFamily:'Baloo',
-        fontSize:24
+    title: {
+        fontFamily: 'Baloo',
+        fontSize: 24
     },
-    titleWrap:{
+    titleWrap: {
         marginLeft: 20
-        
     },
-    backBtn:{
-        width:'10%',
-        // backgroundColor:'green',
+    backBtn: {
+        width: '10%'
     },
-    text:{
+    text: {
         fontSize: 23,
-        fontWeight:'500',
-        textAlign:'center'
-    },
-
-  });
-  
+        fontWeight: '500',
+        textAlign: 'center'
+    }
+})
