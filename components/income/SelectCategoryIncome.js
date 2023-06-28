@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         width:'100%',
-        borderBottomWidth: .5
     },
     lowerWrap:{
         height:windowHeigth,
