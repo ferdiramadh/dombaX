@@ -117,8 +117,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection:'row',
         alignItems:'center',
-        width:'100%',
-        borderBottomWidth: .5
+        width:'100%'
     },
     lowerWrap:{
         // height:windowHeigth,
