@@ -1,94 +1,94 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { MaterialIcons } from '@expo/vector-icons';
-import {Picker} from '@react-native-picker/picker'
+import { MaterialIcons } from '@expo/vector-icons'
+import { Picker } from '@react-native-picker/picker'
+import { DisplayedDateWithName } from '../../../utils/DisplayDate'
 
-const GrantDetail = ({data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue }) => {
+const GrantDetail = ({ data, isUpdate, showDatepicker, values, handleBlur, handleChange, setFieldValue }) => {
   return (
     <View>
-          <View style={[styles.itemWrap, data.namaTransaksi || isUpdate? {} : {display: 'none'}]}>
-              <Text style={styles.subTitle}>Nama Transaksi</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('namaTransaksi')}
-                onBlur={handleBlur('namaTransaksi')}
-                value={values.namaTransaksi}
-                style={styles.textInput}
-                placeholder='Nama Transaksi'
-              /> : data.namaTransaksi && <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
-            </View>
-            <View style={[styles.itemWrap, data.bentukHibah || isUpdate? {} : {display: 'none'}]}>
-            <Text style={styles.subTitle}>Bentuk Hibah</Text>
-            {isUpdate ? <View style={styles.pickerContainer}>
-            <Picker
-                selectedValue={values.bentukHibah}
-                onValueChange={(itemValue, itemIndex) =>
-                {
-                    setFieldValue('bentukHibah',itemValue)
-                }
-                }
-                style={{
-                    fontSize: 22,
-                    fontWeight:'bold',
-                    color: 'black',
-                }}
-                prompt="Bentuk Modal"
-                >
-                <Picker.Item label="Uang" value="Uang" />
-                <Picker.Item label="Barang" value="Barang" />
-              </Picker>
-          </View> : data.bentukHibah && <Text style={styles.itemText}>{data.bentukHibah}</Text> }
+      <View style={[styles.itemWrap, data.namaTransaksi || isUpdate ? {} : { display: 'none' }]}>
+        <Text style={styles.subTitle}>Nama Transaksi</Text>
+        {isUpdate ? <TextInput
+          onChangeText={handleChange('namaTransaksi')}
+          onBlur={handleBlur('namaTransaksi')}
+          value={values.namaTransaksi}
+          style={styles.textInput}
+          placeholder='Nama Transaksi'
+        /> : data.namaTransaksi && <Text style={styles.itemText}>{data.namaTransaksi}</Text>}
+      </View>
+      <View style={[styles.itemWrap, data.bentukHibah || isUpdate ? {} : { display: 'none' }]}>
+        <Text style={styles.subTitle}>Bentuk Hibah</Text>
+        {isUpdate ? <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={values.bentukHibah}
+            onValueChange={(itemValue, itemIndex) => {
+              setFieldValue('bentukHibah', itemValue)
+            }
+            }
+            style={{
+              fontSize: 22,
+              fontWeight: 'bold',
+              color: 'black',
+            }}
+            prompt="Bentuk Modal"
+          >
+            <Picker.Item label="Uang" value="Uang" />
+            <Picker.Item label="Barang" value="Barang" />
+          </Picker>
+        </View> : data.bentukHibah && <Text style={styles.itemText}>{data.bentukHibah}</Text>}
+      </View>
+      <View style={[styles.itemWrap, data.jumlah || isUpdate ? {} : { display: 'none' }]}>
+        <Text style={styles.subTitle}>Jumlah</Text>
+        {isUpdate ? <TextInput
+          onChangeText={handleChange('jumlah')}
+          onBlur={handleBlur('jumlah')}
+          value={values.jumlah}
+          style={styles.textInput}
+          placeholder='Jumlah Piutang'
+          keyboardType='numeric'
+        /> : data.jumlah && <Text style={styles.itemText}>{data.jumlah}</Text>}
+      </View>
+      <View style={[styles.itemWrap, data.diberikanDari || isUpdate ? {} : { display: 'none' }]}>
+        <Text style={styles.subTitle}>Diberikan Dari</Text>
+        {isUpdate ? <TextInput
+          onChangeText={handleChange('diberikanDari')}
+          onBlur={handleBlur('diberikanDari')}
+          value={values.diberikanDari}
+          style={styles.textInput}
+          placeholder='Diberikan Dari'
+        /> : data.diberikanDari && <Text style={styles.itemText}>{data.diberikanDari}</Text>}
+      </View>
+      <View style={[styles.itemWrap, data.tanggal || isUpdate ? {} : { display: 'none' }]}>
+        <Text style={styles.subTitle}>Tanggal Hibah Masuk</Text>
+        {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10 }}>
+            <Text style={{ color: '#474747' }}>{values.tanggal ? DisplayedDateWithName(values.tanggal) : "Tanggal Hibah Masuk"}</Text>
+            <MaterialIcons name="date-range" size={24} color="black" />
           </View>
-            <View style={[styles.itemWrap, data.jumlah || isUpdate? {} : {display: 'none'}]}>
-              <Text style={styles.subTitle}>Jumlah</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('jumlah')}
-                onBlur={handleBlur('jumlah')}
-                value={values.jumlah}
-                style={styles.textInput}
-                placeholder='Jumlah Piutang'
-                keyboardType='numeric'
-              /> : data.jumlah && <Text style={styles.itemText}>{data.jumlah}</Text>}
-            </View>
-            <View style={[styles.itemWrap, data.diberikanDari || isUpdate? {} : {display: 'none'}]}>
-              <Text style={styles.subTitle}>Diberikan Dari</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('diberikanDari')}
-                onBlur={handleBlur('diberikanDari')}
-                value={values.diberikanDari}
-                style={styles.textInput}
-                placeholder='Diberikan Dari'
-              /> : data.diberikanDari && <Text style={styles.itemText}>{data.diberikanDari}</Text>}
-            </View>
-            <View style={[styles.itemWrap, data.tanggal || isUpdate? {} : {display: 'none'}]}>
-              <Text style={styles.subTitle}>Tanggal Hibah Masuk</Text>
-              {isUpdate ? <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
-                <View style={{flexDirection:'row', justifyContent:'space-between', paddingRight:10}}>
-                    <Text style={{color:'#474747'}}>{values.tanggal?values.tanggal:"Tanggal Hibah Masuk"}</Text>   
-                    <MaterialIcons name="date-range" size={24} color="black" />    
-                </View>                
-            </TouchableOpacity> : data.tanggal && <Text style={styles.itemText}>{data.tanggal}</Text>}
-            </View>
-            <View style={[styles.itemWrap, data.pajak || isUpdate? {} : {display: 'none'}]}>
-              <Text style={styles.subTitle}>Pajak</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('pajak')}
-                onBlur={handleBlur('pajak')}
-                value={values.pajak}
-                style={styles.textInput}
-                placeholder='Pajak'
-                keyboardType='numeric'
-              /> : data.pajak && <Text style={styles.itemText}>{data.pajak}</Text>}
-            </View>
-            <View style={[styles.itemWrap, data.deskripsi || isUpdate? {} : {display: 'none'}]}>
-              <Text style={styles.subTitle}>Deskripsi</Text>
-              {isUpdate ? <TextInput
-                onChangeText={handleChange('deskripsi')}
-                onBlur={handleBlur('deskripsi')}
-                value={values.deskripsi}
-                style={styles.textInput}
-                placeholder='Deskripsi'
-              /> : data.deskripsi && <Text style={styles.itemText}>{data.deskripsi}</Text>}
-            </View> 
+        </TouchableOpacity> : data.tanggal && <Text style={styles.itemText}>{DisplayedDateWithName(data.tanggal)}</Text>}
+      </View>
+      <View style={[styles.itemWrap, data.pajak || isUpdate ? {} : { display: 'none' }]}>
+        <Text style={styles.subTitle}>Pajak</Text>
+        {isUpdate ? <TextInput
+          onChangeText={handleChange('pajak')}
+          onBlur={handleBlur('pajak')}
+          value={values.pajak}
+          style={styles.textInput}
+          placeholder='Pajak'
+          keyboardType='numeric'
+        /> : data.pajak && <Text style={styles.itemText}>{data.pajak}</Text>}
+      </View>
+      <View style={[styles.itemWrap, data.deskripsi || isUpdate ? {} : { display: 'none' }]}>
+        <Text style={styles.subTitle}>Deskripsi</Text>
+        {isUpdate ? <TextInput
+          onChangeText={handleChange('deskripsi')}
+          onBlur={handleBlur('deskripsi')}
+          value={values.deskripsi}
+          style={styles.textInput}
+          placeholder='Deskripsi'
+        /> : data.deskripsi && <Text style={styles.itemText}>{data.deskripsi}</Text>}
+      </View>
     </View>
   )
 }
@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   itemWrap: {
     width: '100%',
     paddingVertical: 5,
-    // backgroundColor:'green',
     marginBottom: 10,
   },
   subTitle: {
@@ -110,22 +109,19 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   textInput: {
-    backgroundColor:'#DFE1E0',
-    width:'100%',
-    height:50,                       
-    // borderColor:'black',
-    // borderWidth:2,                
-    // borderRadius:20,
-    justifyContent:'center', 
-    paddingLeft:20,
-    marginVertical:10,
-  }, 
-  pickerContainer:{
-    backgroundColor:'#DFE1E0',
-    width:'100%',
-    height:50,                       
-    justifyContent:'center', 
-    paddingLeft:10,
-    marginVertical:10
+    backgroundColor: '#DFE1E0',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    paddingLeft: 20,
+    marginVertical: 10,
+  },
+  pickerContainer: {
+    backgroundColor: '#DFE1E0',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    paddingLeft: 10,
+    marginVertical: 10
   },
 })
