@@ -1,86 +1,86 @@
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { Formik } from 'formik';
-import { Feather, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
+import React, { useState } from 'react'
+import { Formik } from 'formik'
+import { Feather, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons'
 import firebase from '../../Firebaseconfig'
 import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload'
-import { formatToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DatePickerField from './DatePickerField';
+import { formatToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import DatePickerField from './DatePickerField'
+import { DisplayedDateWithName } from '../../utils/DisplayDate'
 
 const DrugSuplementProductDetail = ({ editData, navigation }) => {
 
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-  const [ date, setDate ] = useState()
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
+  const [date, setDate] = useState()
 
   const onChange = (event, selectedDate) => {
-    if(selectedDate){
-        const currentDate = selectedDate;
-        setShow(false);
-        setDate(selectedDate.toDateString())
+    if (selectedDate) {
+      const currentDate = selectedDate
+      setShow(false)
+      setDate(selectedDate.toDateString())
     } else {
-        console.log("eweuh")
-        setShow(false);
-        setDate()
+      setShow(false)
+      setDate()
     }
-    
-  };
 
-  
+  }
+
+
 
   const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
+    setShow(true)
+    setMode(currentMode)
+  }
 
   const showDatepicker = () => {
-    showMode('date');
-  };
+    showMode('date')
+  }
 
   const [data, setData] = useState(editData)
   const [isUpdate, setIsUpdate] = useState(false)
-  const [ tempImg, setTempImg ] = useState(false)
+  const [tempImg, setTempImg] = useState(false)
 
   const removePhoto = (set) => {
-    set('image','')
+    set('image', '')
   }
   const updateItem = (item) => {
     return firebase
-    .firestore()
-    .collection("userproduk")
-    .doc(item.id)
-    .update(item).then(() => {
-      uploadImageProduk(item.image, "UserProduk", item.id, "userproduk", "image")
-    }).catch((error) => console.log(error))
-    
+      .firestore()
+      .collection("userproduk")
+      .doc(item.id)
+      .update(item).then(() => {
+        uploadImageProduk(item.image, "UserProduk", item.id, "userproduk", "image")
+      }).catch((error) => alert(error))
+
   }
 
   const updateNotification = () => {
     Alert.alert(
       "Perhatian!",
       `Item sudah diubah.`,
-        [
+      [
 
-            {
-                text: "OK",
-                onPress: () => {   
-                  navigation.navigate("Inventory")
-                }
-            }
-        ],
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.navigate("Inventory")
+          }
+        }
+      ],
     )
-    
-    
-}
+
+
+  }
   if (editData) {
 
     return (
       <Formik
         initialValues={data}
         onSubmit={(values, actions) => {
-          updateItem(values);
-          
+          updateItem(values)
+
           updateNotification()
 
         }}
@@ -88,15 +88,15 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
         {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
           <ScrollView style={styles.container}>
             <View style={styles.upperSection}>
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={new Date}
-                mode={mode}
-                is24Hour={true}
-                onChange={onChange}
-              />
-            )}
+              {show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={new Date}
+                  mode={mode}
+                  is24Hour={true}
+                  onChange={onChange}
+                />
+              )}
               <Text style={styles.titlePage}>Obat dan Vitamin</Text>
               <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => {
                 // editItem(item)
@@ -107,7 +107,7 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <View style={[styles.itemWrap, data.nama || isUpdate? {} : {display: 'none'}]}>
+            <View style={[styles.itemWrap, data.nama || isUpdate ? {} : { display: 'none' }]}>
               <Text style={styles.subTitle}>Nama Obat dan Vitamin</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('nama')}
@@ -118,7 +118,7 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
               /> : <Text style={styles.itemText}>{data.nama}</Text>}
 
             </View>
-            <View style={[styles.itemWrap, data.merk || isUpdate? {} : {display: 'none'}]}>
+            <View style={[styles.itemWrap, data.merk || isUpdate ? {} : { display: 'none' }]}>
               <Text style={styles.subTitle}>Produsen</Text>
               {isUpdate ? <TextInput
                 onChangeText={handleChange('merk')}
@@ -129,9 +129,9 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
               /> : <Text style={styles.itemText}>{data.merk}</Text>}
 
             </View>
-            <View style={[styles.itemWrap, data.kadaluarsa || isUpdate? {} : {display: 'none'}]}>
+            <View style={[styles.itemWrap, data.kadaluarsa || isUpdate ? {} : { display: 'none' }]}>
               <Text style={styles.subTitle}>Kadaluarsa</Text>
-              {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values}/> : <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
+              {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values} /> : <Text style={styles.itemText}>{DisplayedDateWithName(data.kadaluarsa)}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Harga Beli/Produk</Text>
@@ -158,41 +158,41 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
             <Text style={styles.subTitle}>Total</Text>
             <Text style={styles.itemText}>{formatToCurrency(parseInt(data.jumlah) * parseInt(data.hargaBeli))}</Text>
             <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
-              { isUpdate | values.image?<Text style={[styles.subTitle, { alignSelf: 'flex-start', marginBottom: 10}]}>Gambar</Text> : null }
-              {values.image?
-              <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
+              {isUpdate | values.image ? <Text style={[styles.subTitle, { alignSelf: 'flex-start', marginBottom: 10 }]}>Gambar</Text> : null}
+              {values.image ?
+                <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
                 : null}
-              {isUpdate? <View style={styles.photoOptionsWrap}>
-              <TouchableOpacity onPress={() => {
+              {isUpdate ? <View style={styles.photoOptionsWrap}>
+                <TouchableOpacity onPress={() => {
                   removePhoto(setFieldValue)
                   // setTempImg(true)
-                  
+
                 }} style={styles.photoButton}>
                   <AntDesign name="delete" size={24} color="lightgrey" /><Text style={{ color: "grey" }}>Remove Photo</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                   let isTrue = true
                   pickImageOnly(isTrue, setFieldValue, 'image')
-                  
+
                 }} style={styles.photoButton}>
                   <FontAwesome name="file-image-o" size={24} color="lightgrey" /><Text style={{ color: "grey" }}>Select A Photo</Text>
                 </TouchableOpacity>
               </View> : null}
-              {isUpdate?<TouchableOpacity style={[styles.btnSave, { backgroundColor: '#ED9B83' }]} onPress={handleSubmit}>
+              {isUpdate ? <TouchableOpacity style={[styles.btnSave, { backgroundColor: '#ED9B83' }]} onPress={handleSubmit}>
                 <Text style={{ fontSize: 18, fontWeight: '700', textAlign: 'center', color: '#FFF' }}>Update</Text>
-              </TouchableOpacity>:null}
+              </TouchableOpacity> : null}
             </View>
 
           </ScrollView>)}
       </Formik>
     )
-  } return(
+  } return (
     <View>
-            <TouchableOpacity style={[styles.btnSave, { backgroundColor: '#ED9B83' }]} onPress={() => {
-             navigation.navigate("Home")
-            }}>
-                <Text style={{ fontSize: 18, fontWeight: '700', textAlign: 'center', color: '#FFF' }}>Go Home</Text>
-              </TouchableOpacity>
+      <TouchableOpacity style={[styles.btnSave, { backgroundColor: '#ED9B83' }]} onPress={() => {
+        navigation.navigate("Home")
+      }}>
+        <Text style={{ fontSize: 18, fontWeight: '700', textAlign: 'center', color: '#FFF' }}>Go Home</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
   itemWrap: {
     width: '100%',
     paddingVertical: 5,
-    // backgroundColor:'green',
     marginBottom: 10,
   },
   subTitle: {
@@ -223,22 +222,17 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   textInput: {
-    backgroundColor:'#DFE1E0',
-    width:'100%',
-    height:50,                       
-    // borderColor:'black',
-    // borderWidth:2,                
-    // borderRadius:20,
-    justifyContent:'center', 
-    paddingLeft:20,
-    marginVertical:10,
+    backgroundColor: '#DFE1E0',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    paddingLeft: 20,
+    marginVertical: 10,
   },
   upperSection: {
-    // backgroundColor:'green',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-
   },
   btnSave: {
     backgroundColor: 'white',
@@ -257,7 +251,6 @@ const styles = StyleSheet.create({
   },
   photoButton: {
     justifyContent: 'center',
-    // backgroundColor:'red',
     alignItems: 'center'
   },
 })
