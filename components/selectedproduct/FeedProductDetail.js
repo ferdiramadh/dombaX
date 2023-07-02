@@ -1,42 +1,43 @@
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { Formik } from 'formik';
-import { Feather, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
+import { Formik } from 'formik'
+import { Feather, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons'
 import firebase from '../../Firebaseconfig'
 import { pickImageOnly, uploadImageProduk } from '../../utils/ImageUpload'
-import { formatToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DatePickerField from './DatePickerField';
+import { formatToCurrency, formatToCurrencyLight } from '../../utils/FormatCurrency'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import DatePickerField from './DatePickerField'
+import { DisplayedDateWithName } from '../../utils/DisplayDate'
 
 const FeedProductDetail = ({ editData, navigation }) => {
 
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
   const [ date, setDate ] = useState()
 
   const onChange = (event, selectedDate) => {
     if(selectedDate){
-        const currentDate = selectedDate;
-        setShow(false);
+        const currentDate = selectedDate
+        setShow(false)
         setDate(selectedDate.toDateString())
     } else {
         console.log("eweuh")
-        setShow(false);
+        setShow(false)
         setDate()
     }
     
-  };
+  }
 
   
 
   const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
+    setShow(true)
+    setMode(currentMode)
+  }
 
   const showDatepicker = () => {
-    showMode('date');
-  };
+    showMode('date')
+  }
 
   const [data, setData] = useState(editData)
   const [isUpdate, setIsUpdate] = useState(false)
@@ -79,7 +80,7 @@ const FeedProductDetail = ({ editData, navigation }) => {
       <Formik
         initialValues={data}
         onSubmit={(values, actions) => {
-          updateItem(values);
+          updateItem(values)
           
           updateNotification()
 
@@ -131,7 +132,7 @@ const FeedProductDetail = ({ editData, navigation }) => {
             </View>
             <View style={[styles.itemWrap, data.kadaluarsa || isUpdate ? {} : {display: 'none'}]}>
               <Text style={styles.subTitle}>Kadaluarsa</Text>
-              {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values}/> : data.kadaluarsa && <Text style={styles.itemText}>{data.kadaluarsa}</Text>}
+              {isUpdate ? <DatePickerField showDatepicker={showDatepicker} setFieldValue={setFieldValue} date={date} values={values}/> : data.kadaluarsa && <Text style={styles.itemText}>{DisplayedDateWithName(data.kadaluarsa)}</Text>}
             </View>
             <View style={styles.itemWrap}>
               <Text style={styles.subTitle}>Harga Beli/Produk</Text>
