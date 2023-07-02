@@ -4,6 +4,7 @@ import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
 import { formatToCurrencyLight } from '../../utils/FormatCurrency'
 import { FontAwesome } from '@expo/vector-icons'
 import { DeleteOptionContext } from '../../context/DeleteOptionContext'
+import { DisplayedDate } from '../../utils/DisplayDate'
 
 const ExpenseItem = ({item, editItem}) => {
 
@@ -38,7 +39,7 @@ const ExpenseItem = ({item, editItem}) => {
         </View>
         <View style={styles.mainWrapper}>
         <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}} numberOfLines={2} ellipsizeMode='tail'>{item.namaTransaksi}</Text>
-            <Text style={{color: '#B3B3B3'}}>{item.tanggal}</Text>
+            <Text style={{color: '#B3B3B3'}}>{DisplayedDate(item.tanggal)}</Text>
         </View>
         <View style={styles.rightWrapper}>
             <View style={styles.upperRight}>
