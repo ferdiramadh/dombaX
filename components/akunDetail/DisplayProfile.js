@@ -1,52 +1,53 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { windowWidth } from '../../utils/DimensionSetup'
+import { DisplayedDateWithName } from '../../utils/DisplayDate'
 
 export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
 
-  return (    
+    return (
         <View style={styles.container}>
-            {profileData.namaDepan? 
-            <View style={styles.wrapper}>
-                <Text style={styles.text}>{profileData.namaDepan}</Text>
-            </View> : null }
-            {profileData.namaBelakang ? 
-            <View style={styles.wrapper}>
-                <Text style={styles.text}>{profileData.namaBelakang}</Text>
-            </View> : null }
-            {profileData.whatsApp? 
-            <View style={styles.wrapper}>
-                <Text style={styles.text}>{profileData.whatsApp}</Text>
-            </View> : null }
-            {profileData.email? 
-            <View style={styles.wrapper}>
-                <Text style={styles.text}>{profileData.email}</Text>
-            </View> : null }
-            {profileData.jenisKelamin? 
-            <View style={styles.wrapper}>
-                <Text style={styles.text}>{profileData.jenisKelamin}</Text>
-            </View> : null }
-            {profileData.tanggalLahir? 
-            <View style={styles.wrapper}>
-                <Text style={styles.text}>{profileData.tanggalLahir.slice(4)}</Text>
-            </View> : null }
-            {profileData.domisili? 
-            <View style={styles.wrapper}>
-                <Text style={styles.text}>{profileData.domisili}</Text>
-            </View> : null}
+            {profileData.namaDepan ?
+                <View style={styles.wrapper}>
+                    <Text style={styles.text}>{profileData.namaDepan}</Text>
+                </View> : null}
+            {profileData.namaBelakang ?
+                <View style={styles.wrapper}>
+                    <Text style={styles.text}>{profileData.namaBelakang}</Text>
+                </View> : null}
+            {profileData.whatsApp ?
+                <View style={styles.wrapper}>
+                    <Text style={styles.text}>{profileData.whatsApp}</Text>
+                </View> : null}
+            {profileData.email ?
+                <View style={styles.wrapper}>
+                    <Text style={styles.text}>{profileData.email}</Text>
+                </View> : null}
+            {profileData.jenisKelamin ?
+                <View style={styles.wrapper}>
+                    <Text style={styles.text}>{profileData.jenisKelamin}</Text>
+                </View> : null}
+            {profileData.tanggalLahir ?
+                <View style={styles.wrapper}>
+                    <Text style={styles.text}>{DisplayedDateWithName(profileData.tanggalLahir)}</Text>
+                </View> : null}
+            {profileData.domisili ?
+                <View style={styles.wrapper}>
+                    <Text style={styles.text}>{profileData.domisili}</Text>
+                </View> : null}
             <TouchableOpacity style={styles.btnSave} onPress={() => setIsEdit(!isEdit)}>
-                <Text style={styles.txtUbah}>UBAH</Text>                  
+                <Text style={styles.txtUbah}>UBAH</Text>
             </TouchableOpacity>
         </View>
-  )
+    )
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: windowWidth, 
+        width: windowWidth,
         alignItems: 'center',
         height: '100%',
-    },   
+    },
     wrapper: {
         justifyContent: 'center',
         width: '90%',
@@ -59,18 +60,18 @@ const styles = StyleSheet.create({
         color: "#000",
     },
     btnSave: {
-      backgroundColor: '#ED9B83',
-      width: windowWidth * .9,
-      height: 60,                     
-      justifyContent: 'center',
-      elevation: 2,
-      borderRadius: 10, 
-      marginTop: 160
-    
+        backgroundColor: '#ED9B83',
+        width: windowWidth * .9,
+        height: 60,
+        justifyContent: 'center',
+        elevation: 2,
+        borderRadius: 10,
+        marginTop: 160
+
     },
     txtUbah: {
-        fontSize: 18, 
-        fontWeight: '700', 
+        fontSize: 18,
+        fontWeight: '700',
         textAlign: 'center',
         color: '#FFF'
     }
