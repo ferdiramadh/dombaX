@@ -15,7 +15,7 @@ const DatePickerField = ({ showDatepicker, setFieldValue, date, values }) => {
   return (
     <TouchableOpacity style={styles.wrapper} onPress={showDatepicker}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10 }}>
-        <Text style={{ color: '#474747' }}>{DisplayedDateWithName(values.kadaluarsa)}</Text>
+        <Text style={{ color: '#474747' }}>{values.kadaluarsa? DisplayedDateWithName(values.kadaluarsa) : '-'}</Text>
         <MaterialIcons name="date-range" size={24} color="black" />
       </View>
     </TouchableOpacity>
