@@ -212,8 +212,8 @@ const FilterIncomeModal = ({filterVisible, setFilterVisible, isIncome}) => {
               <View style={styles.filterWrap}>
                 { filterList.map((item, i) => {
                   return (
-                    <View>
-                      <View style={styles.filterSelection} key={item.id}>
+                    <View key={item.id}>
+                      <View style={styles.filterSelection}>
                           <Text style={[styles.textFilter,{fontFamily: 'Inter-SemiBold'}]}>{item.sortBy}</Text>
                           <CheckBox
                           center
