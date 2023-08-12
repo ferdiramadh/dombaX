@@ -7,7 +7,7 @@ const Stok = () => {
 
     const userProducts = useSelector(state => state.userProductReducer);
     const DATA = userProducts.listUserProduct
-    const imgEmptyState = require('../../assets/images/stock/empty_stock.png')
+    const imgEmptyState = require('../../assets/images/stock/empty_stock_blue.png')
 
     return (
         <View style={styles.container}>
