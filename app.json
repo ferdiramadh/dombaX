@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/gembulapp-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.ferdiramadh.gembulapp"
+      "package": "com.ferdiramadh.gembulapp",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
