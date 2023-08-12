@@ -11,7 +11,7 @@ const AppVersion = () => {
         return versionCode
     }
     return (
-        <View>
+        <View style={styles.container}>
             <Text style={styles.versionText}>Version {version} ({getAppBuildNumber(expoConfig)})</Text>
         </View>
     )
@@ -20,6 +20,10 @@ const AppVersion = () => {
 export default AppVersion
 
 const styles = StyleSheet.create({
+    container: {
+        position: 'absolute',
+        bottom: 60
+    },
     versionText: {
         color: 'grey'
     }
