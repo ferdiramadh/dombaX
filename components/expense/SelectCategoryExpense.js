@@ -2,7 +2,7 @@ import { Alert, Modal, StyleSheet, Text, View, TouchableOpacity, ScrollView } fr
 import React, { useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import ExpenseCategory from './ExpenseCategory'
-import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
+import { windowWidth } from '../../utils/DimensionSetup'
 
 const SelectCategoryExpense = ({ modalCategoryVisible, setModalCategoryVisible, setCategory }) => {
 
@@ -76,15 +76,11 @@ const SelectCategoryExpense = ({ modalCategoryVisible, setModalCategoryVisible, 
                     </View>
                 </View>
                 <ScrollView style={styles.lowerWrap}>
-
-
-
                     {sellingCategory.map((item, i) => {
                         return (
                             <ExpenseCategory item={item} key={item.id} setCategory={setCategory} modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} />
                         )
                     })}
-
                 </ScrollView>
             </View>
         </Modal>
@@ -115,7 +111,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
+        borderBottomColor: 'lightgrey',
+        borderBottomWidth: 1
     },
     lowerWrap: {
         marginTop: 10,
