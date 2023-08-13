@@ -132,12 +132,12 @@ const DombaForm = ({ setFieldValue, handleChange, handleBlur, values, handleSubm
 export default DombaForm
 
 const styles = StyleSheet.create({
-  container: { 
-    width: '100%', 
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    marginBottom: 10 
+  container: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10
   },
   pickerContainer: {
     backgroundColor: '#DFE1E0',
@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     paddingLeft: 20,
-    marginVertical: 10
+    marginVertical: 10,
+    borderRadius: 5
   },
   textInput: {
     backgroundColor: '#DFE1E0',

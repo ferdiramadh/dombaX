@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
      marginVertical: 10
    },
    btnTxt: {
-    fontSize: 16, 
+    fontSize: 18, 
     fontWeight: '700', 
     textAlign: 'center',
     color: '#FFF'}

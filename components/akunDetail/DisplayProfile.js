@@ -36,7 +36,7 @@ export default function DisplayProfile({ profileData, isEdit, setIsEdit }) {
                     <Text style={styles.text}>{profileData.domisili}</Text>
                 </View> : null}
             <TouchableOpacity style={styles.btnSave} onPress={() => setIsEdit(!isEdit)}>
-                <Text style={styles.txtUbah}>UBAH</Text>
+                <Text style={styles.txtUbah}>Ubah</Text>
             </TouchableOpacity>
         </View>
     )
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
 
     },
     txtUbah: {
-        fontSize: 18,
-        fontWeight: '700',
+        fontSize: 22,
         textAlign: 'center',
-        color: '#FFF'
+        color: '#FFF',
+        fontFamily: 'Baloo'
     }
 })

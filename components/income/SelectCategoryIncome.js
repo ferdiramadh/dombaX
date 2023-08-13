@@ -1,5 +1,5 @@
-import { Alert, Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import IncomeCategory from './IncomeCategory'
 import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
@@ -100,6 +100,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
+        borderBottomColor: 'lightgrey',
+        borderBottomWidth: 1
     },
     lowerWrap: {
         height: windowHeigth,

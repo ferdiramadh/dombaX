@@ -138,9 +138,8 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values, set
         value={values.password}
       />
       <TouchableOpacity style={styles.btnSave} onPress={handleSubmit}>
-        <Text style={styles.txtSimpan}>SIMPAN</Text>
+        <Text style={styles.txtSimpan}>Simpan</Text>
       </TouchableOpacity>
-
     </View>
   )
 }
@@ -179,9 +178,9 @@ const styles = StyleSheet.create({
     marginTop: 60
   },
   txtSimpan: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 22,
     textAlign: 'center',
-    color: '#FFF'
+    color: '#FFF',
+    fontFamily: 'Baloo'
   }
 })
