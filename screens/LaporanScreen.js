@@ -23,7 +23,7 @@ const InitialEmpty = ({navigation}) => {
                 <Text style={styles.textInitialEmpty}>Stok dan transaksi Kamu masih kosong nih</Text>
             </View>
             <TouchableOpacity style={styles.btnCatat} onPress={() => navigation.navigate('Inventory')}>
-                <Text style={{fontSize: 24, fontFamily: 'Baloo', color: '#FFF'}}>Catat Sekarang</Text>
+                <Text style={styles.txtCatatSkrg}>Catat Sekarang</Text>
             </TouchableOpacity>
         </View>
     )
@@ -550,10 +550,18 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     btnCatat: {
-        width: '90%', 
-        backgroundColor: '#ED9B83', 
-        padding: 20, 
-        borderRadius: 14, 
-        alignItems: 'center'
+        backgroundColor: '#ED9B83',
+        width: windowWidth * .9,
+        height: 60,
+        justifyContent: 'center',
+        elevation: 2,
+        borderRadius: 10,
+        marginTop: 160
+    },
+    txtCatatSkrg: {
+        fontSize: 24, 
+        fontFamily: 'Baloo', 
+        color: '#FFF', 
+        textAlign: 'center'
     }
 })
