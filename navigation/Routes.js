@@ -32,6 +32,12 @@ const Routes = () => {
         'Inter-Bold': Inter_800ExtraBold,
         'Poppins': require('../assets/font/poppins/Poppins-Medium.ttf'),
         'PoppinsBold': require('../assets/font/poppins/Poppins-Bold.ttf'),
+        'QuickSand': require('../assets/font/quicksand/Quicksand-Regular.ttf'),
+        'QuickSand-Light': require('../assets/font/quicksand/Quicksand-Light.ttf'),
+        'QuickSand-Med': require('../assets/font/quicksand/Quicksand-Medium.ttf'),
+        'QuickSand-SemiBold': require('../assets/font/quicksand/Quicksand-SemiBold.ttf'),
+        'QuickSand-Bold': require('../assets/font/quicksand/Quicksand-Bold.ttf'),
+        
     }
     const [fontsLoaded] = useFonts(customFonts)
     const getData = async () => {
