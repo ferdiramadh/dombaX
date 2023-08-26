@@ -1,46 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, {createContext, useState, useEffect} from 'react';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
-import { useFonts, Inter_400Regular, Inter_300Light, Inter_600SemiBold, Inter_800ExtraBold } from '@expo-google-fonts/inter';
+import React, { createContext, useState } from 'react'
 
-
-  
 export const PhotoContext = createContext()
 const PhotoProfileProvider = (props) => {
-  let customFonts = {
-    'Baloo': require('../assets/font/baloo/Baloo.ttf'),
-    'Inter-Light': Inter_300Light,
-    'Inter': Inter_400Regular,
-    'Inter-SemiBold': Inter_600SemiBold,
-    'Inter-Bold': Inter_800ExtraBold,
-    'Poppins': require('../assets/font/poppins/Poppins-Medium.ttf'),
-    'PoppinsBold': require('../assets/font/poppins/Poppins-Bold.ttf'),
-  };
 
-  const [image, setImage] = useState(null);
-  const [ fontsLoaded, setFontsLoaded ] = useState(false)
-  const [testStyle, setTestStyle] = useState();  
-  const [ topTabTransactionFocus, setTopTabTransactionFocus ] = useState('Income')
-    async function _loadFontsAsync() {
-        await Font.loadAsync(customFonts);
-        setFontsLoaded(true);
-        // setTestStyle('Baloo')
-      }
+  const [image, setImage] = useState(null)
+  const [topTabTransactionFocus, setTopTabTransactionFocus] = useState('Income')
 
-    useEffect(() => {
-            _loadFontsAsync()
-    },[])
-    if (!fontsLoaded) {
-        return <AppLoading />;
-    } 
   return (
-    <PhotoContext.Provider value={{image,setImage,testStyle, topTabTransactionFocus, setTopTabTransactionFocus}}>
+    <PhotoContext.Provider value={{ image, setImage, topTabTransactionFocus, setTopTabTransactionFocus }}>
       {props.children}
     </PhotoContext.Provider>
-  );
-};
+  )
+}
 
-export default PhotoProfileProvider;
+export default PhotoProfileProvider
 
-const styles = StyleSheet.create({});
