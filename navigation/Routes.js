@@ -5,6 +5,12 @@ import { ActivityIndicator, LogBox, StyleSheet, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SplashScreen from 'expo-splash-screen'
 import { useFonts, Inter_400Regular, Inter_300Light, Inter_600SemiBold, Inter_800ExtraBold } from '@expo-google-fonts/inter'
+import {
+    Baloo2_500Medium,
+    Baloo2_600SemiBold,
+    Baloo2_700Bold,
+    Baloo2_800ExtraBold,
+} from '@expo-google-fonts/baloo-2'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -16,6 +22,10 @@ const Routes = () => {
     const [isSignIn, setIsSignIn] = useState(false)
     let customFonts = {
         'Baloo': require('../assets/font/baloo/Baloo.ttf'),
+        'Baloo-Medium' : Baloo2_500Medium,
+        'Baloo-SemiBold' : Baloo2_600SemiBold,
+        'Baloo-Bold' : Baloo2_700Bold,
+        'Baloo-ExtraBold' : Baloo2_800ExtraBold,
         'Inter-Light': Inter_300Light,
         'Inter': Inter_400Regular,
         'Inter-SemiBold': Inter_600SemiBold,
