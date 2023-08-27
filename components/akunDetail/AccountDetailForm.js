@@ -103,9 +103,8 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values, set
           }
           }
           style={{
-            fontSize: 18,
-            fontWeight: 'bold',
             color: "#000",
+            fontFamily: 'Quicksand'
           }}
         >
           <Picker.Item label="Jenis Kelamin" value="jenisKelamin" style={{ color: "#ED9B83" }} />
@@ -115,7 +114,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values, set
       </View>
       <TouchableOpacity style={styles.textInput} onPress={showDatepicker}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10 }}>
-          <Text style={{ color: '#000' }}>{values.tanggalLahir ? DisplayedDateWithName(values.tanggalLahir) : "Tanggal Lahir"}</Text>
+          <Text style={{ color: '#000', fontFamily: 'Quicksand' }}>{values.tanggalLahir ? DisplayedDateWithName(values.tanggalLahir) : "Tanggal Lahir"}</Text>
           <MaterialIcons name="date-range" size={24} color="#000" />
         </View>
       </TouchableOpacity>
