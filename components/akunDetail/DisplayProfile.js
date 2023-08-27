@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 14,
         color: "#000",
+        fontFamily: 'Quicksand'
     },
     btnSave: {
         backgroundColor: '#ED9B83',

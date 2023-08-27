@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 10,
     borderBottomWidth: 1,
+    fontFamily: 'Quicksand'
   },
   pickerContainer: {
     justifyContent: 'center',
