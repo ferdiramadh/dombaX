@@ -10,14 +10,6 @@ const IncomeDetailScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      {!isUpdate? 
-      <View style={styles.iconContainer}>
-        <Image source={require('../assets/Gembul.png')} style={styles.img} resizeMode='contain'/>
-        <View style={{position:'absolute', bottom: 0}} onPress={() => console.log(navigation.canGoBack())}>
-          <Text style={styles.textKategori}>Gembul</Text>
-        </View>
-        
-      </View> : null}
       {isExpense? <ExpenseDetails editData={editData} navigation={navigation} isUpdate={isUpdate} setIsUpdate={setIsUpdate}/> : <IncomeDetails editData={editData} navigation={navigation} isUpdate={isUpdate} setIsUpdate={setIsUpdate}/>}
     </View>
   )
