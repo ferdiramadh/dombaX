@@ -107,7 +107,7 @@ const AccountDetailForm = ({ handleChange, handleBlur, handleSubmit, values, set
             fontFamily: 'Quicksand'
           }}
         >
-          <Picker.Item label="Jenis Kelamin" value="jenisKelamin" style={{ color: "#ED9B83" }} />
+          <Picker.Item label="Jenis Kelamin" value="jenisKelamin" style={{ color: "#ED9B83", fontFamily: 'Quicksand' }} />
           <Picker.Item label="Laki-laki" value="Laki-laki" />
           <Picker.Item label="Perempuan" value="Perempuan" />
         </Picker>
@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 10,
     borderBottomWidth: 1,
-    fontFamily: 'Quicksand'
+    fontFamily: 'Quicksand',
+    fontSize: 16
   },
   pickerContainer: {
     justifyContent: 'center',

@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     text: {
-        fontSize: 14,
+        fontSize: 16,
         color: "#000",
         fontFamily: 'Quicksand'
     },

@@ -28,7 +28,7 @@ const AccountDisplay = ({ navigation }) => {
               {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} /> : <MaterialIcons name="account-circle" size={100} color="black" />}</View>
             }
             {!isLoading && <TouchableOpacity onPress={() => pickImage("Profile", profileData.id, setIsLoading, "profile", setPercent, "image")}>
-              <Text style={styles.editFotoTxt}>Edit Foto</Text>
+              <Text style={styles.editFotoTxt}>Ubah Foto</Text>
             </TouchableOpacity>}
           </View>
           <View style={styles.lowerContent}>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   editFotoTxt: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Quicksand',
     marginVertical: 10
   }

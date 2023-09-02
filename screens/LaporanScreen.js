@@ -463,7 +463,7 @@ export default function LaporanScreen() {
                                 </View> :
                                 <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
 
-                                    <Text style={{ fontSize: 16, fontFamily: 'Quicksand'}}>Pilih Periode</Text>
+                                    <Text style={{ fontSize: 16, fontFamily: 'Quicksand' }}>Pilih Periode</Text>
                                     <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => setFilterVisible(!filterVisible)}>
                                         <MaterialIcons name="filter-list" size={24} color="black" />
                                     </TouchableOpacity>
@@ -497,8 +497,8 @@ export default function LaporanScreen() {
                                     <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianLain} category={'Pengeluaran Lain - lain'} />
                                 </ScrollView>}
                         </View> :
-                        <View style={[styles.pengeluaranWrapper, windowHeigth < 830 ? {marginTop: 15} : {} ]}>
-                            <Text style={[styles.textPengeluaran, windowHeigth > 830 ? {paddingTop: 30} : {}]}>Pengeluaran</Text>
+                        <View style={[styles.pengeluaranWrapper, windowHeigth < 830 ? { marginTop: 15 } : {}]}>
+                            <Text style={[styles.textPengeluaran, windowHeigth > 830 ? { paddingTop: 30 } : {}]}>Pengeluaran</Text>
                             <View style={styles.imgPengeluaranWrapper}>
                                 <Image source={imgEmptyExpense} />
                                 <Text style={styles.emptyExpenseTxt}>Pengeluaran Kamu masih kosong</Text>
@@ -555,8 +555,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textInitialEmpty: {
-        fontSize: 14,
-        fontFamily: 'Inter-SemiBold',
+        fontSize: 16,
+        fontFamily: 'Quicksand',
         marginTop: 30
     },
     btnCatat: {

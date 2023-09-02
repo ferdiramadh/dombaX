@@ -67,13 +67,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#ED9B83',
         width: '90%',
         height: 60,
-        padding: 8,
+        padding: 20,
         borderRadius: 10,
         marginVertical: 8,
         fontSize: 14,
         elevation: 2
     },
     text: {
-        color: "#FFF"
+        color: "#FFF",
+        fontFamily: 'Quicksand',
+        fontSize: 16
     }
 })

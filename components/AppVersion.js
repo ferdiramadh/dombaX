@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
         bottom: 60
     },
     versionText: {
-        color: 'grey'
+        color: 'grey',
+        fontFamily: 'Quicksand'
     }
 })
