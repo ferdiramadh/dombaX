@@ -17,10 +17,11 @@ import { FilterTransactionContext } from '../context/FilterTransactionContext'
 const InitialEmpty = ({ navigation }) => {
     const { setCatatSekarang } = useContext(FilterTransactionContext)
     const imgEmptyHome = require('../assets/images/home/empty_home.png')
+
     const toInventoryAndOpenStockModal = async () => {
         navigation.navigate('Inventory')
         setCatatSekarang(true)
-      }
+    }
     return (
         <View style={styles.initialEmptyWrapper}>
             <View style={styles.imageAndText}>
@@ -36,7 +37,7 @@ const InitialEmpty = ({ navigation }) => {
 export default function LaporanScreen() {
     const navigation = useNavigation()
     const dispatch = useDispatch()
-
+    const imgEmptyExpense = require('../assets/images/home/empty_expense.png')
     //Get Uid From AsyncStorage
     const uid = useSelector(state => state.userReducer.uid)
     const [userObj, setUserObj] = useState()
@@ -448,10 +449,8 @@ export default function LaporanScreen() {
             <StatusBar style='auto' />
             <ProfileHeader navigation={navigation} />
             {haveStockTransaction ?
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, marginTop: 10 }}>
                     <View style={styles.upperWrapper}>
-
-
                         {
                             isFilter ?
                                 <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
@@ -464,20 +463,18 @@ export default function LaporanScreen() {
                                 </View> :
                                 <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
 
-                                    <Text style={{ fontSize: 16, }}>Pilih Periode</Text>
+                                    <Text style={{ fontSize: 16, fontFamily: 'Quicksand'}}>Pilih Periode</Text>
                                     <TouchableOpacity style={{ marginLeft: 5 }} onPress={() => setFilterVisible(!filterVisible)}>
                                         <MaterialIcons name="filter-list" size={24} color="black" />
                                     </TouchableOpacity>
                                 </View>
-
                         }
-
                     </View>
                     <View style={styles.componentContainer}>
                         <LaporanComponent title1='Saldo' title2={isProfit} saldo={formatToCurrencyWithoutStyle(profit)} profit={formatToCurrencyWithoutStyle(arusKas)} />
                     </View>
                     {(listExpense.length > 0 && !isFilter) || (filteredList.length > 0 && isFilter) ?
-                        <View style={{ flex: 1, backgroundColor: '#FFFFFF', alignItems: 'center', position: 'relative', bottom: 0 }}>
+                        <View style={{ flex: 1, backgroundColor: '#FFFFFF', alignItems: 'center', position: 'relative', bottom: 0, marginTop: 50 }}>
 
                             <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: windowWidth, paddingHorizontal: '5%' }}>
                                 <View style={{ paddingHorizontal: 20, width: windowWidth * .9 }}>
@@ -500,10 +497,16 @@ export default function LaporanScreen() {
                                     <ExpenseChart totalExpense={totalExpense} totalCategory={totalPembelianLain} category={'Pengeluaran Lain - lain'} />
                                 </ScrollView>}
                         </View> :
-                        <View style={{ flex: 1, height: '30%', width: windowWidth, marginTop: 5, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={[styles.textPengeluaran]}>Tidak Ada Pengeluaran</Text>
+                        <View style={[styles.pengeluaranWrapper, windowHeigth < 830 ? {marginTop: 15} : {} ]}>
+                            <Text style={[styles.textPengeluaran, windowHeigth > 830 ? {paddingTop: 30} : {}]}>Pengeluaran</Text>
+                            <View style={styles.imgPengeluaranWrapper}>
+                                <Image source={imgEmptyExpense} />
+                                <Text style={styles.emptyExpenseTxt}>Pengeluaran Kamu masih kosong</Text>
+                            </View>
+                            <TouchableOpacity style={[styles.btnTambahPengeluaran,]} onPress={() => console.log(windowHeigth)}>
+                                <Text style={styles.txtCatatSkrg}>Tambah pengeluaran</Text>
+                            </TouchableOpacity>
                         </View>}
-
                 </View>
                 :
                 <InitialEmpty navigation={navigation} />
@@ -519,16 +522,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     textPengeluaran: {
-        fontSize: 26,
+        fontSize: 22,
         color: '#ED9B83',
-        fontWeight: '600',
+        fontFamily: 'Baloo'
     },
     componentContainer: {
         width: '100%',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: windowHeigth * .3,
+        height: windowHeigth * .28,
     },
     upperWrapper: {
         flexDirection: 'row',
@@ -536,7 +539,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: windowHeigth * .13,
         marginHorizontal: 10,
-        paddingHorizontal: 18
+        paddingHorizontal: 18,
+        paddingRight: 10
     },
     initialEmptyWrapper: {
         flex: 1,
@@ -569,5 +573,33 @@ const styles = StyleSheet.create({
         fontFamily: 'Baloo',
         color: '#FFF',
         textAlign: 'center'
-    }
+    },
+    pengeluaranWrapper: {
+        flex: 1,
+        padding: 20,
+        position: 'relative',
+    },
+    imgPengeluaranWrapper: {
+        alignItems: 'center',
+        marginVertical: 20,
+    },
+    emptyExpenseTxt: {
+        fontSize: 16,
+        lineHeight: 26,
+        fontFamily: 'Quicksand',
+        color: '#000',
+        textAlign: 'center',
+        marginVertical: 10
+    },
+    btnTambahPengeluaran: {
+        backgroundColor: '#ED9B83',
+        width: windowWidth * .9,
+        height: 60,
+        justifyContent: 'center',
+        elevation: 2,
+        borderRadius: 10,
+        position: 'absolute',
+        bottom: 10,
+        alignSelf: 'center'
+    },
 })
