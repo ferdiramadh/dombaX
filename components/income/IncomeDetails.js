@@ -87,7 +87,7 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <View style={styles.mainContainer}>
             {show && (
               <DateTimePicker
                 testID="dateTimePicker"
@@ -107,15 +107,9 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
                 }}
               />
             )}
-            <View style={[styles.container, isUpdate ? { height: windowHeigth * .8, marginTop: windowHeigth * .03 } : { height: windowHeigth * .35 }]}>
+            <View style={[styles.container, isUpdate ? { height: windowHeigth * .8, marginTop: windowHeigth * .03 } : {}]}>
               <View style={styles.upperSection}>
                 <Text style={styles.titlePage}>{data.kategori}</Text>
-                <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => {
-                  setIsUpdate(!isUpdate)
-                  setTempImg(false)
-                }}>
-                  {isUpdate ? <MaterialIcons name="cancel" size={24} color="black" /> : <MaterialCommunityIcons name="pencil-outline" size={24} color="black" />}
-                </TouchableOpacity>
               </View>
               {!isUpdate ?
                 <View style={styles.upperImageSection}>
@@ -126,13 +120,19 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
                   {data.kategori == 'Piutang' ? <Image source={purchaseCategoryIcon.piutang} style={styles.img} resizeMode='contain' /> : null}
                   <Text style={styles.totalIncomeCount}>{formatTotalToCurrency(parseInt(data.jumlah), '#43B88E')}</Text>
                 </View> : null}
-              <ScrollView style={styles.containerScroll}>
+              <ScrollView style={styles.containerScroll} nestedScrollEnabled={true}>
+              <TouchableOpacity style={[styles.editBtn, {top: isUpdate? 4 : 15}]} onPress={() => {
+                setIsUpdate(!isUpdate)
+                setTempImg(false)
+              }}>
+                {isUpdate ? <MaterialIcons name="cancel" size={24} color="black" /> : <MaterialCommunityIcons name="pencil-outline" size={24} color="black" />}
+              </TouchableOpacity>
                 {data.kategori == 'Penjualan' ? <SellingDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} isBatasBayar={isBatasBayar} setIsBatasBayar={setIsBatasBayar} /> : null}
                 {data.kategori == 'Penambahan Modal' ? <CapitalDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} /> : null}
                 {data.kategori == 'Piutang' ? <CreditDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} /> : null}
                 {data.kategori == 'Hibah' ? <GrantDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} /> : null}
                 {data.kategori == 'Pinjaman' ? <LoanDetail data={data} isUpdate={isUpdate} showDatepicker={showDatepicker} values={values} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} /> : null}
-                <View style={{ width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
+                <View style={styles.updateImgWrapper}>
                   {isUpdate && <Text style={[styles.subTitle, { alignSelf: 'flex-start', marginBottom: 10 }]}>Gambar</Text>}
                   {values.image && isUpdate ?
                     <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: 300, height: 200, }} />
@@ -181,7 +181,7 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
               </View> : null}
 
             {data.image && data.image !== '' && !isUpdate ?
-              <View>
+              <View style={styles.imgWrapper}>
                 <Text style={[styles.subTitle, { alignSelf: 'flex-start', marginBottom: 10 }]}>Gambar</Text>
                 <Image source={{ uri: values.image }} resizeMode="cover" style={{ width: windowWidth * .7, height: windowHeigth * .2, }} />
               </View>
@@ -204,22 +204,24 @@ const IncomeDetails = ({ editData, navigation, isUpdate, setIsUpdate }) => {
 export default IncomeDetails
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   container: {
     padding: 10,
     borderColor: '#DFE1E0',
     borderWidth: 1,
     borderRadius: 20,
     marginBottom: 10,
-    width: windowWidth * .9,
+    width: windowWidth * .9
   },
   containerScroll: {
     padding: 10,
-
   },
   titlePage: {
-    fontSize: 18,
-    fontFamily: 'Inter-Light',
-    fontWeight: '700',
+    fontSize: 16,
+    fontFamily: 'Quicksand-SemiBold',
     marginBottom: 10
   },
   itemWrap: {
@@ -229,10 +231,8 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontSize: 18,
-    color: '#A8A8A8'
-  },
-  itemText: {
-    fontSize: 18
+    color: '#A8A8A8',
+    fontFamily: 'Quicksand'
   },
   textInput: {
     backgroundColor: '#DFE1E0',
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   upperSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   upperImageSection: {
     justifyContent: 'center',
@@ -256,8 +256,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#DFE1E0',
     borderWidth: 1,
-    borderRadius: 5,
-    height: 40,
+    borderRadius: 20,
+    height: 60,
     width: windowWidth * .9,
     marginBottom: 10
   },
@@ -286,15 +286,12 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   totalIncomeCount: {
-    fontSize: 20,
-    fontWeight: '700',
-    fontFamily: 'Inter',
+    fontFamily: 'Quicksand-Bold',
     color: '#43B88E'
   },
   statusText: {
-    fontFamily: 'Inter',
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 26,
   },
   pickerContainer: {
     backgroundColor: '#DFE1E0',
@@ -304,4 +301,19 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginVertical: 10
   },
+  updateImgWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10
+  },
+  imgWrapper: {
+    marginBottom: 50
+  },
+  editBtn: {
+    marginRight: 10, 
+    position: 'absolute', 
+    zIndex: 100, 
+    right: 10
+  }
 })
