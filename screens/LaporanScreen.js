@@ -499,7 +499,7 @@ export default function LaporanScreen() {
                         </View> :
                         <View style={[styles.pengeluaranWrapper, windowHeigth < 830 ? { marginTop: 15 } : {}]}>
                             <Text style={[styles.textPengeluaran, windowHeigth > 830 ? { paddingTop: 30 } : {}]}>Pengeluaran</Text>
-                            <View style={styles.imgPengeluaranWrapper}>
+                            <View style={[styles.imgPengeluaranWrapper, { marginVertical: windowHeigth < 830 ? 10 : 20 }]}>
                                 <Image source={imgEmptyExpense} />
                                 <Text style={styles.emptyExpenseTxt}>Pengeluaran Kamu masih kosong</Text>
                             </View>
@@ -581,7 +581,6 @@ const styles = StyleSheet.create({
     },
     imgPengeluaranWrapper: {
         alignItems: 'center',
-        marginVertical: 20,
     },
     emptyExpenseTxt: {
         fontSize: 16,
