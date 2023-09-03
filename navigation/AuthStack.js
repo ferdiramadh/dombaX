@@ -9,7 +9,7 @@ import AccountScreen from '../screens/AccountScreen'
 import RegisterProfileScreen from '../screens/RegisterProfileScreen';
 import SelectProductType from '../screens/SelectProductType';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
-import IncomeDetailScreen from '../screens/IncomeDetailScreen';
+import TransactionDetailScreen from '../screens/TransactionDetailScreen';
 import BusinessProfileScreen from '../screens/BusinessProfileScreen';
 
 
@@ -66,7 +66,7 @@ const AuthStack = ({isSignIn}) => {
             fontSize: 26,
           }
         }}/>
-        <Stack.Screen name="IncomeDetail" component={IncomeDetailScreen} options={{
+        <Stack.Screen name="IncomeDetail" component={TransactionDetailScreen} options={{
           title: "Rincian Transaksi",
           headerTitleStyle:{
             fontFamily:'Baloo',
