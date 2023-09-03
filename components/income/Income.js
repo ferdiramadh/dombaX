@@ -6,7 +6,7 @@ import IncomeSection from './IncomeSection'
 const Income = ({ searchItems, isSearch, searchKeyword, isFilter, filterBy, setIsFilter, isLoading, setSearchItems }) => {
     const transactionsData = useSelector(state => state.transactionsReducer)
     const listIncome = transactionsData.listIncome
-    const imgEmptyState = require('../../assets/images/transactions/NewExpenseImage.png')
+    const imgEmptyState = require('../../assets/images/transactions/NewInitiateMoneyTransfer.png')
 
     return (
         <View style={styles.container}>
@@ -14,7 +14,7 @@ const Income = ({ searchItems, isSearch, searchKeyword, isFilter, filterBy, setI
                 {listIncome.length > 0 ? <IncomeSection listIncome={listIncome} isSearch={isSearch} searchItems={searchItems} searchKeyword={searchKeyword} isFilter={isFilter} filterBy={filterBy} setIsFilter={setIsFilter} isLoading={isLoading} setSearchItems={setSearchItems} /> :
                     <View style={styles.emptyPurchaseNotif}>
                         <Image source={imgEmptyState} style={styles.img} />
-                        <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{ fontWeight: 'bold' }}>tombol tambah</Text> untuk menambahkan <Text style={{ fontWeight: 'bold' }}>Pemasukan</Text></Text>
+                        <Text style={styles.text}>Transaksi Kamu masih kosong, silahkan tekan <Text style={{ fontFamily: 'Quicksand-Bold' }}>tombol tambah</Text> untuk menambahkan <Text style={{ fontFamily: 'Quicksand-Bold' }}>Pemasukan</Text></Text>
                     </View>
                 }
             </View>
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        fontWeight: '500',
         textAlign: 'center',
         fontFamily: 'Quicksand',
         marginTop: 10
