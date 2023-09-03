@@ -102,7 +102,7 @@ const SellingDetail = ({ data, isUpdate, showDatepicker, values, handleBlur, han
             <Picker.Item label="Belum Lunas" value="Belum Lunas" />
           </Picker>
         </View>
-      </View> : data.statusBayar && <Text style={styles.itemText}>{data.statusBayar}</Text>}
+      </View> : null}
       <View style={[styles.itemWrap, data.tipePembayaran || isUpdate ? {} : { display: 'none' }]}>
         <Text style={styles.subTitle}>Tipe Pembayaran</Text>
         {isUpdate ? <View style={styles.pickerContainer}>
@@ -159,11 +159,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   subTitle: {
-    fontSize: 18,
-    color: '#A8A8A8'
+    fontSize: 16,
+    color: '#A8A8A8',
+    fontFamily: 'Quicksand'
   },
   itemText: {
-    fontSize: 18
+    fontSize: 16,
+    fontFamily: 'Quicksand'
   },
   textInput: {
     backgroundColor: '#DFE1E0',

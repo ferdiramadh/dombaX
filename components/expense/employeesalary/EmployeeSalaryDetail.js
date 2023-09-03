@@ -78,12 +78,7 @@ const EmployeeSalaryDetail = ({ data, isUpdate, showDatepicker, values, handleBl
             <Picker.Item label="Belum Lunas" value="Belum Lunas" />
           </Picker>
         </View>
-      </View> : data.statusBayar && (
-        <View style={styles.itemWrap}>
-          <Text style={styles.subTitle}>Status Bayar</Text>
-          <Text style={styles.itemText}>{data.statusBayar}</Text>
-        </View>
-      )}
+      </View> : null}
       <View style={[styles.itemWrap, data.deskripsi || isUpdate ? {} : { display: 'none' }]}>
         <Text style={styles.subTitle}>Deskripsi</Text>
         {isUpdate ? <TextInput
@@ -107,11 +102,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   subTitle: {
-    fontSize: 18,
-    color: '#A8A8A8'
+    fontSize: 16,
+    color: '#A8A8A8',
+    fontFamily: 'Quicksand'
   },
   itemText: {
-    fontSize: 18
+    fontSize: 16,
+    fontFamily: 'Quicksand'
   },
   textInput: {
     backgroundColor: '#DFE1E0',
