@@ -38,8 +38,8 @@ const ExpenseItem = ({item, editItem}) => {
             {item.kategori == 'Pengeluaran Lain-Lain'?<Image source={sellingCategoryIcone.others} style={styles.img} resizeMode='contain'/>: null  }     
         </View>
         <View style={styles.mainWrapper}>
-        <Text style={{ fontSize: 18, fontFamily: 'Inter', fontWeight: '600'}} numberOfLines={2} ellipsizeMode='tail'>{item.namaTransaksi}</Text>
-            <Text style={{color: '#B3B3B3'}}>{DisplayedDate(item.tanggal)}</Text>
+        <Text style={styles.namaTransaksiTxt} numberOfLines={2} ellipsizeMode='tail'>{item.namaTransaksi}</Text>
+            <Text style={styles.dateTxt}>{DisplayedDate(item.tanggal)}</Text>
         </View>
         <View style={styles.rightWrapper}>
             <View style={styles.upperRight}>
@@ -61,7 +61,7 @@ const ExpenseItem = ({item, editItem}) => {
                 </View> : null
                 }
             </View>
-            <Text style={{color: '#000'}} ellipsizeMode='tail' numberOfLines={1}>{item.kategori}</Text>
+            <Text style={styles.kategoriTxt} ellipsizeMode='tail' numberOfLines={1}>{item.kategori}</Text>
             {(item.kategori !== 'Tabungan atau Investasi' || item.kategori !== 'Pengeluaran Lain-Lain' ) && (item.statusBayar)?
             <View style={[styles.status, item.statusBayar == 'Lunas'?{backgroundColor:'#43B88E'}:{backgroundColor:'#EB3223'}]}>
                 <Text style={styles.statusText}>{item.statusBayar == 'Lunas'?'Lunas': 'Belum Lunas'}</Text>
@@ -75,17 +75,20 @@ export default ExpenseItem
 
 const styles = StyleSheet.create({
     container:{
-        width: windowWidth, 
-        height: windowHeigth*.1, 
-        marginBottom: 5,
+        width: windowWidth,
+        height: windowHeigth * .12,
         flexDirection: 'row',
-        paddingHorizontal: 5
+        padding: 10,
+        backgroundColor: '#F9F9F9'
     },
     iconWrapper: {
-        height: '100%',
-        width: '20%',
+        width: undefined,
+        height: '90%',
+        aspectRatio: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#F9D6D6',
+        borderRadius: 20
     },
     mainWrapper: {
         height: '100%',
@@ -116,8 +119,7 @@ const styles = StyleSheet.create({
     },
     statusText: {
         color: '#FFF',
-        fontFamily: 'Inter',
-        fontWeight: 'bold'
+        fontFamily: 'Quicksand-SemiBold'
     },
     upperRight: {
         flexDirection:'row',  
@@ -133,5 +135,23 @@ const styles = StyleSheet.create({
         width: 18, 
         height: 18, 
         borderWidth: 1
+    },
+    namaTransaksiTxt: { 
+        fontSize: 16, 
+        fontFamily: 'Quicksand' 
+    },
+    dateTxt: { 
+        color: '#B3B3B3', 
+        fontSize: 14, 
+        fontFamily: 'Quicksand' 
+    },
+    jumlahTxt: { 
+        fontSize: 16, 
+        fontFamily: 'Quicksand-Bold' 
+    },
+    kategoriTxt: { 
+        color: '#000', 
+        fontSize: 14, 
+        fontFamily: 'Quicksand' 
     }
 })

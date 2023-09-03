@@ -82,7 +82,7 @@ const IncomeSection = ({ listIncome, searchItems, isSearch, searchKeyword, isLoa
           }
           {isSearch ? <View style={{ paddingTop: 10 }}>
 
-            <Text style={{ marginLeft: 20, marginBottom: 15 }}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
+            <Text style={{ marginLeft: 20, marginBottom: 15, fontFamily: 'Quicksand' }}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
             {
               searchItems.map((item, i) => {
                 return <IncomeItem item={item} key={item.id} editItem={editItem} />
