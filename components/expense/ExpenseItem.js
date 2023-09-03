@@ -43,7 +43,7 @@ const ExpenseItem = ({item, editItem}) => {
         </View>
         <View style={styles.rightWrapper}>
             <View style={styles.upperRight}>
-                <Text style={{ fontSize: 16, fontFamily: 'Inter', fontWeight: 'bold'}}>{formatToCurrencyLight(item.jumlah)}</Text>
+                <Text style={styles.jumlahTxt}>{formatToCurrencyLight(item.jumlah)}</Text>
                 {
                 !deleteOpt.allDelete? null :
                 <View style={styles.buttonSection}>
