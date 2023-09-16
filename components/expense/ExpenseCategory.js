@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
-import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
+import { windowWidth } from '../../utils/DimensionSetup'
 
 const ExpenseCategory = ({ item, setCategory, modalCategoryVisible, setModalCategoryVisible }) => {
   return (
@@ -9,13 +9,14 @@ const ExpenseCategory = ({ item, setCategory, modalCategoryVisible, setModalCate
       setModalCategoryVisible(!modalCategoryVisible)
     }}>
       <View style={styles.leftSection}>
-        <Image source={item.image} style={styles.img} resizeMode='contain' />
+        <View style={styles.iconWrapper}>
+          <Image source={item.image} style={styles.img} resizeMode='contain' />
+        </View>
         <Text style={styles.title}>{item.title}</Text>
       </View>
       <View style={styles.rightSection}>
         <Text style={styles.text}>{item.text}</Text>
       </View>
-
     </TouchableOpacity>
   )
 }
@@ -25,26 +26,24 @@ export default ExpenseCategory
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: windowHeigth / 7,
     justifyContent: 'center',
     alignItems: 'center',
-    width: windowWidth * .88,
-    marginVertical: 5,
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 10,
-    paddingHorizontal: 5
+    width: windowWidth,
+    paddingVertical: 10,
+    backgroundColor: '#F9F9F9'
   },
   leftSection: {
     justifyContent: 'center',
     alignItems: 'center',
     width: windowWidth * .3,
-    padding: 10
+    height: 120
   },
   rightSection: {
-    width: '70%',
-    paddingRight: 10,
-    paddingVertical: '5%'
+    width: windowWidth * .7,
+    paddingRight: 50,
+    paddingVertical: 5,
+    height: 120,
+    marginLeft: 10
   },
   img: {
     width: 60,
@@ -52,12 +51,22 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontFamily: 'Inter',
-    fontWeight: '700',
-    fontSize: 11
-  }, 
+    fontFamily: 'Quicksand-SemiBold',
+    fontSize: 14,
+    marginTop: 10
+  },
   text: {
     textAlign: 'left',
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: 'Quicksand'
+  },
+  iconWrapper: {
+    width: undefined,
+    height: 80,
+    aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FEDBDB',
+    borderRadius: 20
   }
 })

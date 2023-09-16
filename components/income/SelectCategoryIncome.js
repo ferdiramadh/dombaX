@@ -1,8 +1,8 @@
-import { Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Modal, StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import IncomeCategory from './IncomeCategory'
-import { windowHeigth, windowWidth } from '../../utils/DimensionSetup'
+import { windowWidth } from '../../utils/DimensionSetup'
 
 const SelectCategoryIncome = ({ modalCategoryVisible, setModalCategoryVisible, setCategory }) => {
 
@@ -59,17 +59,15 @@ const SelectCategoryIncome = ({ modalCategoryVisible, setModalCategoryVisible, s
                     }}>
                         <MaterialIcons name="arrow-back" size={24} color="black" />
                     </TouchableOpacity>
-                    <View style={styles.titleWrap}>
-                        <Text style={styles.title}>Kategori Pemasukan</Text>
-                    </View>
+                    <Text style={styles.title}>Kategori Pemasukan</Text>
                 </View>
-                <View style={styles.lowerWrap}>
+                <ScrollView style={styles.lowerWrap}>
                     {purchaseCategory.map((item, i) => {
                         return (
                             <IncomeCategory item={item} key={item.id} setCategory={setCategory} modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} />
                         )
                     })}
-                </View>
+                </ScrollView>
             </View>
         </Modal>
 
@@ -83,6 +81,8 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#FFF',
         width: windowWidth,
+        overflow: 'hidden',
+        paddingBottom: 5
     },
     textStyle: {
         color: 'white',
@@ -100,21 +100,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        borderBottomColor: 'lightgrey',
-        borderBottomWidth: 1
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 3,
+        elevation: 5,
     },
     lowerWrap: {
-        height: windowHeigth,
-        width: windowWidth,
-        alignItems: 'center',
-        marginTop: 10
+        marginTop: 5,
+        paddingHorizontal: 20,
     },
     title: {
         fontFamily: 'Baloo',
-        fontSize: 24
-    },
-    titleWrap: {
-        marginLeft: 20
+        fontSize: 26
     },
     backBtn: {
         width: '10%',

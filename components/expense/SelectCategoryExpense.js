@@ -1,5 +1,5 @@
-import { Alert, Modal, StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import { Modal, StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
+import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import ExpenseCategory from './ExpenseCategory'
 import { windowWidth } from '../../utils/DimensionSetup'
@@ -71,9 +71,7 @@ const SelectCategoryExpense = ({ modalCategoryVisible, setModalCategoryVisible, 
                     }}>
                         <MaterialIcons name="arrow-back" size={24} color="black" />
                     </TouchableOpacity>
-                    <View style={styles.titleWrap}>
-                        <Text style={styles.title}>Kategori Pengeluaran</Text>
-                    </View>
+                    <Text style={styles.title}>Kategori Pengeluaran</Text>
                 </View>
                 <ScrollView style={styles.lowerWrap}>
                     {sellingCategory.map((item, i) => {
@@ -95,6 +93,8 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: '#FFF',
         width: windowWidth,
+        overflow: 'hidden',
+        paddingBottom: 5
     },
     textStyle: {
         color: 'white',
@@ -112,8 +112,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        borderBottomColor: 'lightgrey',
-        borderBottomWidth: 1
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 3,
+        elevation: 5,
     },
     lowerWrap: {
         marginTop: 10,
@@ -121,10 +125,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: 'Baloo',
-        fontSize: 24
-    },
-    titleWrap: {
-        marginLeft: 20
+        fontSize: 26
     },
     backBtn: {
         width: '10%'
