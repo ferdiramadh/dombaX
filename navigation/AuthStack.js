@@ -37,7 +37,7 @@ const AuthStack = ({isSignIn}) => {
           headerShown:false
         }}/>
         <Stack.Screen name="Account" component={AccountScreen} options={{
-          title: "Profil",
+          title: "Profil Saya",
           headerTitleStyle:{
             fontFamily:'Baloo',
             fontSize: 26,

@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
-import ProfileHeader from '../components/laporan/ProfileHeader'
 import firebase from 'firebase'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import AppVersion from '../components/AppVersion'
+import { MaterialIcons } from '@expo/vector-icons'
 
 const OthersScreen = () => {
 
+    const profileData = useSelector(state => state.profileReducer)
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const signOut = () => {
@@ -29,10 +30,13 @@ const OthersScreen = () => {
     }
     return (
         <View style={styles.container}>
-            <ProfileHeader navigation={navigation} />
+            <View style={styles.upperContent}>
+                {profileData.image ? <Image source={{ uri: profileData.image }} style={styles.photoProfileIcon} /> : <MaterialIcons name="account-circle" size={100} color="black" />}
+                <Text style={styles.textName}>{profileData.namaDepan} {profileData.namaBelakang}</Text>
+            </View>
             <View style={styles.main}>
                 <TouchableOpacity style={styles.contentWrapper} onPress={() => navigation.navigate('Account')}>
-                    <Text style={styles.text}>Profil</Text>
+                    <Text style={styles.text}>Profil Saya</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.contentWrapper} onPress={() => {
                     clearAll()
@@ -54,13 +58,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FFF',
+        backgroundColor: '#FFF'
     },
     main: {
         height: '90%',
         width: '90%',
-        alignItems: 'center',
-        marginTop: '40%'
+        alignItems: 'center'
     },
     contentWrapper: {
         justifyContent: 'center',
@@ -77,5 +80,22 @@ const styles = StyleSheet.create({
         color: "#FFF",
         fontFamily: 'Quicksand',
         fontSize: 16
+    },
+    upperContent: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        marginTop: 250
+    },
+    photoProfileIcon: {
+        width: 100,
+        height: 100,
+        borderRadius: 60,
+    },
+    textName: {
+        fontSize: 16,
+        fontFamily: 'Quicksand',
+        color: '#000',
+        marginTop: 10
     }
 })
