@@ -120,8 +120,9 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     lowerWrap: {
-        marginTop: 10,
+        marginTop: 5,
         paddingHorizontal: 20,
+        backgroundColor: '#F9F9F9'
     },
     title: {
         fontFamily: 'Baloo',
