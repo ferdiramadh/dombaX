@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     lowerWrap: {
         marginTop: 5,
         paddingHorizontal: 20,
+        backgroundColor: '#F9F9F9'
     },
     title: {
         fontFamily: 'Baloo',

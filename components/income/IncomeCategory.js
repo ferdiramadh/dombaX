@@ -29,8 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: windowWidth,
-    paddingVertical: 10,
-    backgroundColor: '#F9F9F9'
+    paddingVertical: 10
   },
   leftSection: {
     justifyContent: 'center',
