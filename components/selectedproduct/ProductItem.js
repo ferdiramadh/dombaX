@@ -44,7 +44,19 @@ const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalP
         }
 
     }
-
+    const setBgColor = (val) => {
+        let tipe = val.tipe
+        switch (tipe) {
+            case ('pakan'):
+                return '#E3F4EE'
+            case ('domba'):
+                return '#FCF0EC'
+            case ('obat'):
+                return '#FCE0DE'
+            default:
+                return '#2984B8'
+        }
+    }
     return (
         <TouchableOpacity
             style={styles.container}
@@ -60,7 +72,9 @@ const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalP
             onLongPress={() => setDeleteOpt(prev => ({ ...prev, selectDelete: !deleteOpt.selectDelete }))}
         >
             <View style={styles.leftIcon}>
-                <Image source={imageDefault[`${item.tipe}`]} style={styles.imgIcon} />
+                <View style={[styles.iconWrapper, { backgroundColor: setBgColor(item)}]}>
+                    <Image source={imageDefault[`${item.tipe}`]} style={styles.imgIcon} />
+                </View>
             </View>
             <View style={styles.rightSection}>
                 <View style={styles.upperSection}>
@@ -105,7 +119,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginBottom: 5,
-        height: 80,
+        height: 100,
+        paddingLeft: 10
     },
     leftIcon: {
         width: '20%',
@@ -113,7 +128,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     imgIcon: {
-        width: '100%',
+        width: 80,
         height: undefined,
         aspectRatio: 1
     },
@@ -179,5 +194,13 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         borderWidth: 1
+    },
+    iconWrapper: {
+        width: undefined,
+        height: 70,
+        aspectRatio: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15
     }
 })
