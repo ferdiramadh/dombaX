@@ -3,7 +3,7 @@ import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, TouchableOpac
 import {Picker} from '@react-native-picker/picker'
 import DombaForm from '../stok/domba/DombaForm'
 import FormStok from '../stok/FormStok'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign  } from '@expo/vector-icons';
 
 const ModalAddStok = ({modalVisible, setModalVisible}) => {
     // const [modalVisible, setModalVisible] = useState(false);
@@ -54,7 +54,8 @@ const ModalAddStok = ({modalVisible, setModalVisible}) => {
                     onPress={() => {
                         setModalVisible(!modalVisible)
                     }}>
-                    <AntDesign name="closecircle" size={30} color="red" />
+                    <AntDesign name="closecircle" size={24} color="red" />
+                    {/* <MaterialCommunityIcons name="close-circle" size={24} color="black" /> */}
                 </TouchableOpacity>
                 {/* <ScrollView style={styles.container}>
                 
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
       bottom:10,
       width:50,
       height:50,
-      top:-20,
+      top:-40,
       right:-20,
       // borderWidth:1
     },

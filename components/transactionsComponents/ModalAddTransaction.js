@@ -24,7 +24,7 @@ const ModalAddTransaction = ({modalTransaction, setModalTransaction, topTabTrans
                     onPress={() => {
                         setModalTransaction(!modalTransaction)
                     }}>
-                    <AntDesign name="closecircle" size={30} color="red" />
+                    <AntDesign name="closecircle" size={24} color="red" />
                 </TouchableOpacity>
                 {/* <ScrollView style={styles.container}>
                 
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
       bottom:10,
       width:50,
       height:50,
-      top:-20,
+      top:-40,
       right:-20,
       // borderWidth:1
     },
