@@ -91,8 +91,11 @@ const ModalAddCategoryProduct = ({ modalAddCategory, setModalAddCategory, uid, l
             <TouchableOpacity style={styles.btnSave} onPress={() => {
               setModalAddCategory(!modalAddCategory)
               setCategory({ name: '' })
-              setEditData({})
-              setEditCategory({})
+              if(editCategory.id) {
+                setEditData({})
+                setEditCategory({})
+              }
+            
 
             }}>
               <Text style={{ fontSize: 18, fontWeight: '700', textAlign: 'center' }}>Batal</Text>

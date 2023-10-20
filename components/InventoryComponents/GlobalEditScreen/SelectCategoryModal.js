@@ -6,6 +6,7 @@ import CategoryItem from '../../selectedproduct/CategoryItem'
 import { useSelector } from 'react-redux'
 import firebase from '../../../Firebaseconfig'
 import { FireSQL } from 'firesql'
+import ModalAddCategoryProduct from '../../selectedproduct/ModalAddCategoryProduct'
 
 const SelectCategoryModal = (props) => {
 
@@ -186,6 +187,7 @@ const SelectCategoryModal = (props) => {
           </ScrollView>}
       </View>
       <CustomButton onPress={() => setModalAddCategory(!modalAddCategory)} />
+      <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} uid={uid} editCategory={{}} listCategory={listCategory} />
     </Modal>
 
   )
