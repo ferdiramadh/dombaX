@@ -1,21 +1,45 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { AntDesign, Entypo } from '@expo/vector-icons'
+import ModalAddCategoryProduct from './ModalAddCategoryProduct'
+import firebase from '../../Firebaseconfig'
 
-const CategoryItem = ({ item, deleteItem, editItem, setCategoryValue }) => {
+const CategoryItem = ({ item, deleteItem, setCategoryValue, setFieldValue, uid, listCategory }) => {
     const [isPressed, setIsPressed] = useState(false)
+    const [modalAddCategory, setModalAddCategory] = useState(false)
+    const [editData, setEditData] = useState({})
+    const [editCategory, setEditCategory] = useState({})
+    const editItem = (item) => {
+        return firebase
+            .firestore()
+            .collection("userkategoriproduk")
+            .doc(item.id)
+            .get()
+            .then((i) => {
+                setEditData(i.data())
+                setEditCategory(i.data())
+            })
+
+
+    }
+    useEffect(() => {
+        if (editData.name) {
+            setModalAddCategory(!modalAddCategory)
+        }
+    }, [editData])
     return (
         <TouchableOpacity style={[styles.container, isPressed ? { height: 100, paddingTop: 10 } : { height: 50, alignItems: 'center', }]} onPress={() => setCategoryValue(item.name)} disabled={isPressed ? true : false}>
             <View style={styles.itemName}>
                 <Text style={styles.text}>{item.name}</Text>
             </View>
             <View style={styles.buttonSection}>
-                <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => setIsPressed(!isPressed)}>
+                <TouchableOpacity onPress={() => setIsPressed(!isPressed)}>
                     <Entypo name="dots-three-horizontal" size={24} color="black" />
                 </TouchableOpacity>
             </View>
             {isPressed && <FloatingModal deleteItem={deleteItem} editItem={editItem} item={item} setIsPressed=
                 {setIsPressed} />}
+            <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} setEditData={setEditData} editItem={editItem} editCategory={editCategory} setEditCategory={setEditCategory} setIsPressed={setIsPressed} />
         </TouchableOpacity>
     )
 }
@@ -64,7 +88,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '30%',
         justifyContent: 'flex-end',
-        right: 10,
         paddingRight: 10
     },
     floatingModal: {
