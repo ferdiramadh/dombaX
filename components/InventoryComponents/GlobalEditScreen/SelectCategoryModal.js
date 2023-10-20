@@ -1,8 +1,7 @@
 import { Alert, Modal, StyleSheet, Text, ScrollView, View, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import CustomButton from '../../CustomButton'
-import ModalAddCategoryProduct from '../../selectedproduct/ModalAddCategoryProduct'
 import CategoryItem from '../../selectedproduct/CategoryItem'
 import { useSelector } from 'react-redux'
 import firebase from '../../../Firebaseconfig'
@@ -22,9 +21,6 @@ const SelectCategoryModal = (props) => {
   const setModalCategoryVisible = props.setModalCategoryVisible
   const setFieldValue = props.setFieldValue
   const setCategory = props.setCategory
-
-  const [editData, setEditData] = useState({})
-  const [editCategory, setEditCategory] = useState({})
 
   const [isSearch, setIsSearch] = useState(false)
   const [searchItems, setSearchItems] = useState([])
@@ -48,9 +44,7 @@ const SelectCategoryModal = (props) => {
         items.push(newValue)
 
       })
-      console.log(items)
       setSearchItems(items)
-
     })
 
   }
@@ -62,7 +56,7 @@ const SelectCategoryModal = (props) => {
       [
         {
           text: "Batal",
-          onPress: () => Alert.alert("Canceled"),
+          onPress: () => Alert.alert("Dibatalkan."),
           style: 'cancel'
         },
         {
@@ -83,35 +77,12 @@ const SelectCategoryModal = (props) => {
     )
   }
 
-  const editItem = (item) => {
-
-    return firebase
-      .firestore()
-      .collection("userkategoriproduk")
-      .doc(item.id)
-      .get()
-      .then((i) => {
-        setEditData(i.data())
-        setEditCategory(i.data())
-      })
-
-
-  }
-
   const setCategoryValue = (item) => {
     setFieldValue('kategori', item)
     setCategory(item)
     setModalCategoryVisible(!modalCategoryVisible)
   }
 
-  useEffect(() => {
-    if (editData !== undefined) {
-    }
-    if (editData.name) {
-      setModalAddCategory(!modalAddCategory)
-    }
-
-  }, [editData])
 
   function objToDate(obj) {
     let result = new Date(0)
@@ -176,13 +147,13 @@ const SelectCategoryModal = (props) => {
                 <MaterialIcons name="clear" size={24} color="black" />
               </TouchableOpacity> : null}
             <TouchableOpacity style={styles.searchBtn} onPress={() => {
-              loadingWait()
-              if (searchKeyword.length != 0) {
-
+              const isEmptyKeyword = searchKeyword.length == 0
+              if (isEmptyKeyword) {
+                Alert.alert('Perhatian!', "Keyword Kosong!")
+              } else {
+                loadingWait()
                 setIsSearch(true)
                 searchCategory()
-              } else {
-                console.log("keyword kosong")
               }
             }}>
               <MaterialIcons name="search" size={30} color="black" />
@@ -195,7 +166,7 @@ const SelectCategoryModal = (props) => {
         </View> :
           <ScrollView style={styles.modalView}>
             {listCategory.length > 0 && !isSearch ? sortData.map((item, i) => {
-              return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} editData={editData} setCategoryValue={setCategoryValue} />
+              return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} setCategoryValue={setCategoryValue} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} />
             }) : null}
 
             {isSearch ? <View style={{ paddingTop: 10 }}>
@@ -203,7 +174,7 @@ const SelectCategoryModal = (props) => {
               <Text style={{ marginLeft: 20 }}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
               {
                 searchItems.map((item, i) => {
-                  return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} editItem={editItem} editData={editData} setCategoryValue={setCategoryValue} />
+                  return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} setCategoryValue={setCategoryValue} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} />
                 })
               }
             </View> : null}
@@ -215,7 +186,6 @@ const SelectCategoryModal = (props) => {
           </ScrollView>}
       </View>
       <CustomButton onPress={() => setModalAddCategory(!modalAddCategory)} />
-      <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} editData={editData} setEditData={setEditData} editItem={editItem} editCategory={editCategory} setEditCategory={setEditCategory} />
     </Modal>
 
   )
