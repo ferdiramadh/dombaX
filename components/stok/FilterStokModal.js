@@ -68,7 +68,7 @@ const FilterStokModal = ({ filterVisible, setFilterVisible, setIsFilter, setFilt
             {filterList.map((item, i) => {
               return (
                 <View style={styles.filterSelection} key={item.id}>
-                  <Text style={[styles.textFilter, { fontFamily: 'Inter', fontWeight: 'bold' }]}>{item.sortBy}</Text>
+                  <Text style={styles.textFilter}>{item.sortBy}</Text>
                   <CheckBox
                     center
                     checked={item.isChecked}
@@ -84,7 +84,8 @@ const FilterStokModal = ({ filterVisible, setFilterVisible, setIsFilter, setFilt
                   />
 
                 </View>
-              )})}
+              )
+            })}
           </View>
         </View>
       </View>
@@ -98,12 +99,10 @@ export default FilterStokModal
 
 const styles = StyleSheet.create({
   centeredView: {
-
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
     position: 'relative',
-
   },
   modalView: {
     width: windowWidth,
@@ -154,7 +153,8 @@ const styles = StyleSheet.create({
 
   },
   textFilter: {
-    fontSize: 18,
+    fontFamily: 'QuickSand-SemiBold',
+    fontSize: 20
   },
   filterWrap: {
     width: '80%',
