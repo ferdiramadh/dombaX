@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#F5F5F5',
         marginVertical: 10,
-        paddingLeft: 50
+        paddingLeft: 50,
+        fontFamily: 'Quicksand'
     },
     btn: {
         width: '90%',

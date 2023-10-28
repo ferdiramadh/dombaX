@@ -82,18 +82,18 @@ const RegisterScreen = ({ navigation }) => {
             <Text style={{ fontFamily: 'Poppins', color: '#CCBBCC', fontSize: 18}}>ATAU</Text> */}
             {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Image style={{ width: 30, height: 25, marginRight: 10, position: 'absolute', left: 30, zIndex: 2 }} source={emailIcon} />
+                <Image style={{ width: 24, height: 18, marginRight: 10, position: 'absolute', left: 30, zIndex: 2 }} source={emailIcon} />
                 <TextInput style={styles.input}
-                    placeholder="EMAIL"
+                    placeholder="Email"
                     value={email}
                     onChangeText={setEmail}
                     placeholderTextColor="#CBCBCB"
                 />
             </View>
             <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Image style={{ width: 30, height: 40, marginRight: 10, position: 'absolute', left: 30, zIndex: 2 }} source={lockIcon} />
+                <Image style={{ width: 20, height: 26, marginRight: 10, position: 'absolute', left: 30, zIndex: 2 }} source={lockIcon} />
                 <TextInput style={styles.input}
-                    placeholder="PASSWORD"
+                    placeholder="Password"
                     value={password}
                     onChangeText={setPassword}
                     placeholderTextColor="#CBCBCB"
@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#F5F5F5',
         marginVertical: 10,
-        paddingLeft: 50
+        paddingLeft: 50,
+        fontFamily: 'Quicksand'
     },
     btn: {
         width: '90%',
