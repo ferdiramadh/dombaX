@@ -56,7 +56,6 @@ const FloatingModal = ({ editItem, deleteItem, item, setIsPressed }) => {
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn} onPress={() => {
                 editItem(item)
-                // setIsPressed(false)
             }}>
                 <Text style={styles.btnText}>Ubah</Text>
             </TouchableOpacity>
@@ -121,7 +120,6 @@ const styles = StyleSheet.create({
         zIndex: 10
     },
     btnText: {
-        fontFamily: 'Inter',
-        fontWeight: '700'
+        fontFamily: 'Baloo'
     }
 })
