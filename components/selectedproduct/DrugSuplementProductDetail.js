@@ -80,9 +80,7 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
         initialValues={data}
         onSubmit={(values, actions) => {
           updateItem(values)
-
           updateNotification()
-
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
@@ -99,7 +97,6 @@ const DrugSuplementProductDetail = ({ editData, navigation }) => {
               )}
               <Text style={styles.titlePage}>Obat dan Vitamin</Text>
               <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => {
-                // editItem(item)
                 setIsUpdate(!isUpdate)
                 setTempImg(false)
               }}>
@@ -204,9 +201,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   titlePage: {
-    fontSize: 24,
-    fontFamily: 'Inter-Light',
-    fontWeight: '700',
+    fontSize: 28,
+    fontFamily: 'QuickSand-SemiBold',
     marginBottom: 10
   },
   itemWrap: {
@@ -252,5 +248,5 @@ const styles = StyleSheet.create({
   photoButton: {
     justifyContent: 'center',
     alignItems: 'center'
-  },
+  }
 })

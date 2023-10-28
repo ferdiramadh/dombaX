@@ -80,9 +80,7 @@ const FeedProductDetail = ({ editData, navigation }) => {
         initialValues={data}
         onSubmit={(values, actions) => {
           updateItem(values)
-
           updateNotification()
-
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, setFieldValue, values }) => (
@@ -99,7 +97,6 @@ const FeedProductDetail = ({ editData, navigation }) => {
               )}
               <Text style={styles.titlePage}>Pakan</Text>
               <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => {
-                // editItem(item)
                 setIsUpdate(!isUpdate)
                 setTempImg(false)
               }}>
@@ -204,15 +201,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   titlePage: {
-    fontSize: 24,
-    fontFamily: 'Inter-Light',
-    fontWeight: '700',
+    fontSize: 28,
+    fontFamily: 'QuickSand-SemiBold',
     marginBottom: 10
   },
   itemWrap: {
     width: '100%',
     paddingVertical: 5,
-    // backgroundColor:'green',
     marginBottom: 10,
   },
   subTitle: {
@@ -234,7 +229,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-
   },
   btnSave: {
     backgroundColor: 'white',
@@ -254,5 +248,5 @@ const styles = StyleSheet.create({
   photoButton: {
     justifyContent: 'center',
     alignItems: 'center'
-  },
+  }
 })
