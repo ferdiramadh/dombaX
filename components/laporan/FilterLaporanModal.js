@@ -262,9 +262,8 @@ const styles = StyleSheet.create({
     width: windowWidth - 40
   },
   textFilter: {
-    fontSize: 18,
-    fontFamily: 'Inter',
-    fontWeight: 'bold'
+    fontSize: 20,
+    fontFamily: 'QuickSand-SemiBold',
   },
   filterWrap: {
     width: '90%',
