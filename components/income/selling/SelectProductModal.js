@@ -68,7 +68,7 @@ const SelectProductModal = ({ modalProductVisible, setModalProductVisible, setSe
         items.push(newValue)
 
       })
-      setSearchItems(items)       
+      setSearchItems(items)
     })
 
   }
@@ -240,6 +240,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
+    fontFamily: 'QuickSand'
   },
   searchBtn: {
     width: '20%',
