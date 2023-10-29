@@ -27,9 +27,12 @@ function MyTabs() {
         tabBarOptions={{
           activeTintColor: '#ED9B83',
           activeBackgroundColor:'#FFFFFF',
-          style: { height: 60, paddingBottom: 10, paddingTop: 10}
+          style: { height: 60, paddingBottom: 10, paddingTop: 10},
+          labelStyle: { fontFamily: 'Baloo', fontSize: 12}
           
         }}
+        
+        
       >
         <Tab.Screen
           name="Home"
