@@ -85,10 +85,10 @@ const ProductItem = ({ item, editItem, isTransaction, setSelectedProduct, modalP
                         {item.tipe == 'tambahproduk' ? <Text style={styles.subStokTitle}>{item.nama}</Text> : null}
                     </View>
                     <View style={styles.upperRight}>
-                        {item.tipe == 'domba' ? <Text style={[styles.infoData, { fontWeight: 'bold' }]}>{item.jumlah == "0" ? <Text style={{ color: 'red' }}>Stok Habis</Text> : `${item.jumlah} ${checkSatuan(item)}`}</Text> : null}
-                        {item.tipe == 'pakan' ? <Text style={[styles.infoData, { fontWeight: 'bold' }]}>{item.jumlah == "0" ? <Text style={{ color: 'red' }}>Stok Habis</Text> : `${item.jumlah} ${checkSatuan(item)}`}</Text> : null}
-                        {item.tipe == 'obat' ? <Text style={[styles.infoData, { fontWeight: 'bold' }]}>{item.jumlah == "0" ? <Text style={{ color: 'red' }}>Stok Habis</Text> : `${item.jumlah} ${checkSatuan(item)}`}</Text> : null}
-                        {item.tipe == 'tambahproduk' ? <Text style={[styles.infoData, { fontWeight: 'bold' }]}>{item.jumlah == "0" ? <Text style={{ color: 'red' }}>Stok Habis</Text> : item.jumlah} {item.jumlah !== '0' ? item.satuan ? item.satuan : parseInt(item.jumlah) > 1 ? 'Items' : 'Item' : null}</Text> : null}
+                        {item.tipe == 'domba' ? <Text style={styles.infoData}>{item.jumlah == "0" ? <Text style={{ color: 'red' }}>Stok Habis</Text> : `${item.jumlah} ${checkSatuan(item)}`}</Text> : null}
+                        {item.tipe == 'pakan' ? <Text style={styles.infoData}>{item.jumlah == "0" ? <Text style={{ color: 'red' }}>Stok Habis</Text> : `${item.jumlah} ${checkSatuan(item)}`}</Text> : null}
+                        {item.tipe == 'obat' ? <Text style={styles.infoData}>{item.jumlah == "0" ? <Text style={{ color: 'red' }}>Stok Habis</Text> : `${item.jumlah} ${checkSatuan(item)}`}</Text> : null}
+                        {item.tipe == 'tambahproduk' ? <Text style={styles.infoData}>{item.jumlah == "0" ? <Text style={{ color: 'red' }}>Stok Habis</Text> : item.jumlah} {item.jumlah !== '0' ? item.satuan ? item.satuan : parseInt(item.jumlah) > 1 ? 'Items' : 'Item' : null}</Text> : null}
                         {isTransaction || !deleteOpt.allDelete ? null :
                             <View style={styles.buttonSection}>
                                 <TouchableOpacity onPress={() => AddOrRemoveList(item)}>
@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
     },
     infoData: {
         fontSize: 14,
-        fontWeight: '500',
-        marginVertical: 5
+        marginVertical: 5,
+        fontFamily: 'Quicksand-SemiBold'
     },
     upperSection: {
         flexDirection: 'row',
