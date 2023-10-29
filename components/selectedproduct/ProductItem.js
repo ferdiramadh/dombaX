@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     },
     subStokTitle: {
         fontSize: 20,
-        fontWeight: 'bold'
+        fontFamily: 'Quicksand'
     },
     leftDombaInfo: {
         width: '60%',
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     },
     hargaBeli: {
         color: '#43B88E',
-        fontWeight: 'bold',
+        fontFamily: 'Quicksand-Bold',
         fontSize: 16,
         textAlign: 'right'
     },
