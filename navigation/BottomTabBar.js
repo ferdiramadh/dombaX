@@ -74,7 +74,7 @@ function MyTabs() {
             
             tabBarLabel: 'Profil',
             tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="account-circle" size={24} color={color} />
+              <MaterialIcons name="account-circle" size={22} color={color} />
             ),
           }}
         />
