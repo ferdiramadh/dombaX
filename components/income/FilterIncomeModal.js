@@ -348,9 +348,9 @@ const styles = StyleSheet.create({
     marginVertical: 10
   },
   btnTxt: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 20,
     textAlign: 'center',
-    color: '#FFF'
+    color: '#FFF',
+    fontFamily: 'Baloo'
   }
 })
