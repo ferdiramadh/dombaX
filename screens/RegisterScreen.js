@@ -108,9 +108,9 @@ const RegisterScreen = ({ navigation }) => {
                 <Text style={{ fontFamily: 'Baloo', color: '#FFF', fontSize: 32 }}>Daftar</Text>
             </TouchableOpacity>
             <View style={styles.lowerSection}>
-                <Text style={{ fontFamily: 'Quicksand', marginRight: 5, fontSize: 16 }}>Sudah Punya Akun?</Text>
+                <Text style={{ fontFamily: 'Quicksand', marginRight: 5, fontSize: 16 }}>Sudah punya akun?</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ justifyContent: 'center', alignItems: 'center', height: 60 }} >
-                    <Text style={{ fontFamily: 'Quicksand-Bold', color: '#ED9B83', fontSize: 16 }}>Masuk</Text>
+                    <Text style={{ fontFamily: 'Quicksand', color: '#ED9B83', fontSize: 16 }}>Masuk</Text>
                 </TouchableOpacity>
             </View>
 

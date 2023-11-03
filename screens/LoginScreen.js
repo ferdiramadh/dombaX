@@ -102,7 +102,7 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={{ fontFamily: 'Baloo', color: '#FFF', fontSize: 32 }}>Masuk</Text>
             </TouchableOpacity>
             <View style={styles.lowerSection}>
-                <Text style={{ fontFamily: 'Quicksand', fontSize: 16, marginRight: 5 }}>Belum Punya Akun?</Text>
+                <Text style={{ fontFamily: 'Quicksand', fontSize: 16, marginRight: 5 }}>Belum punya akun?</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{ justifyContent: 'center', alignItems: 'center', height: 60 }} >
                     <Text style={{ fontFamily: 'Quicksand', fontSize: 16, color: '#ED9B83' }}>Daftar</Text>
                 </TouchableOpacity>
