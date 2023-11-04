@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 
   },
   textFilter: {
-    fontFamily: 'QuickSand-SemiBold',
+    fontFamily: 'Quicksand-SemiBold',
     fontSize: 20
   },
   filterWrap: {

@@ -57,10 +57,10 @@ const styles = StyleSheet.create({
         paddingLeft: 60,
         backgroundColor: '#F5F5F5',
         marginVertical: 10,
-        fontFamily: "QuickSand-SemiBold"
+        fontFamily: "Quicksand-SemiBold"
     },
     exampleText: { 
-        fontFamily: 'QuickSand-SemiBold', 
+        fontFamily: 'Quicksand-SemiBold', 
         color: '#ED9B83', 
         marginLeft: 60 
     }

@@ -69,7 +69,7 @@ const NominalComponent = ({ data, setCount, count }) => {
             }
             style={{
               fontSize: 22,
-              fontFamily: 'QuickSand-SemiBold',
+              fontFamily: 'Quicksand-SemiBold',
               color: "#474747",
             }}
             prompt="Kategori"
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
   },
   textFilter: {
     fontSize: 20,
-    fontFamily: 'QuickSand-SemiBold'
+    fontFamily: 'Quicksand-SemiBold'
   },
   filterWrap: {
     width: '90%',

@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   },
   textFilter: {
     fontSize: 20,
-    fontFamily: 'QuickSand-SemiBold',
+    fontFamily: 'Quicksand-SemiBold',
   },
   filterWrap: {
     width: '90%',

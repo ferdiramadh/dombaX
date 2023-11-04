@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   },
   titlePage: {
     fontSize: 28,
-    fontFamily: 'QuickSand-SemiBold',
+    fontFamily: 'Quicksand-SemiBold',
     marginBottom: 10
   },
   itemWrap: {
