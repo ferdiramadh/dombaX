@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
-    fontFamily: 'QuickSand'
+    fontFamily: 'Quicksand'
   },
   searchBtn: {
     width: '10%',

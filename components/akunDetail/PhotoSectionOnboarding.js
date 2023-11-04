@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 60
   },
   tambahFotoBtnTxt: {
-    fontFamily: 'QuickSand',
+    fontFamily: 'Quicksand',
     fontSize: 20
   }
 })
