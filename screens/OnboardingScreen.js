@@ -23,28 +23,25 @@ const OnboardingScreen = ({ navigation }) => {
                     image: <Image source={require('../assets/images/onboard_1d.png')} style={{ width: 420, height: 420 }} />,
                     title: 'Kelola Stok',
                     subtitle: 'Ketahui stok produk dan atur setiap unit peternakan domba Kamu sebanyak apapun dari satu tempat.',
-                    titleStyles: { marginTop: -50 },
-                    subTitleStyles: styles.subTitle
+                    titleStyles: { marginTop: -50 }
                 },
                 {
                     backgroundColor: '#fff',
                     image: <Image source={require('../assets/images/aturtransaksinewest.png')} style={{ width: 280, height: 280 }} resizeMode='contain' />,
                     title: 'Atur Transaksi',
                     subtitle: 'Keuangan lebih rapi dan profesional tidak ada yang tercecer lagi.',
-                    titleStyles: { fontSize: 38, marginTop: -50 },
-                    subTitleStyles: styles.subTitle
+                    titleStyles: { fontSize: 38, marginTop: -50 }
                 },
                 {
                     backgroundColor: '#fff',
                     image: <Image source={require('../assets/images/LaporanInteraktif.png')} />,
                     title: 'Laporan Interaktif',
                     subtitle: 'Lihat laporan arus kas, untung/rugi, dan informasi finansial lainnya dalam satu dashboard interaktif. ',
-                    titleStyles: { fontSize: 38, marginTop: -50 },
-                    subTitleStyles: styles.subTitle
+                    titleStyles: { fontSize: 38, marginTop: -50 }
                 }
             ]}
             containerStyles={{ backgroundColor: '#fff', paddingHorizontal: 20 }}
-            subTitleStyles={{ fontSize: 20, marginTop: 300, fontWeight: 'bold' }}
+            subTitleStyles={styles.subTitle}
             bottomBarColor='#fff'
             imageContainerStyles={{ position: 'absolute', paddingHorizontal: 10, }}
             titleStyles={styles.titleOnboarding}
@@ -64,7 +61,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     titleOnboarding: {
-        fontFamily: 'Baloo-ExtraBold',
+        fontFamily: 'Baloo',
         fontSize: 50,
     },
     doneBtn: {
@@ -83,7 +80,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Baloo'
     },
     subTitle: { 
-        fontFamily: 'QuickSand', 
-        fontSize: 20
+        fontSize: 20, 
+        marginTop: 300, 
+        fontFamily: 'Quicksand', 
+        color: '#000' 
     }
 })
