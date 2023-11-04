@@ -204,6 +204,7 @@ const FilterTransactionProvider = (props) => {
     ]
   }
   const [catatSekarang, setCatatSekarang] = useState(false)
+  const [tambahPengeluaran, setTambahPengeluaran] = useState(false)
 
   const resetFilter = () => {
     let startVal = filterList.map((val, i) => {
@@ -236,7 +237,9 @@ const FilterTransactionProvider = (props) => {
     transactionCategories,
     filterFunction,
     catatSekarang,
-    setCatatSekarang
+    setCatatSekarang,
+    tambahPengeluaran,
+    setTambahPengeluaran
   }
 
   return (
