@@ -301,6 +301,14 @@ export default function LaporanScreen() {
         setShowTanggal(false)
     }
 
+    const { setTambahPengeluaran } = useContext(FilterTransactionContext)
+
+
+    const toTransactionExpenseModal = async () => {
+        setTambahPengeluaran(true)
+        navigation.navigate('Transaction', { screen: 'Pengeluaran' })
+    }
+
 
     useEffect(() => {
         setTimeout(() => {
@@ -503,7 +511,7 @@ export default function LaporanScreen() {
                                 <Image source={imgEmptyExpense} />
                                 <Text style={styles.emptyExpenseTxt}>Pengeluaran Kamu masih kosong</Text>
                             </View>
-                            <TouchableOpacity style={[styles.btnTambahPengeluaran,]} onPress={() => console.log(windowHeigth)}>
+                            <TouchableOpacity style={[styles.btnTambahPengeluaran,]} onPress={toTransactionExpenseModal}>
                                 <Text style={styles.txtCatatSkrg}>Tambah pengeluaran</Text>
                             </TouchableOpacity>
                         </View>}
