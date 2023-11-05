@@ -18,7 +18,7 @@ const InitialEmpty = ({ navigation }) => {
     const { setCatatSekarang } = useContext(FilterTransactionContext)
     const imgEmptyHome = require('../assets/images/home/empty_home.png')
 
-    const toInventoryAndOpenStockModal = async () => {
+    const toInventoryAndOpenStockModal = () => {
         navigation.navigate('Inventory')
         setCatatSekarang(true)
     }
@@ -304,7 +304,7 @@ export default function LaporanScreen() {
     const { setTambahPengeluaran } = useContext(FilterTransactionContext)
 
 
-    const toTransactionExpenseModal = async () => {
+    const toTransactionExpenseModal = () => {
         setTambahPengeluaran(true)
         navigation.navigate('Transaction', { screen: 'Pengeluaran' })
     }
