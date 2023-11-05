@@ -28,7 +28,7 @@ const CategoryItem = ({ item, deleteItem, uid, listCategory }) => {
         }
     }, [editData])
     return (
-        <TouchableOpacity style={[styles.container, isPressed ? { height: 100, paddingTop: 10 } : { height: 50, alignItems: 'center', }]} onPress={() => console.log(item.name)} disabled={isPressed ? true : false}>
+        <View style={[styles.container, isPressed ? { height: 100, paddingTop: 10 } : { height: 50, alignItems: 'center', }]}>
             <View style={styles.itemName}>
                 <Text style={styles.text}>{item.name}</Text>
             </View>
@@ -40,7 +40,7 @@ const CategoryItem = ({ item, deleteItem, uid, listCategory }) => {
             {isPressed && <FloatingModal deleteItem={deleteItem} editItem={editItem} item={item} setIsPressed=
                 {setIsPressed} />}
             <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} uid={uid} listCategory={listCategory} setEditData={setEditData} editItem={editItem} editCategory={editCategory} setEditCategory={setEditCategory} setIsPressed={setIsPressed} />
-        </TouchableOpacity>
+        </View>
     )
 }
 
