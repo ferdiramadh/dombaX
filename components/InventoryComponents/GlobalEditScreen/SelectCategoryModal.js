@@ -172,7 +172,7 @@ const SelectCategoryModal = (props) => {
             </View> : null}
             {listCategory.length < 1 ?
               <View style={styles.emptyStokNotif}>
-                <Text style={styles.text}>Tekan tombol tambah untuk menambahkan kategori baru</Text>
+                <Text style={styles.text}>Tekan <Text style={{ fontFamily: 'Quicksand-Bold' }}>tombol tambah</Text> untuk menambahkan kategori baru</Text>
               </View> : null
             }
           </ScrollView>}
@@ -194,16 +194,6 @@ const styles = StyleSheet.create({
   modalView: {
     marginBottom: '20%',
   },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontFamily: 'Baloo',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
   upperWrap: {
     width: '100%',
     height: 60,
@@ -223,9 +213,9 @@ const styles = StyleSheet.create({
     width: '10%',
   },
   text: {
-    fontSize: 23,
-    fontWeight: '500',
-    textAlign: 'center'
+    fontSize: 20,
+    textAlign: 'center',
+    fontFamily: 'Quicksand'
   },
   emptyStokNotif: {
     justifyContent: 'center',
