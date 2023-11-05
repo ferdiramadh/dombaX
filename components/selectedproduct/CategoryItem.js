@@ -4,7 +4,7 @@ import { AntDesign, Entypo } from '@expo/vector-icons'
 import ModalAddCategoryProduct from './ModalAddCategoryProduct'
 import firebase from '../../Firebaseconfig'
 
-const CategoryItem = ({ item, deleteItem, setCategoryValue, setFieldValue, uid, listCategory }) => {
+const CategoryItem = ({ item, deleteItem, uid, listCategory }) => {
     const [isPressed, setIsPressed] = useState(false)
     const [modalAddCategory, setModalAddCategory] = useState(false)
     const [editData, setEditData] = useState({})
@@ -28,7 +28,7 @@ const CategoryItem = ({ item, deleteItem, setCategoryValue, setFieldValue, uid, 
         }
     }, [editData])
     return (
-        <TouchableOpacity style={[styles.container, isPressed ? { height: 100, paddingTop: 10 } : { height: 50, alignItems: 'center', }]} onPress={() => setCategoryValue(item.name)} disabled={isPressed ? true : false}>
+        <TouchableOpacity style={[styles.container, isPressed ? { height: 100, paddingTop: 10 } : { height: 50, alignItems: 'center', }]} onPress={() => console.log(item.name)} disabled={isPressed ? true : false}>
             <View style={styles.itemName}>
                 <Text style={styles.text}>{item.name}</Text>
             </View>
@@ -39,7 +39,7 @@ const CategoryItem = ({ item, deleteItem, setCategoryValue, setFieldValue, uid, 
             </View>
             {isPressed && <FloatingModal deleteItem={deleteItem} editItem={editItem} item={item} setIsPressed=
                 {setIsPressed} />}
-            <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} setEditData={setEditData} editItem={editItem} editCategory={editCategory} setEditCategory={setEditCategory} setIsPressed={setIsPressed} />
+            <ModalAddCategoryProduct modalAddCategory={modalAddCategory} setModalAddCategory={setModalAddCategory} uid={uid} listCategory={listCategory} setEditData={setEditData} editItem={editItem} editCategory={editCategory} setEditCategory={setEditCategory} setIsPressed={setIsPressed} />
         </TouchableOpacity>
     )
 }

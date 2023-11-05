@@ -20,8 +20,6 @@ const SelectCategoryModal = (props) => {
   })
   const modalCategoryVisible = props.modalCategoryVisible
   const setModalCategoryVisible = props.setModalCategoryVisible
-  const setFieldValue = props.setFieldValue
-  const setCategory = props.setCategory
 
   const [isSearch, setIsSearch] = useState(false)
   const [searchItems, setSearchItems] = useState([])
@@ -77,13 +75,6 @@ const SelectCategoryModal = (props) => {
       }
     )
   }
-
-  const setCategoryValue = (item) => {
-    setFieldValue('kategori', item)
-    setCategory(item)
-    setModalCategoryVisible(!modalCategoryVisible)
-  }
-
 
   function objToDate(obj) {
     let result = new Date(0)
@@ -167,7 +158,7 @@ const SelectCategoryModal = (props) => {
         </View> :
           <ScrollView style={styles.modalView}>
             {listCategory.length > 0 && !isSearch ? sortData.map((item, i) => {
-              return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} setCategoryValue={setCategoryValue} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} />
+              return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} uid={uid} listCategory={listCategory} />
             }) : null}
 
             {isSearch ? <View style={{ paddingTop: 10 }}>
@@ -175,7 +166,7 @@ const SelectCategoryModal = (props) => {
               <Text style={{ marginLeft: 20 }}>{searchItems.length} hasil ditemukan untuk "{searchKeyword}"</Text>
               {
                 searchItems.map((item, i) => {
-                  return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} setCategoryValue={setCategoryValue} setFieldValue={setFieldValue} uid={uid} listCategory={listCategory} />
+                  return <CategoryItem item={item} key={item.id} deleteItem={deleteItem} uid={uid} listCategory={listCategory} />
                 })
               }
             </View> : null}

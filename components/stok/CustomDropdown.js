@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import SelectCategoryModal from '../InventoryComponents/GlobalEditScreen/SelectCategoryModal'
 
-const CustomDropdown = ({ openFunc, title, data, setSelectedProduct, setFieldValue }) => {
+const CustomDropdown = ({ openFunc, title, data, setSelectedProduct }) => {
 
     const { isOpen, setIsOpen } = openFunc
-    const parentObj = { data, setSelectedProduct, setIsOpen, setFieldValue }
+    const parentObj = { data, setSelectedProduct, setIsOpen }
 
     return (
         <View style={styles.pickerContainer}>
@@ -22,8 +22,7 @@ const CustomDropdown = ({ openFunc, title, data, setSelectedProduct, setFieldVal
 const DataWrapper = ({ parentObj }) => {
 
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false)
-    const [category, setCategory] = useState("Kategori")
-    const { data, setSelectedProduct, setIsOpen, setFieldValue } = parentObj
+    const { data, setSelectedProduct, setIsOpen } = parentObj
 
     return (
         <View style={styles.dataWrapper}>
@@ -35,7 +34,7 @@ const DataWrapper = ({ parentObj }) => {
                 }
                 <Item item={{ name: "Tambah Kategori Baru", value: 'tambahProduk' }} setSelectedProduct={setSelectedProduct} onPress={() => setModalCategoryVisible(!modalCategoryVisible)} />
             </ScrollView>
-            <SelectCategoryModal modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} setFieldValue={setFieldValue} setCategory={setCategory} />
+            <SelectCategoryModal modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} />
         </View>
     )
 }
@@ -46,7 +45,7 @@ const Item = ({ item, setSelectedProduct, setIsOpen, onPress }) => {
             setSelectedProduct(item)
             if (item.name !== "Tambah Kategori Baru") {
                 setIsOpen(false)
-            } else  {
+            } else {
                 onPress()
             }
         }}>
