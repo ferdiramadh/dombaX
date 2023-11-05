@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { Formik } from 'formik'
-import { Picker } from '@react-native-picker/picker'
 import DombaForm from './domba/DombaForm'
 import PakanForm from '../stok/pakan/PakanForm'
 import ObatForm from '../stok/obatdansuplemen/ObatForm'
@@ -167,26 +166,6 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
         <ScrollView style={styles.container} contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}>
           <View style={styles.formContainer}>
-            {/* <View style={styles.pickerContainer}>
-              <Picker
-                selectedValue={selectedProduct}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedProduct(itemValue)
-                }
-                style={{
-                  fontSize: 22,
-                  fontWeight: 'bold',
-                  color: '#474747',
-                }}
-                prompt='Kategori'
-
-              >
-
-                {jenisProdukPicker.map((item, i) => {
-                  return <Picker.Item label={item.label} value={item.value} key={item.id} />
-                })}
-              </Picker>
-            </View> */}
             <CustomDropdown openFunc={{ isOpen, setIsOpen }} title={selectedProduct.name !== "Tambah Kategori Baru" && !isOpen ? selectedProduct.name : "Kategori"} data={jenisProdukPicker} setSelectedProduct={setSelectedProduct} setFieldValue={setFieldValue} />
             {selectedProduct.value == 'jenisHewanTernak' ? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
             {selectedProduct.value == 'jenisPakan' ? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
