@@ -27,13 +27,13 @@ const DataWrapper = ({ parentObj }) => {
 
     return (
         <View style={styles.dataWrapper}>
-            <ScrollView>
+            <ScrollView nestedScrollEnabled>
                 {
                     data.map((item, i) => {
-                        return <Item item={item} setSelectedProduct={setSelectedProduct} setIsOpen={setIsOpen} />
+                        return <Item item={item} setSelectedProduct={setSelectedProduct} setIsOpen={setIsOpen} key={i} />
                     })
                 }
-                <Item item={{ label: "Tambah Kategori Baru" }} onPress={() => setModalCategoryVisible(!modalCategoryVisible)} />
+                <Item item={{ name: "Tambah Kategori Baru", value: 'tambahProduk' }} setSelectedProduct={setSelectedProduct} onPress={() => setModalCategoryVisible(!modalCategoryVisible)} />
             </ScrollView>
             <SelectCategoryModal modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} setFieldValue={setFieldValue} setCategory={setCategory} />
         </View>
@@ -43,14 +43,14 @@ const DataWrapper = ({ parentObj }) => {
 const Item = ({ item, setSelectedProduct, setIsOpen, onPress }) => {
     return (
         <TouchableOpacity style={styles.item} onPress={() => {
-            if (item.label !== "Tambah Kategori Baru") {
-                setSelectedProduct(item.value)
+            setSelectedProduct(item.value)
+            if (item.name !== "Tambah Kategori Baru") {
                 setIsOpen(false)
             } else  {
                 onPress()
             }
         }}>
-            <Text style={styles.title}>{item.label}</Text>
+            <Text style={styles.title}>{item.name}</Text>
         </TouchableOpacity>
     )
 }
