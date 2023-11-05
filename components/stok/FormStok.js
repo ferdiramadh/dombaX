@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
-import { Formik } from 'formik';
-import { Picker } from '@react-native-picker/picker'
+import { Formik } from 'formik'
 import DombaForm from './domba/DombaForm'
 import PakanForm from '../stok/pakan/PakanForm'
 import ObatForm from '../stok/obatdansuplemen/ObatForm'
@@ -9,13 +8,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import firebase from '../../Firebaseconfig'
 import AddProductForm from '../selectedproduct/AddProductForm'
 import { uploadImageProduk } from '../../utils/ImageUpload'
-
+import CustomDropdown from './CustomDropdown'
 
 const FormStok = ({ setModalVisible, modalVisible }) => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const uid = useSelector(state => state.userReducer.uid)
-  const [ selectedProduct, setSelectedProduct ] = useState("jenisHewanTernak");
+  const listCategory = useSelector(state => state.userCategoryProductReducer.listUserCategoryProduct)
+  const [selectedProduct, setSelectedProduct] = useState({ name: 'Kategori' })
+  const [isOpen, setIsOpen] = useState(false)
   const ternakData = {
     id: '',
     nama: '',
@@ -56,19 +57,19 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
   }
 
   const addProduct = {
-      id: '',
-      nama: '',
-      merk: '',
-      jumlah: '',
-      hargaBeli: '',
-      deskripsi: '',
-      kategori: 'Kategori',
-      satuan: '',
-      tipe: 'tambahproduk',
-      image: ''
-    }
-  
-  const [ initiateData, setInitiateData ] = useState({})
+    id: '',
+    nama: '',
+    merk: '',
+    jumlah: '',
+    hargaBeli: '',
+    deskripsi: '',
+    kategori: 'Kategori',
+    satuan: '',
+    tipe: 'tambahproduk',
+    image: ''
+  }
+
+  const [initiateData, setInitiateData] = useState({})
 
   const initiateValue = () => {
 
@@ -101,7 +102,7 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     }
     let addedProperties = { id: datas.id, createdAt: firebase.firestore.FieldValue.serverTimestamp(), userId: uid }
     const newValue = Object.assign(values, addedProperties)
-    const db = firebase.firestore();
+    const db = firebase.firestore()
     db.collection("userproduk")
       .doc(datas.id)
       .set(newValue)
@@ -109,27 +110,50 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     uploadImageProduk(values.image, "UserProduk", newValue.id, "userproduk", "image")
 
   }
-
-  const jenisProdukPicker = [
+  const initiateProduk = [
     {
       id: 1,
-      label: "Hewan Ternak",
+      name: "Hewan Ternak",
       value: "jenisHewanTernak"
     }, {
       id: 2,
-      label: "Pakan",
+      name: "Pakan",
       value: "jenisPakan"
     }, {
       id: 3,
-      label: "Obat dan Vitamin",
+      name: "Obat dan Vitamin",
       value: "obatSuplemen"
     }
-    , {
-      id: 4,
-      label: "Tambah Produk",
-      value: "tambahProduk"
-    }
   ]
+  const [jenisProdukPicker, setJenisProdukPicker] = useState(initiateProduk)
+
+  const sortData = listCategory.sort((a, b) => {
+    let bd = objToDate(b.createdAt)
+    let ad = objToDate(a.createdAt)
+    return ad - bd
+  })
+
+  function objToDate(obj) {
+    let result = new Date(0)
+    if (obj !== null) {
+      result.setSeconds(obj.seconds)
+      result.setMilliseconds(obj.nanoseconds / 1000000)
+      return result
+    }
+
+  }
+
+  useEffect(() => {
+    let categoryList = []
+    for (let i = 0; i < sortData.length; i++) {
+      categoryList.push({
+        id: sortData[i].id,
+        name: sortData[i].name,
+        value: "tambahProduk"
+      })
+    }
+    setJenisProdukPicker([...initiateProduk, ...categoryList])
+  }, [listCategory])
 
   return (
     <Formik
@@ -142,30 +166,11 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
         <ScrollView style={styles.container} contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}>
           <View style={styles.formContainer}>
-            <View style={styles.pickerContainer}>
-              <Picker
-                selectedValue={selectedProduct}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedProduct(itemValue)
-                }
-                style={{
-                  fontSize: 22,
-                  fontWeight: 'bold',
-                  color: '#474747',
-                }}
-                prompt='Jenis Produk'
-
-              >
-
-                {jenisProdukPicker.map((item, i) => {
-                  return <Picker.Item label={item.label} value={item.value} key={item.id} />
-                })}
-              </Picker>
-            </View>
-            {selectedProduct == 'jenisHewanTernak' ? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
-            {selectedProduct == 'jenisPakan' ? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
-            {selectedProduct == 'obatSuplemen' ? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
-            {selectedProduct == 'tambahProduk' ? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
+            <CustomDropdown openFunc={{ isOpen, setIsOpen }} title={selectedProduct.name !== "Tambah Kategori Baru" && !isOpen ? selectedProduct.name : "Kategori"} data={jenisProdukPicker} setSelectedProduct={setSelectedProduct} setFieldValue={setFieldValue} />
+            {selectedProduct.value == 'jenisHewanTernak' ? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
+            {selectedProduct.value == 'jenisPakan' ? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
+            {selectedProduct.value == 'obatSuplemen' ? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
+            {selectedProduct.value == 'tambahProduk' && selectedProduct.name !== "Tambah Kategori Baru" ? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
           </View>
         </ScrollView>
       )}
@@ -225,10 +230,10 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginVertical: 10
   },
-  formContainer: { 
-    width: '100%', 
-    justifyContent: 'center', 
-    alignItems: 'center' 
+  formContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
