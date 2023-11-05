@@ -16,7 +16,7 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
   const dispatch = useDispatch()
   const uid = useSelector(state => state.userReducer.uid)
   const listCategory = useSelector(state => state.userCategoryProductReducer.listUserCategoryProduct)
-  const [selectedProduct, setSelectedProduct] = useState("")
+  const [selectedProduct, setSelectedProduct] = useState({ name: 'Kategori' })
   const [isOpen, setIsOpen] = useState(false)
   const ternakData = {
     id: '',
@@ -149,7 +149,8 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
     for (let i = 0; i < sortData.length; i++) {
       categoryList.push({
         id: sortData[i].id,
-        name: sortData[i].name
+        name: sortData[i].name,
+        value: "tambahProduk"
       })
     }
     setJenisProdukPicker([...initiateProduk, ...categoryList])
@@ -186,11 +187,11 @@ const FormStok = ({ setModalVisible, modalVisible }) => {
                 })}
               </Picker>
             </View> */}
-            <CustomDropdown openFunc={{ isOpen, setIsOpen }} title='Kategori' data={jenisProdukPicker} setSelectedProduct={setSelectedProduct} setFieldValue={setFieldValue} />
-            {selectedProduct == 'jenisHewanTernak' ? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
-            {selectedProduct == 'jenisPakan' ? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
-            {selectedProduct == 'obatSuplemen' ? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
-            {selectedProduct == 'tambahProduk' ? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
+            <CustomDropdown openFunc={{ isOpen, setIsOpen }} title={selectedProduct.name !== "Tambah Kategori Baru" && !isOpen ? selectedProduct.name : "Kategori"} data={jenisProdukPicker} setSelectedProduct={setSelectedProduct} setFieldValue={setFieldValue} />
+            {selectedProduct.value == 'jenisHewanTernak' ? <DombaForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
+            {selectedProduct.value == 'jenisPakan' ? <PakanForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
+            {selectedProduct.value == 'obatSuplemen' ? <ObatForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
+            {selectedProduct.value == 'tambahProduk' ? <AddProductForm handleBlur={handleBlur} handleChange={handleChange} values={values} handleSubmit={handleSubmit} setFieldValue={setFieldValue} setModalVisible={setModalVisible} modalVisible={modalVisible} /> : null}
           </View>
         </ScrollView>
       )}

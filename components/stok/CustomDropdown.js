@@ -43,7 +43,7 @@ const DataWrapper = ({ parentObj }) => {
 const Item = ({ item, setSelectedProduct, setIsOpen, onPress }) => {
     return (
         <TouchableOpacity style={styles.item} onPress={() => {
-            setSelectedProduct(item.value)
+            setSelectedProduct(item)
             if (item.name !== "Tambah Kategori Baru") {
                 setIsOpen(false)
             } else  {
