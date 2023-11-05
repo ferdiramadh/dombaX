@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, TextInput, View, TouchableOpacity, Text, Image } from 'react-native'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
-import SelectCategoryModal from '../InventoryComponents/GlobalEditScreen/SelectCategoryModal'
 import { pickImageOnly } from '../../utils/ImageUpload'
 
 const AddProductForm = ({ setFieldValue, handleChange, handleBlur, values, handleSubmit, setModalVisible, modalVisible }) => {
 
-  const [modalCategoryVisible, setModalCategoryVisible] = useState(false)
-  const [category, setCategory] = useState("Kategori")
   const [img, setImg] = useState()
 
   const removePhoto = () => {
@@ -50,24 +47,18 @@ const AddProductForm = ({ setFieldValue, handleChange, handleBlur, values, handl
           keyboardType='numeric'
         />
         <TextInput
-          onChangeText={handleChange('deskripsi')}
-          onBlur={handleBlur('deskripsi')}
-          value={values.deskripsi}
-          style={styles.textInput}
-          placeholder='Deskripsi'
-        />
-        <TouchableOpacity style={styles.textInput} onPress={() => setModalCategoryVisible(!modalCategoryVisible)} >
-          <View style={styles.wrapper}>
-            <Text style={{ color: '#474747' }}>{category}</Text>
-            <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
-          </View>
-        </TouchableOpacity>
-        <TextInput
           onChangeText={handleChange('satuan')}
           onBlur={handleBlur('satuan')}
           value={values.satuan}
           style={styles.textInput}
           placeholder='Satuan'
+        />
+        <TextInput
+          onChangeText={handleChange('deskripsi')}
+          onBlur={handleBlur('deskripsi')}
+          value={values.deskripsi}
+          style={styles.textInput}
+          placeholder='Catatan'
         />
         <TouchableOpacity style={styles.textInput} onPress={() => {
           let isUpdate = false
@@ -85,8 +76,6 @@ const AddProductForm = ({ setFieldValue, handleChange, handleBlur, values, handl
             <AntDesign name="delete" size={24} color="lightgrey" /><Text style={{ color: "grey" }}>Hapus Foto</Text>
           </TouchableOpacity>
         </View> : null}
-
-
         <View style={styles.btnWrap}>
           <TouchableOpacity style={styles.btnSave} onPress={() => setModalVisible(!modalVisible)}>
             <Text style={styles.batalTxt}>Batal</Text>
@@ -99,7 +88,6 @@ const AddProductForm = ({ setFieldValue, handleChange, handleBlur, values, handl
           </TouchableOpacity>
         </View>
       </View>
-      <SelectCategoryModal modalCategoryVisible={modalCategoryVisible} setModalCategoryVisible={setModalCategoryVisible} setFieldValue={setFieldValue} setCategory={setCategory} />
     </View>
   )
 }
@@ -107,12 +95,12 @@ const AddProductForm = ({ setFieldValue, handleChange, handleBlur, values, handl
 export default AddProductForm
 
 const styles = StyleSheet.create({
-  container: { 
-    width: '100%', 
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    marginBottom: 10 
+  container: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10
   },
   pickerContainer: {
     backgroundColor: '#DFE1E0',
@@ -151,20 +139,20 @@ const styles = StyleSheet.create({
     height: '100%',
     aspectRatio: 1
   },
-  txtSave: { 
-    fontSize: 18, 
-    fontWeight: '700', 
-    textAlign: 'center', 
-    color: '#FFF' 
+  txtSave: {
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: '#FFF'
   },
-  batalTxt: { 
-    fontSize: 18, 
-    fontWeight: '700', 
-    textAlign: 'center' 
+  batalTxt: {
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center'
   },
-  wrapper: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    paddingRight: 10 
+  wrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight: 10
   }
 })
